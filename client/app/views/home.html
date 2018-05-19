@@ -1,0 +1,1047 @@
+<div id="main">
+    <!-- START: QUOTE -->
+    <div ng-if="$root.home_display == 'Quote'">
+        <!-- START: BANNER -->
+        <section>
+            <div class="quote-banner">
+                <div class="container">
+                    <div class="get-lancher">
+                        <div class="getlancher-in text-center">
+                            <div class="bot-mspace"> <img src="images/quote.png" alt="[Image: Quote]" title="Quote"> </div>
+                            <h3 class="text-34 text-uppercase"> <strong> {{'Get more done with quote'|translate}} </strong> </h3>
+                            <p class="text-18 top-17-mspace business-txt">{{'Otranslatever 800,000 trusted people ready to complete your task'|translate}} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: BANNER -->
+
+        <!-- START: WHAT IS Getlancer-Quote -->
+        <section class="white-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="about-block text-center">
+                            <h4 class="h3 text-uppercase bot-20-mar Montserrat"> <strong>{{'What is Getlancer-Quote'|translate}}? </strong> </h4>
+                            <p class="text-18 col-lg-8 float-none center-block line-height-32">  {{"Getlancer-Quote is an exclusive marketplace for getting things done domestically by finding an appropriate local service pro’s from a vast recommendations around your proximities"|translate}}. </p>
+                            <div class="lists">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <img src="images/quote-block-1.png" alt="[Image: Quote post]" title="Quote post" class="img-responsive center-block">
+                                      <!--  <p>{{'Share us your requirements'|translate}}. <br>{{"It’s easy to post jobs with few clicks"|translate}}. </p>-->
+                                      <p>{{'Share your requirements with fewer clicks'|translate}}.</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <img src="images/quote-block-trust.png" alt="[Image: Quote offers]" title="Quote offers" class="img-responsive center-block">
+                                        <p> {{'Seamlessly receive a competitive quote from trusted workers'|translate}}.</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <img src="images/quote-block-person.png" alt="[Image: Quote job]" title="Quote job" class="img-responsive center-block">
+                                        <p> {{'Choose the right service pro for your job'|translate}}. </p>
+                                    </div>
+                                </div>   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: WHAT IS Getlancer-Quote -->
+
+        <!-- START: WHAT DO YOU NEED -->
+                  <quote_home_categories></quote_home_categories>
+      
+        <!-- END: WHAT DO YOU NEED -->
+
+        <!-- START: INSURANCE -->
+        <section class="insurance-block">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="text-24 text-uppercase whitec Montserrat"> <strong>  {{'How It Works'|translate}} </strong> </h2>
+                </div>
+                <div class="row rated-lists">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="col-md-11">
+                            <div class="bot-15-space">
+                                <img src="images/top-post-1.png" alt="[Image: Post]" title="Post" class="img-responsive">
+                            </div>
+                            <h4> {{'Easy to post'|translate}}  </h4>
+                            <p> {{"Start submitting your domestic needs and get quotes directly from Service pro"|translate}}.  </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="col-md-11">
+                            <div class="bot-15-space">
+                                <img src="images/top-control-3.png"  alt="[Image: Control]" title="Control" class="img-responsive">
+                            </div>
+                            <h4> {{"You are in control"|translate}}  </h4>
+                            <p> {{'Choose the quote which looks both feasible and favorable for work completion'|translate}}. </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="col-md-11">
+                            <div class="bot-15-space">
+                                <img src="images/top-trusted-3.png"  alt="[Image: Workers]" title="Workers" class="img-responsive">
+                            </div>
+                            <h4> {{'Trusted Workers'|translate}} </h4>
+                            <p> {{'Spotlight your choice by go through the reliable reviews'|translate}}. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: INSURANCE -->
+
+        <!-- START: RECENT TASK -->
+        <div ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1">
+                 <quote_home_reviews></quote_home_reviews>
+        </div>
+            
+        <!-- END: RECENT TASK -->
+
+        <!-- START: EARN -->
+        <section class="earn-money">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-7 col-sm-offset-1">
+                        <h2 class="text-24 text-uppercase whitec ver-mar-20 Montserrat"> <strong> {{'Now, earn up to $5,000 a month with successful completion of tasks'|translate}}</strong> </h2>
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <img src="images/earn-icon.png" alt="[Image: Earnup]" title="Earnup" class="img-responsive">
+                                    </div>
+                                    <div class="media-body">
+                                        <h4> {{"You’re the boss"|translate}} </h4>
+                                        <p> {{'Every month, jobs are posted in overwhelming numbers on quote. A streamlined workflow helps a worker to find his best-fit job and employer with ease'|translate}}. </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 bg-man hidden-xs"></div>
+                </div>
+            </div>
+            
+        </section>
+        <!-- END: EARN -->
+    </div>
+    <!-- END: QUOTE -->
+
+    <!-- START: BIDDING -->
+    <div ng-if="$root.home_display == 'Bidding'">
+        <!-- START: BANNER -->
+        <section>
+            <div class="bidding-banner">
+                <div class="container">
+                    <div class="get-lancher">
+                        <div class="getlancher-in text-center">
+                            <div class="bot-mspace top-space-25">
+                                <img src="images/banner-logo.png" alt="[Image: Get lancer]" title="Get lancer" class="top-space">
+                            </div>
+                            <h3 class="text-34 text-uppercase">
+                                <strong class="fa-inverse">{{'Get more done with freelancers'|translate}}</strong>
+                            </h3>
+                            <p class="text-18 top-17-mspace">
+                                <span class="fa-inverse business-txt">
+                                {{'Millions of small businesses use Freelancer to turn their ideas into reality'|translate}}.
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: BANNER -->
+
+        <!-- START: WHAT IS BIDDING -->
+        <section class="white-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="freelance-bidding text-center">
+                            <h4 class="h3 text-uppercase Montserrat"> <strong> {{'What is Freelance Bidding'|translate}}? </strong> </h4>
+                            <p class="text-18 top-15-mspace line-height-32"> {{'Post your project and receive competitive bids from freelancers within minutes'|translate}}. </p>
+                            <div class="lists">
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-3">
+                                        <img src="images/job-post.png" alt="[Image: Job-post]" title="Job-post" class="img-responsive center-block">
+                                        <h3 class="h4 text-uppercase bot-15-mspace Montserrat text-16"> <strong> {{'Find'|translate}} </strong> </h3>
+                                        <p> {{"Post a job to tell us about your project. We'll quickly match you with the right freelancers"|translate}}. </p>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3">
+                                        <img src="images/hire.png" alt="[Image: Hire]" title="Hire" class="img-responsive center-block">
+                                        <h3 class="h4 text-uppercase bot-15-mspace Montserrat text-16"> <strong> {{'Hire'|translate}} </strong> </h3>
+                                        <p> {{'Browse profiles, reviews, proposals and then interview top candidates. Hire your chosen Freelancer and begin your project'|translate}}. </p>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3">
+                                        <img src="images/work.png" alt="[Image: Work]" title="Work" class="img-responsive center-block">
+                                        <h3 class="h4 text-uppercase bot-15-mspace Montserrat text-16"> <strong> {{'Work'|translate}} </strong> </h3>
+                                        <p> {{'Use the getlancer platform to chat, share files, and collaborate from your desktop or on the go'|translate}}. </p>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3">
+                                        <img src="images/pay.png" alt="[Image: Pay]" title="Pay" class="img-responsive center-block">
+                                        <h3 class="h4 text-uppercase bot-15-mspace Montserrat text-16"> <strong> {{'Pay'|translate}} </strong> </h3>
+                                        <p>{{'Invoicing and payments happen on getlancer. With getlancer Protection, you pay only for the work you authorize'|translate}}.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: WHAT IS BIDDING -->
+
+        <!-- START: WORK WITH SOMEONE -->
+        <bidding_home_categories></bidding_home_categories>
+        <!-- END: WORK WITH SOMEONE -->
+
+        <!-- START: HIRE FREELANCER -->
+       <bidding_categories></bidding_categories>
+        <!-- END: HIRE FREELANCER -->
+
+        <!-- START: NEED WORk DONE -->
+        <section class="work-done bg-blue">
+            <div class="container">
+                <h4 class="h3 text-uppercase Montserrat"> <strong> {{'Need work done'|translate}}? </strong> </h4>
+                <p class="top-15-mspace"> {{"Our reputation system will make it easy to find the perfect freelancer for your job. It's the simplest and safest way to get work done online"|translate}}! </p>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 benefit-list">
+                        <div class="text-18 bot-15-mspace"> {{'How do you benefit'|translate}}? </div>
+                        <ul class="list-unstyled">
+                            <li class="media">
+                                <div class="pull-left">
+                                    <img src="images/check-icon.png" alt="[Image: Check-icon]" title="Check-icon">
+                                </div>
+                                <div class="media-body"> {{"You'll receive competitive bids from our talented freelancers within minutes"|translate}} </div>
+                            </li>
+                            <li class="media">
+                                <div class="pull-left">
+                                    <img src="images/check-icon.png" alt="[Image: Check-icon]" title="Check-icon">
+                                </div>
+                                <div class="media-body"> {{'Keeping up-to-date is easy with our realtime chat'|translate}}, 24/7 {{'support'|translate}}, {{'time tracker'|translate}}, {{'and mobile apps'|translate}} </div>
+                            </li>
+                            <li class="media">
+                                <div class="pull-left">
+                                    <img src="images/check-icon.png" alt="[Image: Check-icon]" title="Check-icon">
+                                </div>
+                                <div class="media-body"> {{'Pay for work safely and securely. Only release payment when you are 100% satisfied with the work provided'|translate}}! </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-8 col-sm-6">
+                        <a href="projects/add" class="pointer">
+                        <img src="images/need-work.png" alt="[Image: Post a project]" title="Post a project" class="img-responsive center-block top-15-mspace"></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: NEED WORk DONE -->
+
+        <!-- START: BROWSE TOP SKILLS -->
+       <bidding_home_skills></bidding_home_skills>
+        <!-- END: BROWSE TOP SKILLS -->
+
+        <!-- START: BUILD YOUR TEAM -->
+        <section class="bg-primary online-team text-center">
+            <div class="container">
+                <h3 class="text-uppercase Montserrat no-mar"> <strong> {{'Post Your Project Now'|translate}} </strong> </h3>
+                <a href="projects/add" title="Get Started" class="btn btn-default btn-lg btn-started text-uppercase">
+                    <span class="text-16">{{'Get Started'|translate}}</span>
+                </a>
+            </div>
+        </section>
+        <!-- END: BUILD YOUR TEAM -->
+    </div>
+    <!-- END: BIDDING -->
+
+    <!-- START: JOBS -->
+    <div ng-if="$root.home_display == 'Job'">
+        <!-- START: BANNER -->
+        <section>
+            <div class="jobs-banner">
+                <div class="container">
+                    <div class="get-lancher">
+                    <div class="getlancher-in text-center">
+                        <div> <img src="images/jobs.png" alt="[Image: Jobs]" title="Jobs"> </div>
+                        <h3 class="text-34 text-uppercase"> <strong> {{'Find Your Jobs - Get Ready to Work'|translate}} </strong> </h3>
+                        <p class="text-18 top-15-mspace business-txt"> {{"We’ll instantly connect you with perfect matches"|translate}} </p>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: BANNER -->
+
+        <!-- START: WHAT IS JOBS -->
+        <section class="white-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                    <div class="about-block text-center">
+                        <h4 class="h3 text-uppercase bot-20-mar Montserrat"> <strong> {{'What is Jobs'|translate}}? </strong> </h4>
+                        <p class="text-18 col-lg-8 float-none center-block line-height-32">{{"We take personal responsibility for our contribution to the design community, whether it’s connecting designers with outstanding career opportunities"|translate}} </p>
+                        <div class="lists">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                <img src="images/jobs_list.png" alt="[Image: Jobs]" title="Jobs" class="img-responsive center-block">
+                                <p> {{'Browse jobs matching your skills in wide range of Industries and communicate with talented personnel'|translate}} </p>
+                                </div>
+                                <div class="col-sm-4">
+                                <img src="images/jobs_applied.png" alt="[Image: Jobs]" title="Jobs" class="img-responsive center-block">
+                                <p>{{"Apply for jobs matching your skill sets. It’s the most simple and safest way to apply"|translate}}. </p>
+                                </div>
+                                <div class="col-sm-4">
+                                <img src="images/jobs_money.png" alt="[Image: Jobs]" title="Jobs" class="img-responsive center-block">
+                                <p>{{'Get Hired and Earn money for the projects you complete'|translate}}. </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: WHAT IS JOBS -->
+
+        <!-- START: RECENT JOBS -->
+        <featured-jobs-home></featured-jobs-home>
+        <!-- END: RECENT JOBS -->
+
+        <!-- START: DESCRIBE -->
+        <section class="describe-need">
+            <div class="container">
+                <div class="text-center col-sm-9 float-none center-block bot-space">
+                    <h2 class="text-uppercase text-24 Montserrat"><strong> {{'Describe what you need'|translate}}? </strong> </h2>
+                    <p class="line-height-28 top-15-mspace">{{"You’ll receive applications from Independent professionals and also receive our own personal recommendations within minutes"|translate}}. </p>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="media">
+                            <div class="pull-left"> <img src="images/talent.png" alt="[Image: Talent]" title="Talent"> </div>
+                            <div class="media-body">
+                                <h4>{{'Talent'|translate}}</h4>
+                                <p> {{'Our members are part of the most authentic global creative community online, which makes getlancer jobs the right place to find highly qualified and accomplished candidates'|translate}}.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="media">
+                            <div class="pull-left"> <img src="images/reach.png"  alt="[Image: Reach]" title="Reach"> </div>
+                            <div class="media-body">
+                                <h4>{{'Reach'|translate}}</h4>
+                                <p> {{'Enjoy quick and timely responses when your job posting reaches millions of visitors, social followers and email subscribers'|translate}}. </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="media">
+                            <div class="pull-left"><img src="images/support.png"  alt="[Image: Support]" title="Support"> </div>
+                            <div class="media-body">
+                                <h4>{{'Support'|translate}}</h4>
+                                <p> {{'The jobs you posted will stay online for 90 days with a 100% satisfaction and  money-back guarantee. We are available all the time and we always welcome your questions and comments'|translate}}. </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: DESCRIBE -->
+
+        <!-- START: SKILLS -->
+        <job_home_skills></job_home_skills>
+        <!-- END: SKILLS -->
+
+        <!-- START: POST YOUR JOB -->
+        <section class="bg-yellow">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 top-15-space bot-space">
+                        <h4 class="h3 text-uppercase whitec bot-mspace Montserrat"> 
+                            <strong> {{'Why post your job at getlancer'|translate}}? </strong> 
+                        </h4>
+                        <ul class="list-unstyled freelancer-work">
+                            <li>
+                                <div class="media">
+                                    <img src="images/check-black.png" alt="[Image: Check]" title="Check" class="pull-left">
+                                    <div class="media-body"> {{'Jobs will be shared across our network of leading design publications'|translate}} </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="media">
+                                    <img src="images/check-black.png" alt="[Image: Check]" title="Check" class="pull-left">
+                                    <div class="media-body">{{'Access to the largest and most diverse creative talent pool possible'|translate}} </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="media">
+                                    <img src="images/check-black.png" alt="[Image: Check]" title="Check" class="pull-left">
+                                    <div class="media-body"> {{'Job posted will stay online for 90 days'|translate}} </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="media">
+                                    <img src="images/check-black.png" alt="[Image: Check]" title="Check" class="pull-left">
+                                    <div class="media-body"> {{'Edit and manage your job posting at any time'|translate}} </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <a href="jobs/add" title="{{'Post a job'|translate}}" class="btn btn-default btn-lg btn-started text-uppercase top-mar">
+                            <span class="text-16">{{'Post a job'|translate}}</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-6">
+                    <img src="images/job_post.png" alt="[Image: Jobs]" class="img-responsive center-block">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: POST YOUR JOB -->
+    </div>
+    <!-- END: JOBS -->
+    <!-- START: CONTEST -->
+    <div class="contest-page" ng-if="$root.home_display == 'Contest'">
+            <!-- START: BANNER -->
+            <section>
+                <div class="contest-banner">
+                    <div class="container">
+                        <div class="get-lancher">
+                        <div class="getlancher-in text-center">
+                            <div> <img src="images/contest.png" alt="[Image: Jobs]" title="Jobs"> </div>
+                            <h3 class="text-34 text-uppercase"> <strong> {{'Get the perfect custom design'|translate}} </strong> </h3>
+                            <p class="text-18 top-15-mspace business-txt"> {{'Over 178,099 completed designs per projects in marketplace'|translate}} </p>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END: BANNER -->
+            <!-- START: WHAT IS CONTEST -->
+            <section class="white-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="about-block text-center">
+                                <h4 class="h3 text-uppercase bot-20-mar Montserrat"> <strong>{{'What is 360CONTEST'|translate}}? </strong> </h4>
+                                <p class="text-18 col-lg-8 float-none center-block line-height-32">{{'Build a design brief, tell us about your business and what you need designed. Take your time. The more details, the better your designs'|translate}}.</p>
+                                <div class="lists">
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-6">
+                                            <img src="images/contest-fill.png" alt="[Image: fill]" title="fill" class="img-responsive center-block">
+                                            <h3 class="h4 text-uppercase bot-15-mspace Montserrat text-16"> <strong> {{'Fill out a brief'|translate}} </strong> </h3>
+                                            <p>{{'Tell the designers about your project'|translate}}</p>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <img src="images/contest-budget.png" alt="[Image: budget]" title="budget" class="img-responsive center-block">
+                                            <h3 class="h4 text-uppercase bot-15-mspace Montserrat text-16"> <strong> {{'Set the budget'|translate}} </strong> </h3>
+                                            <p>{{'Choose a price package or set your own price'|translate}}.</p>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <img src="images/contest-design.png" alt="[Image: design]" title="design" class="img-responsive center-block">
+                                            <h3 class="h4 text-uppercase bot-15-mspace Montserrat text-16"> <strong> {{'Receive designs'|translate}} </strong> </h3>
+                                            <p>{{'Watch your designs come to lifem comment and rate'|translate}}</p>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <img src="images/contest-winner.png" alt="[Image: winner]" title="winner" class="img-responsive center-block">
+                                            <h3 class="h4 text-uppercase bot-15-mspace Montserrat text-16"> <strong> {{'You have a winner'|translate}}! </strong> </h3>
+                                            <p>{{'Pick the winner and get copyrights transferred to you'|translate}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END: WHAT IS CONTEST -->
+
+            <!-- START: CATEGORIES -->
+            <section class="team-block">
+                <div class="container">
+                    <h4 class="h3 text-center text-uppercase Montserrat"> <strong>{{'Design Categories'|translate}}</strong> </h4>
+                    <div class="text-center">
+                        <div class="contest-categories-list">
+                            <div class="clearfix">
+                                <div class="wid-20">
+                                    <div class="list-space">
+                                        <span class="contest-categories contest-categories-logo"></span>
+                                        <p> <a href="#" title="Web-Developer" class="text-info">{{'Logo Design'|translate}}</a> </p>
+                                    </div>
+                                </div>
+                                <div class="wid-20">
+                                    <div class="list-space">
+                                        <span class="contest-categories contest-categories-graphic"></span>
+                                        <p> <a href="#" title="Mobile Developer" class="text-info">{{'Graphic Design'|translate}}</a> </p>
+                                    </div>
+                                </div>
+                                <div class="wid-20">
+                                    <div class="list-space">
+                                        <span class="contest-categories contest-categories-website"></span>
+                                        <p> <a href="#" title="Designers & Cresatives" class="text-info">{{'Website Design'|translate}}</a> </p>
+                                    </div>
+                                </div>
+                                <div class="wid-20">
+                                    <div class="list-space">
+                                        <span class="contest-categories contest-categories-tshirt"></span>
+                                        <p> <a href="#" title="Writers" class="text-info"> {{'T-Shirt Design'|translate}} </a> </p>
+                                    </div>
+                                </div>
+                                <div class="wid-20">
+                                    <div class="list-space">
+                                        <span class="contest-categories contest-categories-business"></span>
+                                        <p> <a href="#" title="Virtual Assistants" class="text-info">{{'Logo &amp; Business Card Design'|translate}}</a> </p>
+                                    </div>
+                                </div>
+                                <div class="wid-20">
+                                    <div class="list-space">
+                                        <span class="contest-categories contest-categories-brand"></span>
+                                        <p> <a href="#" title="Customer Service Agents" class="text-info">{{'Brand Identity Packing Design'|translate}}</a> </p>
+                                    </div>
+                                </div>
+                                <div class="wid-20">
+                                    <div class="list-space">
+                                        <span class="contest-categories contest-categories-flyer"></span>
+                                        <p> <a href="#" title="Sales & Marketing" class="text-info">{{'Flyer Design'|translate}}</a> </p>
+                                    </div>
+                                </div>
+                                <div class="wid-20">
+                                    <div class="list-space">
+                                        <span class="contest-categories contest-categories-icon"></span>
+                                        <p> <a href="#" title="Accountants & Consultants" class="text-info">{{'Icon Design'|translate}}</a> </p>
+                                    </div>
+                                </div>
+                                <div class="wid-20">
+                                    <div class="list-space">
+                                        <span class="contest-categories contest-categories-cover"></span>
+                                        <p> <a href="#" title="Accountants & Consultants" class="text-info">{{'Cover Design'|translate}}</a> </p>
+                                    </div>
+                                </div>
+                                <div class="wid-20">
+                                    <div class="list-space">
+                                        <span class="contest-categories contest-categories-brochure"></span>
+                                        <p> <a href="#" title="Accountants & Consultants" class="text-info">{{'Brochure Design'|translate}}</a> </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <a href="#" title="See more category" class="btn btn-primary btn-catergory text-uppercase"> {{'See more category'|translate}} </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END: CATEGORIES -->
+
+            <!-- START: BROWSE -->
+            <section class="contest-browse">
+                <div class="container">
+                    <h4 class="h3 text-center text-uppercase Montserrat no-mar">
+                        <strong>{{'Browse contest design entries'|translate}}?</strong>
+                    </h4>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-xs-6">
+                            <div class="contest-browse-list">
+                                <figure>
+                                    <img src="images/contest-browse-logo.jpg" alt="[Image: Logo]" title="Logo" class="img-responsive center-block">
+                                    <p>$169</p>
+                                    <span>{{'Logo Design'|translate}}</span>
+                                </figure>
+                                <p>{{'Create a Logo for "House of Horseshoes"'|translate}}</p>
+                                <span class="text-muted">{{'by Grigoris G'|translate}}</span>
+                                <ul class="list-inline contest-details text-center no-mar">
+                                    <li>
+                                        <span>32</span>
+                                        <span class="text-muted">{{'entries'|translate}}</span>
+                                    </li>
+                                    <li>
+                                        <span>14</span>
+                                        <span class="text-muted">{{'designer'|translate}}</span>
+                                    </li>
+                                    <li>
+                                        <span>6</span>
+                                        <span class="text-muted">{{'days'|translate}}</span>
+                                    </li>
+                                </ul>
+                                <ul class="list-inline text-center no-mar">
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="fa fa-file-text" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="fa fa-star" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">{{'Open'|translate}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-xs-6">
+                            <div class="contest-browse-list">
+                                <figure>
+                                    <img src="images/contest-browse-business.jpg" alt="[Image: business]" title="business" class="img-responsive center-block">
+                                    <p>$898</p>
+                                    <span>{{'Businss Card'|translate}}</span>
+                                </figure>
+                                <p>{{'New Business Card for Logic Choice'|translate}}</p>
+                                <span class="text-muted">{{'by Andreas'|translate}}</span>
+                                <ul class="list-inline contest-details text-center no-mar">
+                                    <li>
+                                        <span>119</span>
+                                        <span class="text-muted">{{'entries'|translate}}</span>
+                                    </li>
+                                    <li>
+                                        <span>82</span>
+                                        <span class="text-muted">{{'designer'|translate}}</span>
+                                    </li>
+                                    <li>
+                                        <span>22</span>
+                                        <span class="text-muted">{{'days'|translate}}</span>
+                                    </li>
+                                </ul>
+                                <ul class="list-inline text-center no-mar">
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="fa fa-file-text" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="fa fa-star" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">{{'Open'|translate}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-xs-6">
+                            <div class="contest-browse-list">
+                                <figure>
+                                    <img src="images/contest-browse-book.jpg" alt="[Image: book]" title="book" class="img-responsive center-block">
+                                    <p>$799</p>
+                                    <span>{{'Book Cover'|translate}}</span>
+                                </figure>
+                                <p>{{'Design a Masculine, Non-Fiction eBook Cover'|translate}}</p>
+                                <span class="text-muted">{{'by Vanger'|translate}}</span>
+                                <ul class="list-inline contest-details text-center no-mar">
+                                    <li>
+                                        <span>140</span>
+                                        <span class="text-muted">{{'entries'|translate}}</span>
+                                    </li>
+                                    <li>
+                                        <span>27</span>
+                                        <span class="text-muted">{{'designer'|translate}}</span>
+                                    </li>
+                                    <li>
+                                        <span>3</span>
+                                        <span class="text-muted">{{'days'|translate}}</span>
+                                    </li>
+                                </ul>
+                                <ul class="list-inline text-center no-mar">
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="fa fa-file-text" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="fa fa-star" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">{{'Open'|translate}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-xs-6">
+                            <div class="contest-browse-list">
+                                <figure>
+                                    <img src="images/contest-browse-social.jpg" alt="[Image: social]" title="social" class="img-responsive center-block">
+                                    <p>$215</p>
+                                    <span>{{'Social media page'|translate}}</span>
+                                </figure>
+                                <p>{{'Design a Twitter background for anonymous project'|translate}}</p>
+                                <span class="text-muted">{{'by Sarah Design'|translate}}</span>
+                                <ul class="list-inline contest-details text-center no-mar">
+                                    <li>
+                                        <span>33</span>
+                                        <span class="text-muted">{{'entries'|translate}}</span>
+                                    </li>
+                                    <li>
+                                        <span>11</span>
+                                        <span class="text-muted">{{'designer'|translate}}</span>
+                                    </li>
+                                    <li>
+                                        <span>3</span>
+                                        <span class="text-muted">{{'days'|translate}}</span>
+                                    </li>
+                                </ul>
+                                <ul class="list-inline text-center no-mar">
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="fa fa-file-text" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="fa fa-star" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">{{'Open'|translate}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <a href="javascript:void(0)" title="See more contest" class="btn btn-primary btn-catergory text-uppercase"> {{'See more Contest'|translate}} </a>
+                    </div>
+                </div>
+            </section>
+            <!-- END: BROWSE -->
+
+            <!-- START: KEY BENEFITS -->
+            <section class="contest-benefits fa-inverse">
+                <div class="clearfix">
+                    <div class="col-md-5">
+                        <figure>
+                            <img src="images/benefits-banner.jpg" alt="[Image: benefits-banner]" title="benefits-banner" class="img-responsive center-block">
+                        </figure>
+                    </div>
+                    <div class="col-md-7 top-space">
+                        <h3 class="font-bold text-uppercase">
+                            <strong>{{'Key Benefits'|translate}}</strong>
+                        </h3>
+                        <ul class="list-inline">
+                            <li class="col-md-6">
+                                <h5 class>{{'More contest entries'|translate}}</h5>
+                                <p>{{'With over 160,000 designers at DC, you receive more design entries than with any other platform'|translate}}.</p>
+                            </li>
+                            <li class="col-md-6">
+                                <h5>100% {{'money back guarantee'|translate}}</h5>
+                                <p>{{'You can request your money back at any stage o contest. This cover all the fees'|translate}}.</p>
+                            </li>
+                            <li class="col-md-6">
+                                <h5>{{'Pre-qualified designers'|translate}}</h5>
+                                <p>{{'All the designers on our platform undergo qualification testing'|translate}}.</p>
+                            </li>
+                            <li class="col-md-6">
+                                <h5>1-on-1 {{'projects'|translate}}</h5>
+                                <p>{{'Continue working with your favourite designer on your future projects or other design related tasks'|translate}}.</p>
+                            </li>
+                            <li class="col-md-6">
+                                <h5>{{'Privacy option'|translate}}</h5>
+                                <p>{{'Your contest is protected by the NDA, and hidden from search engines'|translate}}.</p>
+                            </li>
+                            <li class="col-md-6">
+                                <h5>{{'Enhanced voting feature'|translate}}</h5>
+                                <p>{{'Get early feedback on your favourite design from your target audience, colleagues and friends'|translate}}.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <!-- END: KEY BENEFITS -->
+
+            <!-- START: OUR BEST -->
+            <section class="our-best">
+                <div class="container text-center">
+                    <h4 class="h3 text-uppercase Montserrat no-mar">
+                        <strong>{{'our best designers directly'|translate}}</strong>
+                    </h4>
+                    <h3 class="notoserif-regular-italic text-18">
+                        <span>187,627 {{'Qualified designersto start One-on-One project with'|translate}}</span>    
+                    </h3>
+                    <a href="javascript:void(0);" title="" class="btn btn-primary text-uppercase btn-catergory our-best-btn">{{'GET STARTED'|translate}}</a>
+                </div>
+            </section>
+            <!-- END: OUR BEST -->
+
+            <!-- START: NUMBERS -->
+            <section class="contest-number">
+                <div class="container text-center">
+                    <h4 class="text-24">
+                        {{'The numbers say it all'|translate}}
+                    </h4>
+                    <ul class="list-inline top-space">
+                        <li>
+                            <h3>8,892</h3>
+                            <p class="greenc text-16">{{'contests'|translate}}</p>
+                        </li>
+                        <li>
+                            <h3>187,627</h3>
+                            <p class="greenc text-16">{{'professional designers'|translate}}</p>
+                        </li>
+                        <li>
+                            <h3>4.8/5</h3>
+                            <p class="greenc text-16">{{'satisfaction rate'|translate}}</p>
+                        </li>
+                        <li>
+                            <h3>1,595,985</h3>
+                            <p class="greenc text-16">{{'creative designs'|translate}}</p>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <!-- END: NUMBERS -->
+        </div>
+    <!-- END: CONTEST -->
+    <!-- START: PORTFOLIO -->
+    <div ng-if="$root.home_display == 'Portfolio'">
+        <!-- START: BANNER -->
+        <section>
+            <div class="portfolio-banner">
+                <div class="container">
+                    <div class="get-lancher">
+                    <div class="getlancher-in text-center">
+                        <div> <img src="images/portfolio-logo.png" alt="[Image: Portfolio]" title="Portfolio"> </div>
+                        <h3 class="text-34 text-uppercase"> <strong> {{'showcase portfolio work'|translate}} </strong> </h3>
+                        <p class="text-18 top-15-mspace business-txt"> {{"Hire with confidence freelancer's portfolios for work histories"|translate}} </p>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: BANNER -->
+        <!-- START: WHAT PORTFOLIO-->
+        <section class="white-bg sep-bot what-port">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="freelance-bidding text-center">
+                            <h4 class="h3 text-uppercase Montserrat"> <strong> {{'What is portfolio'|translate}}? </strong> </h4>
+                            <p class="text-18 top-15-mspace line-height-32">{{'Create a profile and define the freelance services you want to offer. Employers will find you by these services when they search for freelancers to hire'|translate}}. </p>
+                            <div class="lists">
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-4">
+                                        <img src="images/portfolio-1.png" alt="[Image: Job-post]" title="Job-post" class="img-responsive center-block">
+                                        <p> {{'List your portfolio and get hired with confidence through web and mobile programming'|translate}}.</p>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                        <img src="images/portfolio-review.png" alt="[Image: Hire]" title="Hire" class="img-responsive center-block">
+                                        <p>{{'Get feedbacks and reviews from Portfolio experts in our marketplace'|translate}}</p>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                        <img src="images/portfolio-opportunity.png" alt="[Image: Work]" title="Work" class="img-responsive center-block">
+                                        <p> {{"You'll get opportunities from independent professionals and receive our personalized recommendations within minutes"|translate}}.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: WHAT PORTFOLIO -->
+        <!-- START: DICOVER PORTFOLIO-->
+       <portfolio-home></portfolio-home>
+        <!-- END: DISCOVER PORTFOLIO -->
+        <!-- START: HIRED CLIENTS-->
+        <section class="insurance-block portfolio-insurance">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="text-24 text-uppercase whitec Montserrat"> <strong> {{'How do I get hired by Clients'|translate}}? </strong> </h2>
+                    <p class="line-height-28 top-15-mspace">{{'Getting freelance work is a lot like traditional searching — you submit applications on projects, then impress potential clients before being offered the project'|translate}}. 
+</p>
+                </div>
+                <div class="row rated-lists">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="col-md-11">
+                            <div class="bot-15-space">
+                                <img src="images/portfolio-professional.png" alt="[Image: Post]" title="Post" class="img-responsive">
+                            </div>
+                            <h4> {{'Professional skills'|translate}} </h4>
+                            <p>  {{'All you need to get started is a computer, Internet connection and amazing skills. Your next step is creating an outstanding freelancer profile to showcase your business'|translate}}.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="col-md-11">
+                            <div class="bot-15-space">
+                                <img src="images/portfolio-tailor.png"  alt="[Image: Equipment]" title="Equipment" class="img-responsive">
+                            </div>
+                            <h4> {{'Tailor-mode'|translate}} </h4>
+                            <p> {{'A Simple and an Easy one step solution for all your Freelance work needs'|translate}}. </p> 				
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="col-md-11">
+                            <div class="bot-15-space">
+                                <img src="images/portfolio-skills.png"  alt="[Image: Control]" title="Control" class="img-responsive">
+                            </div>
+                            <h4> {{'Skills results'|translate}} </h4>
+                            <p> {{"Yes, you can build an online business that's personally and professionally rewarding. When you deliver great work to your clients, success"|translate}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: HIRED CLIENTS -->
+        <!-- START: WHAT PROJECTS Skills-->
+        <portfolio-home-skills></portfolio-home-skills>
+        <!-- END: WHAT PROJECTS -->
+        <!-- START: BUSINESS-->
+        <section class="work-done bg-blue portfolio-done">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 benefit-list">
+                        <h4 class="h3 text-uppercase Montserrat"> <strong> {{'can i grow my business on getlancer'|translate}}? </strong> </h4>
+                        <p class="top-15-mspace">{{"Yes, Definitely. Building your Online Business can be personally and professionally a rewarding experience. When you deliver great work to your clients, success will follow"|translate}}</p>
+                        <p class="top-15-mspace"> {{'When you deliver great work to your clients, success will follow'|translate}}.</p>
+                        <div class="text-18 bot-15-mspace"> {{'The most successful freelancers are'|translate}}: </div>
+                        <ul class="list-unstyled">
+                            <li class="media">
+                                <div class="pull-left">
+                                    <img src="images/check-black.png" alt="[Image: Check-icon]" title="Check-icon">
+                                </div>
+                                <div class="media-body"> {{'Responsive to client needs'|translate}} </div>
+                            </li>
+                            <li class="media">
+                                <div class="pull-left">
+                                    <img src="images/check-black.png" alt="[Image: Check-icon]" title="Check-icon">
+                                </div>
+                                <div class="media-body"> {{'Excellent at communicating with their clients'|translate}} </div>
+                            </li>
+                            <li class="media">
+                                <div class="pull-left">
+                                    <img src="images/check-black.png" alt="[Image: Check-icon]" title="Check-icon">
+                                </div>
+                                <div class="media-body"> {{'Upfront about their abilities and deadlines'|translate}} </div>
+                            </li>
+                            <li class="media">
+                                <div class="pull-left">
+                                    <img src="images/check-black.png" alt="[Image: Check-icon]" title="Check-icon">
+                                </div>
+                                <div class="media-body"> {{'Able to deliver excellent work on time, every time'|translate}} </div>
+                            </li>
+                        </ul>
+                        <div class="text-left portfolio-btn top-mspace">
+                            <a href="javascript:void(0);" class="btn btn-primary btn-catergory text-uppercase white-bg blackc"> {{'Find freelancer'|translate}} </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <img src="images/port-business.png" alt="[Image: Post a project]" title="Post a project" class="img-responsive center-block top-15-mspace">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: BUSINESS -->
+    <!-- END: PORTFOLIO -->
+    </div>
+    <!-- START: INDEX -->
+    <div ng-if="$root.home_display == 'Common'">
+        <div class="home-banner">
+            <div class="container">
+                <div class="banner-content fa-inverse">
+                    <h2> {{'Get more done with freelancer'|translate}} </h2>
+                    <h3 class="text-uppercase text-34"> Bidding - Job - Portfolio - Quote </h3>
+                    <p class="text-18 font-normal"> 1+ {{'million businesses use getlancer for top quality talent'|translate}} </p> <a ui-sref="users_register" class="text-uppercase montserrat-regular banner-btn fa-inverse text-center">{{'Get Started'|translate}}</a> </div>
+            </div>
+        </div>
+        <section class="about-blk">
+            <div class="container">
+                <div class="aboutinner-blk">
+                    <p class="text-18 abt-text text-center">{{"Agriya Getlancer is the best freelancing marketplace script. Search your project and receive competitive bids from getlancer within minutes. Our reputation system will make it easy to find the perfect. It's the simplest and safest way
+                        to get work done online"|translate}}! </p>
+                    <ul class="about-row clearfix list-inline">
+                        <li class="about-listing">
+                            <div class="about-listing-img">
+                                <div><img src="images/bidding-icon.png" alt="[Image: Bidding]" title="Bidding" class="center-block"></div>
+                                <h4 class="text-center montserrat-bold text-uppercase text-16">{{'Bidding'|translate}}</h4>
+                            </div>
+                            <p class="text-center">{{'An effective job posting platform where one can find a freelancer with right skill-set'|translate}}.</p>
+                        </li>
+                        <li class="about-listing">
+                            <div class="about-listing-img">
+                                <div><img src="images/quote-icon.png" alt="[Image: Quote]" title="Quote" class="center-block"></div>
+                                <h4 class="text-center montserrat-bold text-uppercase text-16">{{'Quote'|translate}}</h4>
+                            </div>
+                            <p class="text-center">{{'A purpose-built platform allowing service professionals to seal job deals with employers for a reasonable price'|translate}}.</p>
+                        </li>
+                        <li class="about-listing">
+                            <div class="about-listing-img">
+                                <div><img src="images/portfolio-icon.png" alt="[Image: Portfolio]" title="Portfolio" class="center-block"></div>
+                                <h4 class="text-center montserrat-bold text-uppercase text-16">Portfolio</h4>
+                            </div>
+                            <p class="text-center">{{'A highly conceptualized platform that empowers a professional to showcase his/her job competency, for an employer to take a note of'|translate}}.</p>
+                        </li>
+                        <li class="about-listing">
+                            <div class="about-listing-img">
+                                <div><img src="images/jobs-icon.png" alt="[Image: Jobs]" title="Jobs" class="center-block"></div>
+                                <h4 class="text-center montserrat-bold text-uppercase text-16">Job</h4>
+                            </div>
+                            <p class="text-center">{{'This platform allows an employer to list numerous freelancing jobs and efficiently hire an appropriate workforce'|translate}}.</p>
+                        </li>
+                        <!--<li class="about-listing">
+                            <div class="about-listing-img">
+                                <div><img src="images/contest-icon.png" alt="[Image: Contest]" title="Contest" class="center-block"></div>
+                                <h4 class="text-center montserrat-bold text-uppercase text-16">{{'Contest'|translate}}</h4>
+                            </div>
+                            <p class="text-center">{{'Run a specialized competition, get real-time work based entries, evaluate the work process and choose the best'|translate}}.</p>
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="people-say-blk fa-inverse">
+            <div class="container">
+                <div class="row">
+                    <div>
+                        <h2 class="text-24 text-center whitec montserrat-bold text-uppercase">{{'What People Are Saying'|translate}}</h2>
+                        <div id="feedback" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li data-target="#feedback" data-slide-to="0" class="active"></li>
+                                <li data-target="#feedback" data-slide-to="1"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <p class="people-quote text-center">{{'This particular service has helped me to a great extent in finding a right-fit web designer for my website. It certainly made my job easy, as I was provided with numerous alternatives to choose from. Every now and then,
+                                        I find my customers really happy in using my website. It wouldn’t have been possible without a far-reaching design'|translate}}.</p>
+                                    <p class="people-info text-center">{{'Lynda Forman'|translate}},<span class="notoserif-regular-italic">{{'Owner of Lynda Forman LLC'|translate}}</span></p>
+                                </div>
+                                <div class="item">
+                                    <p class="people-quote text-center">{{'I was looking for a service professional to fix my home needs. Luckily, found one through this platform. The impeccable workflow of the platform meant that things were sorted in a hassle free manner. I would recommend this
+                                        service strongly'|translate}}.</p>
+                                    <p class="people-info text-center">{{'Lynda Forman'|translate}},<span class="notoserif-regular-italic">{{'Owner of Lynda Forman LLC'|translate}}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="getlancer-advantages-blk">
+            <div class="advatages-inner-blk">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <h3 class="text-24 bot-mspace-35 montserrat-bold text-uppercase">{{'Getlancer Advantages'|translate}}</h3>
+                            <ul class="list-unstyled">
+                                <li> <i class="fa fa-angle-right"></i>{{'Made in ISO 9001-2008 certified and NASSCOM® listed company'|translate}}.</li>
+                                <li> <i class="fa fa-angle-right"></i>{{'In-built revenue options like listing fee, urgent listing fee, featured listing fee and transction commission'|translate}}</li>
+                                <li> <i class="fa fa-angle-right"></i>{{'A completely systemized freelance bidding, job portal and request for quotation (RFQ) with displaying portfolio'|translate}}</li>
+                                <li> <i class="fa fa-angle-right"></i>{{'Allowing dual user'|translate}} ({{'Employer'|translate}} & {{'Freelancer'|translate}}) -{{'which can be turned off'|translate}}</li>
+                                <li> <i class="fa fa-angle-right"></i>{{'Multilingual support'|translate}}</li>
+                                <li> <i class="fa fa-angle-right"></i>{{'gzip and file based caching for high performance and high traffic sites'|translate}}</li>
+                                <li> <i class="fa fa-angle-right"></i>{{'Follows plugin based architecture'|translate}}</li>
+                                <li> <i class="fa fa-angle-right"></i>{{'Integrated dispute module along with activities tracking page'|translate}}.</li>
+                                <li> <i class="fa fa-angle-right"></i>{{'Countless payment gateways support; powered by ZazPay'|translate}} </li>
+                                <li> <i class="fa fa-angle-right"></i>{{'Highly responsive design, making it mobile friendly'|translate}}.</li>
+                                <li> <i class="fa fa-angle-right"></i>{{'Increased convenience of maintenance, made possible through streamlined workflows'|translate}}.</li>
+                                <li> <i class="fa fa-angle-right"></i>{{'Constant support through periodic upgrades with respect to customer suggestions and requests'|translate}}.</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-7 col-sm-12">
+                            <div class="advantages-img visible-sm visible-xs"> <img src="images/bgimg.png" alt="[Img: Bgimg]" title="Bgimg"> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- END: INDEX -->
+</div>

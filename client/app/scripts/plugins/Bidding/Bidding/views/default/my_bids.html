@@ -1,0 +1,23 @@
+<div class="section navbar-default photo-view">
+    <div class="container">
+        <div class="row">
+            <uib-tabset justified="false" active="activeStatus">
+                <uib-tab index="0" heading="{{'Active Bids'|translate}}" ng-click="getBidsShow('active')"> <br>
+                    <div ng-include="'scripts/plugins/Bidding/Bidding/views/default/my_bids_active.html'"></div>
+                </uib-tab>
+                <uib-tab ng-if="Freelancer" index="1" heading="{{'Current Projects'|translate}}" ng-click="getBidsShow('my_bids')"> <br>
+                    <div ng-include="'scripts/plugins/Bidding/Bidding/views/default/my_bids_current_projects.html'"></div>
+                </uib-tab>
+                <uib-tab ng-if="Freelancer" index="2" heading="{{'Past Projects'|translate}}" ng-click="getBidsShow('past_projects')"> <br>
+                    <div ng-include="'scripts/plugins/Bidding/Bidding/views/default/my_bids_past_projects.html'"></div>
+                </uib-tab>
+                <uib-tab ng-if="Freelancer" index="3" heading="{{'Milestones'|translate}}" ng-click="getBidsShow('milestone')"> <br>
+                    <div ng-include="'scripts/plugins/Bidding/Milestone/views/default/my_bids_milestones.html'"></div>
+                </uib-tab>
+                <uib-tab ng-if="Freelancer" index="4" heading="{{'Invoice'|translate}}" ng-click="getBidsShow('invoice')"> <br>
+                    <div ng-include="'scripts/plugins/Bidding/Invoice/views/default/my_bids_invoices.html'"></div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+</div>

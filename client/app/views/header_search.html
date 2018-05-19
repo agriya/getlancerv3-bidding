@@ -1,0 +1,36 @@
+<div class="container" ng-controller="HeaderSearchController">
+    <div class="search-form">
+        <form class="form-inline row" role="form" name="SearchForm" ng-submit="searchResult()">
+            <div class="form-group col-xs-12"> 
+                <div class="frm-select">
+					<select class="form-control" ng-model="search.searchpage">
+                        <option value="Portfolios" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio')>-1">{{'Portfolios'|translate}}</option>
+
+                        <option value="Jobs" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1">{{'Jobs'|translate}}</option>
+
+                        <option value="Freelance Projects" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">{{'Projects'|translate}}</option>
+
+                        <option value="Freelancers" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Jobs/Jobs') > -1">{{'Freelancers'|translate}}</option>
+                     
+                        <option value="Services" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 && (isAuth && !Freelancer)">{{'Services'|translate}}</option>
+
+                        <option value="Services" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 && !isAuth">{{'Services'|translate}}</option>
+
+                        <option value="My Services" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 && (isAuth && Freelancer)">{{'My Services'|translate}}</option>
+
+                        <option value="Skill Test" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Exam') > -1">{{'Skill Test'|translate}}</option>
+                    </select> 
+                </div>
+            </div>
+            <div class="form-group col-xs-12"> 
+                <label>{{'Search'|translate}}</label> 
+                <div>
+                    <input type="text" class="form-control" ng-model="search.searchvalue"> 
+                </div>
+            </div>
+            <div class="text-center col-xs-12"> 
+                <button title="Search" type="submit" class="btn btn-primary">{{'Go'|translate}} </button> 
+            </div>
+        </form>
+    </div>
+</div>

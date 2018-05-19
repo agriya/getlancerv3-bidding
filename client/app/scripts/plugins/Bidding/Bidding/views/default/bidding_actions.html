@@ -1,0 +1,9 @@
+<div class="dropdown bidding-actinos" ng-if="(is_freelancer && !bid_awarded || !is_freelancer && !bid_awarded)">
+    <a type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{'Action'|translate}}<i class="fa fa-angle-down fa-fw" aria-hidden="true"></i></a>
+    <ul class="dropdown-menu dropdown-arrow-right">
+        <li ng-if="is_freelancer  && $root.contact_winner"><a class="bidding-action-edit cursor" ng-click="editBid()"><i class="fa fa-edit"></i> {{'Edit'|translate}} </a></li>
+        <li ng-if="is_freelancer  && $root.contact_winner"><a class="bidding-action-retake cursor" ng-click="retakeBid()"><i class="fa fa-trash-o"></i> {{'Withdraw My Bid'|translate}}</a></li>
+        <li ng-if="!is_freelancer && $root.contact_winner"><a class="bidding-action-retake cursor" ng-click="selectWinner()"><i class="fa fa-check"></i> {{'Select as Winner'|translate}}</a></li>
+        <li ng-if="!is_freelancer && $root.withdrawthisfreelancer"><a class="bidding-action-retake cursor" ng-click="selectWinner()"><i class="fa fa-check"></i> {{'Select as Winner'|translate}}</a></li>
+    </ul>
+</div>

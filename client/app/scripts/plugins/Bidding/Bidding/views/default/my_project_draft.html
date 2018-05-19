@@ -1,0 +1,153 @@
+<div class="tabs-block container">
+    <div role="tabpanel" class="tab-pane active" id="projects">
+        <div class="my-projects clearfix">
+            <div class="pull-left float-none-xs">
+                <!--<h3 class="navbar-btn">{{'My Projects'|translate}}</h3>-->
+            </div>
+        </div>
+        <!--<div class="pull-right float-none-xs">
+        <ul class="list-inline">
+          <li ng-repeat="projectState in projectStatus |  orderBy:'id'">
+            <a href="" title="Payment Pending">
+              <span ng-click="StatusFilter(projectState.id)" ng-show="projectState.id== 2">
+                {{'Payment Pending' | translate}}
+                <span class="badge badge-red">  {{projectState.project_count}}</span>
+              </span>
+            </a>
+            <a href="" title="Draft">
+                <span ng-click="StatusFilter(projectState.id)" ng-show="projectState.id== 1 && projectState.project_count > 0">
+                    {{'Draft' | translate}}  
+                    <span class="badge badge-blue">{{projectState.project_count}}</span>
+                </span>
+            </a>
+            <a href="" title="Pending For Approval">
+                <span ng-click="StatusFilter(projectState.id)" ng-show="projectState.id== 3 && projectState.project_count > 0">
+                    {{'Pending For Approval' | translate}}  
+                    <span class="badge badge-yellow">{{projectState.project_count}}</span>
+                </span>
+            </a>
+            <a href="" title="Open For Bidding">
+              <span ng-click="StatusFilter(projectState.id)" ng-show="projectState.id== 4">
+                {{'Open For Bidding' | translate}} 
+                <span class="badge badge-orange">{{projectState.project_count}}</span>
+              </span>
+            </a>
+            <a href="" title="Bidding closed">
+                  <span ng-click="StatusFilter(projectState.id)" ng-show="projectState.id== 5 && projectState.project_count > 0">{{'Bidding closed/Expired' | translate}}  
+                      <span class="badge badge-green">{{projectState.project_count}}</span>
+                </span>
+            </a>
+            <a href="" title="Winner Selected">
+                  <span ng-click="StatusFilter(projectState.id)" ng-show="projectState.id== 6 && projectState.project_count > 0">
+                  {{'Winner Selected' | translate}}  
+                    <span class="badge badge-blue">{{projectState.project_count}}</span>
+                </span>
+            </a>
+            <a href="" title="Under Development">
+              <span ng-click="StatusFilter(projectState.id)" ng-show="projectState.id== 11">
+                    {{'Under Development' | translate}}  
+                    <span class="badge badge-orange">{{projectState.project_count}}</span>
+              </span>
+            </a>
+            <a href="" title="Final Review Pending">
+                <span ng-click="StatusFilter(projectState.id)" ng-show="projectState.id== 14 && projectState.project_count > 0">{{'Final Review Pending' | translate}} 
+                    <span class="badge badge-yellow"> {{projectState.project_count}}</span>
+                </span>
+            </a>
+            <a href="" title="Closed">
+                <span ng-click="StatusFilter(projectState.id)" ng-show="projectState.id== 16 && projectState.project_count > 0">
+                    {{'Closed' | translate}}  
+                    <span class="badge badge-green">{{projectState.project_count}}</span>
+                </span>
+            </a>
+            <a href="" title="Canceled By Admin">
+                <span ng-click="StatusFilter(projectState.id)" ng-show="projectState.id== 13 && projectState.project_count > 0">{{'Canceled By Admin' | translate}}  
+                    <span class="badge badge-blue">{{projectState.project_count}}</span>
+                </span>
+            </a>
+            <a href="" title="Canceled">
+                <span ng-click="StatusFilter(projectState.id)" ng-show="projectState.id== 15 && projectState.project_count > 0">
+                    {{'Canceled' | translate}} 
+                    <span class="badge badge-orange">{{projectState.project_count}}</span>
+                </span>
+            </a>
+          </li>
+          <li class="project-arrow">
+            <a href="#" title="arrow-down">
+              <i class="fa fa-angle-down"></i>
+            </a>
+          </li>
+        </ul>
+      </div>-->
+        <div class="actions">
+            <div class="row">
+                <div class="col-sm-2">
+                    <p class="no-mar">{{'Project Name'| translate}}</p>
+                </div>
+                <div class="col-sm-1">
+                    <p class="no-mar">{{'Bids'| translate}}</p>
+                </div>
+                <div class="col-sm-2">
+                    <p class="no-mar">{{'Freelancer'| translate}}</p>
+                </div>
+                <div class="col-sm-2">
+                    <p class="no-mar">{{'Awarded Bid'| translate}}</p>
+                </div>
+                <div class="col-sm-2">
+                    <p class="no-mar">{{'Time'| translate}}</p>
+                </div>
+                <div class="col-sm-1">
+                    <p class="no-mar">{{'Status'| translate}}</p>
+                </div>
+                <div class="col-sm-2">
+                    <p class="no-mar">{{'Action'| translate}}</p>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="actions" ng-repeat="project in projects">
+            <div class="row">
+                <div class="col-sm-2">
+                    <p> <a ui-sref="Bid_ProjectView({id:project.id,slug:project.slug})">
+                      {{project.name}}
+              </a> </p>
+                </div>
+                <div class="col-sm-1">
+                    <p class="no-mar">{{project.project_bid.bid_count}}</p>
+                </div>
+                <div class="col-sm-2">
+                    <p class="no-mar"><a href="users/{{project.project_bid.user.id}}/{{project.project_bid.user.username}}">{{project.project_bid.user.username}}</a></p>
+                </div>
+                <div class="col-sm-2">
+                    <p class="no-mar">
+                        <amount-display  amount='{{project.project_range.min_amount}}' ng-if="project.project_range.min_amount"></amount-display> - <amount-display  amount='{{project.project_range.max_amount}}' ng-if="project.project_range.max_amount"></amount-display>  
+                        </p>
+                </div>
+                <div class="col-sm-2">
+                    <p class="no-mar">{{project.created_at }}</p>
+                </div>
+                <div class="col-sm-1">
+                    <p class="no-mar">{{project.project_status.name}}</p>
+                </div>
+                <div class="col-sm-2">
+                    <div class="center-responsive">
+                        <div class="dropdown"> <button class="request-btn btn btn-default dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Action<i class="fa fa-angle-down" aria-hidden="true"></i> </button>
+                            <ul
+                                class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a ng-if="project.project_status_id < projectConstant.OpenForBidding" ui-sref="Bid_ProjectEdit({'id':project.id})"> <i class="fa fa-edit fa-fw"></i> {{'Edit'| translate}} </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" ng-click="deleteProject(project.id)"> <i class="fa fa-close fa-fw"></i>{{'Delete'|translate}} </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="projects.length == 0" class="list-group-item project-content">
+            <p class="no-mar text-center text-danger">{{'No records available'| translate}}</p>
+        </div>
+    </div>
+</div>

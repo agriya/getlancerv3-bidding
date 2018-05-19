@@ -1,0 +1,136 @@
+<div class="dashboard_summary">
+    <div class="row pie-charts">
+        <div class="pie-chart-item-container">
+            <div class="panel animated zoomIn">
+                <div class="panel-body">
+                    <div class="pie-chart-item">
+                        <div class="chart"> <i class="fa fa-users fa-3x"></i> </div>
+                        <div class="description">
+                            <div class="">{{adminstats.customers}}</div>
+                            <div class="description-stats">Customers</div>
+                        </div>
+                    </div>
+                </div>
+               </div>
+        </div>
+        <div class="pie-chart-item-container" ng-if="enabled_plugins.indexOf('Quote') > -1">
+            <div class="panel animated zoomIn">
+                <div class="panel-body">
+                    <div class="pie-chart-item">
+                        <div class="chart"> <i class="fa fa-cogs fa-3x" ></i> </div>
+                        <div class="description">
+                            <div class="">{{adminstats.quote_services}}</div>
+                            <div class="description-stats">Services</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pie-chart-item-container" ng-if="enabled_plugins.indexOf('Quote') > -1">
+            <div class="panel animated zoomIn">
+                <div class="panel-body">
+                    <div class="pie-chart-item">
+                        <div class="chart"> <i class="fa fa-reply fa-3x"></i> </div>
+                        <div class="description">
+                            <div class="">{{adminstats.quote_requests}}</div>
+                            <div class="description-stats">Requests</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pie-chart-item-container" ng-if="enabled_plugins.indexOf('Quote') > -1">
+            <div class="panel animated zoomIn">
+                <div class="panel-body">
+                    <div class="pie-chart-item">
+                        <div class="chart"> <i class="fa fa-recycle fa-3x"></i> </div>
+                        <div class="description">
+                            <div class="">{{adminstats.quote_bids}}</div>
+                            <div class="description-stats">Quote Bids</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pie-chart-item-container" ng-if="enabled_plugins.indexOf('Bidding') > -1">
+            <div class="panel animated zoomIn">
+                <div class="panel-body">
+                    <div class="pie-chart-item">
+                        <div class="chart"> <i class="fa fa-file-text-o fa-3x"></i> </div>
+                        <div class="description">
+                            <div class="">{{adminstats.project_count}}</div>
+                            <div class="description-stats">Projects</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         
+        <div class="pie-chart-item-container" ng-if="enabled_plugins.indexOf('Contest') > -1">
+            <div class="panel animated zoomIn">
+                <div class="panel-body">
+                    <div class="pie-chart-item">
+                        <div class="chart"> <i class="fa fa-trophy fa-3x"></i> </div>
+                        <div class="description">
+                            <div class="">{{adminstats.contest_count}}
+                                </div>
+                            <div class="description-stats">Contests</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pie-chart-item-container" ng-if="enabled_plugins.indexOf('Job') > -1">
+            <div class="panel animated zoomIn">
+                <div class="panel-body">
+                    <div class="pie-chart-item">
+                        <div class="chart"> <i class="fa fa-search fa-3x"></i> </div>
+                        <div class="description">
+                            <div class="">{{adminstats.job_count}}</div>
+                            <div class="description-stats">Jobs</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pie-chart-item-container"  ng-if="enabled_plugins.indexOf('Portfolio') > -1">
+            <div class="panel animated zoomIn">
+                <div class="panel-body">
+                    <div class="pie-chart-item">
+                        <div class="chart"> <i class="fa fa-cog fa-3x"></i> </div>
+                        <div class="description">
+                            <div class="">{{adminstats.portfolio_count}}</div>
+                            <div class="description-stats">Portfolios</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pie-chart-item-container">
+            <div class="panel animated zoomIn">
+                <div class="panel-body">
+                    <div class="pie-chart-item">
+                        <div class="chart"> <i class="glyphicon glyphicon-usd fa-3x"></i> </div>
+                        <div class="description">
+                            <div class="">{{adminstats.total_transaction_amount}}</div>
+                            <div class="description-stats">Transactions <span> (<i class="glyphicon glyphicon-usd"></i>) </span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pie-chart-item-container">
+            <div class="panel animated zoomIn">
+                <div class="panel-body">
+                    <div class="pie-chart-item">
+                        <div class="chart"> <i class="fa fa-money fa-3x"></i> </div>
+                        <div class="description">
+                            <div class="">{{adminstats.total_revenue}}</div>
+                            <div class="description-stats">Site Commissions <span> (<i class="glyphicon glyphicon-usd"></i>) </span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="section navbar-default " ng-controller='QuoteCreditPurchasePlanController'>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 ver-big-mspace">
+                <div class="col-md-6 text-center navbar-btn col-md-offset-3 clearfix">
+                    <h3>{{'Purchase credits to send your quote' | translate }}</h3>
+                    <p class="text-15 text-info">{{"If you're hired, keep 100% of what you earn. No additional fees or commision" | translate }}</p>
+                </div>
+                <form name="PaymentForm" role="form" ng-submit="PaymentFormSubmit(PaymentForm.$valid)">
+                    <div class="col-md-6 panel navbar-btn col-md-offset-3 clearfix purchase-plan">
+                        <div class="panel-body">
+                            <h4>{{"Select a credit pack" | translate }}</h4>
+                            <h6>{{'Available credits'|translate}}{{user_available_credit_count}}</h6>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" ng-repeat="quote_credit_purchase_plan in credit_purchase_plans"> <input type="radio" id="credit_purchase_plan_id_{{$index}}" ng-change="getPlandetails($index)" value="{{quote_credit_purchase_plan.id}}" name="credit_purchase_plan_id" ng-model="plan.credit_purchase_plan_id" required>
+                                <label
+                                    for="credit_purchase_plan_id_{{$index}}"><span class="left-space">{{quote_credit_purchase_plan.name}} ( {{quote_credit_purchase_plan.no_of_credits}} {{"Credits" | translate }} )</span> </label>
+                                    <div class="pull-right text-right"> <span class="price"> {{quote_credit_purchase_plan.price | currency : selectedCurrency.currency_symbol : GeneralConfig.fraction}} </span> <span class="show text-muted">{{quote_credit_purchase_plan.discount_percentage}}% {{'Off'|translate}}
+                              <strike> {{quote_credit_purchase_plan.original_price | currency : selectedCurrency.currency_symbol : GeneralConfig.fraction}} </strike></span> </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-12 price-block" ng-show="plan_info.price_final >= 0">
+                        <div class="panel panel-primary">
+                            <!--<div class="panel-footer clearfix" ng-show="plan.credit_purchase_plan_id">
+                                <div class="navbar-left"> <input ng-change="ClearCoupon()" ng-model="plan.coupon" title="{{'Please enter your coupon'|translate}}" placeholder="{{'Coupon Code'|translate}}" class="form-control" id="inputCoupon3" autocomplete="off"> <span class="text-danger"
+                                        ng-show="purchase_plan_coupon">{{'The Field is required.' | translate }}</span> </div>
+                                <div class="pull-left"> <button type="button" class="btn btn-primary" ng-click="applyCoupon()">{{'Apply'|translate}}</button> </div>
+                            </div>-->
+                            <div class="panel-body">
+                                <div class="have-to-pay">
+                                    <p class="text-22"> {{"You have to pay" | translate }} <span class="show">{{plan_info.price_final | currency : selectedCurrency.currency_symbol : GeneralConfig.fraction}}</span></p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6 no-right-pad">
+                                        <div class="original-price">
+                                            <p class="text-18" ng-show="plan_info.original_price"> {{"Original Price" | translate }} <span class="show">{{plan_info.original_price | currency : selectedCurrency.currency_symbol : GeneralConfig.fraction}}</span></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 nav">
+                                        <div class="offer-price">
+                                            <p class="text-18" ng-show="plan_info.price"> {{"Offer price" | translate }} <span class="show">{{plan_info.price | currency : selectedCurrency.currency_symbol : GeneralConfig.fraction}}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="coupen-code">
+                                    <p class="text-22" ng-show="show_discount"> {{"Coupon discount" | translate }} <span class="show"> {{show_discount}}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 panel navbar-btn  clearfix">
+                        <div class="panel navbar-btn clearfix">
+                            <div class="panel-body">
+                                <div ng-include="'views/gateway.html'"></div>
+                            </div>
+                </form>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>

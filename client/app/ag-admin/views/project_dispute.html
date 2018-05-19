@@ -1,0 +1,95 @@
+<div class="list-header">
+	<div>
+		<div class="content-top clearfix">
+			<!--<ul class="breadcrumb al-breadcrumb">
+				<li>
+					<a class="btn btn-success editable-table-button btn-xs" ng-class="size ? 'btn-' + size : ''" ui-sref="list(stateParams)" href="#/project_disputes/list">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>&nbsp;<span class="hidden-xs ng-scope" translate="LIST">List</span>
+</a>
+</li>
+			<a class="btn btn-danger editable-table-button btn-xs" ng-class="size ? 'btn-' + size : ''" ui-sref="delete(stateParams)" href="#/project_disputes/delete/{{dispute.id}}">
+			<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;<span class="hidden-xs ng-scope" translate="DELETE">Delete</span>
+</a>
+			</ul>-->
+		</div>
+		<div>
+			<form class="form-horizontal" id="show-view" role="form" name="contactForm" ng-submit="save()">
+				<div class="clearfix">
+					<div class="panel panel-blur with-scroll animated zoomIn">
+						<div class="panel-heading clearfix">
+							<h3> {{dispute.project.name}}<h3>
+						</div>
+						<div class="panel-body">
+							<div>
+							<div class="clearfix">
+									<div class="col-sm-3 text-right">
+										<label class="control-label">Dispute Open Type</label>
+									</div>
+									<div class="col-sm-6">
+										<label class="control-label">{{dispute.dispute_open_type.name}}</label>
+									</div>
+								</div>
+								<div class="clearfix">
+									<div class="col-sm-3 text-right">
+										<label class="control-label">User</label>
+									</div>
+									<div class="col-sm-6">
+										<a href="/users/{{dispute.user.id}}/{{dispute.user.username}}" target="_blank"> <label class="control-label">{{dispute.user.username}}</label></a>
+									</div>
+								</div>
+								<div class="clearfix">
+									<div class="col-sm-3 text-right">
+										<label class="control-label">Opposite User</label>
+									</div>
+									<div class="col-sm-6" ng-if="dispute.user_id === dispute.project.freelancer_user_id">
+										<a href="/users/{{dispute.project.user.id}}/{{dispute.project.user.username}}" target="_blank"> <label class="control-label">{{dispute.project.user.username}}</label></a>
+									</div> 
+									<div class="col-sm-6" ng-if="dispute.user_id === dispute.project.user_id">
+										<a  href="/users/{{dispute.project.freelancer.id}}/{{dispute.project.freelancer.username}}" target="_blank"> <label class="control-label">{{dispute.project.freelancer.username}}</label></a>
+									</div>
+								</div>
+								<div class="clearfix">
+									<div class="col-sm-3 text-right">
+										<label class="control-label">Project</label>
+									</div>
+									<div class="col-sm-6">
+										<label class="control-label">{{dispute.project.name}}</label>
+									</div>
+								</div>
+								
+								<div class="clearfix">
+									<div class="col-sm-3 text-right">
+										<label class="control-label">Dipute Note</label>
+									</div>
+									<div class="col-sm-6">
+										<label class="control-label">{{dispute.reason}}</label>
+									</div>
+								</div>
+								<div class="clearfix form-group" ng-if="dispute.dispute_status_id === '1' || dispute.dispute_status_id === '2' ||  dispute.dispute_status_id === '3'">
+									<label class="col-sm-3 control-label">Display Close Type </label>
+									<div class="col-sm-6 col-md-4">
+									<select id="inputCategory" name="value_name" ng-model="dispute_closed_type.id" class="form-control" required>
+										<option value="">Filter value</option>
+										<option value="{{dispute_closed_type.id}}" ng-repeat="dispute_closed_type in dispute_closed_types">{{dispute_closed_type.resolve_type}}</option>
+                   					 </select> 
+									</div>
+								</div>
+								<div class="clearfix form-group" ng-if = "dispute.dispute_status_id === '4'">
+									<div class="col-sm-3 text-right">
+										<label class="control-label">Display Close Type</label>
+									</div>
+									<div class="col-sm-6">
+										<label class="control-label">{{dispute_resove_type}}</label>
+									</div>
+								</div>
+								<div class="clearfix top-mspace" ng-if="dispute.dispute_status_id === '1' || dispute.dispute_status_id === '2' ||  dispute.dispute_status_id === '3'">
+									<div class="col-sm-offset-3 col-sm-6"><button type="submit" class="btn btn-primary text-center"><span class="glyphicon glyphicon-ok"></span>&nbsp;<span class="hidden-xs">Save changes</span></button></div>
+								</div>
+								<div class="text-right"><a href="/projects/view/{{dispute.project_id}}/{{dispute.project.slug}}?action=dispute"><span class="hidden-xs">See activities</span></a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>

@@ -1,0 +1,24 @@
+<div class="section navbar-default">
+    <div class="container">
+        <div class="text-center howHead">
+            <h2 class="text-uppercase text-44 bot-big-mspace howitH cuprumFont ng-binding">{{'All' | translate}} <span class="text-primary ng-binding">{{'Services' | translate}}</span></h2>
+            <p class="center-block text-18 howP bot-big-mspace ng-binding"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+        </div>
+    </div>
+</div>
+<div class="section quick-link">
+    <div class="container">
+        <div ng-repeat="quote_service_type in quote_service_types">
+            <div class="row">
+                <div class="col-sm-3" ng-repeat="parent in quote_service_type">
+                    <h3><a href="service_category/{{parent.id}}/{{parent.slug}}">{{parent.name}}</a></h3>
+                    <div ng-if="parent.children.length">
+                        <ul class="list-unstyled">
+                            <li ng-repeat="child in parent.children"> <a title="{{child.name}}" ng-if="!$root.isAuth" ng-click="openLoginModal('login')" href="">{{child.name}}</a> <a title="{{child.name}}" href="" ng-if="$root.isAuth" ng-click="openQuoteRequestModal(child.id,'null','category')">{{child.name}}</a>                                </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

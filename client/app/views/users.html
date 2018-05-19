@@ -1,0 +1,176 @@
+<section class="binding-freelancer" ng-controller="UsersController">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h4 class="text-22 bot-mspace">{{'Browse Freelancers'|translate}}</h4>
+                <form class="form-horizontal" ng-submit="freelancerSearch(data)" novalidate>
+                    <div class="form-group has-feedback"> 
+                        <label for="Search" class="control-label col-md-2 col-sm-4">{{'Search'|translate}}</label>
+                        <div class="col-md-10 col-sm-8"> 
+                            <input type="search" id="Search" ng-model="data.q" placeholder="{{'Search for freelancers'|translate}}" class="form-control">
+                            <!--<span class="form-control-feedback">
+                                <!--<i class="fa fa-search"></i>
+                                </span>-->
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1"> 
+                        <label for="Search" class="control-label col-md-2 col-sm-4">{{'Skills'|translate}}</label>
+                        <div class="col-md-10 col-sm-8">
+                            <tags-input ng-model="data.skill_select" placeholder="{{'Type to Filter by Skills'|translate}}" on-tag-added="tagAdded($tag)" on-tag-removed="tagRemoved($tag)" add-from-autocomplete-only="true">
+                                <auto-complete min-length="1" debounce-delay="0" source="loadSkills($query)"></auto-complete>
+                            </tags-input>
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback"> 
+                        <label for="Search" class="control-label col-md-2 col-sm-4">{{'Hourly Rate'|translate}}</label>
+                        <div class="col-md-10 col-sm-8"> 
+                            <div class="frm-select">
+                                <select name="hourly_rate" id="hourly_rate" ng-model="data.hourly_rate" class="form-control">
+                                    <option value="">{{'Any Hourly Rate'| translate}}</option> <!-- not selected / blank option -->
+                                   <option value="hourly_rate_min"> &lt; {{10 | customCurrency}}/{{'hour'| translate}}</option> <!-- interpolation -->
+                                    <option value="hourly_rate_minimum">
+                                       {{10 | customCurrency}} -  {{20 | customCurrency}}/{{'hour' | translate}}</option>
+                                    <option value="hourly_rate_medium"> {{21 | customCurrency}} - {{30 | customCurrency}}/{{'hour'| translate}}</option>
+                                    <option value="hourly_rate_max"> {{31 | customCurrency}} - {{40 | customCurrency}}/{{'hour'| translate}}</option>
+                                    <option value="hourly_rate_maximum"> &gt; {{40|customCurrency}}/{{'hour'| translate}}</option>
+                                </select> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <div class="col-md-12 col-sm-12"> 
+                            <button type="submit" class="btn btn-success pull-right">{{'Search'|translate}}</button> 
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="top-mspace">
+            <ul class="list-unstyled no-pad">
+                <li class="list-group-item freelancher-innerblock border-none" ng-repeat="user in users">
+                    <div class="clearfix">
+                        <div class="media freelancer-media">
+                            <div class="pull-left">
+                                <div class="freelancherprotfolio">
+                                    <div class="navbar-left">
+                                        <div class="freelancheruserimage">
+                                            <a href="users/{{user.id}}/{{user.username}}">
+                                                <img ng-src="{{user.users_avatar_url}}" class="img-resposnive center-block user-med">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="media-body">     
+                                <div class="row">   
+                                    <div class="col-sm-8">                    
+                                        <div class="freelancherdetail">
+                                            <a href="users/{{user.id}}/{{user.username}}">
+                                                <h3 class="no-mar">{{user.username}}</h3>
+                                            </a> 
+                                            <span class="">
+                                                <i class="flag-icon flag-icon-{{user.country.iso_alpha2 | lowercase}}"> </i>
+                                            </span>                                                                            
+                                        </div>                                
+                                        <div class="info-skills bot-space-10" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1">
+                                            <ul class="list-inline mar-bot-10"> 
+                                                <span ng-init="value = (user.total_rating_as_freelancer / user.review_count_as_freelancer)"></span>
+                                                <li> 
+                                                    <span class="c star-rating">
+                                                        <span ng-if="value" class="label label-default">{{(user.total_rating_as_freelancer / user.review_count_as_freelancer)|number:1}}</span>
+                                                    </span> 
+                                                    <span class="c star-rating">
+                                                        <span ng-if="!value" class="label label-default">{{rating_value}}</span> 
+                                                    </span>
+                                                </li>
+                                                <li class="media-middle" ng-if="!value">
+                                                    <input-stars max="5" ng-model="rating_value" readonly></input-stars>
+                                                </li>
+                                                <li ng-if="value">
+                                                    <input-stars max="5" ng-model="value" readonly></input-stars>
+                                                </li>
+                                                <li>
+                                                    <p class="freelancherreviewpoint">{{user.review_count_as_freelancer}} {{'reviews'|translate}} </p>
+                                                </li>
+                                        </ul>                                      
+                                            <ul class="list-inline show-Skills">
+                                                <li ng-repeat="exam_user in user.exams_users" class="skill-certificate">
+                                                    <div ng-if="exam_user.user_id == user.id">
+                                                        <div class="pull-left">
+                                                            <div class="no-mar" ng-mouseover="showhideSkills(user.id, 1, exams.exam_id)">
+                                                            <a href="#"> <img ng-src="{{exam_user.exam_image}}" alt="
+                                                                {{exam_user.title}}" class="img-min"/> </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="user-certificate-skills"  id="skills-{{user.id}}"   ng-mouseleave="showhideSkills(user.id,2)">
+                                                            <h5 class="text-b"> {{'Passed Freelancer Certifications' | translate}}</h5>
+                                                            <div class="clearfix" ng-repeat="exam_user in user.exams_users">
+                                                                <div class="pull-left">
+                                                                <a href="#" title="{{exam_user.exam.title}}" class="text-info">
+                                                                {{exam_user.exam.title}} </a>  {{exam_user.exam_level.name}}
+                                                                ({{exam_user.exam_user_per |number:0}}%, {{exam_user.percentile_rank}} percentile)
+                                                        
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>                                          
+                                        </div>
+                                        
+                                        <ul class="list-inline project-content" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1">
+                                            <li ng-repeat="userskill in user.skill_users"> 
+                                                <a ui-sref="Users({skills:userskill.skills.id})"> 
+                                                {{userskill.skills.name | capitalize}}{{!$last?', ':''}}</a> 
+                                            </li>
+                                        </ul>
+                                        <p ng-bind-html="user.about_me | cut:true:450:' ...'"></p>
+                                    </div>
+                                    <div class="col-sm-4 free-right-blk">
+                                        <div class="text-right">
+                                            <span ng-if="user.hourly_rate && (user.hourly_rate != 'null' || user.hourly_rate != '0')">
+                                                <amount-display  amount='{{user.hourly_rate}}' ng-if="user.hourly_rate"> </amount-display>
+                                                {{'per hour'| translate}}
+                                            </span>  
+                                            <div class="apply-now" ng-if="!isAuth">
+                                                <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                                                    <button type="button" class="btn btn-primary text-uppercase gradi-rnd-btn" ng-click="openLoginModal('login')">{{'Hire Me'|translate}}</button>
+                                                </div>
+                                            </div>
+                                            <div class="apply-now" ng-if="isAuth">
+                                                <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                                                    <button type="button" class="btn btn-primary text-uppercase gradi-rnd-btn" ng-show="user.id !== $root.user.id && $root.user.role_id <= 3" ng-click="HireMe(user.id)">{{'Hire Me'|translate}}</button>
+                                                </div>
+                                            </div> 
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li ng-if="!users.length && !loader" class="list-group-item">
+                    <p class="text-danger text-center top-mspace">{{'No records available'| translate}}</p>
+                </li>
+                <li ng-if="!users.length && loader" class="text-center"> 
+                    <span>
+                        <img ng-src="images/contest_loader.gif" alt="loading" title="loading">
+                    </span> 
+                </li>
+            </ul>
+        </div>
+        <div class="row binding-pagination" ng-hide="!users.length">
+                <div class="pagnation-content">
+                    <div class="container">
+                        <div class="clearfix pagnation-inner">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <uib-pagination total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="numPages" num-pages="noOfPages" ng-click="paginate()"></uib-pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>  
+</section>

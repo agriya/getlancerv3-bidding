@@ -1,0 +1,36 @@
+<div class="section" ng-controller="ProjectPaymentController">
+    <div class="container">
+        <div class="row">
+            <div class="modal-header photo-view">
+                <h3>{{'Listing fee for'|translate}} {{projectTitle}}</h3>
+            </div>
+            <div class="modal-body">
+                <div class="">
+                    <div class="">
+                        <div class="clearfix">
+                            <form name="PaymentForm" role="form" ng-submit="PaymentFormSubmit(PaymentForm.$valid)">
+                                <div class="panel navbar-btn clearfix">
+                                    <div class="panel-body col-xs-12">
+                                        <!--<div class="form-group col-sm-5 col-sm-offset-3 col-xs-9"> <input ng-change="ClearCoupon()" ng-model="plan.coupon" title="{{'Please enter your coupon'|translate}}" placeholder="{{'Coupon Code'|translate}}" class="form-control" id="inputCoupon3" autocomplete="off"> </div>
+                                        <button type="button" class="btn btn-primary pull-left" ng-click="applyCoupon()">{{'Apply'|translate}}</button>-->
+                                        <div class="col-xs-12 text-center navbar-btn">
+                                            <p class="text-22 textb" ng-show="quote_request_views_detail.quote_amount && show_discount">
+                                                {{"Price" | translate }} 
+                                            <amount-display  amount='{{quote_request_views_detail.quote_amount}}' ng-if="quote_request_views_detail.quote_amount"></amount-display> 
+                                            </p>
+                                            <p class="text-22 textb" ng-show="show_discount"> {{"Coupon discount" | translate }} {{show_discount}}</p>
+                                            <p class="text-22 textb"> {{"You have to pay" | translate }} 
+                                                <amount-display  amount='{{total_listing_fee}}' ng-if="total_listing_fee"></amount-display> 
+                                                </p>
+                                        </div>
+                                    </div>
+                                    <div ng-include="'views/gateway.html'" class="col-xs-12"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

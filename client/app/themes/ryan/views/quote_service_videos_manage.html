@@ -1,0 +1,51 @@
+<div class="section navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb navbar-btn">
+                    <li> <a href="/">{{'Home'|translate}}</a> </li>
+                    <li> <a href="quote_service/my_services">{{'My Services'|translate}}</a> </li>
+                    <li> <a href="user/quote_service/edit/{{quoteServiceId}}">{{business_name}}</a> </li>
+                    <li class="active">{{'Videos'|translate}} </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div ng-include="'views/users_services_left_side_menu.html'"></div>
+            </div>
+            <div class="col-md-8 col-lg-9 navbar-btn">
+                <div class="section navbar-default" ng-show="!loader" ng-controller='QuoteServiceVideosManageController'>
+                    <div class="panel service-lists clearfix">
+                        <div class="panel-heading sep-bot bot-mspace top-small-mspace">
+                            <h3 style="display:inline;">{{business_name}} - {{'Videos'|translate}} </h3> <a class="pull-right btn btn-primary text-uppercase" title="{{'Add' | translate}}" href="" ng-click='QuoteVideoAdd(quoteServiceId)'><i class="fa fa-plus"></i> {{'Add'|translate}}</a>                            </div>
+                        <div class="col-sm-4" ng-if="quote_service_videos.length > 0" ng-repeat='quote_service_video in quote_service_videos'>
+                            <div class="text-center bg-white howitBlocks qutoesBlock height-auto">
+                                <div class="pr"> <span bind-html-compile="quote_service_video.embed_code"></span>
+                                    <div class="edit-icon">
+                                        <a ng-click='QuoteVideoDelete(quote_service_video.id)' href="" title="{{'Delete' | translate}}"> <i class="fa fa-trash fa-inverse"></i> </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center" ng-hide="(quote_service_videos.length > itemsPerPage) && currentPage==1">
+                                <uib-pagination ng-hide="!quote_service_videos.length" total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="noOfPages" ng-click="paginate_video()"></uib-pagination>
+                            </div>
+                        </div>
+                        <div ng-include="'views/loader.html'"></div>
+                        <div class="col-xs-12">
+                            <div class="alert alert-danger" ng-show="!loader && !quote_service_videos.length">
+                                <p class="text-center">{{'No Records'|translate}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

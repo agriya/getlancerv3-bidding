@@ -1,0 +1,60 @@
+<div class="section navbar-default">
+    <div>
+        <form class="form-horizontal adminpg-form" name="applyJobReport" role="form" novalidate>
+           
+                    <div class="section navbar-default"> 
+                         <div class="row">
+                <div class="col-sm-12">
+                        <div class="panel no-mar" ng-if="!is_flag">
+                            <div class="modal-header sep-bot">
+                                <button type="button" class="close" data-dismiss="modal" ng-click="closemodel()">&times;</button>
+                                <h3 class="no-mar">{{'Report Project'|translate}}</h3>
+                            </div>
+                            <div class="modal-body">                             
+                                <div class="form-group">
+                                    <div class="col-sm-4"> 
+                                        <label for="flagCategory" class="control-label">{{'Flag Category'|translate}}
+                                            <span class="error">*</span>
+                                        </label> 
+                                    </div>
+                                    <div class="col-sm-8"> 
+                                        <select name="flagCategory" ng-model="flags.flag_category_id" class="form-control" ng-required="true"> 
+                                            <option value="{{flags.id}}">{{'Please Select'|translate}}</option>
+                                            <option value="{{flags.id}}" ng-repeat="flags in flag" >{{flags.name}}</option>
+                                        </select> 
+                                        <span class="error" ng-if="(applyJobReport.$submitted || applyJobReport.flagCategory.$touched) && (applyJobReport.flagCategory.$pristine || applyJobReport.flagCategory.$invalid) && (applyJobReport.flagCategory.$error.required)">{{'Required'| translate}} </span>                                                
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-4"> 
+                                        <label for="message" class="control-label">{{'Message'|translate}}<span class="error">*</span></label> 
+                                    </div>
+                                    <div class="col-sm-8"> 
+                                        <textarea type="text" name="inputMessage" ng-model="flags.message" class="form-control" ng-required="true"></textarea> 
+                                        <span class="error" ng-if="(applyJobReport.$submitted || applyJobReport.inputMessage.$touched) && (applyJobReport.inputMessage.$pristine || applyJobReport.inputMessage.$invalid) && (applyJobReport.inputMessage.$error.required)">
+                                            {{'Required'| translate }} 
+                                        </span> 
+                                    </div>
+                                </div>                                
+                            
+                            <div class="panel" ng-if="is_flag">{{'Already Reported'|translate}} </div>
+                        
+                        <div class="panel" ng-if="is_flag"> {{'Already Reported'|translate}} </div>
+                        <div class="form-group" ng-if="!is_flag">
+                            <div class="col-sm-offset-4 col-sm-8"> 
+                                <button type="submit" ng-show="job_report" class="btn btn-primary" disabled>{{'Submit'|translate}}</button> 
+                                <button type="submit" class="btn btn-primary" ng-click="submit(applyJobReport.$valid)" ng-show="!job_report"> {{'Submit'|translate}}</button>                                    
+                                <button class="btn btn-danger" ng-click="closemodel()">{{'Cancel'|translate}}</button> 
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="is_flag">
+                            <div class="col-sm-offset-4 col-sm-8"> <button class="btn btn-danger" ng-click="closemodel()">{{'Cancel'|translate}}</button> </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

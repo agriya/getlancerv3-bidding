@@ -1,0 +1,19 @@
+<div class=" featuerdEquip">
+    <div class="container">
+        <div class="row" ng-if="quote_services.length">
+            <div class="col-sm-6 col-md-3" ng-repeat="quote_service in quote_services">
+                <div class="text-center bg-white ver-big-mspace pr howitBlocks qutoesBlock">
+                    <div class="bot-small-space">
+                        <a href="quote_service/{{quote_service.id}}/{{quote_service.slug}}" title="{{quote_service.business_name | translate}}" class="img-circle center-block show pr feutrimgCont"> <img ng-src="{{quote_service.image_name}}" title="{{quote_service.business_name | translate}}"> </a>
+                    </div>
+                    <h3 class="text-18 top-small-mspace text-gray hor-big-space htruncate">{{quote_service.business_name | translate}}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 text-center">
+            <uib-pagination ng-hide="!quote_services.length" total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="noOfPages" ng-click="paginate()"> </uib-pagination>
+            <div class="alert alert-danger" ng-show="!loader && !quote_services.length">
+                <p class="text-center">{{'No Services Found'|translate}}</p>
+            </div>
+        </div>
+    </div>

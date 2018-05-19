@@ -1,0 +1,21 @@
+<div class="dropdown bidding-actinos" ng-if="((projectstatus != ProjectStatusConstant.MutuallyCanceled || projectstatus != ProjectStatusConstant.CanceledByAdmin) && (isdispute == 'false'))">
+    <a type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action <i class="fa fa-angle-down" aria-hidden="true"></i> </a>
+    <ul class="dropdown-menu dropdown-arrow-right">
+      <!--   <li ng-if="(is_freelancer) && (isprojectcancel == 'false')"> <a class="bidding-action-edit cursor" ng-click="contactFreelancer()"><i class="fa fa-envelope-o"></i> {{'View / Send Message'|translate}} </a> </li>-->
+        <li ng-if="(is_freelancer) && (isprojectcancel == 'false' && projectstatus != ProjectStatusConstant.FinalReviewPending && projectstatus != ProjectStatusConstant.Completed && projectstatus != ProjectStatusConstant.Closed)"> <a class="bidding-action-edit cursor" ng-click="projectstatuschange(1)"><i class="fa fa-check fa-fw"></i>{{'Mark as Completed'|translate}}</a> </li>
+        <li ng-if="(!is_freelancer) && (isprojectcancel == 'false' && projectstatus != ProjectStatusConstant.FinalReviewPending && projectstatus != ProjectStatusConstant.Closed && projectstatus != ProjectStatusConstant.UnderDevelopment)"> <a class="bidding-action-edit cursor" ng-click="projectstatuschange(2)"><i class="fa fa-check fa-fw"></i> {{projectstatus == ProjectStatusConstant.Completed ? 'Accept as Completed':'Mark as Completed'}} </a> </li>
+         <li ng-if="(!is_freelancer) && (isprojectcancel == 'false' && projectstatus != ProjectStatusConstant.FinalReviewPending && projectstatus != ProjectStatusConstant.Closed && projectstatus == ProjectStatusConstant.Completed)"> <a class="bidding-action-edit cursor" ng-click="projectstatuschange(10)"><i class="fa fa-close fa-fw"></i> {{'Not Completed, Move to Under Development'| translate}} </a> </li>
+        <li ng-if="isprojectcancel == 'false' && is_show_actions.mutual && projectstatus == ProjectStatusConstant.UnderDevelopment && $root.settings.PROJECT_IS_ALLOW_EMPLOYER_TO_CANCEL_PROJECT == 1">
+        <a class="bidding-action-edit cursor" ng-click="projectstatuschange(3)"><i class="fa fa-close fa-fw"></i>{{'Cancel this Project'|translate}}</a> </li>
+        <li ng-if="isprojectcancel != 'false' && is_show_accept && is_show_actions.mutual && projectstatus != ProjectStatusConstant.MutuallyCanceled">
+        <a class="bidding-action-edit cursor" ng-click="projectstatuschange(4)"><i class="fa fa-check fa-fw"></i>{{'Accept Cancel Request'|translate}} </a> </li>
+        <li ng-if="isprojectcancel != 'false' && is_show_actions.mutual && projectstatus != ProjectStatusConstant.MutuallyCanceled"> <a class="bidding-action-edit cursor" ng-click="projectstatuschange(5)"><i class="fa fa-times fa-fw"></i>{{'Reject Cancel Request'|translate}}</a> </li>
+        <li ng-if="isdispute == 'false' && is_show_actions.dispute && is_show_actions.mutual && $root.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Dispute') > -1"> <a class="bidding-action-edit cursor" ng-click="projectstatuschange(6)"> <i class="fa fa-legal fa-fw"></i> {{'Raise Dispute'|translate}}</a> </li>
+        <li ng-if="is_show_actions.review && $root.userReview && $root.reviewShow && $root.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1"> <a class="bidding-action-edit cursor" ng-click="projectstatuschange(8)"><i class="fa fa-plus fa-fw"></i>{{'Add Review'|translate}}</a> </li>
+        <li ng-if="is_show_actions.review && !$root.userReview && $root.reviewShow && $root.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1"> <a class="bidding-action-edit cursor" ng-click="projectstatuschange(9)"><i class="fa fa-refresh fa-fw"></i>{{'Update Review'|translate}}</a> </li>
+        <li ng-if="show_cancel"> <a class="bidding-action-edit cursor" ng-click="projectstatuschange(7)"><i class="fa fa-close fa-fw"></i> {{'Cancel Dispute Request'|translate}}</a> </li>
+        <!--<li ng-if="!show_request">
+      <a class="bidding-action-edit text-danger cursor"> Cancel </a>
+    </li>-->
+    </ul>
+</div>

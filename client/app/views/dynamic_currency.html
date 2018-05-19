@@ -1,0 +1,4 @@
+<span>
+    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">{{amount | currency : $root.settings.CURRENCY_SYMBOL}}</span>
+    <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">{{amount | currency : $root.settings.CURRENCY_CODE}} </span>
+</span>

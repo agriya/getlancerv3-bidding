@@ -1,0 +1,10 @@
+<div ng-controller="PageViewController">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 page-content">
+                <h2>{{page.title}}</h2>
+                <p class="grayc" ng-bind-html="page.content | unsafe"></p>
+            </div>
+        </div>
+    </div>
+</div>

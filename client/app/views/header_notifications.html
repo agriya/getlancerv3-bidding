@@ -1,0 +1,1297 @@
+<li ng-if="isAuth" class="dropdown header-notifications" ng-controller="newsFeedsCtrl">
+        <a href="" class="dropdown-toggle text-uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" ng-click="unreadedActivity('update')">
+            <span><i class="fa fa-bell-o fa-lg"></i></span><span class="notifications" ng-if="is_have_unreaded_activity == true || is_have_unreaded_activity == 1"><i class="fa fa-circle"></i></span>
+        </a>		
+        <ul class="dropdown-menu">
+			<li ng-show="!news_feeds.length && loader"> <img src="images/contest_loader.gif" class="img-responsive center-block" id="loading"> </li>
+			<li ng-repeat="news_feeds in news_feeds">
+                <div ng-repeat="news_feed in news_feeds | limitTo: 5">
+                  <!--Start  quote activites-->
+                    <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1">
+                            <!--Start Activity Type from status 1 to 2 Condition check-->
+                            <div ng-if="news_feed.activity_type == ActivityType.QuoteBidStatusChanged && news_feed.from_status_id == 1 && news_feed.to_status_id == 2 && news_feed.class == 'QuoteBid'">
+                                <a href ="users/{{news_feed.foreign.activity.foreign_service_provider_user.id}}/{{news_feed.foreign.activity.foreign_service_provider_user.username}}" class="show">
+                                    <div class="header-border">
+                                        <div class="media">
+                                            <div class="pull-left">												
+                                                <!--Start User Attachment condition check-->
+                                                <div ng-if="news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment != null">
+                                                    <user_avatar userclass={{news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment.class}} foreignid={{news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment.foreign_id}} username={{news_feed.foreign.activity.foreign_service_provider_user.username}}></user_avatar>
+                                                </div>
+                                                <div ng-if="news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment == null">
+                                                    <img src="images/default.png" alt="{{news_feed.foreign.activity.foreign_service_provider_user.username}}" class="img-circle user-small" target="_black">
+                                                </div>
+                                                <!--End User Attachment condition check-->												
+                                            </div>
+                                            <div class="media-body">
+                                                <p>
+                                                    {{news_feed.foreign.activity.foreign_service_provider_user.username}} {{"submitted the quote for " | translate}} {{news_feed.foreign.activity.foreign_quote_request.title}}. {{"Quote amount" | translate}}{{settings.CURRENCY_SYMBOL + news_feed.amount}}{{"."}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!--End Activity Type Condition check-->
+                            <!--Start Activity Type for status quotebid amount changed Condition check-->
+                            <div ng-if="news_feed.activity_type == ActivityType.QuoteBidAmountChanged && news_feed.class == 'QuoteBid'">
+                                <a href="users/{{news_feed.foreign.activity.foreign_service_provider_user.id}}/{{news_feed.foreign.activity.foreign_service_provider_user.username}}" class="show">
+                                    <div class="header-border">
+                                        <div class="media">
+                                            <div class="pull-left">											
+                                                <!--Start User Attachment condition check-->
+                                                <div ng-if="news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment != null">
+                                                    <user_avatar userclass={{news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment.class}} foreignid={{news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment.foreign_id}} username={{news_feed.foreign.activity.foreign_service_provider_user.username}}></user_avatar>
+                                                </div>
+                                                <div ng-if="news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment == null">
+                                                    <img src="images/default.png" alt="{{news_feed.foreign.activity.foreign_service_provider_user.username}}" class="img-circle user-small" target="_black">
+                                                </div>
+                                                <!--End User Attachment condition check-->											
+                                            </div>
+                                            <div class="media-body">
+                                                <p>
+                                                    {{news_feed.foreign.activity.foreign_service_provider_user.username}} 
+                                                    {{"updated the quote for" | translate}}{{news_feed.foreign.activity.foreign_quote_request.title}}. {{"New Quote amount" | translate}}{{settings.CURRENCY_SYMBOL + news_feed.amount}}{{"."}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!--End Activity Type Condition check-->
+                            <!--Start Activity Type from status 2 to 3 Condition check-->
+                            <div ng-if="news_feed.activity_type == ActivityType.QuoteBidStatusChanged && news_feed.from_status_id == 2 && news_feed.to_status_id == 3 && news_feed.class == 'QuoteBid'">
+                                <a href ="users/{{news_feed.foreign.activity.foreign_user.id}}/{{news_feed.foreign.activity.foreign_user.username}}" class="show">
+                                    <div class="header-border">
+                                        <div class="media">
+                                            <div class="pull-left">												
+                                                <!--Start User Attachment condition check-->
+                                                <div ng-if="news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment != null">
+                                                <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                                </div>
+                                                <div ng-if="news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment == null">
+                                                    <img src="images/default.png" alt="{{news_feed.foreign.activity.foreign_service_provider_user.username}}" class="img-circle user-small" target="_black">
+                                                </div>
+                                                <!--End User Attachment condition check-->												
+                                            </div>
+                                            <div class="media-body">
+                                                <p>
+                                                    {{news_feed.foreign.activity.foreign_user.username}} {{"hired you for" | translate}} {{news_feed.foreign.activity.foreign_quote_request.title}}.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!--End Activity Type Condition check-->
+                            <!--Start Activity Type from status 3 to 4 Condition check-->
+                            <div ng-if="news_feed.activity_type == ActivityType.QuoteBidStatusChanged && news_feed.from_status_id == 3 && news_feed.to_status_id == 4 && news_feed.class == 'QuoteBid'">
+                                <a href ="users/{{news_feed.foreign.activity.foreign_service_provider_user.id}}/{{news_feed.foreign.activity.foreign_service_provider_user.username}}" class="show">
+                                    <div class="header-border">
+                                        <div class="media">
+                                            <div class="pull-left">												
+                                                <!--Start User Attachment condition check-->
+                                                <div ng-if="news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment != null">
+                                                    <user_avatar userclass={{news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment.class}} foreignid={{news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment.foreign_id}} username={{news_feed.foreign.activity.foreign_service_provider_user.username}}></user_avatar>
+                                                </div>
+                                                <div ng-if="news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment == null">
+                                                    <img src="images/default.png" alt="{{news_feed.foreign.activity.foreign_service_provider_user.username}}" class="img-circle user-small" target="_black">
+                                                </div>
+                                                <!--End User Attachment condition check-->												
+                                            </div>
+                                            <div class="media-body">
+                                                <p>
+                                                    {{news_feed.foreign.activity.foreign_service_provider_user.username}} {{"completed " | translate}} {{news_feed.foreign.activity.foreign_quote_request.title}} {{"job" | translate}}.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!--End Activity Type Condition check-->
+                            <!--Start Activity Type from status 4 to 6 Condition check-->
+                            <div ng-if="news_feed.activity_type == ActivityType.QuoteBidStatusChanged && news_feed.from_status_id == 4 && news_feed.to_status_id == 6 && news_feed.class == 'QuoteBid'">
+                                <a href ="users/{{news_feed.foreign.activity.foreign_user.id}}/{{news_feed.foreign.activity.foreign_user.username}}" class="show">
+                                    <div class="header-border">
+                                        <div class="media">
+                                            <div class="pull-left">												
+                                                <!--Start User Attachment condition check-->
+                                                <div ng-if="news_feed.foreign.activity.foreign_user.foreign_attachment != null">
+                                                    <user_avatar userclass={{news_feed.foreign.activity.foreign_user.foreign_attachment.class}} foreignid={{news_feed.foreign.activity.foreign_user.foreign_attachment.foreign_id}} username={{news_feed.foreign.activity.foreign_user.username}}></user_avatar>
+                                                </div>
+                                                <div ng-if="news_feed.foreign.activity.foreign_user.foreign_attachment == null">
+                                                    <img src="images/default.png" alt="{{news_feed.foreign.activity.foreign_user.username}}" class="img-circle user-small" target="_black">
+                                                </div>
+                                                <!--End User Attachment condition check-->												
+                                            </div>                                            
+                                            
+                                            <div class="media-body">
+                                                <p>
+                                                    {{news_feed.foreign.activity.foreign_user.username}} {{" accepted your job completion of "| translate}} {{news_feed.foreign.activity.foreign_quote_request.title}} {{" and closed | translate"}}.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!--End Activity Type Condition check-->
+                            <!--Start Activity Type from status 4 to 7 Condition check-->
+                            <div ng-if="news_feed.activity_type == ActivityType.QuoteBidStatusChanged && news_feed.from_status_id == 4 && news_feed.to_status_id == 7 && news_feed.class == 'QuoteBid'">
+                                <a href ="users/{{news_feed.foreign.activity.foreign_user.id}}/{{news_feed.foreign.activity.foreign_user.username}}" class="show">
+                                    <div class="header-border">
+                                        <div class="media">
+                                            <div class="pull-left">												
+                                                <!--Start User Attachment condition check-->
+                                                <div ng-if="news_feed.foreign.activity.foreign_user.foreign_attachment != null">
+                                                    <user_avatar userclass={{news_feed.foreign.activity.foreign_user.foreign_attachment.class}} foreignid={{news_feed.foreign.activity.foreign_user.foreign_attachment.foreign_id}} username={{news_feed.foreign.activity.foreign_user.username}}></user_avatar>
+                                                </div>
+                                                <div ng-if="news_feed.foreign.activity.foreign_user.foreign_attachment == null">
+                                                    <img src="images/default.png" alt="{{news_feed.foreign.activity.foreign_user.username}}" class="img-circle user-small" target="_black">
+                                                </div>
+                                                <!--End User Attachment condition check-->												
+                                            </div>
+                                            <div class="media-body">
+                                                <p>
+                                                    {{news_feed.foreign.activity.foreign_user.username}} {{"rejected this job" | translate}} {{news_feed.foreign.activity.foreign_quote_request.title}} {{"done and marked as not completed status" | translate}}.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!--End Activity Type Condition check-->
+                            <!--Start Activity Type from status 5 Condition check-->
+                            <div ng-if="news_feed.activity_type == ActivityType.QuoteBidStatusChanged && news_feed.to_status_id == 5 && news_feed.class == 'QuoteBid'">
+                                <a href ="users/{{news_feed.foreign.activity.foreign_service_provider_user.id}}/{{news_feed.foreign.activity.foreign_service_provider_user.username}}" class="show">
+                                    <div class="header-border">
+                                        <div class="media">
+                                            <div class="pull-left">												
+                                                <!--Start User Attachment condition check-->
+                                                <div ng-if="news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment != null">
+                                                    <user_avatar userclass={{news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment.class}} foreignid={{news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment.foreign_id}} username={{news_feed.foreign.activity.foreign_service_provider_user.username}}></user_avatar>
+                                                </div>
+                                                <div ng-if="news_feed.foreign.activity.foreign_service_provider_user.foreign_attachment == null">
+                                                    <img src="images/default.png" alt="{{news_feed.foreign.activity.foreign_service_provider_user.username}}" class="img-circle user-small" target="_black">
+                                                </div>
+                                                <!--End User Attachment condition check-->												
+                                            </div>
+                                            <div class="media-body">
+                                                <p>{{news_feed.foreign.activity.foreign_service_provider_user.username}} {{"ignored this quote requests | translate"}}.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!--End Activity Type Condition check-->
+                            <!--Start Activity Message Type Condition check-->
+                            <div ng-if="news_feed.activity_type == ActivityType.QuoteConversation && news_feed.class == 'Message'">
+                                <a href ="users/{{news_feed.foreign.activity.quote_bid.foreign_service_provider_user.id}}/{{news_feed.foreign.activity.quote_bid.foreign_service_provider_user.username}}" class="show">
+                                    <div class="header-border">
+                                        <div class="media">
+                                            <div class="pull-left">												
+                                                <!--Start User Attachment condition check-->
+                                                <div ng-if="news_feed.foreign.activity.quote_bid.foreign_service_provider_user.foreign_attachment != null">
+                                                    <user_avatar userclass={{news_feed.foreign.activity.quote_bid.foreign_service_provider_user.foreign_attachment.class}} foreignid={{news_feed.foreign.activity.quote_bid.foreign_service_provider_user.foreign_attachment.foreign_id}} username={{news_feed.foreign.activity.quote_bid.foreign_service_provider_user.username}}></user_avatar>
+                                                </div>
+                                                <div ng-if="news_feed.foreign.activity.quote_bid.foreign_service_provider_user.foreign_attachment == null">
+                                                    <img src="images/default.png" alt="{{news_feed.foreign.activity.quote_bid.foreign_service_provider_user.username}}" class="img-circle user-small" target="_black">
+                                                </div>
+                                                <!--End User Attachment condition check-->												
+                                            </div>
+                                            <div class="media-body">
+                                                <p>
+                                                {{news_feed.foreign.activity.quote_bid.foreign_service_provider_user.username}} {{"sent a message on the project" | translate}} {{news_feed.foreign.activity.quote_bid.foreign_quote_request.title}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!--End Activity Message Type Condition check-->
+                    </div>
+                  <!--  end quote activities -->
+               
+                 <!--start bidding activities-->
+                    <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                            <!--Start Activity Type class=project and activity_type=FollowerPosted Condition check-->
+                            <div ng-if="news_feed.activity_type == ActivityType.FollowerPosted && news_feed.class == 'Project'">
+                                <a href ="projects/view/{{news_feed.foreign.id}}/{{news_feed.foreign.slug}}" class="show">
+                                    <div class="header-border">
+                                        <div class="media">
+                                            <div class="pull-left">											
+                                                <!--Start User Attachment condition check-->
+                                                <div ng-if="news_feed.user.foreign_attachment != null">
+                                                    <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                                </div>
+                                                <div ng-if="news_feed.user.foreign_attachment == null">
+                                                    <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                                </div>
+                                                <!--End User Attachment condition check-->											
+                                            </div>
+                                            <div class="media-body">
+                                                <p class="no-mar">
+                                                    {{news_feed.user.username}} {{"bookmarked the project" | translate}} {{news_feed.foreign.name}}
+                                                </p>
+                                                <p class="no-mar">
+                                                    <small>{{news_feed.created_at | timeago}}</small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!--End Activity Type class=project and activity_type=FollowerPosted Condition check-->
+                            
+                            <!--Start Activity Type activity_type=ProjectOpenStatusChanged Condition check-->
+                            <div ng-if="news_feed.activity_type == ActivityType.ProjectOpenStatusChanged">
+                                <a href="projects/view/{{news_feed.foreign.id}}/{{news_feed.foreign.slug}}" class="show">
+                                    <div class="header-border">
+                                        <div class="media">
+                                            <div class="pull-left">										
+                                                <!--Start User Attachment condition check-->
+                                                <div ng-if="news_feed.user.foreign_attachment != null">
+                                                    <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                                </div>
+                                                <div ng-if="news_feed.user.foreign_attachment == null">
+                                                    <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                                </div>
+                                                <!--End User Attachment condition check-->										
+                                            </div>
+                                            <div class="media-body">
+                                                <p class="no-mar">
+                                                    {{news_feed.user.username}} {{"bookmarked the project" | translate}} {{news_feed.foreign.name}}
+                                                </p>
+                                                <p class="no-mar">
+                                                    <small>{{news_feed.created_at | timeago}}</small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!--End Activity Type activity_type=ProjectOpenStatusChanged Condition check-->
+                            
+                            
+                            <!--Start Activity Type activity_type=ProjectRejectedToWork Condition check-->
+                            <div ng-if="news_feed.activity_type == ActivityType.ProjectBidStatusChanged && news_feed.from_status_id == 2 && news_feed.to_status_id == 3">
+                                <a href="projects/view/{{news_feed.foreign.activity.foreign_project.id}}/{{news_feed.foreign.activity.foreign_project.slug |slugify }}" class="show">
+                                    <div class="header-border">
+                                        <div class="media">
+                                            <div class="pull-left">
+                                                <!--Start User Attachment condition check-->
+                                                <div ng-if="news_feed.user.foreign_attachment != null">
+                                                    <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                                </div>
+                                                <div ng-if="news_feed.user.foreign_attachment == null">
+                                                    <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                                </div>
+                                                <!--End User Attachment condition check-->
+                                            </div>
+                                            <div class="media-body">
+                                                <p class="no-mar">
+                                                    {{news_feed.user.username}} {{"rejected to work in" | translate}} {{news_feed.foreign.activity.foreign_project.name}}
+                                                </p>
+                                                <p class="no-mar">
+                                                    <small>{{news_feed.created_at | timeago}}</small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!--End Activity Type activity_type=ProjectRejectedToWork Condition check-->
+                            
+                            <!--Start Activity Type activity_type=ProjectBidFreelancerWithdrawn Condition check-->
+                            <div ng-if="news_feed.activity_type == ActivityType.ProjectBidFreelancerWithdrawn">
+                                <a href="projects/view/{{news_feed.foreign.activity.foreign_project.id}}/{{news_feed.foreign.activity.foreign_project.slug}}" class="show">
+                                    <div class="header-border">
+                                        <div class="media">
+                                            <div class="pull-left">										
+                                                <!--Start User Attachment condition check-->
+                                                <div ng-if="news_feed.user.foreign_attachment != null">
+                                                    <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                                </div>
+                                                <div ng-if="news_feed.user.foreign_attachment == null">
+                                                    <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                                </div>
+                                                <!--End User Attachment condition check-->									
+                                            </div>
+                                            <div class="media-body">
+                                                <p class="no-mar">
+                                                    {{news_feed.user.username}} {{" withdraw the bid from" | translate}} {{news_feed.foreign.activity.foreign_project.name}}
+                                                </p>
+                                                <p class="no-mar">
+                                                    <small>{{news_feed.created_at | timeago}}</small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!--End Activity Type activity_type=ProjectBidFreelancerWithdrawn Condition check-->
+                    </div>
+                    <!--Start Project Activities for milestone plugin eanbled -->
+                        <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Milestone') > -1">
+                            <!--Start Activity Type activity_type=MilestonePosted Condition check-->
+                            <div ng-if="news_feed.activity_type == ActivityType.MilestonePosted">
+                                <div ng-if="news_feed.foreign.activity.user_id == news_feed.foreign.activity.project.user_id">
+                                    <a href="projects/view/{{news_feed.foreign.activity.project.id}}/{{news_feed.foreign.activity.project.name | slugify}}?action=milestones" class="show">
+                                        <div class="header-border">
+                                            <div class="media">
+                                                <div class="pull-left">											
+                                                    <!--Start User Attachment condition check-->
+                                                    <div ng-if="news_feed.user.foreign_attachment != null">
+                                                        <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                                    </div>
+                                                    <div ng-if="news_feed.user.foreign_attachment == null">
+                                                        <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                                    </div>
+                                                    <!--End User Attachment condition check-->											
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="no-mar">
+                                                        {{'New Milestone added for'| translate}} 
+                                                        {{news_feed.other_user.username}} by 
+                                                        {{news_feed.user.username}}
+                                                    </p>
+                                                    <p class="no-mar">
+                                                        <small>{{news_feed.created_at | timeago}}</small>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div ng-if="news_feed.foreign.activity.user_id != news_feed.foreign.activity.project.user_id">
+                                    <a href ="projects/view/{{news_feed.foreign.activity.project.id}}/{{news_feed.foreign.activity.project.name}}" class="show">
+                                        <div class="header-border">
+                                            <div class="media">
+                                                <div class="pull-left">											
+                                                    <!--Start User Attachment condition check-->
+                                                    <div ng-if="news_feed.user.foreign_attachment != null">
+                                                        <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                                    </div>
+                                                    <div ng-if="news_feed.user.foreign_attachment == null">
+                                                        <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                                    </div>
+                                                    <!--End User Attachment condition check-->											
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="no-mar">
+                                                        {{'New milestone requested for'| translate}} {{news_feed.foreign.activity.project.name}}
+                                                    </p>
+                                                    <p class="no-mar">
+                                                        <small>{{news_feed.created_at | timeago}}</small>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <!--End Activity Type activity_type=MilestonePosted Condition check-->
+                            
+                            <!--Start Activity Type activity_type=MilestoneStatuschanged Condition check-->
+                            <div ng-if="news_feed.activity_type == ActivityType.MilestoneStatuschanged">
+                                <a href="projects/view/{{news_feed.foreign.activity.project.id}}/{{news_feed.foreign.activity.project.slug}}?action=milestones" class="show">
+                                    <div class="header-border">
+                                        <div class="media">
+                                            <div class="pull-left">												
+                                                <!--Start User Attachment condition check-->
+                                                <div ng-if="news_feed.user.foreign_attachment != null">
+                                                    <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                                </div>
+                                                <div ng-if="news_feed.user.foreign_attachment == null">
+                                                    <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                                </div>
+                                                <!--End User Attachment condition check-->												
+                                            </div>
+                                            <div class="media-body">
+                                            <!--Start Milestone status RequestedForEscrow condition check -->
+                                                <div ng-if="news_feed.to_status_id == MilestoneStatus.Approved">
+                                                    <p>
+                                                        {{news_feed.user.username}} {{'approved	milestone for'| translate}} {{news_feed.foreign.activity.project.name | cut:true:200:' ...'}}
+                                                    </p>
+                                                </div>
+                                                <!--Start Milestone status RequestedForEscrow condition check -->
+                                                <div ng-if="news_feed.to_status_id == MilestoneStatus.RequestedForEscrow">
+                                                    <p>{{news_feed.user.username}} {{"requested to pay milestone amount for" | translate}} {{news_feed.foreign.activity.project.name | cut:true:200:' ...'}}</p>
+                                                </div>
+                                                <!--End Milestone status RequestedForEscrow condition check -->
+                                                
+                                                <!--Start Milestone status EscrowFunded condition check -->
+                                                <div ng-if="news_feed.to_status_id == MilestoneStatus.EscrowFunded">
+                                                    <p>{{news_feed.user.username}} {{"paid milestone amount to escrow for" | translate}} {{news_feed.foreign.activity.project.name | cut:true:200:' ...'}}</p>
+                                                </div>
+                                                <!--End Milestone status EscrowFunded condition check -->
+                                                
+                                                <!--Start Milestone status Completed condition check -->
+                                                <div ng-if="news_feed.to_status_id == MilestoneStatus.Completed">
+                                                    <p>{{news_feed.user.username}} {{"completed this milestone for" | translate}} {{news_feed.foreign.activity.project.name | cut:true:200:' ...'}}</p>
+                                                </div>
+                                                <!--End Milestone status Completed condition check -->
+                                                
+                                                <!--Start Milestone status RequestedForRelease condition check -->
+                                                <div ng-if="news_feed.to_status_id == MilestoneStatus.RequestedForRelease">
+                                                    <p>{{news_feed.user.username}} {{"asked to release milestone amount for" | translate}} {{news_feed.foreign.activity.project.name | cut:true:200:' ...'}}</p>
+                                                </div>
+                                                <!--End Milestone status RequestedForRelease condition check -->
+                                                
+                                                <!--Start Milestone status EscrowReleased condition check -->
+                                                <div ng-if="news_feed.to_status_id == MilestoneStatus.EscrowReleased">
+                                                    <p>{{news_feed.user.username}} {{"accepted this milestone work and released amount for" | translate}}  {{news_feed.foreign.activity.project.name | cut:true:200:' ...'}}</p>
+                                                </div>
+                                                <!--End Milestone status EscrowReleased condition check -->
+                                                
+                                                <!--Start Milestone status Canceled condition check -->
+                                                <div ng-if="news_feed.to_status_id == MilestoneStatus.Canceled">
+                                                    <p class="no-mar">{{news_feed.user.username}} {{"cancelled this milestone for" | translate}} {{news_feed.foreign.activity.project.name | cut:true:200:' ...'}}</p>
+                                                </div>
+                                                <!--End Milestone status Canceled condition check -->
+                                                    <p class="no-mar">
+                                                        <small>{{news_feed.created_at | timeago}}</small>
+                                                    </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!--End Activity Type activity_type=MilestoneStatuschanged Condition check-->
+                        </div>
+                    <!-- End milestone activity    -->
+                    <!--Start Project Invoice Activity-->
+                    <div ng-if="news_feed.activity_type == ActivityType.ProjectBidInvoicePosted">
+                        <a href ="projects/view/{{news_feed.foreign.activity.project.id}}/{{news_feed.foreign.activity.project.slug}}?action=invoices" class="show">
+                            <div class="header-border">
+                                <div class="media">
+                                    <div class="pull-left">										
+                                        <!--Start User Attachment condition check-->
+                                        <div ng-if="news_feed.foreign.activity.foreign_user.foreign_attachment != null">
+                                            <user_avatar userclass={{news_feed.foreign.activity.foreign_user.foreign_attachment.class}} foreignid={{news_feed.foreign.activity.foreign_user.foreign_attachment.foreign_id}} username={{news_feed.foreign.activity.foreign_user.username}}></user_avatar>
+                                        </div>
+                                        <div ng-if="news_feed.foreign.activity.foreign_user.foreign_attachment == null">
+                                            <img src="images/default.png" alt="{{news_feed.foreign.activity.username}}" class="img-circle user-small" target="_black">
+                                        </div>
+                                        <!--End User Attachment condition check-->										
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="no-mar">
+                                            {{news_feed.foreign.activity.foreign_user.username}} {{'raised invoice for'| translate}} {{news_feed.foreign.activity.project.name}}
+                                        </p>
+                                        <p class="no-mar">
+                                            <small>{{news_feed.created_at | timeago}}</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                   </div>
+                    <div ng-if="news_feed.activity_type == ActivityType.ProjectBidInvoicePaid">
+                        <a href ="projects/view/{{news_feed.foreign.activity.project.id}}/{{news_feed.foreign.activity.project.slug}}?action=invoices" class="show">
+                            <div class="header-border">
+                                <div class="media">
+                                    <div class="pull-left">										
+                                        <!--Start User Attachment condition check-->
+                                        <div ng-if="news_feed.foreign.activity.foreign_user.foreign_attachment != null">
+                                        <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                        </div>
+                                        <div ng-if="news_feed.foreign.activity.foreign_user.foreign_attachment == null">
+                                            <img src="images/default.png" alt="{{news_feed.foreign.activity.username}}" class="img-circle user-small" target="_black">
+                                        </div>
+                                        <!--End User Attachment condition check-->										
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="no-mar">
+                                            {{news_feed.user.username}} {{'paid invoice for' | translate}}
+                                            {{news_feed.foreign.activity.project.name}}
+                                        </p>
+                                        <p class="no-mar">
+                                            <small>{{news_feed.created_at | timeago}}</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                   <!--  End invoice activity-->
+                    <!--Start User Follower Activity-->
+                    <div ng-if="news_feed.activity_type == ActivityType.FollowerPosted && news_feed.class == 'User'">
+                            <a href ="users/{{news_feed.user.id}}/{{news_feed.user.username}}" class="show">
+                                <div class="header-border">
+                                    <div class="media">
+                                        <div class="pull-left">												
+                                            <!--Start User Attachment condition check-->
+                                            <div ng-if="news_feed.user.foreign_attachment != null">
+                                                <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                            </div>
+                                            <div ng-if="news_feed.user.foreign_attachment == null">
+                                                <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                            </div>
+                                            <!--End User Attachment condition check-->												
+                                        </div>
+                                        <div class="media-body">
+                                            <p class="no-mar">{{news_feed.user.username}} {{'starts following you' | translate}}.</p>
+                                            <p class="no-mar">
+                                                <small>{{news_feed.created_at | timeago}}</small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                    </div>
+                    <!--End User Follower Activity -->
+                    <!--Start Follower contest Activity-->
+                    <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1">
+                        <div ng-if="news_feed.activity_type == ActivityType.FollowerPosted && news_feed.class == 'Contest'">
+                                <a href="contests/{{news_feed.foreign.id}}/{{news_feed.foreign.name | slugify}}" class="show">
+                                    <div class="header-border">
+                                        <div class="media">
+                                            <div class="pull-left">													
+                                                <!--Start User Attachment condition check-->
+                                                <div ng-if="news_feed.user.foreign_attachment != null">
+                                                    <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                                </div>
+                                                <div ng-if="news_feed.user.foreign_attachment == null">
+                                                    <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                                </div>
+                                                <!--End User Attachment condition check-->													
+                                            </div>
+                                            <div class="media-body">
+                                                <p class="no-mar">{{news_feed.user.username}} {{'followed the contest'| translate}} {{news_feed.foreign.name}}</p>
+                                                <p class="no-mar">
+                                                    <small>{{news_feed.created_at | timeago}}</small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        <!--End User Follower Activity -->
+                    </div>
+                    <!--   End follower contest-->
+                    <!--Start Portfolio Follower  Activity-->
+                    <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1">
+                        <div ng-if="news_feed.activity_type == ActivityType.FollowerPosted && news_feed.class == 'Portfolio'">
+                            <a href="portfolios/{{news_feed.foreign.id}}/{{news_feed.foreign.title}}" class="show">
+                                <div class="header-border">
+                                    <div class="media">
+                                        <div class="pull-left">                                            
+                                            <!--Start User Attachment condition check-->
+                                            <div ng-if="news_feed.user.foreign_attachment != null">
+                                            <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                            </div>
+                                            <div ng-if="news_feed.user.foreign_attachment == null">
+                                                <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                            </div>
+                                            <!--End User Attachment condition check-->                                            
+                                        </div>
+                                        <div class="media-body">                                        
+                                            <p class="no-mar">
+                                            {{news_feed.user.username}} {{'liked your portfolio'| translate}} {{news_feed.foreign.title}}
+                                            </p>  
+                                            <p class="no-mar">
+                                                <small>{{news_feed.created_at | timeago}}</small>
+                                            </p>                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!--End User Follower Activity -->
+                    <!-- job apply activity-->
+                    <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1">
+                        <div ng-if="news_feed.activity_type == ActivityType.JobApply && news_feed.class == 'JobApply'">
+                            <a href ="users/{{news_feed.user.id}}/{{news_feed.user.username}}" class="show">
+                                <div class="header-border">
+                                    <div class="media">
+                                        <div class="pull-left">									
+                                            <!--Start User Attachment condition check-->
+                                            <div ng-if="news_feed.user.foreign_attachment != null">
+                                                <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.foreign_attachment.username}}></user_avatar>
+                                            </div>
+                                            <div ng-if="news_feed.user.foreign_attachment == null">
+                                                <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                            </div>
+                                            <!--End User Attachment condition check-->									
+                                        </div>
+                                        <div class="media-body">
+                                            <p class="no-mar">
+                                            {{news_feed.user.username}} {{'applied your job'| translate}}.
+                                            </p>
+                                            <p class="no-mar">
+                                                <small>{{news_feed.created_at | timeago}}</small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                  <!--End job apply Activity -->
+                  <!--  project applyed-->
+                   <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                        <div ng-if="news_feed.activity_type == ActivityType.Notification && news_feed.class == 'Project'">
+                            <a href="projects/view/{{news_feed.foreign.id}}/{{news_feed.foreign.slug}}"  class="show">
+                                <div class="header-border">
+                                    <div class="media">
+                                        <div class="pull-left">												
+                                            <!--Start User Attachment condition check-->
+                                            <div ng-if="news_feed.user.foreign_attachment != null">
+                                                <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.foreign_attachment.username}}></user_avatar>
+                                            </div>
+                                            <div ng-if="news_feed.user.foreign_attachment == null">
+                                                <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                            </div>
+                                            <!--End User Attachment condition check-->												
+                                        </div>
+                                        <div class="media-body">
+                                            <p class="no-mar">{{news_feed.user.username}} {{'posted a new project' | translate}} {{news_feed.foreign.name}}</p>
+                                            <p class="no-mar">
+                                                <small>{{news_feed.created_at | timeago}}</small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                  </div>
+                  <!--End Project apply Activity -->
+                  <!--Start JOb Follower Activity -->
+                    <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1">
+                        <div ng-if="news_feed.activity_type == ActivityType.Notification && news_feed.class == 'Job'">
+                            <a href ="users/{{news_feed.user.id}}/{{news_feed.user.username}}" class="show">
+                                <div class="header-border">
+                                    <div class="media">
+                                        <div class="pull-left">										
+                                            <!--Start User Attachment condition check-->
+                                            <div ng-if="news_feed.user.foreign_attachment != null">
+                                                <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                            </div>
+                                            <div ng-if="news_feed.user.foreign_attachment == null">
+                                                <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                            </div>
+                                            <!--End User Attachment condition check-->										
+                                        </div>
+                                        <div class="media-body">
+                                            <p class="no-mar">{{'New Job'| translate}} {{news_feed.foreign.title}} {{'Posted By'| translate }} {{news_feed.user.username}}</p>
+                                            <p class="no-mar">
+                                                <small>{{news_feed.created_at | timeago}}</small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                  <!--End Job Follower Activity -->
+                  <!-- Portfolio follower activity-->
+                  <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1">
+                    <div ng-if="news_feed.activity_type == ActivityType.Notification && news_feed.class == 'Portfolio'">
+                        <a href ="portfolio/{{news_feed.foreign.id}}/{{news_feed.foreign.title}}" class="show">
+                            <div class="header-border">
+                                <div class="media">
+                                    <div class="pull-left">										
+                                        <!--Start User Attachment condition check-->
+                                        <div ng-if="news_feed.user.foreign_attachment != null">
+                                            <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.foreign_attachment.username}}></user_avatar>
+                                        </div>
+                                        <div ng-if="news_feed.user.foreign_attachment == null">
+                                            <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                        </div>
+                                        <!--End User Attachment condition check-->										
+                                    </div>
+                                    <div class="media-body">									
+                                        <p class="no-mar">{{news_feed.user.username}} {{'posted a new portfolio' | translate}} {{news_feed.foreign.title}}</p>
+                                        <p> 
+                                            <small>{{news_feed.created_at | timeago}}</small> 
+                                        </p>										
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                  <!--End Portfolio Follower Activity -->
+                  <!-- Portfolio comment activity-->
+                  <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1">
+                    <div ng-if="news_feed.activity_type == ActivityType.PortfolioComment && news_feed.class == 'Message'">
+                        <a href="portfolios/{{news_feed.foreign.activity.portfolio.id}}/{{news_feed.activity.portfolio.title}}" class="show">
+                            <div class="header-border">
+                                <div class="media">
+                                    <div class="pull-left">												
+                                        <!--Start User Attachment condition check-->
+                                        <div ng-if="news_feed.user.foreign_attachment != null">
+                                            <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                        </div>
+                                        <div ng-if="news_feed.user.foreign_attachment == null">
+                                            <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                        </div>
+                                        <!--End User Attachment condition check-->												
+                                    </div>
+                                    <div class="media-body">									
+                                        <p class="no-mar">{{news_feed.user.username}} {{'commented a portfolio'| translate}} {{news_feed.foreign.activity.portfolio.title}}</p>									
+                                        <p> 
+                                            <small>{{news_feed.created_at | timeago}}</small> 
+                                        </p>										
+                                    </div>	
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                  <!--End  Portfolio comment Activity -->
+               <!-- start Project send message -->
+               <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                    <div ng-if="news_feed.activity_type == ActivityType.ProjectConversation && news_feed.class == 'Message' && news_feed.foreign.class != 'ProjectDispute'">
+                        <a href ="projects/view/{{news_feed.foreign.activity.bid.foreign_project.id}}/{{news_feed.foreign.activity.bid.foreign_project.slug}}" class="show">
+                                <div class="header-border">
+                                    <div class="media">
+                                        <div class="pull-left">											
+                                            <!--Start User Attachment condition check-->
+                                            <div ng-if="news_feed.user.foreign_attachment != null">
+                                                <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                            </div>
+                                            <div ng-if="news_feed.user.foreign_attachment == null">
+                                                <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                            </div>
+                                            <!--End User Attachment condition check-->											
+                                        </div>
+                                        <div class="media-body">
+                                            <p class="no-mar">{{news_feed.user.username}} {{"sent a message for the project " | translate}} {{news_feed.foreign.activity.bid.foreign_project.name}}</p>
+                                            <p class="no-mar">
+                                                <small>{{news_feed.created_at | timeago}}</small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+              </div>
+              <!--  End project send message-->
+               <!-- start Project dispute message -->
+               <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                    <div ng-if="news_feed.activity_type == ActivityType.ProjectConversation && news_feed.class == 'Message' && news_feed.foreign.class == 'ProjectDispute'">
+                        <a href ="projects/view/{{news_feed.foreign.activity.project_dispute.foreign_project.id}}/{{news_feed.foreign.activity.project_dispute.foreign_project.slug}}" class="show">
+                                <div class="header-border">
+                                    <div class="media">
+                                        <div class="pull-left">											
+                                            <!--Start User Attachment condition check-->
+                                            <div ng-if="news_feed.user.foreign_attachment != null">
+                                                <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                            </div>
+                                            <div ng-if="news_feed.user.foreign_attachment == null">
+                                                <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                            </div>
+                                            <!--End User Attachment condition check-->											
+                                        </div>
+                                        <div class="media-body">
+                                            <p class="no-mar">{{news_feed.user.username}} {{"sent a message for the project " | translate}} {{news_feed.foreign.activity.project_dispute.foreign_project.name}}</p>
+                                            <p class="no-mar">
+                                                <small>{{news_feed.created_at | timeago}}</small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+              </div>
+              <!--  End project dispute message-->
+              <!--  start Quote new request reviced-->
+              <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1">
+                <div ng-if="news_feed.activity_type == ActivityType.QuoteBidPosted && news_feed.class == 'QuoteBid'">
+                    <a href ="users/{{news_feed.user.id}}/{{news_feed.user.username}}" class="show">
+                        <div class="header-border">
+                            <div class="media">
+                                <div class="pull-left">												
+                                    <!--Start User Attachment condition check-->
+                                    <div ng-if="news_feed.user.foreign_attachment != null">
+                                        <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                    </div>
+                                    <div ng-if="news_feed.user.foreign_attachment == null">
+                                        <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                    </div>
+                                    <!--End User Attachment condition check-->												
+                                </div>
+                                <div class="media-body">
+                                    <p class="no-mar">{{'New quote request received from' | translate}} {{news_feed.user.username}}</p>
+                                    <p class="no-mar">
+                                        <small>{{news_feed.created_at | timeago}}</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                 </div>
+             </div>
+              <!--  End quote received-->
+              <!-- Project Satus change-->
+               <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                    <div ng-if="news_feed.activity_type == ActivityType.ProjectStatusChanged && news_feed.class == 'Project'">
+                        <a href="projects/view/{{news_feed.foreign.id}}/{{news_feed.foreign.slug}}" class="show">
+                            <div class="header-border">
+                                <div class="media">
+                                    <div class="pull-left">												
+                                        <!--Start User Attachment condition check-->
+                                        <div ng-if="news_feed.user.foreign_attachment != null">
+                                            <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                        </div>
+                                        <div ng-if="news_feed.user.foreign_attachment == null">
+                                            <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                        </div>
+                                        <!--End User Attachment condition check-->												
+                                    </div>
+                                    <div class="media-body">									
+                                        <p class="no-mar">{{news_feed.foreign.name}} {{'status is changed from' | translate}} {{news_feed.formStatus}} {{'to'| translate}} 
+                                            {{news_feed.ToStatus}}.</p>
+                                        <p class="no-mar"><small>{{news_feed.created_at | timeago}}</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+               </div>
+              <!-- Project Status change end-->
+             <!-- new user project miestone set activity-->
+             <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                <div ng-if="news_feed.activity_type == ActivityType.ProjectAcceptedToWork && Employer">
+                    <a href="projects/view/{{news_feed.foreign.id}}/{{news_feed.foreign.name |slugify}}" class="show">
+                        <div class="header-border">
+                            <div class="media">
+                                <div class="pull-left">											
+                                    <!--Start User Attachment condition check-->
+                                    <div ng-if="news_feed.user.foreign_attachment != null">
+                                        <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                    </div>
+                                    <div ng-if="news_feed.user.foreign_attachment == null">
+                                        <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                    </div>
+                                    <!--End User Attachment condition check-->												
+                                </div>
+                                <div class="media-body">										
+                                    <p class="no-mar">{{news_feed.foreign.activity.foreign_freelancer.username}} {{'agreed to work on '| translate}} {{news_feed.foreign.name}}</p>
+                                    <p class="no-mar">
+                                        <small>{{news_feed.created_at | timeago}}</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+           </div>
+             <!--  start freelancer winner selected status-->
+            <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                <div ng-if="news_feed.activity_type == ActivityType.ProjectBidStatusChanged && news_feed.to_status_id == 2">
+                    <a href="projects/view/{{news_feed.foreign.activity.foreign_project.id}}/{{news_feed.foreign.activity.foreign_project.slug}}" class="show">
+                        <div class="header-border">
+                            <div class="media">
+                                <div class="pull-left">								
+                                    <!--Start User Attachment condition check-->
+                                    <div ng-if="news_feed.user.foreign_attachment != null">
+                                        <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                    </div>
+                                    <div ng-if="news_feed.user.foreign_attachment == null">
+                                        <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                    </div>
+                                    <!--End User Attachment condition check-->								
+                                </div>
+                                <div class="media-body">
+                                    <p class="no-mar"> {{'You are selected as winner for'| translate}} {{news_feed.foreign.activity.foreign_project.name}} </p>
+                                    <p class="no-mar"><small>{{news_feed.created_at | timeago}}</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!--start review project-->
+            <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                <div ng-if="news_feed.activity_type == ActivityType.ReviewPosted && news_feed.foreign.class == 'Bid'">
+                    <a href="projects/view/{{news_feed.foreign.activity.foreign_review_model.id}}/{{news_feed.foreign.activity.foreign_review_model.slug}}" class="show">
+                        <div class="header-border">
+                            <div class="media">
+                                <div class="pull-left">							
+                                    <!--Start User Attachment condition check-->
+                                    <div ng-if="news_feed.user.foreign_attachment != null">
+                                        <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                    </div>
+                                    <div ng-if="news_feed.user.foreign_attachment == null">
+                                        <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                    </div>
+                                    <!--End User Attachment condition check-->							
+                                </div>
+                                <div class="media-body">
+                                  <p class="no-mar">{{news_feed.user.username}} {{'feedback has been published for' | translate}} {{news_feed.foreign.activity.foreign_review_model.name}}</p>
+                                  <p class="no-mar">
+                                       <small>{{news_feed.created_at | timeago}}</small>
+                                  </p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!--  end freelancer winner selected status-->
+            <!--start quote review -->
+            <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1">
+                <div ng-if="news_feed.activity_type == ActivityType.ReviewPosted && news_feed.foreign.class == 'QuoteBid'">
+                    <a href="my_works/all/{{ConstQuoteStatuses.Closed}}/closed">
+                        <div class="header-border">
+                            <div class="media">
+                                <div class="pull-left">									
+                                    <!--Start User Attachment condition check-->
+                                    <div ng-if="news_feed.user.foreign_attachment != null">
+                                        <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                    </div>
+                                    <div ng-if="news_feed.user.foreign_attachment == null">
+                                        <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                    </div>
+                                    <!--End User Attachment condition check-->							
+                                </div>
+                                <div class="media-body">								
+                                    <p class="no-mar">
+                                        {{news_feed.user.username}} {{'feedback has been published for'| translate}} 
+                                        {{news_feed.foreign.activity.foreign_review_model.business_name}}
+                                    </p>
+                                    <p class="no-mar">
+                                        <small>{{news_feed.created_at | timeago}}</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!--	end quote review-->
+            <!--  start	contest review -->
+            <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1">
+                <div ng-if="news_feed.activity_type == ActivityType.ReviewPosted && news_feed.foreign.class == 'ContestUser'">
+                    <a href="contests/{{news_feed.foreign.activity.foreign_review_model.id}}/{{news_feed.foreign.activity.foreign_review_model.name}}" class="show">
+                        <div class="header-border">
+                            <div class="media">
+                                <div class="pull-left">										
+                                    <!--Start User Attachment condition check-->
+                                    <div ng-if="news_feed.user.foreign_attachment != null">
+                                        <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                    </div>
+                                    <div ng-if="news_feed.user.foreign_attachment == null">
+                                        <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                    </div>
+                                    <!--End User Attachment condition check-->										
+                                </div>
+                                <div class="media-body">									
+                                    <p class="no-mar"> 
+                                        {{news_feed.user.username}} {{'feedback has been published for' | translate}} 
+                                        {{news_feed.foreign.activity.foreign_review_model.name}}</p>
+                                    <p class="no-mar">
+                                        <small>{{news_feed.created_at | timeago}}</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!--  start user attachement review -->
+            <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                <div ng-if="news_feed.activity_type == ActivityType.ProjectAttachmentPosted && news_feed.class == 'Attachment'">
+                    <a href="projects/view/{{news_feed.foreign.activity.project.id}}/{{news_feed.foreign.activity.project.name | slugify}}?action=files" class="show">
+                        <div class="header-border">
+                            <div class="media">
+                                <div class="pull-left">								
+                                    <!--Start User Attachment condition check-->
+                                    <div ng-if="news_feed.user.foreign_attachment != null">
+                                        <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                    </div>
+                                    <div ng-if="news_feed.user.foreign_attachment == null">
+                                        <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                    </div>
+                                    <!--End User Attachment condition check-->								
+                                </div>
+                                <div class="media-body">								
+                                    <p class="no-mar"> 
+                                        {{news_feed.user.username}} {{'added the attachment for' | translate}} 
+                                        {{news_feed.foreign.activity.project.name}}
+                                    </p>
+                                    <p class="no-mar">
+                                        <small>{{news_feed.created_at | timeago}}</small>
+                                    </p>								
+                                </div>
+                            </div>							
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Project	dispute -->
+            <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                <div ng-if="news_feed.activity_type == ActivityType.ProjectDisputePosted && news_feed.class == 'ProjectDispute'">
+                    <a href="projects/view/{{news_feed.foreign.activity.foreign_dispute_model.id}}/{{news_feed.foreign.activity.foreign_dispute_model.slug}}" class="show">
+                        <div class="header-border">
+                            <div class="media">
+                                <div class="pull-left">											
+                                    <!--Start User Attachment condition check-->
+                                    <div ng-if="news_feed.user.foreign_attachment != null">
+                                        <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                    </div>
+                                    <div ng-if="news_feed.user.foreign_attachment == null">
+                                        <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                    </div>
+                                    <!--End User Attachment condition check-->											
+                                </div>
+                                <div class="media-body">    
+                                    <p class="no-mar"> 
+                                        {{news_feed.user.username}} {{'dispute raised' | translate}}
+                                            {{news_feed.foreign.activity.foreign_dispute_model.name}}
+                                    </p>
+                                    <p class="no-mar">
+                                        <small>{{news_feed.created_at | timeago}}</small>
+                                    </p>										
+                                </div>
+                            </div>								
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Project	dispute  -->
+            <!-- Project	dispute status change -->
+            <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                <div ng-if="news_feed.activity_type == ActivityType.ProjectDisputeStatusChanged && news_feed.class == 'ProjectDispute'">
+                    <a href="project/view/{{news_feed.foreign.id}}/{{news_feed.foreign.slug}}" class="show">
+                    <a href="project/view/{{news_feed.foreign.activity.foreign_dispute_model.id}}/{{news_feed.foreign.activity.foreign_dispute_model.slug}}">
+                        <div class="header-border">
+                            <div class="media">
+                                <div class="pull-left">											
+                                    <!--Start User Attachment condition check-->
+                                    <div ng-if="news_feed.user.foreign_attachment != null">
+                                        <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                    </div>
+                                    <div ng-if="news_feed.user.foreign_attachment == null">
+                                        <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                    </div>
+                                    <!--End User Attachment condition check-->											
+                                </div>
+                                <div class="media-body">
+                                    <p class="no-mar" ng-if="news_feed.to_status_id == '1'">{{ 'Dispute status changed to Open for project' |translate }}
+                                    {{news_feed.foreign.activity.foreign_dispute_model.name}}</p>
+                                    <p class="no-mar" ng-if="news_feed.to_status_id == '2'"> {{'Dispute status changed to UnderDiscussion for project' |translate }}
+                                    {{news_feed.foreign.activity.foreign_dispute_model.name}}</p>
+                                    <p class="no-mar" ng-if="news_feed.to_status_id == '3'"> {{'Dispute status changed to Waiting for Administrator Decision for project' | translate }}
+                                    {{news_feed.foreign.activity.foreign_dispute_model.name}}</p>
+                                    <p class="no-mar" ng-if="news_feed.to_status_id == '4'"> {{'Dispute status changed to closed for project' | translate }}
+                                    {{news_feed.foreign.activity.foreign_dispute_model.name}}</p>	
+                                    <p class="no-mar">
+                                        <small>{{news_feed.created_at | timeago}}</small>
+                                    </p>									
+                                </div>
+                            </div>								
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                <div ng-if="news_feed.activity_type == ActivityType.ProjectBidPosted">
+                    <a href="projects/view/{{news_feed.foreign.activity.foreign_project.id}}/{{news_feed.foreign.activity.foreign_project.slug}}" clas="show">
+                        <div class="header-border">
+                            <div class="media">
+                                <div class="pull-left">														
+                                    <!--Start User Attachment condition check-->
+                                    <div ng-if="news_feed.user.foreign_attachment != null">
+                                        <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}}
+                                            username={{news_feed.user.username}}></user_avatar>
+                                    </div>
+                                    <div ng-if="news_feed.user.foreign_attachment == null">
+                                        <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                    </div>
+                                    <!--End User Attachment condition check-->														
+                                </div>
+                                <div class="media-body">	
+                                    <p class="no-mar">{{'A new bid is posted by'| translate}} {{news_feed.user.username}} {{ 'for' | translate}} {{news_feed.foreign.activity.foreign_project.name}}</p>
+                                    <p><small>{{news_feed.created_at | timeago}}</small></p>
+                                </div>
+                            </div>												
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Start job Status change -->
+                <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1">
+                        <div ng-if="news_feed.activity_type == ActivityType.JobStatusChanged && news_feed.class == 'Job'">
+                            <a href ="jobs/view/{{news_feed.user.id}}" class="show">
+                                <div class="header-border">
+                                    <div class="media">
+                                        <div class="pull-left">										
+                                            <!--Start User Attachment condition check-->
+                                            <div ng-if="news_feed.user.foreign_attachment != null">
+                                                <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                            </div>
+                                            <div ng-if="news_feed.user.foreign_attachment == null">
+                                                <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                            </div>
+                                            <!--End User Attachment condition check-->										
+                                        </div>
+                                        <div class="media-body">
+                                            <p class="no-mar"> {{news_feed.foreign.title}} {{'status is changed from'| translate}} {{news_feed.JobformStatus}} {{'to'| translate}} 
+												{{news_feed.jobToStatus}}.</p>
+                                                <p>
+                                                    <small>{{news_feed.created_at | timeago}}</small>
+                                                </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+        <!--  End  job status change -->
+         <!-- Project Mutual Cancel Request start  -->
+                <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                        <div ng-if="news_feed.activity_type == ActivityType.ProjectMutualCancelRequest">
+                            <a href ="projects/view/{{news_feed.foreign.id}}/{{news_feed.foreign.slug}}" class="show">
+                                <div class="header-border">
+                                    <div class="media">
+                                        <div class="pull-left">										
+                                            <!--Start User Attachment condition check-->
+                                            <div ng-if="news_feed.user.foreign_attachment != null">
+                                                <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                            </div>
+                                            <div ng-if="news_feed.user.foreign_attachment == null">
+                                                <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                            </div>
+                                            <!--End User Attachment condition check-->										
+                                        </div>
+                                        <div class="media-body">
+                                             <p class="no-mar">  {{news_feed.user.username}} {{'raised project cancel request for'| translate}} {{news_feed.foreign.name}}</p>
+                                                <p>
+                                                    <small>{{news_feed.created_at | timeago}}</small>
+                                                </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+        <!--  End Project Mutual Cancel Request-->
+        <!-- Project Mutual Cancel Accept start  -->
+                <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                        <div ng-if="news_feed.activity_type == ActivityType.ProjectMutualCancelAccept">
+                            <a href ="projects/view/{{news_feed.foreign.id}}/{{news_feed.foreign.slug}}" class="show">
+                                <div class="header-border">
+                                    <div class="media">
+                                        <div class="pull-left">										
+                                            <!--Start User Attachment condition check-->
+                                            <div ng-if="news_feed.user.foreign_attachment != null">
+                                                <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                            </div>
+                                            <div ng-if="news_feed.user.foreign_attachment == null">
+                                                <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                            </div>
+                                            <!--End User Attachment condition check-->										
+                                        </div>
+                                        <div class="media-body">
+                                             <p class="no-mar">  {{news_feed.user.username}} {{'accept the project cancel request for'| translate}} {{news_feed.foreign.name}}</p>
+                                                <p>
+                                                    <small>{{news_feed.created_at | timeago}}</small>
+                                                </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+        <!--  End Project Mutual Cancel Accept-->
+        <!-- Project Mutual Cancel Reject start  -->
+                <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                        <div ng-if="news_feed.activity_type == ActivityType.ProjectMutualCancelReject">
+                            <a href ="projects/view/{{news_feed.foreign.id}}/{{news_feed.foreign.slug}}" class="show">
+                                <div class="header-border">
+                                    <div class="media">
+                                        <div class="pull-left">										
+                                            <!--Start User Attachment condition check-->
+                                            <div ng-if="news_feed.user.foreign_attachment != null">
+                                                <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                            </div>
+                                            <div ng-if="news_feed.user.foreign_attachment == null">
+                                                <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                            </div>
+                                            <!--End User Attachment condition check-->										
+                                        </div>
+                                        <div class="media-body">
+                                             <p class="no-mar">  {{news_feed.user.username}} {{'rejected the project cancel request for'| translate}} {{news_feed.foreign.name}}</p>
+                                                <p>
+                                                    <small>{{news_feed.created_at | timeago}}</small>
+                                                </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+        <!--  End Project Mutual Cancel Reject-->
+        <!-- Hire Me  start  -->
+                <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                        <div ng-if="news_feed.activity_type == ActivityType.BidInvite">
+                            <a href ="projects/view/{{news_feed.foreign.activity.foreign_project.id}}/{{news_feed.foreign.activity.foreign_project.slug}}" class="show">
+                                <div class="header-border">
+                                    <div class="media">
+                                        <div class="pull-left">										
+                                            <!--Start User Attachment condition check-->
+                                            <div ng-if="news_feed.user.foreign_attachment != null">
+                                                <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                            </div>
+                                            <div ng-if="news_feed.user.foreign_attachment == null">
+                                                <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                            </div>
+                                            <!--End User Attachment condition check-->										
+                                        </div>
+                                        <div class="media-body">
+                                             <p class="no-mar">  {{news_feed.user.username}} {{'invited you to bid on'| translate}} {{news_feed.foreign.activity.foreign_project.name}}</p>
+                                                <p>
+                                                    <small>{{news_feed.created_at | timeago}}</small>
+                                                </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+        <!--  Hire me End -->
+            <!-- Withdraw Request Status Change start -->
+                        <div ng-if="news_feed.activity_type == ActivityType.WithdrawRequestStatusChange">
+                            <a href ="users/cash_withdrawals" class="show">
+                                <div class="header-border">
+                                    <div class="media">
+                                        <div class="pull-left">										
+                                            <!--Start User Attachment condition check-->
+                                            <div ng-if="news_feed.user.foreign_attachment != null">
+                                                <user_avatar userclass={{news_feed.user.foreign_attachment.class}} foreignid={{news_feed.user.foreign_attachment.foreign_id}} username={{news_feed.user.username}}></user_avatar>
+                                            </div>
+                                            <div ng-if="news_feed.user.foreign_attachment == null">
+                                                <img src="images/default.png" alt="{{news_feed.user.username}}" class="img-circle user-small" target="_black">
+                                            </div>
+                                            <!--End User Attachment condition check-->										
+                                        </div>
+                                        <div class="media-body">
+                                            <p> {{'Your withdraw request is'| translate}} {{news_feed.withdrawStatus}}</p>
+                                                <p>
+                                                    <small>{{news_feed.created_at | timeago}}</small>
+                                                </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+         <!-- Withdraw Request Status Change End -->
+        </div>
+        	</li>
+        	<!--end contest review-->
+        	<!--  End new milestone project set-->
+         	<!-- end bidding activities-->
+            <li>
+                <div ng-if="NorecordFound" class="text-center">
+                    <p class="text-danger no-mar space">{{'No feeds available' | translate}} </p>
+                </div>
+                <div class="text-center header-border" ng-if="!NorecordFound">
+                    <a href="users/dashboard?type=news_feed" class="btn btn-primary" ng-click="viewAll()"> {{'View All'|translate}}</a>
+                </div>	
+            </li>
+    	</ul>	
+	</div>
+</li>

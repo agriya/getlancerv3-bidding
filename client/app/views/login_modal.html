@@ -1,0 +1,11 @@
+<div class="modal-header user-login" ng-controller="MainController">
+    <button type="button" class="close" ng-click="cancel()">x</button>
+    <uib-tabset active="loginactive" justified="true">
+        <uib-tab index="0" heading="{{'Login'|translate}}" ng-click="switch_tab('login')">
+            <div ng-include="'views/user_login.html'"></div>
+        </uib-tab>
+        <uib-tab index="1" heading="{{'Signup'|translate}}" ng-click="switch_tab('register')">
+            <div ng-include="'views/user_register.html'"></div>
+        </uib-tab>
+    </uib-tabset>
+</div>

@@ -1,0 +1,32 @@
+<div class="section navbar-default">
+    <div class="container">
+        <div class="text-center howHead">
+            <h2 class="text-uppercase text-44 bot-big-mspace howitH cuprumFont ng-binding">{{'Service'| translate}} <span class="text-primary ng-binding">{{'Listings' | translate}}</span></h2>
+        </div>
+    </div>
+</div>
+<div class="howitWork featuerdEquip service-search" ng-controller='UserServicesController as $ctrl'>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-3" ng-repeat="quote_service in $ctrl.user_services">
+                <div class="text-center bg-white ver-big-mspace pr qutoesBlock">
+                    <div class="bot-space">
+                        <a href="quote_services/{{quote_service.id}}/{{quote_service.username}}" title="{{quote_service.username}}" class="img-circle center-block show pr feutrimgCont"> <img class="img-circle img-thumbnail" ng-src="{{quote_service.image_name}}" alt="{{quote_service.username}}" title="{{quote_service.username}}"> </a>
+                        <h5 class="text-center htruncate"><a href="quote_services/{{quote_service.id}}/{{quote_service.username}}" title="{{quote_service.username}}" class="text-gray">{{quote_service.username}}</a></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center" ng-hide="($ctrl.user_services.length > itemsPerPage) && currentPage==1">
+                <uib-pagination ng-hide="!$ctrl.user_services.length" total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="noOfPages" ng-click="$ctrl.paginate_user_quote_services()"></uib-pagination>
+            </div>
+        </div>
+        <div ng-include="'views/loader.html'"></div>
+        <div class="col-xs-12">
+            <div class="alert alert-danger" ng-show="!$ctrl.loader && !$ctrl.user_services.length">
+                <p class="text-center">{{'No Records'|translate}}</p>
+            </div>
+        </div>
+    </div>
+</div>

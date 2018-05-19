@@ -1,0 +1,75 @@
+<div class="container photo-view">
+    <div>
+        <h3>Bookmarked Projects</h3>
+        <div class="project-contest">
+            <div class="clearfix">
+                <ul class="list-group custom-binding bookmark-list">
+                    <li class="list-group-item project-heading hidden-xs">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-3">
+                                <h5>Project</h5>
+                            </div>
+                            <div class="col-md-8 col-sm-9 text-center">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h5>Bids/entries</h5>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <h5>{{'Started'|translate}}</h5>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <h5>{{'Price'|translate}} 
+                                            <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                        <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}})</span></h5>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <h5>UnBookMark <i class="fa fa-bookmark fa-fw text-danger" title="bookmarked" aria-hidden="true"></i> </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item project-content" ng-repeat="BookMark in BookMarks">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-3">
+                                <h5 class="visible-xs">Project</h5>
+                                <h5 class="text-18"> <a ui-sref="Bid_ProjectView({id:BookMark.id, slug:BookMark.slug})" class="no-pad"> {{BookMark.name}} </a> </h5>
+                                <p class="multiline-ellipsis" ng-bind-html='BookMark.description'></p>
+                            </div>
+                            <div class="col-md-8 col-sm-9">
+                                <div class="row">
+                                    <div class="col-sm-3"> <span class="visible-xs">Bids/entries:</span> <span class="content" ng-if="BookMark.project_bid.bid_count != null">{{BookMark.project_bid.bid_count}}</span> <span class="content" ng-if="BookMark.project_bid.bid_count == null">0</span>                                        </div>
+                                    <div class="col-sm-3"> <span class="visible-xs">Date:</span> <span class="content">{{BookMark.created_at | timeago}}</span> </div>
+                                    <div class="col-sm-3"> 
+                                    <span class="visible-xs">{{'Price'|translate}} 
+                                        <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                                <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}})</span>
+                                </span> 
+                                <span class="content">{{'Min Amount'|translate}} : 
+                                    <amount-display  amount='{{BookMark.project_range.min_amount}}' ng-if="BookMark.project_range.min_amount"></amount-display>   {{'Max Amount'|translate}} : 
+                                    <amount-display  amount='{{BookMark.project_range.max_amount}}' ng-if="BookMark.project_range.max_amount"></amount-display>
+                                    </span>  
+                                </div>
+                                    <div class="col-sm-3" ng-repeat="mark in BookMark.follower"> <span class="visible-xs">{{'Delete'|translate}}</span> <span class="content"><button type="button" class="btn btn-primary" ng-click="deleteBookMarks(mark.id)">{{'UnBookMark'|translate}}</button></span> </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li ng-if="BookMarks.length == 0" class="list-group-item project-content">
+                        <p class="no-mar text-danger text-center">{{'No BookMarked Projects'| translate}}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- pagtion-Blk: START -->
+<div class="binding-pagination clearfix">
+    <div class="pagnation-content">
+        <div class="container">
+            <div class="clearfix pagnation-inner">
+                <uib-pagination total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="numPages" num-pages="noOfPages" ng-click="paginate()"></uib-pagination>
+            </div>
+        </div>
+    </div>
+</div>

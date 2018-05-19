@@ -1,0 +1,143 @@
+<div class="gray-bg" ng-controller='UsersRegisterController'>
+    <your-details></your-details>
+    <div class="container">
+        <div class="row">
+            <div class="user-login clearfix">
+                <ul class="nav nav-justified nav-tabs">
+                    <li> <a href="users/login">{{'Login'|translate}}</a> </li>
+                    <li class="active"> <a href="">{{'Signup'|translate}}</a> </li>
+                </ul>
+                <form class="user-ascess-form register-form" role="form" name="userSignup" ng-submit="save(userSignup.$valid)" novalidate>
+                    <div class="table-row">
+                        <div class="col-sm-5 hidden-xs">
+                            <figure>
+                                <img src="images/logo.png" alt="logo">
+                            </figure>
+                              <ul class="social-btn list-unstyled no-mar">
+                                <li class="" ng-repeat="provider in providers">
+                                    <a data-provider="{{provider.name}}" ng-click="authenticate(provider.slug)" class="btn btn-lg {{provider.button_class}}"> 
+                                        <span class="fa {{provider.icon_class}} fa-fw"></span> {{'Login with'|translate}} {{provider.name}} 
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="row">
+                                <div class="form-group material col-sm-12"> 
+                                    <input type="email" ng-model="user.email" pattern="[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}" title="{{'Please enter valid email address'|translate}}" name="Email" class="form-control" id="inputEmail3" placeholder="{{'Email'|translate}}"
+                                    autocomplete="off" required> 
+                                    <span class="error" ng-show="(userSignup.$submitted || userSignup.Email.$touched) && (userSignup.Email.$pristine || userSignup.Email.$invalid) && (userSignup.Email.$error.required)">
+                                    {{'Required'| translate }}                                    
+                                    </span> 
+                                    <span class="error" ng-show="userSignup.Email.$error.pattern">{{'Please enter valid email address'|translate}}</span> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group material col-sm-12"> 
+                                    <input type="text" ng-model="user.username" name="username" pattern="[a-zA-Z0-9_-]+" title="{{'Must be alphanumeric and underscore characters only'|translate}}" name="username" class="form-control" id="inputUsername3" ng-minlength="3" ng-maxlength="15" placeholder="{{'Username'|translate}}"
+                                    autocomplete="off" required> 
+                                    <span class="error" ng-show="(userSignup.$submitted || userSignup.username.$touched) && (userSignup.username.$pristine || userSignup.username.$invalid) && (userSignup.username.$error.required)">
+                                    {{'Required'| translate }} </span>
+                                    <span class="error" ng-show="userSignup.username.$error.minlength && !userSignup.username.$error.pattern">{{'Must have at least 3 characters'|translate}}</span> 
+                                    <span class="error" ng-show="userSignup.username.$error.maxlength && !userSignup.username.$error.pattern">{{'Maximum 10 characters is allowed'|translate}}</span>
+                                    <span class="error" ng-show="userSignup.username.$error.pattern">{{'Must be alphanumeric and underscore characters only'|translate}}</span> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group material">
+                                        <input type="password" ng-model="user.password" name="Password" class="form-control" id="password" ng-minlength="6" placeholder="{{'Password'|translate}}" ng-required='true'> 
+                                        <span class="error" ng-show="(userSignup.$submitted || userSignup.Password.$touched) && (userSignup.Password.$pristine || userSignup.Password.$invalid) && (userSignup.Password.$error.required)">
+                                            {{'Required'| translate }}                                    
+                                        </span> 
+                                        <span class="error" ng-show="userSignup.Password.$error.pattern">{{'Enter a valid password'|translate}}</span> 
+                                        <span class="error" ng-show="(userSignup.$submitted || userSignup.Password.$touched) && (userSignup.Password.$pristine || userSignup.Password.$invalid) && (userSignup.Password.$error.minlength)">{{'Must have at least 6 characters'| translate }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group material">
+                                        <input password-match="user.password" type="password" class="form-control" placeholder="{{'Confirm Password'|translate}}" name="confirmPassword" ng-model="confirm_password" ng-required="true"> 
+                                        <span class="error" ng-show="(userSignup.$submitted || userSignup.confirmPassword.$touched) && (userSignup.confirmPassword.$pristine || userSignup.confirmPassword.$invalid) && (userSignup.confirmPassword.$error.required)">
+                                            {{'Required'| translate }}                                    
+                                        </span>
+                                        <div class="error" ng-if="userSignup.confirmPassword.$dirty" ng-messages="userSignup.confirmPassword.$error">
+                                            <div ng-message="compareTo">{{'Password and repeat password must be same'|translate}}.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    <ul class="list-inline">
+                                        <li class="radio no-mar"> 
+                                            <label for="inputIsFreelancer">
+                                                <input type="radio"  id="inputIsFreelancer" ng-model="userChoose" value="freelancer" required>
+                                                <span> {{'I want to Work'|translate}}</span>
+                                            </label> 
+                                        </li>
+                                        <li class="radio no-mar"> 
+                                            <label for="inputIsEmployer">
+                                                <input type="radio"   id="inputIsEmployer" ng-model="userChoose"  value="empolyer" required>
+                                                <span> {{'I want to Hire'|translate}}</span>
+                                            </label> 
+                                        </li> 
+                                        <span ng-show="$root.settings.IS_ENABLED_DUAL_REGISTER != 0 && $root.settings.IS_ENABLED_DUAL_REGISTER !=''">
+                                            <li class="radio no-mar top-mar">
+                                                <label for="inputIsBoth">
+                                                    <input type="radio" id="inputIsBoth"   ng-model="userChoose"  value="both" required> 
+                                                    <span>{{'I want to perform both'|translate}}</span> 
+                                                </label>
+                                            </li>
+                                        </span>
+                                    </ul>
+                                    <span class="error" ng-show="(userSignup.$submitted && !userChoose)">
+                                        {{'Required'| translate}}                   
+                                    </span> 
+                                </div>
+                            <div class="form-group" ng-if="settings.CAPTCHA_TYPE == 'Google reCAPTCHA'">
+                                <div class="google-recaptcha"></div>
+                            </div>
+                            <div class="form-group" ng-if="settings.CAPTCHA_TYPE == 'Google reCAPTCHA'"> 
+                                <span class="error" ng-show="captchaErr">{{captchaErr}}</span> 
+                            </div>
+                             <div class="form-group" ng-if="settings.CAPTCHA_TYPE == 'Normal'">
+                                <div class="normal-captcha text-18">
+                                    <simple-captcha valid="captchaValid" form={{userSignup}}></simple-captcha>
+                                </div>
+                                <span class="error" ng-show="(userSignup.$submitted || userSignup.normalcapcha1.$touched) && (userSignup.normalcapcha1.$pristine || userSignup.normalcapcha1.$invalid)">
+                                    <span ng-if="!captchaValid && userSignup.normalcapcha1.$error.required">Required.</span>
+                                </span>
+                                    <span class="error" ng-show="(userSignup.$submitted || userSignup.normalcapcha2.$touched) && (userSignup.normalcapcha2.$pristine || userSignup.normalcapcha2.$invalid)">
+                                    <span ng-if="!captchaValid && userSignup.normalcapcha2.$error.required">Required.</span>
+                                </span>
+                                <span class="error" ng-if="!captchaValid && (!userSignup.normalcapcha1.$error.required && !userSignup.normalcapcha2.$error.required)">Error, incorrect captcha.</span>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox"> 
+                                    <label for="is_agree_terms_conditions">
+                                        <input type="checkbox" ng-model="user.is_agree_terms_conditions" name="is_agree_terms_conditions" id="is_agree_terms_conditions" required>
+                                        <span class="">{{'I have read and accepted the'|translate}} 
+                                            <a href="pages/7/terms-and-conditions" target="_blank"> {{'Terms'|translate}} & {{'Conditions'|translate}}</a> {{'and'|translate}} 
+                                            <a href="pages/9/privacy-policy" target="_blank"> {{'Privacy policy'|translate}}</a>
+                                        </span>
+                                    </label> 
+                                </div> 
+                                <span class="error" ng-show="(userSignup.$submitted || userSignup.is_agree_terms_conditions.$touched) && (userSignup.is_agree_terms_conditions.$pristine || userSignup.is_agree_terms_conditions.$invalid) && (userSignup.is_agree_terms_conditions.$error.required)">
+                                    {{'You must agree to the terms'| translate}} & {{'conditions and privacy policy'| translate}}.                                  
+                                </span> 
+                            </div>
+                            <div class="form-group"> 
+                                <button type="submit" ng-show="save_btn" class="btn btn-primary disabled">{{'Signup'|translate}}</button> 
+                                <button type="submit" ng-show="!save_btn" class="btn btn-primary">{{'Signup'|translate}}</button> 
+                            </div>
+                        </div>
+                        <div class="col-sm-5 visible-xs">
+                            <figure>
+                                <img src="images/logo.png" alt="logo">
+                            </figure>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

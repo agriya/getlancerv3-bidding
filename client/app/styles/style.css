@@ -1,0 +1,45 @@
+/*
+Author: CSSilize http://www.cssilize.com/
+Date: 2016-10-31
+(c)2016 CSSilize. All rights reserved.
+*/
+
+.content {
+}
+
+/** common elements */
+/* TODO: h1,h2,etc */
+
+#header {
+}
+
+#footer {
+}
+
+/** common classes */
+/* TODO: form.normal, table.list, ul.list, ol.list, dl.list, etc */
+
+/** page-wise overrides */
+/* TODO: #pages-home table.list th {}, etc */
+
+/** JavaScript */
+/* Usually no need */
+
+/** Hacks */
+/* Usually no need */
+
+/** Cssilized by cssilize */
+p#cssilize {
+	padding:35px 0;	
+}
+p#cssilize a {
+	background:url(../images/cssilize.png) no-repeat center top;
+	height:17px;
+	width:118px;
+	display:block;
+	text-indent:-9999em;
+	margin:0 auto;
+}
+p#cssilize a:hover {
+	background-position:center bottom;
+}

@@ -1,0 +1,10 @@
+<div class="col-sm-3" ng-if="footer_featured_categories.length">
+    <ul class="list-unstyled">
+        <li>
+            <h3 class="text-20 text-black">{{'Browse Category'|translate}} </h3>
+        </li>
+        <li ng-repeat="footer_featured_category in footer_featured_categories">
+            <!--<a href="service_category/{{footer_featured_category.id}}/{{footer_featured_category.slug}}" title="{{footer_featured_category.name}}" class="text-14 text-black">{{footer_featured_category.name}} </a>--><a href="" ng-if="!$root.isAuth" ng-click="openLoginModal('login')" title="{{footer_featured_category.name}}" class="text-14 text-black">{{footer_featured_category.name}} </a> <a href="" ng-if="$root.isAuth" ng-click="openQuoteRequestModal(footer_featured_category.id,'null','category')"
+                title="{{footer_featured_category.name}}" class="text-14 text-black">{{footer_featured_category.name}} </a> </li>
+    </ul>
+</div>

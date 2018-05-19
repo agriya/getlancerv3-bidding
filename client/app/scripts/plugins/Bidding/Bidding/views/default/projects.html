@@ -1,0 +1,203 @@
+<main id="main" class="main">
+    <!-- Binding-Freelancer: START -->
+    <section class="binding-freelancer">
+        <div class="container">
+            <div class="row">
+                <div ng-if="(type == 'bookmarked')" class="col-xs-12">
+                    <h4 class="text-22 bot-15-space">{{'Bookmarked Projects'|translate}}</h4>
+                </div>
+                <div ng-if="(type == 'my_skills')" class="col-xs-12">
+                    <h4 class="text-22 bot-15-space">{{'Projects with My Skills'|translate}}</h4>
+                </div>
+                <div ng-if="bookmarked" class="col-xs-12">
+                    <h4 class="text-22 bot-15-space">{{'Browse Projects'|translate}}</h4>
+                    <form class="form-horizontal" ng-submit="refinesearch(data)" novalidate>
+                        <div class="form-group has-feedback"> <label for="Search" class="control-label col-md-2 col-sm-4">{{'Search'|translate}}</label>
+                            <div class="col-md-10 col-sm-8"> <input type="search" id="Search" ng-model="data.q" placeholder="{{'Search for Projects'|translate}}"
+                                    class="form-control">
+                                <!--<span class="form-control-feedback">
+                                    <i class="fa fa-search"></i>
+                                </span>--></div>
+                        </div>
+                        <div class="form-group has-feedback"> <label for="Search" class="control-label col-md-2 col-sm-4">{{'Categories'|translate}}</label>
+                            <div class="col-md-10 col-sm-8">
+                                <tags-input ng-model="data.category_select" placeholder="{{'Type to Filter Projects by Categories'|translate}}" on-tag-added="tagAdded($tag)"
+                                    on-tag-removed="tagRemoved($tag)" add-from-autocomplete-only="true">
+                                    <auto-complete min-length="1" debounce-delay="0" source="loadCategories($query)"></auto-complete>
+                                </tags-input>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback"> <label for="Search" class="control-label col-md-2 col-sm-4">{{'Skills'|translate}}</label>
+                            <div class="col-md-10 col-sm-8">
+                                <tags-input ng-model="data.skill_select" placeholder="{{'Type to Filter Projects by Skills'|translate}}" on-tag-added="tagAdded($tag)"
+                                    on-tag-removed="tagRemoved($tag)" add-from-autocomplete-only="true">
+                                    <auto-complete min-length="1" debounce-delay="0" source="loadSkills($query)"></auto-complete>
+                                </tags-input>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback" ng-if='slider.min || slider.max'>
+                            <label for="Search" class="control-label col-md-2 col-sm-4">{{'Range'|translate}}  </label>
+                            <div class="col-md-10 col-sm-8">
+                                <rzslider rz-slider-model="slider.min" rz-slider-high="slider.max" rz-slider-options="slider.options"></rzslider>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <div class="col-md-12 col-sm-12"> <button type="submit" class="btn btn-success pull-right">{{'Search'|translate}}</button> </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- project-contest: START -->
+                <div class="col-xs-12">
+                    <div class="project-contest">
+                        <div class="clearfix">
+                            <div class="navbar-left">
+                                <p class="grayc">{{'Showing'|translate}} <strong class="blackc">{{totalItems}}</strong> {{'were found based
+                                    on your criteria'|translate}}</p>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <ul class="list-group custom-binding">
+                                <li class="list-group-item project-heading hidden-xs">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-5">
+                                            <h5>{{'Project'|translate}}</h5>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-7 text-center">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-sm-2">
+                                                    <h5>{{'Bids/entries'|translate}}</h5>
+                                                </div>
+                                                <div class="col-lg-4 col-sm-4 cursor">
+                                                    <h5 class="dropdown" ng-click="orderPosted(sortby)"> {{'Started'|translate}} <i class="fa fa-angle-{{created_at}}" aria-hidden="true"></i></h5>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                        <li><a href="#">{{'Started'|translate}}</a></li>
+                                                        <li><a href="#">{{'end'|translate}}</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-lg-4 col-sm-6">
+                                                    <h5>{{'Price'|translate}} <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                                                     <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item project-content" ng-repeat="project in projects">
+                                    <div class="clearfix">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-5">
+                                                <h5 class="visible-xs">{{'Project'|translate}}</h5>
+                                                <h5 class="text-18"> <a ui-sref="Bid_ProjectView({id:project.id, slug:project.slug})"> {{project.name}} </a>                                                    </h5>
+                                                <p class="multiline-ellipsis" ng-bind-html="project.description | nl2br"></p>
+                                                <div class="mar-bot-10">
+                                                    <span class="label label-info label-orage Featured inline-span" ng-if="project.is_featured">
+                                                        {{'Featured'|translate}}
+                                                    </span>
+                                                    <span class="label label-info label-red Private inline-span" ng-if="project.is_private">
+                                                        {{'Private'|translate}}
+                                                    </span>
+                                                    <span  class="label label-info label-blue Urgent inline-span" ng-if="project.is_urgent">
+                                                        {{'Urgent'|translate}}
+                                                    </span>
+                                                    <span class="label label-info label-gray Sealed inline-span" ng-if="project.is_hidded_bid">
+                                                        {{'Sealed'|translate}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-7">
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-sm-2">
+                                                        <span class="visible-xs">{{'Bids/entries'|translate}}</span>
+                                                        <span class="content" ng-if="project.project_bid.bid_count != null">{{project.project_bid.bid_count}}</span>
+                                                        <span class="content" ng-if="project.project_bid.bid_count == null">0</span>
+                                                    </div>
+                                                    <div class="col-lg-4 col-sm-4"> <span class="visible-xs">{{'Date'|translate}}</span> <span class="content">{{project.created_at | timeago}}</span>                                                        </div>
+                                                    <div class="col-lg-4 col-sm-6"> <span class="visible-xs">{{'Price'|translate}}'
+                                                         <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                                                     <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span>
+                                                     </span> 
+                                                     <span class="content">
+                                                         <amount-display  amount='{{project.project_range.min_amount}}' ng-if="project.project_range.min_amount"></amount-display> - 
+                                                         <amount-display  amount='{{project.project_range.max_amount}}' ng-if="project.project_range.max_amount"></amount-display>
+                                                        </span>                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6 col-xs-12">
+                                                <span ng-if="project.skills_projects.length > 0" ng-repeat="skill in project.skills_projects">                                                         
+                                                    <a ui-sref="Bid_Projects({skills:skill.skills.id,page:'',type:'',project_categories:'',price_range_min:'',price_range_max:''})"> 
+                                                        {{skill.skills.name | capitalize}}{{!$last?', ':''}}</a>
+                                                </span> <span ng-if="project.skills_projects.length  == 0">
+                                                    {{'--'| translate}}
+                                                </span>
+                                            </div>
+                                            <div class="col-sm-6 col-xs-12" ng-if="user.id != project.user_id && project.bid.length == 0">
+                                                <span ng-if="!isAuth">
+                                                    <a href="projects" title="{{'Bid Now'|translate}}" ng-click="openLoginModal('login')" class="btn gradi-rnd-btn navbar-right">{{'Bid Now'|translate}}</a></span>
+                                                <span ng-if="isAuth">
+                                                    <a class="btn gradi-rnd-btn pull-right" ui-sref="Bid_ProjectView({id:project.id, slug:project.slug, placebid: true})" class="btn btn-success">{{'Bid Now'| translate}}</a>
+                                                </span>
+                                            </div>
+                                            <div class="col-sm-6 col-xs-12" ng-if="user.id == project.user.id && isAuth">
+                                                <a class="btn gradi-rnd-btn pull-right" ui-sref="Bid_ProjectEdit({id:project.id, status:project.project_status.name})">
+                                                    {{'Edit' | translate}}
+                                                </a>
+                                            </div>
+                                            <div class="col-sm-6 col-xs-12" ng-if="isAuth && user.id != project.user_id && project.bid.length != 0 && project.bid.is_freelancer_withdrawn == false">
+                                                <span class="btn gradi-rnd-btn pull-right" class="btn btn-success">{{'BID PLACED'| translate}}</span>
+                                            </div>
+                                             <div class="col-sm-6 col-xs-12" ng-if="isAuth && user.id != project.user_id && project.bid.length != 0 && project.bid.is_freelancer_withdrawn == true">
+                                                 <a class="btn gradi-rnd-btn pull-right" ui-sref="Bid_ProjectView({id:project.id, slug:project.slug, placebid: true})" class="btn btn-success">{{'Bid Now'| translate}}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li ng-if="projects.length == 0" class="list-group-item project-content">
+                                    <p class="no-mar text-danger text-center">{{'No Projects'| translate}}</p>
+                                </li>
+                                  <li ng-if="!projects.length && loader" class="list-group-item project-content text-center"> 
+                                    <span>
+                                        <img ng-src="images/contest_loader.gif" alt="loading" title="loading">
+                                    </span> 
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- project-contest: END -->
+            </div>
+            <!-- pagtion-Blk: START -->
+            <div class="row binding-pagination" ng-hide="!projects.length">
+                <div class="pagnation-content">
+                    <div class="container">
+                        <div class="clearfix pagnation-inner">
+                            <uib-pagination total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm"
+                                boundary-links="true" num-pages="numPages" num-pages="noOfPages" ng-click="paginate()"></uib-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Binding-Freelancer: END -->
+    <!-- pagtion-Blk: END -->
+    <!-- started today-Blk: START -->
+    <section class="bg-primary get-start-blk" ng-if="user.role_id != 4">
+        <div class="container">
+            <div class="ver-top-mspace30 ver-space10">
+                <div class="text-center">
+                    <h4 class="h3 no-mar text-uppercase Montserrat text-22"> <strong>{{'Get started today'|translate}}</strong> </h4>
+                    <p class="ver-mspace15 text-16 lin-heig22">{{settings.SITE_NAME}} {{'is the perfect place for you to find the best freelancer for your projects'|translate}}.
+                        </p>
+                    <ul class="list-inline ver-mspace30 started-list">
+                        <!--<li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1"> <a href="contests" title="Join Contest" class="btn btn-default btn-lg text-uppercase navbar-btn">{{'Join Contest'|translate}}</a>                            </li>-->
+                        <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                                <a href="projects/add" title="Post a Project" class="btn btn-default btn-lg text-uppercase navbar-btn">{{'Post a Project'|translate}}</a>                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- started today-Blk: START -->
+</main>

@@ -1,0 +1,258 @@
+<div class="container" ng-if='show_response_page == true'>
+    <div class="websiteprojectsblock">
+        <h2>{{project.name}}</h2>
+        <div class="webistebadges clearfix">
+            <div class="pull-left">
+                <ul class="bidding-badge-blk list-inline">
+                    <li>{{'Bids'|translate}}
+                        <span class="badge bids">{{(project.project_bid.bid_count != null)?project.project_bid.bid_count: '0'}}</span>
+                    </li>
+                    <li>{{'Avg Bids'|translate}} 
+                        <span class="badge avgbids" ng-if="project.project_bid.bid_count != null && project.project_bid.total_bid_amount != null &&project.project_bid.bid_count != 0 && project.is_hidded_bid != 1"> 
+                         <amount-display  amount='{{project.project_bid.total_bid_amount / project.project_bid.bid_count}}' ng-if="project.project_bid.bid_count != 0 && project.project_bid.bid_count != null"></amount-display> 
+
+                        </span>
+                        <span class="badge avgbids" ng-if="project.project_bid.bid_count == null && project.project_bid.total_bid_amount == null || project.project_bid.bid_count == 0 || project.is_hidded_bid == 1"> 
+                        N/A 
+                        </span>
+                    </li>
+                    <li>{{'Project Budget'|translate}} 
+                         
+                        <span class="badge avgbids">
+                            <amount-display  amount='{{project.project_range.min_amount}}' ng-if="project.project_range.min_amount"></amount-display>  -  
+                            <amount-display  amount='{{project.project_range.max_amount}}' ng-if="project.project_range.max_amount"></amount-display>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="pos-rel">
+                <span ng-if="project.is_featured" class="label label-info label-orage Featured tilt-feature tilt">
+                    {{'Featured'|translate}}
+                </span>
+                <span ng-if="project.is_private" class="label label-info label-red Private tilt tilt-private">
+                    {{'Private'|translate}}
+                </span>
+                <span ng-if="project.is_urgent" class="label label-info label-blue Urgent tilt tilt-urgent">
+                    {{'Urgent'|translate}}
+                </span>
+                <span ng-if="project.is_hidded_bid" class="label label-info label-gray Sealed tilt tilt-sealed">
+                    {{'Sealed'|translate}}
+                </span>
+            </div>
+             <div class="clearfix bidding-open-btn" ng-if="!is_already_bidded && !project_user && project.project_status_id == ProjectStatusConstant.OpenForBidding">
+                <button class="btn btn-primary btn-large" ng-if="!is_bid_enable && isAuth" ng-click="bidProject()"> {{'Bid on This Project'|translate}} </button>
+                <button class="btn btn-primary btn-large" ng-if="!isAuth" ng-click="openLoginModal('login')"> {{'Bid on This Project'|translate}} </button>
+            </div>
+              <div class="clearfix bidding-open-btn directly-blk bid-placed" ng-if="!project_user">
+                <span class="text-uppercase label label-primary"  ng-if="(is_already_bidded || is_bid_edit) && project.project_status_id <= ProjectStatusConstant.OpenForBidding">
+                    {{'Bid Placed'|translate}}
+                </span>
+                <!--<span class="text-uppercase label label-primary" ng-if="!is_already_bidded && project.project_status_id != ProjectStatusConstant.OpenForBidding && bid_lost">
+                    {{'Already Awarded by others'|translate}} 
+                </span>
+                <span class="text-uppercase label label-primary" ng-if="is_already_bidded && project.project_status_id != ProjectStatusConstant.OpenForBidding && bid_lost">
+                    {{'Awarded by others'|translate}}  
+                </span> -->
+              <!--  <span class="text-uppercase label label-primary" ng-if="project.project_status_id == ProjectStatusConstant.WinnerSelected && !bid_lost">
+                    {{'Selected as Winner'|translate}} 
+                </span>-->
+              <!--   <span class="text-uppercase label label-primary" ng-if="project.project_status_id == ProjectStatusConstant.WinnerSelected && bid_lost">
+                    {{'Winner Selected'|translate}} 
+                </span>-->
+              <!--  <span class="text-uppercase label label-primary" ng-if="project.project_status_id == ProjectStatusConstant.UnderDevelopment">
+                    {{'Under Development'|translate}} 
+                </span>-->
+            <!--    <span class="text-uppercase label label-primary" ng-if="project.project_status_id == ProjectStatusConstant.MutuallyCanceled">
+                    {{'Mutually Canceled'|translate}} 
+                </span>-->
+               <!-- <span class="text-uppercase label label-primary" ng-if="project.project_status_id == ProjectStatusConstant.Completed">
+                    {{'Requested for complete'|translate}} 
+                </span>-->
+              <!--  <span class="text-uppercase label label-primary" ng-if="project.project_status_id == ProjectStatusConstant.FinalReviewPending">
+                    {{'Final review pending'|translate}} 
+                </span>-->
+              <!--  <span class="text-uppercase label label-primary" ng-if="project.project_status_id == ProjectStatusConstant.Closed">
+                    {{'Closed'|translate}} 
+                </span>-->
+               <!-- <project_view_share> </project_view_share>-->
+            </div>
+            <div class="clearfix bidding-open-btn directly-blk">
+                <div class="text-uppercase" ng-class="(project.project_status_id == ProjectStatusConstant.OpenForBidding && !project_user)? '' : 'label label-primary'">
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.Draft" title="{{'Saved as Draft'|translate}}"> 
+                        {{'Saved as Draft'|translate}} 
+                    </span>
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.PaymentPending" title="{{'Payment Pending'|translate}}"> 
+                        {{'Payment Pending'|translate}} 
+                    </span>
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.PendingForApproval" title="{{'Waiting for Approval'|translate}}"> 
+                        {{'Waiting for Approval '|translate}} 
+                    </span>
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.BiddingExpired" title="{{'Bidding Expired'|translate}}"> 
+                        {{'Bidding Expired'|translate}} 
+                    </span>
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.WaitingForEscrow" title="{{'Waiting For Escrow'|translate}}"> 
+                        {{'Waiting For Escrow'|translate}} 
+                    </span>
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.FundedInEscrow" title="{{'Funded In Escrow'|translate}}"> 
+                        {{'Funded In Escrow'|translate}} 
+                    </span>
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.BiddingClosed" title="{{'Bidding Closed'|translate}}"> 
+                        {{'Bidding Closed'|translate}} 
+                    </span>
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.EmployerCanceled" title="{{'Employer Canceled'|translate}}"> 
+                        {{'Employer Canceled'|translate}} 
+                    </span>
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.CanceledByAdmin" title="{{'Canceled By Admin'|translate}}"> 
+                        {{'Canceled By Admin'|translate}} 
+                    </span>
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.OpenForBidding && project_user" title="{{'Open for Bidding'|translate}}"> 
+                        {{'Open for Bidding'|translate}} 
+                    </span>
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.WinnerSelected" title="{{'Winner Selected'|translate}}"> 
+                        {{'Winner Selected'|translate}} 
+                    </span>
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.UnderDevelopment" title="{{'Under Development'|translate}}"> 
+                        {{'Under Development'|translate}}  
+                    </span>
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.Completed" title="{{'Completed'|translate}}"> 
+                        {{'Completed'|translate}}  
+                    </span>
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.Closed" title="{{'Closed'|translate}}"> 
+                        {{'Closed'|translate}}  
+                    </span>
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.MutuallyCanceled" title="{{'Mutually Canceled'|translate}}"> 
+                        {{'Mutually Canceled'|translate}}  
+                    </span>
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.Completed" title="{{'Requested for complete'|translate}}"> 
+                    {{'Requested for complete'|translate}} 
+                    </span>
+                    <span ng-if="project.project_status_id == ProjectStatusConstant.FinalReviewPending"> 
+                        {{'Final Review Pending'|translate}} 
+                    </span>
+                </div>
+                 <project_view_share> </project_view_share>
+            </div>           
+            <!--&& project.project_status_id > ProjectStatusConstant.OpenForBidding-->
+          
+            
+            <div ng-if="!is_already_bidded && !project_user" class="clearfix clear">
+                <bidding-post project="{{project.id}}"></bidding-post>
+            </div>
+			<span ng-if="isAuth && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/ProjectFollow') > -1)"> 
+              <bookmark-follow classname="Project"> </bookmark-follow>
+             
+            </span>
+          
+            <div title="Bookmark Projects" class="project-bookmark cursor" ng-if="!isAuth && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/ProjectFollow') > -1)" ng-click="openLoginModal('login')">
+                <span class="bookmark-circle"></span>
+            </div> 
+        </div>
+        <div class="projectdescription">
+            <div class="decriptionpart">
+                <h3>{{'Project Description' | translate}}</h3>
+                <p ng-bind-html="project.description | nl2br"></p>
+            </div>
+            <div class="decriptionpart" ng-if="project.additional_descriptions">
+                <h3>{{'Additional Description' | translate}}</h3>
+                <p ng-bind-html="project.additional_descriptions | nl2br"></p>
+            </div>
+            <div class="decriptionpart">
+                 <file-download attachment="{{project.attachment}}" downloadlable="{{project.attachment.filename}}" ng-if="project.attachment">
+                  {{project.attachment.filename}} </file-download>
+                  
+                 <file-download attachment="{{project.attachment}}" downloadlable="<i class='fa fa-download'> </i>" ng-if="project.attachment"></file-download>
+            </div>
+            <div class="employerdescription" ng-if="isAuth">
+                <h3>{{'About the employer'|translate}}</h3>
+                <div class="media">
+                    <div class="pull-left">
+                        <div class="bot-15-mspace">
+                            <a href="users/{{project.user.id}}/{{project.user.username}}" ng-if="$root.user.role_id == 1 || project.freelancer_user_id == $root.user.id">
+                                <img ng-src="{{project.user.user_avatar_url}}" class="img-responsive img-circle user-med" title="{{project.user.username}}" alt="[Image: {{project.user.username}}]">
+                            </a>
+                            <span ng-if="$root.user.role_id != 1 && (project.freelancer_user_id != $root.user.id || project.freelancer_user_id == null)">
+                            <img src="images/default.png" class="img-responsive img-circle user-med">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <div class="info-skills">
+                            <ul class="list-inline text-center pull-left user-pro-rating">
+                                <span ng-init="value = (project.user.total_rating_as_employer / project.user.review_count_as_employer)"></span>
+                                <li class="" ng-if="value && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1)">
+                                    <span class="label label-default">{{value | number:1}}</span>
+                                </li>
+                                <li ng-if="value && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1)">
+                                    <bidding-stars ng-model="value" max=5 readonly="true" class="list-ratings"></bidding-stars>
+                                </li>
+                                <li ng-if="!value && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1)">
+                                    <span class="label label-default">{{rating_value}}</span>
+                                </li>
+                                <li ng-if="!value && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1)">
+                                    <input-stars max="5" ng-model="rating_value" readonly></input-stars>
+                                </li>
+                                <li>
+                                    <!--<img src="images/flag1.jpg" alt="[Image: Flags]" title="Flags"> -->
+                                    <i class="flag-icon flag-icon-{{project.user.country.iso_alpha2 | lowercase}}"> </i>
+                                </li>
+                            </ul>
+                            <div>
+                                <ul class="clsemployersocials list-unstyled text-center no-mar pull-left list-inline">
+                                    
+                                    <li class="status-show" ng-if="project.user.is_email_confirmed">
+                                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                        <span>{{'Email Verified'|translate}}</span>
+                                    </li>
+                                    <li class="grey-bg status-show" ng-if="!project.user.is_email_confirmed">
+                                        <i class="fa fa-envelope-o" aria-hidden="true" ></i>
+                                        <span>{{'Email till not verified'|translate}}</span>
+                                    </li>
+                                    <li class="status-show" ng-if="project.user.is_made_deposite">
+                                        <i class="fa fa-credit-card" aria-hidden="true"></i>
+                                        <span>{{'Payment Verified'|translate}}</span>
+                                    </li>
+                                    <li class="grey-bg status-show" ng-if="!project.user.is_made_deposite">
+                                        <i class="fa fa-credit-card" aria-hidden="true"></i>
+                                        <span>{{'Payment till not made'|translate}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="is_show_follow">
+                    <ul class="list-inline share no-mar">
+                        <li>
+                            <ul class="list-inline">
+                                <li class="share-border cursor">
+                                    <a href="" ng-click="follow()" class="text-primary"><i class="fa fa-heart"></i></a>
+                                </li>
+                                <li>
+                                    <a href="" ng-click="follow()" class="grayc" title="{{'Follow'| translate}}">{{followBtn}}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="skillrequired">
+                <h3>{{'Skills required'|translate}}</h3>
+                <p>
+                    <span ng-repeat="skills in project.skills_projects">
+                        <a class="" ui-sref="Bid_Projects({'skills':skills.skills.id})"> {{skills.skills.name | capitalize}}{{!$last?', ':''}} </a>
+                    </span>
+                </p>
+                <div class="clearfix">
+                    <a class="btn btn-primary" ui-sref="Bid_ProjectAdd()" ng-if="$root.user.role_id == $root.ConstUserRole.User || $root.user.role_id == $root.ConstUserRole.Employer">Post a Project like this</a> 
+
+                    <span class="pull-right report-link" ng-if="isAuth &&(project.user_id != $root.user.id) && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/ProjectFlag') > -1)">
+                        <bidding-flag classname="Project" foreignid="{{project.id}}" appendhtml='<span class="share"><span class="share-border hor-space-5"><i class="fa fa-flag text-primary"></i></span><span class="left-space text-muted">Report Project</span></span>'> </bidding-flag>
+                    </span>
+                </div>
+            </div>
+        </div>
+		<!--condition for 404 error if project is null not to call bids	-->
+        <bidding-list ng-if="project.id" project="{{project.id}}" projectuser="{{project.user_id}}" projectstatus="{{project.project_status_id}}" hiddienbid="{{project.is_hidded_bid}}"
+            isbid="{{is_already_bidded}}" projectbidid="{{project.project_bid.id}}" isprojectcancel="{{isprojectcancel}}" isdispute="{{project.is_dispute}}" id="bidsAll"></bidding-list>
+    </div>
+</div>

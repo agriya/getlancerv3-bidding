@@ -1,0 +1,74 @@
+<section class="my-contests" ng-controller="biddingProjectDashboardCtrl">
+  <div class="row">
+    <div class="col-xs-12 top-mspace">
+      <div class="table-block">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>{{'Project Details'|translate}}</th>
+                <th class="text-center">{{'Amount'|translate}} 
+                  <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                  <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span></th>
+                <th>{{'Description'|translate}} </th>
+                <th width="100"  class="text-center"> {{'Action'|translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="invoice in my_invoices">
+                <td>
+                    <a ui-sref="Bid_ProjectView({id:invoice.project_id,slug:invoice.bid.project.slug})">
+                      <span title="{{invoice.bid.project.name}}">  
+                        {{invoice.bid.project.name}}
+                      </span>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <span>  
+                      {{invoice.amount}}
+                    </span>
+                </td>
+                <td> <span title="{{invoice.bid.description}}">  
+                    {{invoice.bid.description}} 
+                </span> </td>
+                <td  class="text-center">
+                  <div class = text-center ng-if='invoice.is_paid  == true'>
+                    -
+                  </div>
+                  <div class="dropdown" ng-if='invoice.is_paid != true'>
+                     <button class="request-btn btn btn-primary dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="true">{{'Action'|translate}} <i class="fa fa-angle-down fa-fw" aria-hidden="true"></i> </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                      <li> <a ng-click="milestonePage(invoice.bid.project.id, invoices, 2)">
+                         {{'Edit'|translate}}</a> </li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              <tr ng-if="!my_invoices.length && !loader" class="text-center ">
+                <td colspan="8 "> <span class="text-danger">{{'No records available'|translate}}</span> </td>
+              </tr>
+              <tr ng-if="!my_invoices.length && loader " class="text-center ">
+                 <td colspan="8 ">
+                    <span>
+                      <img ng-src="images/contest_loader.gif " alt="loading " title="loading ">
+                    </span>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row binding-pagination " ng-show="currentPage> 1">
+          <div class="pagnation-content">
+            <div class="container">
+              <div class="clearfix pagnation-inner">
+                <uib-pagination total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm"
+                boundary-links="true" num-pages="numPages" num-pages="noOfPages" ng-click="paginate()"></uib-pagination>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>

@@ -1,0 +1,12 @@
+<div class="navbar-btn searchForm pr">
+    <div class="visible-sm serchIconSm pa"> <i class="fa fa-search fa-fw pa text-16"></i> </div>
+    <div class="serchSm">
+        <div class="serachCont pr"> <i class="fa fa-search fa-fw pa text-16"></i> <input placeholder="{{'Search'|translate}}" id="head-search" type="text" class="form-control text-16 seerchInp" ng-model="search_category" uib-typeahead="state as state.name for state in quote_search_categories | filter:$viewValue | limitTo:8"
+                typeahead-editable="false" typeahead-template-url="search_category_tpl.html" typeahead-on-select="getSelected($item);" /> </div>
+    </div>
+    <script type="text/ng-template" id="search_category_tpl.html">
+        <a> <span ng-bind-html="match.model.name | uibTypeaheadHighlight:query">
+        
+      </span> </a>
+    </script>
+</div>

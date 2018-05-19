@@ -1,0 +1,10 @@
+{
+	"name": "PaypalREST", 
+	"class": "fa fa-2x fa-user-md",
+	"description": "PaypalREST",
+	"dependencies": "Common",
+	"module_id": "819",
+	"module_hash": "2d76957f57343c6b582915ffcbfcbcab",
+	"display_order": "23",
+	"plugin_name":"Common/PaypalREST"
+}

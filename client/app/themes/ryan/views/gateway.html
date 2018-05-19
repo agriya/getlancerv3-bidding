@@ -1,0 +1,97 @@
+<article id="get-gateways-index">
+    <div class="get-gateways">
+        <div class="ver-space">
+            <div id="paymentgateways-tab-container" class="navbar-btn">
+                <ul class="nav nav-tabs cur">
+                    <!-- paypal tabs -->
+                    <li ng-if="paypal_enabled" ng-class='{active:paypal_enabled && !wallet_enabled}'>
+                        <a data-target="#Paypal" data-toggle="tab" ng-click="paneChanged('paypal')"> </a>
+                    </li>
+                    <!-- zazpay tabs -->
+                    <li ng-repeat="gateway_group in gateway_groups" ng-hide="!gateway_group.gateways.length" ng-class='{active:$first && !paypal_enabled}'>
+                        <a data-target="#{{gateway_group.id}}" data-toggle="tab" ng-click="paneChanged(gateway_group.display_name)">
+                            <div> <img ng-src="{{gateway_group.thumb_url}}" data-target="#{{gateway_group.id}}" /> </div>
+                        </a>
+                    </li>
+                    <!-- Wallet tab -->
+                    <li ng-if="wallet_enabled" ng-class='{active: !wallet_enabled && !paypal_enabled}'>
+                        <a data-target="#Wallet" data-toggle="tab" ng-click="paneChanged('Wallet')">
+                            <div> <img src="themes/ryan/images/wallet-icon.png" data-target="#Wallet"> </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content">
+                <div ng-repeat="gateway_group in gateway_groups" id="{{gateway_group.id}}" class="tab-pane" ng-class='{active:$first && !paypal_enabled }'>
+                    <ul class="list-inline">
+                        <li ng-repeat="payment_gateway in payment_gateways" ng-if="payment_gateway.group_id == gateway_group.id" class="">
+                            <div ng-if="payment_gateway.group_id == first_gateway_id" class="payment-note">{{'Please enter your credit card details below'|translate}}.</div>
+                            <div ng-if="payment_gateway.group_id != first_gateway_id" class="input radio no-mar hor-mspace radio_buttons"> <input type="radio" name="data" ng-model="sel_payment_gateway" id="PaymentGatewayIdSp{{payment_gateway.id}}" class="js-payment-type js-no-pjax pull-left no-mar" value="sp_{{payment_gateway.id}}" ng-click="rdoclick(payment_gateway.id, payment_gateway.form_fields)"
+                                /> <label for="PaymentGatewayIdSp{{payment_gateway.id}}">
+                                    <div class="pull-left">
+                                        <img ng-src="{{payment_gateway.thumb_url}}" alt="{{payment_gateway.name}}"/>
+                                    </div>
+                                </label>
+                                <p ng-bind-html="payment_gateway.instruction_for_manual" ng-show="payment_gateway.instruction_for_manual" class="payment-note"></p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="js-form col-xs-12 js-form navbar-btn">
+                        <div class="js-gatway_form_tpl clearfix" ng-repeat="(key, value) in form_fields_tpls" id="form_tpl_{{key}}" ng-if="gateway_group.id == group_gateway_id">
+                            <div ng-if="show_form[key]">
+                                <div class="no-mar space clearfix" ng-if="key == 'credit_card'">
+                                    <h3>{{'Credit card Details'|translate}}</h3>
+                                    <hr class="row" />
+                                    <div ng-include="form_fields[key]" ng-if="key === 'credit_card'" class="payment-form cc-section"></div>
+                                </div>
+                                <div class="no-mar space clearfix" ng-if="key == 'buyer' && payer_form_enabled">
+                                    <h3>{{'Payer Details'|translate}}</h3>
+                                    <hr class="row" />
+                                    <div ng-include="form_fields[key]" ng-if="key === 'buyer'" class="payment-form"></div>
+                                </div>
+                                <div class="no-mar space clearfix" ng-if="key == 'manual' && payment_note_enabled">
+                                    <h3>{{'Payer Details'|translate}}</h3>
+                                    <hr class="row" />
+                                    <div ng-include="form_fields[key]" ng-if="key === 'manual'" class="payment-form"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="navbar-btn mob-clr col-xs-12">
+                        <div class="bot-20-space">{{'By clicking the "Pay Now" button, you agree to these '|translate}} 
+                            <a target="_blank" href="pages/2/terms-and-conditions" title="{{'Terms of Service'|translate}}" class="text-primary">{{'Terms of Service.'|translate}}</a>                            
+                        </div>
+                        <div class="clearfix"> 
+                            <button type="submit" ng-disabled="paynow_is_disabled" class="btn btn-primary" title="{{'Pay Now'|translate}}">{{'Pay Now'|translate}} 
+                                <span ng-show="paynow_is_disabled"><i class="fa fa-spinner fa-pulse fa-lg"></i></span>
+                            </button>                            
+                        </div>
+                    </div>
+                </div>
+                <!-- paypal form -->
+                <div class="tab-pane" ng-class='{active: !wallet_enabled && paypal_enabled}' id="Paypal">
+                    <div class="js-form col-xs-12 js-form navbar-btn">
+                        <div class="clearfix btn-group"> <button type="submit" ng-disabled="paynow_is_disabled" class="textb text-13 btn btn-lg btn-primary" title="{{'Pay Now'|translate}}">{{'Pay Now'|translate}} <span ng-show="paynow_is_disabled"><i class="fa fa-spinner fa-pulse fa-lg"></i></span></button>                            </div>
+                        <div class="ver-space ver-mspace navbar-btn mob-clr col-xs-12 row"> <span class="text-info">{{'By clicking the "Pay Now" button, you agree to these '|translate}} <a target="_blank" href="pages/2/terms-and-conditions" title="{{'Terms of Service'|translate}}">{{'Terms of Service.'|translate}}</a></span>                            </div>
+                    </div>
+                </div>
+                <!-- wallet form -->
+                <div class="tab-pane" ng-class='{active: !wallet_enabled && !paypal_enabled && !is_wallet_page}' id="Wallet">
+                    <div class="js-form col-xs-12 js-form navbar-btn">
+                        <h3>{{'Your Available Balance:'|translate}} 
+                            <strong> {{user_available_balance | currency : selectedCurrency.currency_symbol : GeneralConfig.fraction}} </strong>
+                        </h3>
+                        <div class="bot-20-space">{{'By clicking the "Pay Now" button, you agree to these '|translate}} 
+                            <a target="_blank" href="pages/2/terms-and-conditions" title="{{'Terms of Service'|translate}}" class="text-primary">{{'Terms of Service.'|translate}}</a>
+                        </div>
+                        <div class="clearfix"> 
+                            <button type="submit" ng-disabled="paynow_is_disabled" class="btn btn-primary" title="{{'Pay Now'|translate}}">{{'Pay Now'|translate}} 
+                                <span ng-show="paynow_is_disabled"><i class="fa fa-spinner fa-pulse fa-lg"></i></span>
+                            </button>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>

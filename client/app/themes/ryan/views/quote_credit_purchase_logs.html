@@ -1,0 +1,69 @@
+<div class="section navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb navbar-btn">
+                    <li> <a href="/">{{'Home'|translate}}</a> </li>
+                    <li class="active">{{'Credit Purchase Logs'|translate}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div ng-include="'views/users_account_left_side_menu.html'"></div>
+            </div>
+            <div class="col-md-8 col-lg-9 navbar-btn" ng-controller="QuoteCreditPurchaseLogsController">
+                <div class="section navbar-default" ng-show="!loader">
+                    <div class="panel">
+                        <div class="panel-heading sep-bot">
+                            <h3 style="display:inline;">{{'Credit Purchase Logs'|translate}}</h3>
+                        </div>
+                        <div class="panel-heading" ng-show="credit_purchase_logs.length && !loader">
+                            <div class="add-wallet-table">
+                                <div class="table-responsive pg-table">
+                                    <table class="table table-striped no-mar">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'Date' |translate}}</th>
+                                                <th>{{'Name'|translate}}</th>
+                                                <th>{{'Credits'|translate}}</th>
+                                                <th>{{'Price'|translate}}</th>
+                                                <th>{{'Payment status'|translate}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="list in credit_purchase_logs">
+                                                <td>{{list.created_at}} </td>
+                                                <td>{{list.quote_credit_purchase_plan.name}}</td>
+                                                <td>{{list.quote_credit_purchase_plan.no_of_credits}}</td>
+                                                <td>{{list.quote_credit_purchase_plan.price | currency : selectedCurrency.currency_symbol : GeneralConfig.fraction}}</td>
+                                                <td><span ng-show="list.is_payment_completed"><i class="fa fa-check" aria-hidden="true"></i></span> <span ng-show="!list.is_payment_completed"><i class="fa fa-times" aria-hidden="true"></i></span> </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center" ng-hide="(credit_purchase_logs.length > itemsPerPage) && currentPage==1">
+                                        <uib-pagination ng-hide="!credit_purchase_logs.length" total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="noOfPages"
+                                            ng-click="paginate_credit_log()"></uib-pagination>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-include="'views/loader.html'"></div>
+                        <div class="panel-heading" ng-show="!credit_purchase_logs.length">
+                            <div class="alert alert-danger">
+                                <p class="text-center text-danger" ng-show="!loader"> {{'No records available' | translate}} </p>
+                                <p class="text-center" ng-show="loader"> {{'Loading..' | translate}} </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

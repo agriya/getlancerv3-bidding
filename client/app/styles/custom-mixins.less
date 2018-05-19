@@ -1,0 +1,91 @@
+.pos-abs (@position:absolute; @top:0; @right:0; @bottom:0; @left:0; ) {
+	position:@position;
+	top:@top;
+	right:@right;
+	bottom:@bottom;
+	left:@left;
+}
+
+.transition (border-top .25s linear, color .5s linear;) {
+  -webkit-transition: @arguments;
+  -moz-transition: @arguments;
+  -o-transition: @arguments;
+  transition: @arguments;
+}
+
+.box-shadow(@x: 0; @y: 0; @blur: 1px; @color: #000) {
+  -webkit-box-shadow: @arguments;
+     -moz-box-shadow: @arguments;
+          box-shadow: @arguments;
+}
+
+.text-shadow(@x: 0; @y: 0; @blur: 1px; @color: #000) {
+  -webkit-text-shadow: @arguments;
+     -moz-text-shadow: @arguments;
+          text-shadow: @arguments;
+}
+
+.bor-rad(@border-radius:40%;) {
+	-moz-border-radius:@border-radius;
+	  -webkit-border-radius:@border-radius;
+	    -o-border-radius:@border-radius;
+	      -ms-border-radius:@border-radius;
+	         border-radius:@border-radius;
+}
+
+.out-rad(@outline-radius:50%;) {
+	-moz-outline-radius:@outline-radius;
+	  -webkit-outline-radius:@outline-radius;
+	    -o-outline-radius:@outline-radius;
+	      -ms-outline-radius:@outline-radius;
+	        outline-radius:@outline-radius;
+}
+
+.wid-hei (@width:100px; @height:100px; ) {
+	width:@width;
+	height:@height;
+}
+.checkbox-before {
+		content:'';
+		display:inline-block;
+		background-color:@white;
+		.wid-hei(19px; 19px;);
+		min-width:19px;
+		position:relative;
+		text-align:center;
+		vertical-align:middle;
+		margin-right:10px;
+		margin-bottom:4px;
+		border:1px solid #d5dae0;
+		pointer-events:none;
+		.bor-rad(4px;);
+}
+.option-checked {
+		content:'\f00c';
+		background-color:@brand-primary;
+		font:10px/18px fontawesome;
+		border:none;
+		color:@white;
+}
+.radio-before {
+		content:'';
+		display:inline-block;
+		background-color:@white;
+		.wid-hei(19px; 19px;);
+		
+		position:relative;
+		text-align:center;
+		vertical-align:middle;
+		
+		border:1px solid #d5dae0;	
+		margin:-4px 6px 0 0;
+		.bor-rad(50%;);	
+		.box-shadow(1px 1px 1px @white-d4;);
+}
+.modal-option {
+		margin-right:@margin - 5px;
+		z-index:1;
+		position:static;
+		margin-left: 0;
+		outline:0;
+}

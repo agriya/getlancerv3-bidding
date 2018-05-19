@@ -1,0 +1,200 @@
+<div class="gray-bg top-space top-mspace-10">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb panel">
+                    <li> <a href="/">{{'Home'|translate}}</a> </li>
+                    <li class="active">{{'Cash Withdrawals'|translate}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div ng-include="'views/users_account_left_side_menu.html'"></div>
+            </div>
+            <div class="col-md-8 col-lg-9 navbar-btn">
+                <div class="section navbar-default" ng-show="!loader" ng-controller='CashWithdrawalsController'>
+                    <div class="panel">
+                        <div class="panel-heading sep-bot">
+                            <h3 class="no-mar">{{'Cash Withdrawals'|translate}}</h3>
+                        </div>
+                        <div class="add-wallet-table" ng-if="moneyTransferList.length !== 0">
+                            <div class="panel-heading">
+                                <div class="alert alert-info" ng-if="settings.WITHDRAW_REQUEST_FEE != 0 && settings.WITHDRAW_REQUEST_FEE_TYPE == 'Percentage'">
+                                    <p>
+                                        {{'Site will charge'|translate}} <span>{{settings.WITHDRAW_REQUEST_FEE}}</span>% {{'as site commission from the requested amount'|translate}}.
+                                        <p>
+                                            e.g., {{'If you request to withdraw '|translate}}
+                                            <amount-display amount='{{withDrawAmount}}'
+                                                ng-if="withDrawAmount"></amount-display>,
+                                           {{'admin will transfer' |translate}}
+                                            <amount-display amount='{{withDrawAmount - total}}' ng-if="total"></amount-display> {{' to your account'|translate}}.
+                                        </p>
+                                    </p>
+                                </div>
+                                <div class="alert alert-info" ng-if="settings.WITHDRAW_REQUEST_FEE != 0 && settings.WITHDRAW_REQUEST_FEE_TYPE == 'Fixed Fee' && settings.WITHDRAW_REQUEST_FEE != ''">
+                                    <p>
+                                        {{'Site will charge'|translate}}
+                                        <amount-display amount='{{settings.WITHDRAW_REQUEST_FEE}}' ng-if="withDrawAmount"></amount-display>
+                                        {{'as site commission from the requested amount'|translate}}.
+                                        <p>
+                                            e.g., {{'If you request to withdraw'|translate}}
+                                            <amount-display amount='{{withDrawAmount}}'
+                                                ng-if="withDrawAmount"></amount-display> {{'and admin will be transfer'|translate}}
+                                            <amount-display amount='{{ExampleAmount}}' ng-if="ExampleAmount"></amount-display> {{'to your account'|translate}}.
+                                        </p>
+                                    </p>
+                                </div>
+                                <form class="clearfix " role="form" name="moneyTransfer" ng-submit="userCashWithdrawSubmit(moneyTransfer.$valid)" novalidate>
+                                    <div class="form-group clearfix">
+                                        <label class="col-sm-4 control-label">{{'Choose your payment option'|translate}}</label>
+                                        <ul class="col-sm-8 list-inline transfer-option">
+                                            <li ng-show="!moneyTransferList.length"> {{'No account found'|translate}}
+                                                <a href="users/money_transfer_account"> {{'Click here to add account' | translate}}</a>
+                                            </li>
+                                            <li class="show" ng-repeat="moneyTransfer in moneyTransferList" ng-init="money_transfer_account_id = moneyTransferList[0].id;selectedAcc(moneyTransferList[0].id);">
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" value="{{moneyTransfer.id}}" id="moneyTransfer_{{moneyTransfer.id}}" name="money_transfer_account_id" ng-model="money_transfer_account_id" ng-click="selectedAcc(moneyTransfer.id)">
+                                                        <span ng-bind-html="moneyTransfer.account"></span>                                    
+                                                    </label>
+                                                </div>
+                                            </li>
+                                            <span ng-show="((moneyTransfer.$submitted || moneyTransfer.money_transfer_account_id.$touched) && (moneyTransfer.money_transfer_account_id.$pristine))">
+                                                <span class="error" ng-show="account_error">
+                                                    {{'You must select one account' | translate}}
+                                                </span>
+                                            </span>
+                                        </ul>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <label class="col-sm-4 control-label" for="amount">{{'Amount'|translate}}</label>
+                                        <div class="col-sm-6">
+                                            <input type="number" min="{{minimum_withdraw_amount}}" max="{{maximum_withdraw_amount}}" class="form-control" name="amount"
+                                                id="amount" placeholder="{{'Amount'|translate}}" ng-model="amount" ng-change="amountErr=''"
+                                                required>
+                                            <div ng-show="((moneyTransfer.$submitted || moneyTransfer.amount.$touched) && (moneyTransfer.amount.$pristine || moneyTransfer.amount.$invalid)) || amountErr">
+                                                <span class="error" ng-show="(moneyTransfer.amount.$error.required)">
+                                                {{'You must enter the amount' | translate}}
+                                                </span>
+                                                <span class="error" ng-show="(moneyTransfer.amount.$error.number)">
+                                                    {{'You did not enter a valid number' | translate}}
+                                                </span>
+                                                <span class="error" ng-show="(moneyTransfer.amount.$error.min)">
+                                                    {{'Your field value is lesser than minimum value' | translate}}
+                                                </span>
+                                                <span class="error" ng-show="(moneyTransfer.amount.$error.max)">
+                                                    {{'Your field value is greater than maximum value' | translate}}
+                                                </span>
+                                                <span class="error" ng-show="amountErr">
+                                                    {{amountErr}}
+                                                </span>
+                                            </div>
+                                            <ul class="list-unstyled left-space navbar-btn text-muted text-12">
+                                                <li>{{'Minimum Withdrawal'|translate}}&nbsp;
+                                                    <span> <amount-display  amount='{{minimum_withdraw_amount}}' ng-if="minimum_withdraw_amount"></amount-display>  </span>
+                                                </li>
+                                                <li>{{'Maximum Withdrawal'|translate}}&nbsp;
+                                                    <span>
+                                                        <amount-display  amount='{{maximum_withdraw_amount}}' ng-if="maximum_withdraw_amount"></amount-display> 
+                                                        </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <label class="sr-only col-sm-4" for="submit">{{'Submit'|translate}}</label>
+                                        <div class="col-sm-8 col-sm-offset-4">
+                                            <button id="submit" class="btn btn-primary" type="submit">{{'Submit' | translate }}</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="panel-heading" ng-show="cashWithdrawalsList.length && !loader">
+                                <div class="add-wallet-table">
+                                    <h4 class="">{{'Cash Withdraw Requests'|translate}}</h4>
+                                    <div class="table-responsive pg-table">
+                                        <table class="table no-mar table-striped table-bordered table-center">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{'Date' |translate}}</th>
+                                                    <th>{{'Account'|translate}}
+                                                    <th class="text-center" ng-if="settings.WITHDRAW_REQUEST_FEE != 0">
+                                                     {{'Requested Amount ' |translate}} <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                                                     <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}}) </span>
+                                                     </th>
+                                                    <th class="text-center" ng-if="settings.WITHDRAW_REQUEST_FEE != 0">{{'Site Commission ' |translate}} <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                                                     <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}}) </span></th>
+                                                    <th class="text-center" ng-if="settings.WITHDRAW_REQUEST_FEE != 0">{{'Final Amount' |translate}} <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span><span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}}) </span>
+                                                    </th>
+                                                    <th class="text-center" ng-if="settings.WITHDRAW_REQUEST_FEE == 0">{{'Requested Amount ' |translate}} <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span><span ng-if="$root.settings.CURRENCY_SYMBOL === ''"></span></th>
+                                                    <th>{{'Status' |translate}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="userCashWithdrawals in cashWithdrawalsList">
+                                                    <td class="col-sm-3">{{userCashWithdrawals.created_at}}</td>
+                                                    <td>{{userCashWithdrawals.money_transfer_account.account}}</td>
+                                                    <td class="text-center" ng-if="settings.WITHDRAW_REQUEST_FEE != 0">
+                                                        {{userCashWithdrawals.amount}}
+                                                    </td>
+                                                     <td class="text-center" ng-if="settings.WITHDRAW_REQUEST_FEE != 0">
+                                                        {{userCashWithdrawals.withdrawal_fee}}
+                                                    </td>
+                                                     <td class="text-center" ng-if="settings.WITHDRAW_REQUEST_FEE != 0">
+                                                       {{userCashWithdrawals.amount - userCashWithdrawals.withdrawal_fee}} 
+                                                    </td>
+                                                     <td class="text-center" ng-if="settings.WITHDRAW_REQUEST_FEE == 0">             
+                                                        {{userCashWithdrawals.amount}}
+                                                    </td>
+                                                    <td>
+                                                        <span ng-show="userCashWithdrawals.withdrawal_status_id == 1">{{'Pending' |translate}}</span>
+                                                        <span ng-show="userCashWithdrawals.withdrawal_status_id == 2">{{'Under Process' |translate}}</span>
+                                                        <span ng-show="userCashWithdrawals.withdrawal_status_id == 3">{{'Success' |translate}}</span>
+                                                        <span ng-show="userCashWithdrawals.withdrawal_status_id == 4">{{'Rejected' |translate}}</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="binding-pagination">
+                                <div class="pagnation-content">
+                                    <div class="clearfix pagnation-inner">
+                                        <div class="col-md-12 text-center" ng-hide="(cashWithdrawalsList.length > itemsPerPage) && currentPage==1">
+                                            <uib-pagination ng-hide="!cashWithdrawalsList.length" previous-text="Previous" next-text="Next" total-items="totalItems"
+                                                ng-model="currentPage" max-size="maxSize" class="pagination-sm"
+                                                boundary-link-numbers="true" rotate="false" items-per-page="itemsPerPage" num-pages="numPages" num-pages="noOfPages" ng-click="paginate(currentPage)"></uib-pagination>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="row">
+                                <div class="col-md-12 text-center" ng-hide="(cashWithdrawalsList.length > itemsPerPage) && currentPage==1">
+                                    <uib-pagination ng-hide="!cashWithdrawalsList.length" previous-text="Previous" next-text="Next" total-items="totalItems" num-pages="numPages" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true"
+                                        rotate="false" items-per-page="itemsPerPage" ng-change="paginate()"></uib-pagination>
+                                </div>
+                            </div>-->
+                            <div ng-include="'views/loader.html'"></div>
+                            <div class="panel-heading">
+                                <div class="" ng-show="!loader && !cashWithdrawalsList.length">
+                                    <p class="text-center text-danger">{{'No records available'|translate}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-heading" ng-if="moneyTransferList.length === 0">
+                            <div ng-show="!loader && !cashWithdrawalsList.length">
+                                <p class="text-center text-danger">
+                                    <a href="users/money_transfer_account"> {{'Your money transfer account is empty, so click here to update money transfer account.' | translate}} </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

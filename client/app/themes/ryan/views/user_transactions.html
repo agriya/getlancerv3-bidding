@@ -1,0 +1,62 @@
+<div class="section navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb navbar-btn">
+                    <li> <a href="/">{{'Home'|translate}}</a> </li>
+                    <li class="active">{{'Transactions'|translate}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div ng-include="'views/users_account_left_side_menu.html'"></div>
+            </div>
+            <div class="col-md-8 col-lg-9 navbar-btn">
+                <div class="section navbar-default" ng-show="!loader" ng-controller='UserTransactionsController'>
+                    <div class="panel">
+                        <div class="panel-heading sep-bot">
+                            <h3 style="display:inline;">{{'Transactions'|translate}}</h3>
+                        </div>
+                        <div class="panel-heading" ng-show="transactionsList.length && !loader">
+                            <div class="add-wallet-table">
+                                <div class="table-responsive pg-table">
+                                    <table class="table table-striped no-mar">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'Date' |translate}}</th>
+                                                <th>{{'To'|translate}}</th>
+                                                <th>{{'Amount'|translate}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="list in transactionsList">
+                                                <td>{{list.created_at}}</td>
+                                                <td>{{list.other_user.username}}</td>
+                                                <td>{{list.amount | currency : selectedCurrency.currency_symbol : GeneralConfig.fraction}}</td>
+                                            </tr>
+                                            <tr ng-if="!loader && !transactionsList.length && !loader" class="text-center">
+                                                <td colspan="8" class="text-danger"> {{'No records available'|translate}} </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center" ng-hide="(transactionsList.length > itemsPerPage) && currentPage==1">
+                                        <uib-pagination ng-hide="!transactionsList.length" previous-text="Previous" next-text="Next" total-items="totalItems" num-pages="numPages" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true"
+                                            rotate="false" items-per-page="itemsPerPage" ng-change="paginate()"></uib-pagination>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-include="'views/loader.html'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

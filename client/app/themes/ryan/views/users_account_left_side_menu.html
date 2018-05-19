@@ -1,0 +1,20 @@
+<ul class="list-unstyled navbar-btn menu-left-sidebar panel">
+    <li> <a title="{{'Profile'|translate}}" href="users/settings"><i class="fa fa-fw fa-user"></i> {{'My Account'|translate}}</a></li>
+    <li> <a title="{{'Change Password'|translate}}" href="users/change_password"><i class="fa fa-key fa-fw"></i> {{'Change Password'|translate}}</a></li>
+    <li> <a title="{{'Cash Withdrawals'|translate}}" href="users/cash_withdrawals"><i class="fa fa-fw fa-money"></i> {{'Cash Withdrawals'|translate}}</a></li>
+    <li> <a title="{{'Money Transfer Account'|translate}}" href="users/money_transfer_account"><i class="fa fa-fw fa-book"></i> {{'Money Transfer Account'|translate}}</a></li>
+    <li> <a title="{{'Transactions'|translate}}" href="users/transactions"><i class="fa fa-fw fa-money"></i> {{'Transactions'|translate}}</a></li>
+    <li> <a title="{{'Add to Wallet'|translate}}" href="wallets"><i class="fa fa-fw fa-google-wallet"></i> {{'Add to Wallet'|translate}}</a></li>
+    <!-- Begin:QuoteService -->
+    <li ng-show="SupplierPortal"> <a title="{{'My Services'|translate}}" href="quote_service/my_services"><i class="fa fa-fw fa-wrench"></i> {{'My Services'|translate}}</a></li>
+    <li ng-if="settings.IS_BUY_OPTION_ENABLED != ConstQuoteBuyOption.Enabled" ng-show="SupplierPortal">
+    <a title="{{'My Works'|translate}}" href="my_works"><i class="fa fa-fw fa-folder-o"></i> {{'My Works'|translate}}</a></li>
+    <li ng-if="settings.IS_BUY_OPTION_ENABLED == ConstQuoteBuyOption.Enabled" ng-show="SupplierPortal"> <a title="{{'Rental Quotes'|translate}}" href="my_works"><i class="fa fa-fw fa-folder-o"></i> {{'Rental Quote'|translate}}</a></li>
+    <li ng-if="settings.IS_BUY_OPTION_ENABLED == ConstQuoteBuyOption.Enabled" ng-show="SupplierPortal"> <a title="{{'Sales Quote'|translate}}" href="my_works?type=sales"><i class="fa fa-fw fa-folder-o"></i> {{'Sales Quote'|translate}}</a></li>
+    <li ng-show="CustomerPortal"> <a title="{{'My Requests'|translate}}" href="my_requests"><i class="fa fa-fw fa-paper-plane"></i> {{'My Requests'|translate}}</a></li>
+    <!-- End:QuoteService -->
+    <li ng-show="SupplierPortal"> <a title="{{'Purchase Plan'|translate}}" href="purchase_plan"><i class="fa fa-fw fa-credit-card "></i> {{'Get Credit Points'|translate}}</a></li>
+    <li ng-show="SupplierPortal"> <a title="{{'Credit Purchase Logs'|translate}}" href="purchase_logs"><i class="fa fa-fw fa-money"></i> {{'Credit Purchase Logs'|translate}}</a></li>
+    <li> <a title="{{'Logout'|translate}}" href="users/logout"><i class="fa fa-fw fa-sign-out "></i> {{'Logout'|translate}}</a></li>
+</ul>
+</pre>

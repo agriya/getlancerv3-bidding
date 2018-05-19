@@ -1,0 +1,46 @@
+<div class="row">
+	<div class="col-lg-12">
+		<content-top>
+			<div class="content-top clearfix">
+				<h1 class="al-title ng-binding">Manage Allowed Service Locations</h1>
+				<ul class="breadcrumb al-breadcrumb">
+					<li><a href="#/dashboard">Home</a></li>
+					<li class="ng-binding">Service Locations</li>
+				</ul>
+			</div>
+		</content-top>
+	</div>
+</div>
+<div class="row" id="create-view">
+	<div class="clearfix well-sm panel animated zoomIn">
+		<form class="proj-form" role="form" name="servicelocationFrm" ng-submit="sercviceLocationadd(allcountries, country_select, city_select)"
+			novalidate>
+			<div class="form-group" ng-init="allcountries">
+				<input type="checkbox" id="value" name="Countries" ng-model="allcountries" ng-true-value="1" ng-false-value="0">
+				<span>{{"All Countries"}}</span>
+			</div>
+			<div class="form-group">(or)</div>
+			<div class="row">
+				<div class="form-group col-sm-6">
+					<tags-input class="custom-select" name="country_select" ng-model="country_select" placeholder="Please select a country" add-from-autocomplete-only="true"
+						on-tag-added="tagAdded($tag)" on-tag-removed="tagRemoved($tag)" replace-spaces-with-dashes="false">
+						<auto-complete class="text-left" min-length="1" debounce-delay="0" source="loadCountries($query)"></auto-complete>
+					</tags-input>
+				</div>
+			</div>
+			<div class="form-group">(or)</div>
+			<div class="row">
+				<div class="form-group col-sm-6">
+					<tags-input class="custom-select" name="city_select" ng-model="city_select" placeholder="Please select cities" add-from-autocomplete-only="true"
+						on-tag-added="tagAdded($tag)" on-tag-removed="tagRemoved($tag)" replace-spaces-with-dashes="false">
+						<auto-complete class="text-left" min-length="1" debounce-delay="0" source="loadCities($query)"></auto-complete>
+					</tags-input>
+					<span>Info: Before choosing, please confirm your <a href="#/cities/list">city’s </a> presence in the list. If not, please add your <a href="#/cities/create">city</a> to the list manually.</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> {{'Submit'|translate}}</button>
+			</div>
+		</form>
+	</div>
+</div>

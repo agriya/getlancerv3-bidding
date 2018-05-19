@@ -1,0 +1,10 @@
+<li>
+    <p ng-show="(userprofile.id !== user.id && settings.SITE_ENABLED_PLUGINS.indexOf('Common/UserFlag') > -1)">
+        <a href="javascript:;" ng-if="isAuth">  
+            <span class="report-link" ng-click="FlagModel(userprofile.id)">{{'Report this User'|translate}}?</span>
+        </a>
+        <a href="javascript:;" ng-if="!isAuth">  
+            <span class="report-link" ng-click="openLoginModal('login')">{{'Report this User'|translate}}?</span>
+        </a>
+    </p>
+</li>

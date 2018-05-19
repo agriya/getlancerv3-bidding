@@ -1,0 +1,26 @@
+<div>
+    <div class="modal-header"><button type="button" class="close" ng-click="cancel()">x</button>
+        <h3>{{'Orders' | translate}}</h3>
+    </div>
+    <div class="modal-body" ng-controller="OrderPaymentsController">
+        <div class="">
+            <div class="">
+                <div class="clearfix">
+                    <form name="PaymentForm" role="form" ng-submit="PaymentFormSubmit(PaymentForm.$valid)">
+                        <div class="panel navbar-btn clearfix">
+                            <div class="panel-body col-xs-12">
+                                <!--<div class="form-group col-sm-5 col-sm-offset-3 col-xs-9"> <input ng-change="ClearCoupon()" ng-model="plan.coupon" title="{{'Please enter your coupon'|translate}}" placeholder="{{'Coupon Code'|translate}}" class="form-control" id="inputCoupon3" autocomplete="off"> </div>
+                                <button
+                                    type="button" class="btn btn-primary pull-left" ng-click="applyCoupon()">{{'Apply'|translate}}</button>-->
+                                <div class="col-xs-12 text-center navbar-btn">
+                                    <p class="text-22 textb" ng-show="quote_request_views_detail.quote_amount && show_discount"> {{"Price" | translate }} {{quote_request_views_detail.quote_amount | currency : selectedCurrency.currency_symbol : GeneralConfig.fraction}}</p>
+                                    <p class="text-22 textb" ng-show="show_discount"> {{"Coupon discount" | translate }} {{show_discount}}</p>
+                                    <p class="text-22 textb"> {{"You have to pay" | translate }} {{plan_info.price_final | currency : selectedCurrency.currency_symbol : GeneralConfig.fraction}}</p>
+                                </div>
+                            </div>
+                            <div ng-include="'views/gateway.html'" class="col-xs-12"></div>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>

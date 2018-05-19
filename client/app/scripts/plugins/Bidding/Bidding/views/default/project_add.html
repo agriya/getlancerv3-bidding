@@ -1,0 +1,359 @@
+<section class="proj-details">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h2>{{'Post a Project'|translate}}</h2>
+        <form class="proj-form" role="form" name="projectFrm" novalidate>
+			
+			<div class="form-group" ng-show="user.role_id == ConstUserRole.Admin && isAuth"> <label>{{'Employer'|translate}}</label>
+            
+			<ajax-search-input text-attr="username" container-css-class="span2 form-control emp-text frm-select" query-param="q" selected-item="data.username" ng-model="data.user_id">
+      </ajax-search-input>
+			</div>
+			
+          <div class="form-group"> <label>{{'Project Name'|translate}} <span class="req-color">*</span></label> <input type="text" ng-model="data.name" class="form-control" id="projtitle"
+              placeholder="e.g., Build a Website" name="projtitle" required="true">
+
+            <span class="error" ng-show="(projectFrm.$submitted || projectFrm.projtitle.$touched) && (projectFrm.projtitle.$pristine || projectFrm.projtitle.$invalid) && (projectFrm.projtitle.$error.required)"> {{'Required'| translate }} </span>
+          </div>
+			
+          <div class="form-group"> <label>{{'Project Details'|translate}} <span class="req-color">*</span></label>
+          <br>
+            <textarea ng-model="data.description" name="description" ng-required="true" placeholder="Project Details" ng-if='text_box' rows="6" cols="50" class="form-control"></textarea>
+            <span class="error" ng-show="(projectFrm.$submitted || projectFrm.description.$touched) && (projectFrm.description.$pristine || projectFrm.description.$invalid) && (projectFrm.description.$error.required)"> {{'Required'| translate }} </span>
+            
+          </div>
+          <div class="form-group frm-select">
+            <label>{{'Budget Range'|translate}} <span class="req-color">*</span></label>
+            <select class="form-control" name="project_range_id" ng-model="data.project_range_id" ng-change="customRange(data.project_range_id)"
+              required>
+                <option value=""> {{'Select Your Budget Range'|translate}} </option>
+                <option value="{{range.id}}" ng-repeat="range in projectRanges"> 
+                    {{range.name}} 
+                </option>
+            </select>
+            <span class="grayc"><small>{{'Freelancer can bid their proposals between this budget range.'|translate}}</small></span>
+            <div class="form-group inline-frm">
+              <div class="row">
+                <div class="cutom-range" ng-if="show_custom_range">
+                  <div class="col-sm-4">
+                    <label>{{'Minimum Budget'|translate}}</label>
+                    <div class="input-group">
+                      <span  class="input-group-addon" ng-if="$root.settings.CURRENCY_SYMBOL !== ''">{{settings.CURRENCY_SYMBOL+range.min_amount}}</span>
+                      <span class="input-group-addon" ng-if="$root.settings.CURRENCY_SYMBOL === ''">{{settings.CURRENCY_CODE+range.min_amount}}</span>
+                      <input type="number" ng-model="data.custom_range.min_amount" name="min_amount" ng-required="show_custom_range" class="form-control"
+                        id="min_amount" min="1" number-only>
+                    </div>
+                    <span class="error" ng-show="(projectFrm.$submitted || projectFrm.min_amount.$touched) && (projectFrm.min_amount.$pristine || projectFrm.min_amount.$invalid) && (projectFrm.min_amount.$error.required)">{{'Required'|translate}}</span>
+                    <span class="error" ng-show="projectFrm.min_amount.$error.min && !projectFrm.min_amount.$error.required">{{'Enter the valid amount'|translate}}</span>
+                  </div>
+                  <div class="col-sm-4">
+                    <label>{{'Maximum Budget'|translate}}</label>
+                    <div class="input-group">
+                      <span  class="input-group-addon" ng-if="$root.settings.CURRENCY_SYMBOL !== ''">{{settings.CURRENCY_SYMBOL+range.max_amount}}</span>
+                      <span class="input-group-addon" ng-if="$root.settings.CURRENCY_SYMBOL === ''">{{settings.CURRENCY_CODE+range.max_amount}}</span>
+                      <input type="number" name="max_amount" ng-model="data.custom_range.max_amount" ng-required="show_custom_range" id="max_amount"
+                        class="form-control" min="1" number-only>
+                    </div>
+                    <span class="error" ng-show="data.custom_range.min_amount >= data.custom_range.max_amount">{{'Maximum Budget should be greater than minimum Budget'| translate }}</span>
+                    <span class="error" ng-show="(projectFrm.$submitted || projectFrm.max_amount.$touched) && (projectFrm.max_amount.$pristine || projectFrm.max_amount.$invalid) && (projectFrm.max_amount.$error.required)">Required</span>
+
+                    <span class="error" ng-show="projectFrm.max_amount.$error.min && !projectFrm.max_amount.$error.required">{{'Enter the valid amount'|translate}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="error" ng-show="(projectFrm.$submitted || projectFrm.project_range_id.$touched) && (projectFrm.project_range_id.$pristine || projectFrm.project_range_id.$invalid) && (projectFrm.project_range_id.$error.required)"> {{'Required'| translate }} </span>
+          </div>
+          <div class="form-group"> <label>{{'What Type of Work Do You Require'|translate}}? <span class="req-color">*</span></label>
+            <tags-input name="category_select" ng-model="data.category_select" placeholder="Choose Your Work Categories" add-from-autocomplete-only="true"
+              on-tag-added="tagAdded($tag)" on-tag-removed="tagRemoved($tag)" replace-spaces-with-dashes="false" ng-required="true">
+              <auto-complete min-length="1" debounce-delay="0" source="loadCategories($query)"></auto-complete>
+            </tags-input> <span class="error" ng-show="(projectFrm.$submitted || projectFrm.category_select.$touched) && (projectFrm.category_select.$pristine || projectFrm.category_select.$invalid) && (projectFrm.category_select.$error.required)"> {{'Required'| translate }} </span>
+          </div>
+
+          <div class="form-group"> <label>{{'Bidding Duration'|translate}} ({{'Days'|translate}}) <span class="req-color">*</span></label>
+
+            <input type="number" name="bid_duration" ng-model="data.bid_duration" class="form-control" placeholder="e.g., 10" ng-required="true"
+              number-only id="bid_duration" min='1'>
+
+            <span class="grayc"><small ng-hide="(project_bidding_fee == 0) || (data.bid_duration > project_bidding_fee)">{{'Specify the Number of Days to Allow of Bidding'|translate}}. {{'Maximum days:'|translate}} {{project_bidding_fee}}</small></span>
+
+            <span class="error" ng-if="(data.bid_duration > project_bidding_fee) && (project_bidding_fee !== 0) &&(projectFrm.bid_duration.$error)"><small class="text-12">{{'Specify the Number of Days to Allow of Bidding. Maximum days: '| translate}} {{project_bidding_fee}}</small></span>
+            <div class="top-mspace">
+              <span class="error" ng-show="(projectFrm.$submitted || projectFrm.bid_duration.$touched) && (projectFrm.bid_duration.$pristine || projectFrm.bid_duration.$invalid) && (projectFrm.bid_duration.$error.required)"> {{'Required'| translate}}  </span>              </div>
+          </div>
+
+          <div class="form-group"> <label>{{'What Skills Are Required'|translate}}? <span class="req-color">*</span></label>
+
+            <tags-input name="skill_select" ng-model="data.skill_select" placeholder="Skill sets required"  
+              on-tag-added="tagAdded($tag)" on-tag-removed="tagRemoved($tag)" replace-spaces-with-dashes="false" ng-required="true" add-on-enter="true">
+              <auto-complete min-length="1" debounce-delay="0" source="loadSkills($query)"></auto-complete>
+           </tags-input> <span class="error" ng-show="(projectFrm.$submitted || projectFrm.skill_select.$touched) && (projectFrm.skill_select.$pristine || projectFrm.skill_select.$invalid) && (projectFrm.skill_select.$error.required)"> {{'Required'| translate }} </span>            </div>
+          <div class="form-group">
+            <div class="panel">
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-sm-5">
+                    <label class="fileinput-button btn-block">
+                        <input type="file" ngf-select ng-model="file" name="file" ng-change="upload(file)" class="underline text-red"> 
+                        <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                        {{'Upload File'|translate}}
+                    </label>
+                    <div ng-if='$root.settings.ALLOWED_EXTENSIONS_FOR_PROJECT_DOCUMENT_FILE'>
+                     <span class="grayc help-block">{{'Allowed extensions:'|translate}} 
+                                            {{$root.settings.ALLOWED_EXTENSIONS_FOR_PROJECT_DOCUMENT_FILE}}</span>
+                      <span class="error bot-space" ng-if="error_message && error_message !== ''">
+                                            {{error_message}}</span>
+                    </div>
+                        <span class="error" ng-show="(projectFrm.$submitted || projectFrm.file.$touched) && (projectFrm.file.$pristine || projectFrm.file.$invalid) && (projectFrm.file.$error.required)"> {{'Required'| translate }} </span>
+                    <img ngf-src="file" alt="[Image: Group]" title="Group" class="img-responsive center-block">
+                    <div ng-bind="file.name" class="navbar-btn"></div>
+                  </div>
+                  <div class="col-sm-7">
+                    <p class="grayc"> {{'Drag and Drop Any Image or Document That Might Be Helpful In Explaining Your Project Brief Here'|translate}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--<div class="form-group clearfix label-frm">
+                        <div class="checkbox"> <label for="is_hidden">
+                            <input type="checkbox" id="is_hidden" name="is_hidden" ng-model="data.is_hidded_bid">
+                            <span>{{'SEALED'|translate}}</span>
+                        </label> </div>
+                    </div>-->
+          <!--<div class="form-group clearfix label-frm">
+                        <div class="checkbox"> <label for="private">
+                            <input type="checkbox" id="private" name="is_private" ng-model="data.is_private">
+                            <span>{{'PRIVATE'|translate}}</span>
+                        </label> </div>
+                    </div>-->
+          <div class="form-group option-blk">
+            <div class="panel">
+              <h4 class="hor-space alert alert-info text-left blackc">{{'Listing fee'| translate}}:
+                 <span ng-if="settings.PROJECT_LISTING_FEE == 0">
+                    {{'Free'|translate}} </span>
+                     <span ng-if="settings.PROJECT_LISTING_FEE > 0">
+                                     <amount-display  amount='{{settings.PROJECT_LISTING_FEE}}' ng-if="settings.PROJECT_LISTING_FEE"></amount-display>  
+                                  </span>
+              </h4>
+                      <h3>{{'Get the most from project! (optional)'|translate}}</h3>
+                                 
+               
+              <ul class="list-unstyled">
+                <li>
+                  <div class="option-innr">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <div class="clearfix">
+                          <div class="pull-left">
+                            <div class="form-group">
+                              <div class="checkbox"> <label for="is_featured">
+                                     <input type="checkbox" ng-model="data.is_featured" ng-click="projectFeatureFeeAdd(settings.PROJECT_FEATURED_FEE)" name="featured" class="form-control" id="is_featured" ng-required="false">
+                                      <span></span>
+                                      </label> </div>
+                            </div>
+                          </div>
+                          <div class="pull-right">
+                            <div class="form-group">
+                              <div class="label label-info label-orage">{{'Featured'|translate}}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-9">
+                        <div class="row">
+                          <div class="col-sm-10">
+                            <h4>250% {{'Higher success rate'|translate}}!</h4>
+                            <p> {{'Our hands on recruitment service ensures you get the best results from your project. Our recruiters
+                              personally review your proposals saving you time vetting freelancers. Let us find to right
+                              person for the job'|translate}}. </p>
+                          </div>
+                          <div class="col-sm-2">
+                            <h4>
+                              <span ng-if="settings.PROJECT_FEATURED_FEE == 0">
+                               {{'Free'|translate}}
+                                  </span>
+                              <span ng-if="settings.PROJECT_FEATURED_FEE > 0">
+                                     <amount-display  amount='{{settings.PROJECT_FEATURED_FEE}}' ng-if="settings.PROJECT_FEATURED_FEE"></amount-display> 
+                                  </span>
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="option-innr">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <div class="clearfix">
+                          <div class="pull-left">
+                            <div class="form-group">
+                              <div class="checkbox"> <label for="is_urgent">
+                                   <input type="checkbox" ng-model="data.is_urgent" ng-click="projectUrgentFeeAdd(settings.PROJECT_URGENT_FEE)" name="urgent" class="form-control" id="is_urgent" ng-required="false">
+                                   <span></span>
+                                   </label> </div>
+                            </div>
+                          </div>
+                          <div class="pull-right">
+                            <div class="form-group">
+                              <div class="label label-info label-red">{{'Urgent'|translate}}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-9">
+                        <div class="row">
+                          <div class="col-sm-10">
+                            <p> {{'Our hands on recruitment service ensures you get the best results from your project. Our recruiters
+                              personally review your proposals saving you time vetting freelancers. Let us find to right
+                              person for the job'|translate}}. </p>
+                          </div>
+                          <div class="col-sm-2">
+                            <h4>
+                              <span ng-if="settings.PROJECT_URGENT_FEE == 0">
+                               {{'Free'|translate}}
+                                  </span>
+                              <span ng-if="settings.PROJECT_URGENT_FEE > 0">
+                                   <amount-display  amount='{{settings.PROJECT_URGENT_FEE}}' ng-if="settings.PROJECT_URGENT_FEE"></amount-display> 
+                                  
+                                  </span>
+
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="option-innr">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <div class="clearfix">
+                          <div class="pull-left">
+                            <div class="form-group">
+                              <div class="checkbox"> <label for="is_private">
+                                   <input type="checkbox" ng-model="data.is_private" ng-click="projectPrivateFeeAdd(settings.PROJECT_PRIVATE_PROJECT_FEE)" name="is_private" class="form-control"
+                                    id="is_private" ng-required="false">
+                                   <span></span>
+                                   </label> </div>
+                            </div>
+                          </div>
+                          <div class="pull-right">
+                            <div class="form-group">
+                              <div class="label label-info label-blue">{{'Private'|translate}}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-9">
+                        <div class="row">
+                          <div class="col-sm-10">
+                            <p>{{'I want to hide project details from search engines and users that are not logged in. This
+                              feature is recommended for projects where confidentiality is a must'|translate}}. </p>
+                          </div>
+                          <div class="col-sm-2">
+                            <h4>
+                              <span ng-if="settings.PROJECT_PRIVATE_PROJECT_FEE == 0">
+                               {{'Free'|translate}}
+                                  </span>
+                              <span ng-if="settings.PROJECT_PRIVATE_PROJECT_FEE > 0">
+                                    <amount-display  amount='{{settings.PROJECT_PRIVATE_PROJECT_FEE}}' ng-if="settings.PROJECT_PRIVATE_PROJECT_FEE"></amount-display> 
+                                  </span>
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="option-innr">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <div class="clearfix">
+                          <div class="pull-left">
+                            <div class="form-group">
+                              <div class="checkbox"> <label for="is_hidden">
+                                   <input type="checkbox" ng-model="data.is_hidded_bid" ng-click="projectHiddenFeeAdd(settings.PROJECT_HIDDEN_BID_FEE)" name="is_hidden" class="form-control"
+                                    id="is_hidden" ng-required="false">
+                                   <span></span>
+                                   </label> </div>
+                            </div>
+                          </div>
+                          <div class="pull-right">
+                            <div class="form-group">
+                              <div class="label label-info label-gray">{{'SEALED'|translate}}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-9">
+                        <div class="row">
+                          <div class="col-sm-10">
+                            <p>{{'I want all bids to be sealed so that freelancers cannot see what others are bidding, leading
+                              to more accurate, higher quality proposals'|translate}}. </p>
+                          </div>
+                          <div class="col-sm-2">
+                            <h4>
+                              <span ng-if="settings.PROJECT_HIDDEN_BID_FEE == 0">
+                               {{'Free'|translate}}
+                                  </span>
+                              <span ng-if="settings.PROJECT_HIDDEN_BID_FEE > 0">
+                                     <amount-display  amount='{{settings.PROJECT_HIDDEN_BID_FEE}}' ng-if="settings.PROJECT_HIDDEN_BID_FEE"></amount-display> 
+                                  </span>
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+            </div>
+            <p class="pull-right total-fee">
+              <label for="is_total">{{'PROJECT TOTAL FEE'|translate}}</label>
+              <span class="js-total">
+              <label ng-if="PROJECT_TOTAL_FEE == 0">
+                {{'Free'|translate}}
+              </label>
+              <label ng-if="PROJECT_TOTAL_FEE > 0">
+                  <strong class="total-fee-amount"> <amount-display  amount='{{PROJECT_TOTAL_FEE}}' ng-if="PROJECT_TOTAL_FEE && amount_find"></amount-display></strong>
+              </label>
+              </span>
+            </p>
+          </div>
+
+          <div class="form-group">
+            <button title="Save as Draft" ng-show="save_btn" class="btn btn-danger" disabled>{{'Save as Draft'|translate}}</button>
+             <button title="Save as Draft" type="sumbit" ng-show="!save_btn" ng-click="postProject(projectFrm.$valid, projectFrm ,data, 1)" class="btn btn-danger">{{'Save as Draft'|translate}}</button>
+            <button type="submit" ng-show="save_btn" class="btn btn-primary" disabled>{{'Publish this Project'|translate}}</button>
+            <button title="Publish this Project" type="submit" ng-click="postProject(projectFrm.$valid, projectFrm, data, 2)" class="btn btn-primary"
+              ng-show="!save_btn">{{'Publish this Project'|translate}}</button> </div>
+        </form>
+      </div>
+      <div class="col-md-4">
+        <div class="post-project">
+          <div class="bg-primary">
+            <h4 class="text-center no-mar">{{"Post your project"|translate}}</h4>
+          </div>
+          <ul class="list-unstyled clearfix">
+            <li> <span class="sprite sprite-head-check2"> </span> <span class="menu-content"> {{'Get bid from skilled freelancer in minutes'|translate}}. </span>
+            </li>
+            <li> <span class="sprite sprite-head-check2"> </span> <span class="menu-content"> {{'View freelancer profiles and feedback and choose best freelancer'|translate}}.</span> </li>
+            <li> <span class="sprite sprite-head-check2"> </span> <span class="menu-content"> {{"Pay the freelancer once you're 100% satisfied"|translate}}. </span>
+                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Milestone') && settings.PROJECT_COMMISSION_FROM_EMPLOYER_FOR_MILESTONE"> <span class="sprite sprite-head-check2"> </span> <span class="menu-content"> {{"Milestone payment commission"|translate}}: {{settings.PROJECT_COMMISSION_FROM_EMPLOYER_FOR_MILESTONE}}%</span> </li>
+                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Invoice') && settings.PROJECT_COMMISSION_FROM_EMPLOYER_FOR_INVOICE"> <span class="sprite sprite-head-check2"> </span> <span class="menu-content"> {{"Invoice payment commission"|translate}}: {{settings.PROJECT_COMMISSION_FROM_EMPLOYER_FOR_INVOICE}}%</span> </li>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

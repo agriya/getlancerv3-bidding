@@ -1,0 +1,96 @@
+<section class="my-contests" ng-controller="biddingProjectDashboardCtrl">
+  <div class="row">
+    <div class="col-xs-12 top-mspace">
+      <div class="table-block">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>{{'Project Details'|translate}}</th>
+                <th class="text-center">{{'Amount'|translate}} 
+                  <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                   <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span></th>
+                <th>{{'Description'|translate}} </th>
+                <th class="text-center"> {{'Status'|translate}}</th>
+                <th> {{'Deadline Date'|translate}}</th>
+                <th width="100" class='text-center'> {{'Action'|translate}}</th>
+              </tr> 
+            </thead>
+            <tbody>
+               <tr ng-repeat="milestone in my_milestones">
+                  <td>
+                    <a ui-sref="Bid_ProjectView({id:milestone.project_id,slug:milestone.project.slug})">
+                      <span  title={{milestone.project.name}}>  
+                        {{milestone.project.name}}
+                      </span>
+                    </a>
+                  </td>
+                  <td class="text-center">
+                    <span>  
+                        {{milestone.amount}}
+                    </span>
+                  </td>
+                  <td>
+                    <span>  
+                        {{milestone.description}}
+                    </span>
+                  </td>
+                  <td class="text-center">
+                    <span>  
+                        {{milestone.milestone_status.name}} 
+                    </span>
+                  </td>
+                  <td>
+                    <span>  
+                        {{milestone.deadline_date}}
+                    </span>
+                  </td>
+                  <td>
+                    <div ng-if='milestone.milestone_status.id == MilestoneStatusConstant.EscrowReleased || milestone.milestone_status.id == MilestoneStatusConstant.Completed || milestone.milestone_status.id == MilestoneStatusConstant.RequestedForRelease ||milestone.milestone_status.id == MilestoneStatusConstant.Canceled' class='text-center'> 
+                      -
+                    </div>
+                    <div class="dropdown" ng-if='milestone.milestone_status.id != MilestoneStatusConstant.EscrowReleased && milestone.milestone_status.id != MilestoneStatusConstant.Completed && milestone.milestone_status.id != MilestoneStatusConstant.RequestedForRelease && milestone.milestone_status.id != MilestoneStatusConstant.Canceled'> 
+                      <button class="request-btn btn btn-primary dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="true">{{'Action'|translate}} <i class="fa fa-angle-down fa-fw" aria-hidden="true"></i> </button>
+                      <ul class="dropdown-menu dropdown-menu-right">
+                        <li class="cursor"  ng-if="milestone.milestone_status_id == MilestoneStatusConstant.MilestoneSet">
+                          <a href="javascript:void(0);" ng-click="milestoneStatueChange(milestone.id, MilestoneStatusConstant.RequestedforEscrow)">
+                          <i class='fa fa-hand-stop-o fa-fw'></i> {{'Requested for Escrow'|translate}} {{milestonestatus}}</a>
+                        </li>
+                        <li class="cursor" ng-if="milestone.milestone_status_id == MilestoneStatusConstant.EscrowFunded"> 
+                          <a ng-click="milestoneStatueChange(milestone.id, MilestoneStatusConstant.RequestedForRelease, 'workcompleted')"><i class='fa fa-check fa-fw'></i> {{'Work Completed / Request to Release Escrow'|translate}} </a>
+                        </li>
+                        <li class="cursor" ng-if="milestone.milestone_status_id < MilestoneStatusConstant.EscrowFunded"> 
+                          <a ng-click="milestoneStatueChange(milestone.id, MilestoneStatusConstant.Canceled)"><i class='fa fa-close fa-fw'></i>{{'Canceled'|translate}}  </a> 
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+                <tr ng-if="!my_milestones.length && !loader" class="text-center">
+                  <td colspan="8"> <span class="text-danger">{{'No records available'|translate}}</span> </td>
+                </tr>
+                <tr ng-if="!my_milestones.length && loader" class="text-center">
+                  <td colspan="8"> 
+                    <span>
+                      <img ng-src="images/contest_loader.gif" alt="loading " title="loading">
+                    </span> 
+                  </td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row binding-pagination">
+        <div class="pagnation-content">
+          <div class="container">
+            <div class="clearfix pagnation-inner">
+              <uib-pagination total-items="totalItemsMilestone" max-size="maxSize" items-per-page="itemsPerPageMilestone" ng-model="currentPageMilestone" class="pagination-sm"
+                boundary-links="true" num-pages="numPages" num-pages="noOfPagesMilestone" ng-click="paginate()"></uib-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

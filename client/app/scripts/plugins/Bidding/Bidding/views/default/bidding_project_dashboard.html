@@ -1,0 +1,430 @@
+<div class="my-contests-dashboard" ng-controller="biddingProjectDashboardCtrl">
+  <div>
+    <div class="big-mspace">
+      <!--<h3 class="no-mar"> {{'My Projects'|translate}} - {{project_status}} </h3>-->
+      <ul class="list-inline dashboard-list top-mspace text-center project-lists text-center" ng-if="Employer">
+        <!--<li ng-click="getProjects('all')" title="All">
+          {{'All' | translate}}
+          <span class="badge badge-yellow">
+            0</span>
+        </li>-->
+        <li ng-click="getProjects(projectConstant.Draft)" title="Draft" ng-class="{active:tabType == projectConstant.Draft}" data-class="tabType">
+          <span class="badge badge-blue">{{projectStatus[0]['project_count'] -- projectStatus[1]['project_count']}}</span>
+          <p class="no-mar">{{'Draft' | translate}}</p>
+        </li>
+        <li ng-if="$root.settings.PROJECT_IS_AUTO_APPROVE == 0 || projectStatus[2]['project_count'] > 0" ng-click="getProjects(projectConstant.PendingForApproval)" title="Waiting for Approval " 
+          ng-class="{active:tabType == projectConstant.PendingForApproval}" data-class="tabType">
+          <span class="badge badge-violet">{{projectStatus[2]['project_count']}}</span>
+          <p class="no-mar">{{'Waiting for Approval '| translate}}</p>
+        </li>
+        <li ng-click="getProjects(projectConstant.OpenForBidding)" title="Open for Bidding" ng-class="{active:tabType == projectConstant.OpenForBidding}"
+          data-class="tabType">
+          <span class="badge badge-pink">{{projectStatus[3]['project_count']}}</span>
+          <p class="no-mar">{{'Open for Bidding' | translate}}</p>
+        </li>
+            <li ng-click="getProjects(projectConstant.BiddingClosed)" title="Closed/Expired" ng-class="{active:tabType == projectConstant.BiddingClosed}"
+          data-class="tabType">
+          <span class="badge badge-red">{{projectStatus[6]['project_count'] -- projectStatus[4]['project_count']}}</span>
+          <p class="no-mar">{{'Bidding'|translate}} {{'Closed/Expired' | translate}}</p>
+        </li>
+        <li ng-click="getProjects(projectConstant.WinnerSelected)" title="Winner Selected" ng-class="{active:tabType ==projectConstant.WinnerSelected}"
+          data-class="tabType">
+          <span class="badge badge-lime-green">{{projectStatus[5]['project_count']}}</span>
+          <p class="no-mar">{{'Winner Selected' | translate}}</p>
+        </li>
+        <li ng-click="getProjects(projectConstant.UnderDevelopment)" title="Under Development" ng-class="{active:tabType == projectConstant.UnderDevelopment}"
+          data-class="tabType">
+          <span class="badge badge-green">{{projectStatus[8]['project_count'] -- projectStatus[12]['project_count']}} </span>
+          <p class="no-mar">{{'Under Development'| translate}}</p>
+        </li>
+        <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1" ng-click="getProjects(projectConstant.FinalReviewPending)" title="Waiting for Review" ng-class="{active:tabType == projectConstant.FinalReviewPending}"
+          data-class="tabType">
+          <span class="badge badge-purple">{{projectStatus[11]['project_count']}}</span>
+          <p class="no-mar">{{'Waiting for Review' | translate}}</p>
+        </li>
+    
+        <li ng-click="getProjects(projectConstant.Closed)" title="Closed" ng-class="{active:tabType == projectConstant.Closed}"
+          data-class="tabType">
+          <span class="badge badge-blue">{{projectStatus[13]['project_count']}} </span>
+          <p class="no-mar">{{'Closed' | translate}}</p>
+        </li>
+        <li ng-click="getProjects(projectConstant.CanceledByAdmin)" title="Canceled" ng-class="{active:tabType ==projectConstant.CanceledByAdmin}"
+          data-class="tabType">
+          <span class="badge badge-magenta">{{projectStatus[10]['project_count'] -- projectStatus[9]['project_count'] -- projectStatus[7]['project_count']}}</span>
+          <p class="no-mar">{{'Cancelled' | translate}}</p>
+        </li>
+         <li ng-class="{active:tabType == 'milestone'}" data-class="tabType" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Milestone') > -1" title="{{'Milestone'|translate}}">
+          <span class="badge badge-blue">{{employer_count.milestone_count}}</span>
+          <a class="no-pad" href="" ng-click="getProjects('milestone')">
+            <span class="blackc">{{'Milestone' | translate}}</span>
+          </a>
+        </li>
+        <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Invoice') > -1" title="{{'Invoice'|translate}}"
+          ng-class="{active:tabType == 'invoice'}" data-class="tabType">
+          <span class="badge badge-magenta">{{employer_count.invoice_count}}</span>
+          <a class="no-pad" href="" ng-click="getProjects('invoice')"><span class="blackc"> {{'Invoice' | translate}}</span> </a>
+        </li>
+      </ul>
+    </div>
+    <div class="clearfix">
+      <!-- <div class="dropdown pull-right">
+      <a href="javascript:void(0)" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <span><i class="fa fa-angle-down blackc"></i></a></span>
+        <ul class="dropdown-menu dropdown-menu-right dashboard-list" ng-if="Employer">
+          <li ng-click="getProjects(projectConstant.WinnerSelected)" title="Winner Selected" ng-if="projectStatus[5]['project_count'] != 0">
+            {{'Winner Selected' | translate}} <span class="badge badge-lime-green">{{projectStatus[5]['project_count']}}</span>
+          </li>
+          
+          <li ng-click="getProjects(projectConstant.UnderDevelopment)" title="Under Development" ng-if="projectStatus[10]['project_count'] != 0"> {{'Under Development' | translate}} <span class="badge badge-green">{{projectStatus[10]['project_count']}}</span>
+          </li>
+          
+          <li ng-click="getProjects(projectConstant.FinalReviewPending)" title="Pending Review" ng-if="projectStatus[13]['project_count'] != 0">
+            {{'Pending Review' | translate}} <span class="badge badge-purple">{{projectStatus[13]['project_count']}}</span>
+          </li>
+          
+          <li ng-click="getProjects(projectConstant.Closed)" title="Closed / Expired"> {{'Closed / Expired' | translate}} <span class="badge badge-red">{{projectStatus[15]['project_count'] -- projectStatus[4]['project_count']}}</span></li>
+
+          <li ng-click="getProjects(projectConstant.CanceledByAdmin)" title="Canceled">
+            {{'Canceled' | translate}} <span class="badge badge-magenta">{{projectStatus[12]['project_count']}}</span>
+          </li>
+          
+          <li title="Milestone">
+           {{'Milestone' | translate}}
+          </li>
+          
+          <li title="Canceled">
+            {{'Invoice' | translate}} </li>
+        </ul>
+    </div>-->
+
+      <ul class="list-inline bot-space-10 cursor project-lists text-center" ng-if="Freelancer">
+        <li class="text-center" ng-click="getProjects('my_bids')" title="Active Projects" ng-class="{active:tabType == 'my_bids'}"
+          data-class="tabType">
+          <span class="badge badge-teal">{{freelancer_count.current_project_count}}</span>
+          <p class="no-mar"> {{'Active Projects' | translate}}</p>
+        </li>
+        <li class="text-center" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1" ng-click="getProjects('active')"
+          title="Active Bids" ng-class="{active:tabType == 'active'}" data-class="tabType">
+          <span class="badge badge-dark-green">{{freelancer_count.active_bid_count}}</span>
+          <p class="no-mar"> {{'Active Bids' | translate}}</p>
+        </li>
+        <li class="text-center" ng-click="getProjects('past_projects')" title="Past Projects" ng-class="{active:tabType == 'past_projects'}"
+          data-class="tabType">
+          <span class="badge badge-red">{{freelancer_count.past_project_count}}</span>
+          <p class="no-mar">{{'Past Projects' | translate}}</p>
+        </li>
+        <li class="text-center" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Milestone') > -1" title="{{'Milestones'|translate}}" ng-click="getProjects('milestones')"
+          ng-class="{active:tabType == 'milestones'}" data-class="tabType">
+          <span class="badge badge-blue">{{freelancer_count.milestone_count}}</span>
+          <p class="no-mar">
+             {{'Milestones' | translate}}
+          </p>
+        </li>
+        <li class="text-center" ng-click="getProjects('invoices')" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Invoice') > -1" title="{{'Invoices'|translate}}"
+          ng-class="{active:tabType == 'invoices'}" data-class="tabType">
+          <span class="badge badge-magenta">{{freelancer_count.invoice_count}}</span>
+          <p class="no-mar">
+           {{'Invoices' | translate}}
+           
+          </p>
+        </li>
+      </ul>
+    </div>
+    <!--<div class="post-project-btn pull-right">
+          <span ng-if="Employer"> 
+              <a ui-sref="Bid_ProjectAdd" class="btn btn-primary"> {{ 'Post a Project' | translate}}</a> 
+          </span>
+        </div>--></div>
+  <div class="actions" ng-if="Employer">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="table-block">
+          <div class="table-responsive">
+            <table class="table table-striped table-center table-bordered">
+              <thead>
+                <tr>
+                  <th class="data-left"> {{'Project Name'| translate}} </th>
+                  <!--payment pending and draft-->
+                  <th ng-if="tabType <= projectConstant.Draft"> {{'Budget'| translate}}
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                   <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}})</span> </th>
+                  <th ng-if="tabType <= projectConstant.Draft"> {{'Status'| translate}} </th>
+                  <!--open for bidding-->
+                  <th  ng-if="tabType == projectConstant.OpenForBidding"> {{'Budget'| translate}} <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                   <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}})</span>
+                   </th>
+                  <th ng-if="tabType == projectConstant.OpenForBidding"> {{'Bids'| translate}} </th>
+                  <th ng-if="tabType == projectConstant.OpenForBidding"> {{'Average Bid'| translate}} 
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span> </th>
+                  <th ng-if="tabType == projectConstant.OpenForBidding"> {{'Lowest Bid'| translate}} 
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                   <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span> </th>
+                  <th class="data-left" ng-if="tabType == projectConstant.OpenForBidding"> {{'Bid Expiry date'| translate}} </th>
+                  <!--winner selected -->
+                  <th class="data-left" ng-if="tabType >= projectConstant.WinnerSelected"> {{'Freelancer'| translate}} </th>
+                  <th ng-if="tabType >= projectConstant.WinnerSelected"> {{'Budget'| translate}}
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                   <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}})</span></th>
+                  <th ng-if="tabType >= projectConstant.WinnerSelected"> {{'Awarded Bid'| translate}} 
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span> </th>
+                  <!--under develpemnt-->
+                  <th ng-if="tabType == projectConstant.UnderDevelopment"> {{'Milestone'| translate}} </th>
+                  <th ng-if="tabType == projectConstant.UnderDevelopment"> {{'Paid'| translate}} 
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span> </th>
+                    <th ng-if="tabType == projectConstant.UnderDevelopment"> {{'Status'| translate}} </th>
+                  <!--pending for approvel-->
+                  <th ng-if="tabType == projectConstant.PendingForApproval"> {{'Budget'| translate}} 
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                   <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}})</span>
+                  </th>
+                  <th ng-if="tabType == projectConstant.PendingForApproval"> {{'Status'| translate}} </th>
+                  <!--Milestone-->
+                  <th ng-if="tabType == 'milestone'"> {{'Amount'| translate}} 
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span> </th>
+                  <th class="data-left" ng-if="tabType == 'milestone'"> {{'Description'| translate}} </th>
+                  <th ng-if="tabType == 'milestone'"> {{'Status'| translate}} </th>
+                  <th class="data-left" ng-if="tabType == 'milestone'"> {{'Deadline Date'| translate}} </th>
+                  <!--Invoice-->
+                  <th ng-if="tabType == 'invoice'"> {{'Amount'| translate}} 
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span> </th>
+                  <th class="data-left" ng-if="tabType == 'invoice'"> {{'Description'| translate}} </th>
+                  <!--final review pending-->
+                  <th ng-if="tabType == projectConstant.FinalReviewPending"> {{'Total Paid'| translate}} 
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span> </th>
+                  <!--Bidding Expired-->
+                  <th ng-if="tabType == projectConstant.BiddingExpired"> {{'Budget'| translate}} 
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                   <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}})</span>
+                  </th>
+                  <th ng-if="tabType == projectConstant.BiddingExpired"> {{'Bids'| translate}} </th>
+                  <th ng-if="tabType == projectConstant.BiddingExpired"> {{'End Date'| translate}} </th>
+                  <!--CanceledByAdmin-->
+                  <th ng-if="tabType == projectConstant.CanceledByAdmin"> {{'Total Paid'| translate}}
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                    <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span> </th>
+                  <th ng-if="tabType == projectConstant.CanceledByAdmin"> {{'Status'| translate}} </th>
+                  <th width="100"> {{'Action'| translate}} </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="project in projects" ng-if="projects.length > 0">
+                  <td class="data-left">
+                    <p class="no-mar">
+                      <a ui-sref="Bid_ProjectView({id:project.id,slug:project.slug})" title={{project.name}}>
+                        <span> {{project.name}}</span>
+                      </a>
+                    </p>
+                      <span class="label label-info label-orage Featured" ng-if="project.is_featured">{{'Featured'|translate}}</span>
+                      <span class="label label-info label-red Private" ng-if="project.is_private">{{'Private'|translate}}</span>
+                      <span class="label label-info label-blue Urgent" ng-if="project.is_urgent">{{'Urgent'|translate}}</span>
+                      <span class="label label-info label-gray Sealed" ng-if="project.is_hidded_bid">{{'Sealed'|translate}}</span>
+                  </td>
+                  <!--payment pending-->
+                  <td ng-if="tabType <= projectConstant.Draft">
+                    <span class='text-center'> {{project.project_range.min_amount}} - {{project.project_range.max_amount}}
+                    </span>
+                  </td>
+                  <!--open bidding-->
+                  <td ng-if="tabType == projectConstant.OpenForBidding">
+                    <p class="no-mar text-center">
+                      {{project.project_range.min_amount}} - {{project.project_range.max_amount}}
+                      </p>
+                  </td>
+                  <td ng-if="tabType == projectConstant.OpenForBidding">
+                    <a href="projects/view/{{project.id}}/{{project.name | slugify}}" ng-click="bidcount()"><span>{{(project.project_bid.bid_count != null) ? project.project_bid.bid_count: '0'}}</span></a>
+                  </td>
+                  <td ng-if="tabType == projectConstant.OpenForBidding">
+                    <span class="content">{{project.project_bid.amount}}</span>
+                  </td>
+                  <td ng-if="tabType == projectConstant.OpenForBidding">
+                    <p class="no-mar">{{project.project_bid.lowest_bid_amount}}</p>
+                  </td>
+                  <td class="data-left" ng-if="tabType == projectConstant.OpenForBidding">
+                    <p class="no-mar">{{project.project_bid.bidding_end_date | date_format}}</p>
+                  </td>
+                  <!--payment pending-->
+                  <td ng-if="tabType <= projectConstant.Draft">
+                    <p class="no-mar">{{project.project_status.name}}</p>
+                  </td>
+                  <!--winner selected -->
+                  <td class="data-left" ng-if="tabType >= projectConstant.WinnerSelected">
+                    <a href="users/{{project.bid_winner.user.id}}/{{project.bid_winner.user.username}}" title={{project.user.username}}>{{project.bid_winner.user.username}}</a>
+                  </td>
+                  <td ng-if="tabType >= projectConstant.WinnerSelected">
+                    <p class="no-mar text-center">
+                      {{project.project_range.min_amount}} - {{project.project_range.max_amount}}
+                     </p>
+                  </td>
+                  <td ng-if="tabType >= projectConstant.WinnerSelected"> <span class="content text-right">
+                    {{project.bid_winner.paid_escrow_amount-- project.bid_winner.total_invoice_got_paid}}</span> </td>
+                  <!--Under Development-->
+                  <td ng-if="tabType == projectConstant.UnderDevelopment">
+                    <p class="no-mar">{{project.milestone_count}}</p>
+                  </td>
+                  <td ng-if="tabType == projectConstant.UnderDevelopment">
+                    <p class="no-mar text-center">{{project.bid_winner.amount}}</p>
+                  </td>
+                   <td ng-if="tabType == projectConstant.UnderDevelopment">
+                    <p class="no-mar">{{project.project_status.name}}</p>
+                  </td>
+                  <!--pending for approvel-->
+                  <td ng-if="tabType == projectConstant.PendingForApproval">
+                   <p class="no-mar text-center">
+                      {{project.project_range.min_amount}} - {{project.project_range.max_amount}}
+                     </p>
+                  </td>
+                  <td ng-if="tabType == projectConstant.PendingForApproval">
+                    <p class="no-mar">{{project.project_status.name}}</p>
+                  </td>
+                  <!--final review pending-->
+                  <td ng-if="tabType == projectConstant.FinalReviewPending">
+                    <p class="no-mar">{{project.project_bid.total_paid_amount}}</p>
+                  </td>
+                  <!--BiddingExpired-->
+                  <td ng-if="tabType == projectConstant.BiddingExpired">
+                    <p class="no-mar text-center">
+                      {{project.project_range.min_amount}} - {{project.project_range.max_amount}}
+                     </p>
+                  </td>
+                  <td ng-if="tabType == projectConstant.BiddingExpired">
+                    <span>{{(project.project_bid.bid_count != null)?project.project_bid.bid_count: '0'}}</span>
+                  </td>
+                  <td class="data-left" ng-if="tabType == projectConstant.BiddingExpired">
+                    <p class="no-mar">{{project.project_bid.bidding_end_date | date_format}}</p>
+                  </td>
+                  <!--CanceledByAdmin-->
+                  <td ng-if="tabType == projectConstant.CanceledByAdmin">
+                    <p class="no-mar text-center">{{project.project_bid.total_paid_amount}}</p>
+                  </td>
+                  <td ng-if="tabType == projectConstant.CanceledByAdmin">
+                    <p class="no-mar">{{project.project_status.name}}</p>
+                  </td>
+                  <td class="data-left">
+                    <bidding-dashboar-project-action projstatus="{{tabType}}" projid="{{project.id}}" projname="{{project.slug}}" projectstatusid="{{project.project_status_id}}"
+                      projisreachedresponseenddateforfreelancer="{{project.bid_winner.is_reached_response_end_date_for_freelancer}}" 
+                      projbidid = "{{project.bid_winner.id}}"
+                      bidusername="{{project.project_bid.user.username}}" disputestatus = "{{project.is_dispute}}">
+                    </bidding-dashboar-project-action>
+                  </td>
+                </tr>
+                <!--Milestone-->
+                <tr ng-show="tabType <= 'milestone'" ng-repeat="milestone in milestones">
+                  <td class="data-left">
+                    <a ui-sref="Bid_ProjectView({id:milestone.project_id,slug:milestone.project.slug})">
+                      <span title={{milestone.project.name}}>  
+                    {{milestone.project.name}}
+                      </span>
+                    </a>
+                  </td>
+                  <td>
+                    <span class='text-center'>  
+                    {{milestone.amount}}
+                    </span>
+                  </td>
+                  <td class="data-left">
+                    <span>  
+                    {{milestone.description}}
+                    </span>
+                  </td>
+                  <td>
+                    <span>  
+                    {{milestone.milestone_status.name}}
+                    </span>
+                  </td>
+                  <td>
+                    <span>  
+                    {{milestone.deadline_date}}
+                    </span>
+                  </td>
+                  <td>
+                    <div  ng-if='milestone.milestone_status_id == 7 || milestone.milestone_status_id == 8 || milestone.milestone_status_id == 4'>
+                      <span class='center'>-</span>
+                    </div>
+                      <div class="dropdown"> 
+                    <div class="dropdown" ng-if='milestone.milestone_status_id != 7' ng-hide = 'milestone.milestone_status_id == 8 || milestone.milestone_status_id == 4'>
+                      <button class="request-btn btn btn-primary dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="true">{{'Action'|translate}} <i class="fa fa-angle-down fa-fw" aria-hidden="true"></i> </button>
+                      <ul class="dropdown-menu dropdown-menu-right">
+                        <li class="cursor" ng-if="milestone.milestone_status_id == MilestoneStatusConstant.MilestoneSuggested">
+                          <a ng-click="milestoneStatueChange(milestone.id, MilestoneStatusConstant.MilestoneSet)"> {{'Milestone Set'|translate}}</a>
+                        </li>
+                        <li class="cursor" ng-if="(milestone.milestone_status_id == MilestoneStatusConstant.RequestedforEscrow)">
+                          <a ng-click="milestoneStatueChange(milestone.id, 'pay')"> <i class='fa fa-money fa-fw'></i>{{'Pay amount'|translate}} </a>
+                        </li>
+                        <li class="cursor" ng-if="(milestone.milestone_status_id == MilestoneStatusConstant.RequestedForRelease || milestone.milestone_status_id == MilestoneStatusConstant.Completed)">
+                          <a ng-click="milestoneStatueChange(milestone.id, MilestoneStatusConstant.EscrowReleased)"><i class='fa fa-check fa-fw'></i>  {{'Released Escrow'|translate}}  </a>
+                        </li>
+                        <li class="cursor" ng-if="milestone.milestone_status_id < MilestoneStatusConstant.EscrowFunded">
+                          <a ng-click="milestoneStatueChange(milestone.id, MilestoneStatusConstant.Canceled)"> <i class='fa fa-close fa-fw'></i>{{'Canceled'|translate}}  </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+                <!--Invoice-->
+                <tr ng-show="tabType <= 'invoice'" ng-repeat="invoice in invoices">
+                  <td class="data-left">
+                    <a ui-sref="Bid_ProjectView({id:invoice.project_id, slug:invoice.project.slug})">
+                      <span  title="{{invoice.project.name}}">  
+                        {{invoice.project.name}}
+                      </span>
+                    </a>
+                  </td>
+                  <td>
+                    <span class='text-right'>{{invoice.amount}}</span>
+                  </td>
+                  <td class="data-left" ng-repeat="bidinvoice in invoice.projectbidinvoiceitems">
+                    <span title="{{bidinvoice.description}}">  
+                      {{bidinvoice.description}}
+                    </span>
+                  </td>
+                  <td>
+                    <div ng-if='invoice.is_paid == true' class='text-center'> - </div>
+                    <div class="dropdown" ng-if='invoice.is_paid != true'>
+                      <button class="request-btn btn btn-primary dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="true">{{'Action'|translate}} <i class="fa fa-angle-down fa-fw" aria-hidden="true"></i> </button>
+                      <ul class="dropdown-menu dropdown-menu-right">
+                        <li>  <a class="btn btn-primary" ui-sref="Bidding_InvoicePayment({'slug':'invoice' , 'id':invoice.id})">{{'Pay'| translate}}</a>  
+                          </li>
+                          
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+                <tr ng-show="((endpoint=='milestone' && !milestones.length) || (endpoint=='projects'  && !projects.length) || (endpoint=='invoice' && !invoices.length) && !loader)"
+                  class="text-center text-danger top-mspace">
+                  <td colspan="8"> <span> {{'No records available' | translate}}</span> </td>
+                </tr>
+                <tr ng-if="!projects.length && loader" class="text-center">
+                  <td colspan="8">
+                    <span>
+                      <img ng-src="images/contest_loader.gif" alt="loading " title="loading">
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="action" ng-include="renderSubPage" ng-if="Freelancer"> </div>
+    <div class="big-mspace" ng-if="projects.length > 0">
+        <div class="binding-pagination">
+            <div class="pagnation-content">
+                <div class="clearfix pagnation-inner">
+                    <uib-pagination previous-text="Previous" next-text="Next" total-items="totalItems" num-pages="numPages"  ng-model="projectcurrentPage"
+                    max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" rotate="false"
+                    items-per-page="itemsPerPage" ng-change="pagination(projectcurrentPage)"></uib-pagination>
+                </div>
+              </div>
+          </div>
+    </div>
+</div>

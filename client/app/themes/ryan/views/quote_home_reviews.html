@@ -1,0 +1,21 @@
+<div class="emmContentSlide indexBanerCover pr" ng-if="quote_reviews.length">
+    <div class="cover-image indexContentbg"></div>
+    <div class="container">
+        <div class="row">
+            <div id="indexContCarousal" class="carousel slide borOrg" interval="5" data-ride="carousel">
+                <div class="carousel-inner text-center" role="listbox">
+                    <div class="item" ng-repeat="quote_review in quote_reviews" ng-class="{'active': $first}">
+                        <a href="" title="{{quote_review.user.username}}" class="show contentImg center-block"> <img ng-src="{{quote_review.image_name}}" alt="{{quote_review.user.username}}" title="{{quote_review.user.username}}" class="center-block img-circle"> </a>
+                        <div class="indexSlideXs">
+                            <p class="text-20 indexContentP font-italic pr font-wlight">{{quote_review.message}} </p>
+                            <h3 class="text-20 text-primary font-wsemib">{{quote_review.user.first_name}} {{quote_review.user.last_name}}</h3>
+                        </div>
+                    </div>
+                </div>
+                <ol class="carousel-indicators center-block ps top-mspace">
+                    <li ng-repeat="quote_review in quote_reviews" data-target="#indexContCarousal" data-slide-to="{{$index}}" ng-class="{'active': $first}"></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>

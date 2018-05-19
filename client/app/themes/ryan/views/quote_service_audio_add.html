@@ -1,0 +1,7 @@
+<div class="modal-header"><button type="button" class="close" ng-click="ok()">x</button>
+    <h3>{{'Add Audio' | translate}}</h3>
+</div>
+<div class="modal-body" ng-controller="QuoteServiceAudiosManageController">
+    <form name="myForm" ng-submit="add()" enctype="multipart/form-data">
+        <div class="form-group"> <label for="embed_code">{{'Embed Code' | translate}}</label> <textarea ng-model="embed_code" id="embed_code" required class="form-control"></textarea> </div> <button type="submit" class="btn btn-textb btn-primary">{{'Submit' | translate}}</button>        </form>
+</div>

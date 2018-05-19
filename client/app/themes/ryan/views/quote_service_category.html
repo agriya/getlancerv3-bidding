@@ -1,0 +1,141 @@
+<!-- BEGIN: BANNER SECTION -->
+<div class="CategoryBaner">
+    <div class="CategoryBaner pr">
+        <!-- <div class="cover-image" style="background:url();"></div>-->
+        <div class="banner-block2"> <img ng-src="{{quote_services_category.image_name}}" alt="{{quote_services_category.name}}" title="{{quote_services_category.name}}" class="">
+            <div class="banerCont pa">
+                <div class="text-center">
+                    <h3 ng-if="quote_services_category.parent_category_id === null" class="text-uppercase no-mar text-40 text-white font-wsemib banerHead">{{quote_services_category.name}} </h3>
+                    <h3 ng-if="quote_services_category.parent_category_id !== null" class="no-mar text-white banerHead">{{'Hire For'|translate}} {{quote_services_category.name}} </h3>
+                    <p ng-if="quote_services_category.description" class=" htruncate text-18 text-white banerP" bind-html-compile="quote_services_category.description"></p>
+                    <ul ng-if="quote_services_category.parent_category_id !== null" class="list-inline top-mspace">
+                        <li><a href="" title="{{'Get Started '| translate}}" ng-click="quoteCategoryViewScroll();" class="btn btn-default text-18 rentalBtun">{{'Get Started'| translate}}</a></li>
+                    </ul>
+                    <div ng-if="quote_services_category.parent_category_id === null" class="banner-search form-group clearfix">
+                        <div class="input-group quote-group">
+                            <ui-select ng-model="search_category" on-select="PutChildCategory($item)">
+                                <ui-select-match placeholder="Search" class="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices position="down" class="banner-select" repeat="collection in search_child_categories track by $index" refresh="getChildCategories($select.search)" refresh-delay="0">
+                                    <div class="s-name" ng-bind-html="collection.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select> 
+                            <span class="input-group-btn left-quote">
+                                <a href="" class="btn btn-primary  Montserrat ng-binding">{{'Get Started'|translate}}</a>
+                            </span>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div ng-if="quote_services_category.parent_category_id === null">
+    <div class="text-center howHead">
+        <h2 class="text-uppercase text-44 bot-big-mspace howitH cuprumFont">{{'Popular Services IN'|translate}} <span class="text-primary">{{quote_services_category.name}} </span></h2>
+        <p class="center-block text-18 howP bot-big-mspace"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. </p>
+    </div>
+    <div class=" featuerdEquip">
+        <div class="container">
+            <div class="row" ng-if="quote_service_types.length">
+                <div class="col-sm-6 col-md-3 clearfix" ng-repeat="quote_service_category in quote_service_types">
+                    <div class="text-center bg-white ver-big-mspace pr howitBlocks qutoesBlock">
+                        <div class="bot-space">
+                            <a href="" ng-if="!$root.isAuth" ng-click="openLoginModal('login')" title="{{quote_service_category.name}}" class="img-circle center-block show pr feutrimgCont"> <img ng-src="{{quote_service_category.image_name}}" alt="{{quote_service_category.name }}" title="{{quote_service_category.name}}"> </a>
+                            <a href="" ng-if="$root.isAuth" ng-click="openQuoteRequestModal(quote_service_category.id,'null','category')"
+                                title="{{quote_service_category.name}}" class="img-circle center-block show pr feutrimgCont"> <img ng-src="{{quote_service_category.image_name}}" alt="{{quote_service_category.name }}" title="{{quote_service_category.name}}"> </a>
+                        </div>
+                        <h3 class="text-18 no-mar htruncate"><a ng-href="" ng-if="!$root.isAuth" ng-click="openLoginModal('login')" title="{{quote_service_category.name}}" class="text-gray">{{quote_service_category.name}}</a></h3>
+                        <h3 class="text-18 no-mar htruncate"><a ng-href="" ng-if="$root.isAuth" ng-click="openQuoteRequestModal(quote_service_category.id,'null','category')" title="{{quote_service_category.name}}" class="text-gray">{{quote_service_category.name}}</a></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container " ng-if="quote_services_category.parent_category_id !== null && user.role_id != ConstUserRole.Freelancer" id="quote_request">
+    <div class="row">
+        <div class="my-works">
+            <div ng-if="form1" class="panel">
+                <div class="panel-heading">
+                    <form class="form-horizontal adminpg-form " role="form" enctype="multipart/form-data" name="RequestAdd" ng-submit="QuotaFormSave(RequestAdd.$valid)">
+                        <div class="">
+                            <h4>{{'Basic Information'|translate}}</h4>
+                            <hr>
+                            <div class="form-group" ng-if="settings.IS_BUY_OPTION_ENABLED == ConstQuoteBuyOption.Enabled">
+                                <div class="col-sm-4"> <label for="inputIsRequestForBuy" class="control-label">{{'Quote Type'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                <div class="col-sm-8" ng-init="quoteRequest.is_request_for_buy = 0">
+                                    <ul class="list-inline">
+                                        <li class="checkbox"> <label for="inputIsRental" class="custom-checkbox"> 
+                                             <input type="radio" ng-model="quoteRequest.is_request_for_buy" 
+                                              title="{{'Rental Quote'|translate}}" id="inputIsRental"  
+                                               ng-value="0" ng-required="quoteRequest.is_request_for_buy == null " placeholder="{{'Rental Quote'|translate}}" > 
+                                                <span>{{'Rental Quote'|translate}}</span></label></li>
+                                        <li class="checkbox hor-big-mspace"> <label for="inputIsSales" class="custom-checkbox"> <input type="radio" ng-model="quoteRequest.is_request_for_buy" ng-required="quoteRequest.is_request_for_buy == null"  title="{{'Sales Quote'|translate}}" id="inputIsSales"  ng-value="1"  placeholder="{{'Sales Quote'|translate}}"> <span>{{'Sales Quote'|translate}}</span> </label></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4"> <label for="inputTitle3" class="control-label">{{'Title'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                <div class="col-sm-8"> <input type="text" autocomplete="off" ng-model="quoteRequest.title" class="form-control" id="inputTitle3" placeholder="{{'Title'|translate}}" required> </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4"> <label for="inputDescription3" class="control-label">{{'Description'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                <div class="col-sm-8"> <textarea ng-model="quoteRequest.description" class="form-control" id="inputDescription3" placeholder="{{'Description'|translate}}" required> </textarea> </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4"> <label for="inputBestDayTimeForWork3" class="control-label">{{'Best Day Time For Work'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                <div class="col-sm-8"> <input autocomplete="off" type="text" ng-model="quoteRequest.best_day_time_for_work" class="form-control" id="inputBestDayTimeForWork3" placeholder="{{'Best Day Time For Work'|translate}}" required> </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4"> <label for="inputPhoneNo" class="control-label">{{'Phone Number'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                <div class="col-sm-8"> <input type="text" autocomplete="off" ng-model="quoteRequest.phone_no" class="form-control" id="inputPhoneNo3" placeholder="{{'Phone No'|translate}}" required> </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4"> <label for="inputFullAddress3" class="control-label">{{'Work Location'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                <div class="col-sm-8"> <input class="form-control" id="inputFullAddress3" g-places-autocomplete force-selection="true" ng-change="location_quote();" ng-model="quoteRequest.place" required autocomplete="off" />
+                                    <p class="help-block" class="form-text text-muted">{{'You must select address from autocomplete'|translate}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4"> <label for="inputZipCode3" class="control-label">{{'Zip code'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                <div class="col-sm-8"> <input class="form-control" autocomplete="off" id="inputZipCode3" ng-model="quoteRequest.zip_code" required /> </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-8 col-sm-offset-4"> <button type="submit" class="btn btn-textb btn-primary"><span  ng-if ="!isformfield">{{'Submit' | translate}}</span><span ng-if ="isformfield">Next</span></button> </div>
+                            </div>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="panel-heading" ng-repeat="form_field in form_fields_all track by form_field.id">
+            <div ng-if="showfrms[$index+1]">
+                <h4>{{form_field.name}}</h4>
+                <hr>
+                <div ng-model="quoteRequest.form_fields[$index]" fb-form="{{'default-'+($index+1)}}" fb-default="defaultValue"></div>
+                <div class="form-group"> <button ng-hide="$index==0" ng-click="serviceShowprevious($index+1)" class="btn btn-textb btn-primary">{{'Prevoius'|translate}}</button> <button ng-if="$index==0" ng-click="showMainForm()" class="btn btn-textb btn-primary">{{'Prevoius'|translate}}</button>                    <button type="button" ng-click="serviceSavenew($index+1)" class="btn btn-textb btn-primary">{{'Submit'|translate}}</button> </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-if="formfinal">
+        <div class="panel-heading">
+            <div>
+                <h3>{{'Thank you'|translate}}</h4>
+                    <hr>
+                    <p>{{'Your Request sent successfully. Our service provider will contact you soon.'|translate}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container howitWork" ng-if="quote_services_category.parent_category_id !== null && user.role_id == ConstUserRole.Freelancer">
+    <div>
+        <h3>{{'Request a Quote'|translate}}</h3>
+    </div>
+    <div c>
+        <p>{{'Sorry!. Supplier cannot request quote for this service'|translate }}</p>
+    </div>
+</div>
+</div>

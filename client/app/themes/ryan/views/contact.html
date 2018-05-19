@@ -1,0 +1,53 @@
+<div class="section navbar-default">
+    <div class="container">
+        <div class="text-center howHead">
+            <h2 class="text-uppercase text-44 bot-big-mspace howitH cuprumFont ng-binding">{{'Contact'| translate}} <span class="text-primary ng-binding">{{'us'|translate}}</span></h2>
+        </div>
+    </div>
+</div>
+<div class="section howitWork" ng-controller='ContactController'>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 pr">
+                <form class="form-horizontal" role="form" name="contactForm" ng-submit="save()">
+                    <div class="form-group">
+                        <div class="col-sm-3"> <label for="inputFirstName3" class="control-label">{{'First Name'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                        <div class="col-sm-9"> <input type="text" ng-model="contact.first_name" pattern="[a-zA-Z]+" title="Only enter letters" class="form-control" id="inputFirstName3" placeholder="{{'First Name'|translate}}" autocomplete="off" required> </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3"> <label for="inputLastName3" class="control-label">{{'Last Name'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                        <div class="col-sm-9"> <input type="text" ng-model="contact.last_name" pattern="[a-zA-Z]+" title="Only enter letters" class="form-control" id="inputLastName3" placeholder="{{'Last Name'|translate}}" autocomplete="off" required> </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3"> <label for="inputEmail3" class="control-label">{{'Email'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                        <div class="col-sm-9"> <input type="email" ng-model="contact.email" pattern="[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}" title="Please enter valid email address" class="form-control" id="inputEmail3" placeholder="{{'Email'|translate}}" autocomplete="off"
+                                required> </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3"> <label for="inputMobile3" class="control-label">{{'Mobile'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                        <div class="col-sm-9"> <input type="text" pattern="\+?\d{10}" title="Please enter valid mobile no" ng-model="contact.phone" class="form-control" id="inputMobile3" placeholder="{{'Mobile'|translate}}" autocomplete="off" required> </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3"> <label for="inputUsername3" class="control-label">{{'Subject'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                        <div class="col-sm-9"> <input type="text" ng-model="contact.subject" class="form-control" id="inputUsername3" placeholder="{{'Subject'|translate}}" autocomplete="off" required> </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3"> <label for="inputMessage3" class="control-label">{{'Message'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                        <div class="col-sm-9"> <textarea type="text" ng-model="contact.message" class="form-control" id="inputMessage3" placeholder="{{'Message'|translate}}" autocomplete="off" required rows="3"></textarea> </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">&nbsp;</div>
+                        <div class="col-sm-9 google-recaptcha"> </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">&nbsp;</div>
+                        <div class="col-sm-9"> <span class="text-danger" ng-show="captchaErr">{{captchaErr}}</span> </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9"> <button type="submit" ng-show="save_btn" class="btn btn-lg btn-primary disabled">{{'Submit'|translate}}</button> <button type="submit" ng-show="!save_btn" class="btn btn-lg btn-primary col-sm-4 col-xs-6">{{'Submit'|translate}}</button>                            </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

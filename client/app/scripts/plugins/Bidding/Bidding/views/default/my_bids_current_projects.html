@@ -1,0 +1,132 @@
+<section class="my-contests" ng-controller="biddingProjectDashboardCtrl">
+    <div class="row">
+        <div class="col-xs-12 top-mspace">
+            <div class="table-block">
+                <div class="table-responsive">
+                    <table class="table table-striped table-center table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="data-left">{{'Project Details'|translate}}</th>
+                                <th class="data-left">{{'Employer'|translate}}</th>
+                                <th>{{'Assigned Amount'|translate}} 
+                                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                                    <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span>
+                                </th>
+                                <th width="100">{{'Deadline'|translate}}</th>
+                                <th width="125">{{'Bid Expiry date'|translate}}</th>
+                                <th ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Milestone') > -1"> {{'Milestones'|translate}} </th>
+                                <th ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Invoice') > -1">{{'Invoices'|translate}}</th>
+                                <th> {{'Total Amount Received'|translate}}
+                                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                                    <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span>
+                                </th>
+                                <!--<th> {{'Status'|translate}}</th>-->
+                                <th width="100"> {{'Action'|translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="" ng-repeat="bid in mybids" ng-if="mybids.length > 0">
+                                <td class="data-left">
+                                    <h5 class="visible-xs">{{'PROJECT NAME'|translate}}</h5>
+                                    <h5 class="text-14 no-mar">
+                                        <a ui-sref="Bid_ProjectView({id:bid.project.id,slug:bid.project.slug})">{{bid.project.name}}</a>
+                                    </h5>
+                                </td>
+                                <td class="data-left"> 
+                                    <span class="visible-xs">{{'Employer'|translate}}</span> 
+                                    <span class="content">{{bid.project.user.username}}</span> 
+                                </td>
+                                <td> 
+                                    <span class="visible-xs">{{'Awarded Bid'|translate}}</span> 
+                                    <span class="content">
+                                        {{bid.amount}}
+                                        </span>
+                                </td>
+                                <td> 
+                                    <span class="visible-xs">{{'Deadline'|translate}}</span> 
+                                    <span class="content">{{bid.project_bid.bidding_end_date | date_format : 'MMM dd yyyy'}}</span> 
+                                </td>
+                                <td> 
+                                    <span class="visible-xs">{{'Bid Expiry date'|translate}}</span> 
+                                    <span class="content">{{bid.project_bid.bidding_end_date | date_format : 'MMM dd yyyy'}}</span> 
+                                </td>
+                                <td ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Milestone') > -1"> 
+                                    <span class="visible-xs">{{'Milestones'|translate}}</span>
+                                    <span class="content">{{bid.milestone_count}}</span> 
+                                 </td>
+                                 <td ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Invoice') > -1"> 
+                                    <span class="visible-xs">{{'Invoices'|translate}}</span>
+                                    <span class="content">{{bid.project.project_bid_invoice_count}}</span> 
+                                 </td>
+                                 <td>
+                                    <span class="content">
+                                        {{bid.paid_escrow_amount--bid.total_invoice_got_paid}}
+                                    </span>
+                                 </td>
+                                  <!--<td>
+                                         <span class="content">{{bid.bid_status.name}}</span>
+                                         
+                                 </td>-->
+                                <td> 
+                                    <div class="dropdown"> 
+                                        <button class="request-btn btn btn-primary dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="true">{{'Action'|translate}} 
+                                            <i class="fa fa-angle-down fa-fw" aria-hidden="true"></i> 
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                              <li class="cursor" ng-if="bid.project.project_status_id == projectConstant.WinnerSelected" ng-click="awardedprocess(1, bid.project.id, bid.id)"><i class="fa fa-check"></i> {{'Accept this Project'|translate}}
+                                            </li>
+                                             <li class="cursor" ng-if="bid.project.project_status_id == projectConstant.WinnerSelected" ng-click="awardedprocess(2, bid.project.id, bid.id)"><i class="fa fa-remove"></i> {{'Reject this Project'|translate}}
+                                            </li>
+                                            <li class="cursor" ng-if="bid.project.project_status_id == projectConstant.UnderDevelopment ||bid.project.project_status_id == projectConstant.Completed">
+                                                <a href="javascript:void(0);" ng-click="milestonePage(bid.project.id, action, 1)">
+                                                {{'Milestones'|translate}}</a>
+                                            </li>
+                                            <li class="cursor" ng-if="bid.project.project_status_id == projectConstant.UnderDevelopment ||bid.project.project_status_id == projectConstant.Completed">
+                                                <a href="javascript:void(0);" ng-click="milestonePage(bid.project.id, action, 2)">
+                                                {{'Invoices'|translate}}</a>
+                                            </li>
+                                            <li class="cursor" ng-if="(bid.project.project_status_id == projectConstant.UnderDevelopment) && (projectstatus != ProjectStatusConstant.FinalReviewPending)">
+                                                <a href="javascript:void(0);" ng-click="AcceptCompleted(bid.project.id)">
+                                                {{'Mark as Completed '|translate}}</a>
+                                            </li>
+                                            <li class="cursor" ng-if="bid.project.project_status_id == projectConstant.UnderDevelopment||bid.project.project_status_id == projectConstant.Completed">
+                                                <a href="javascript:void(0);" ng-click="milestonePage(bid.project.id, action, 3)">
+                                                {{'Dispute'|translate}}</a>
+                                            </li>
+                                            <li class="cursor" ng-if="bid.project.project_status_id == projectConstant.FinalReviewPending">
+                                                <a href="javascript:void(0);" ng-click="milestonePage(bid.project.id, action, 4)">
+                                                {{'Add Review'|translate}} / {{'Update Review'|translate}} </a>
+                                            </li>
+                                        </ul>
+                                    </div> 
+                                </td>
+                            </tr>
+                            <tr ng-if="!mybids.length && !loader" class="text-center">
+                                <td colspan="9" class="text-danger"> 
+                                    <span class="text-danger">{{'No records available'|translate}}</span> 
+                                </td>
+                            </tr>
+                            <tr ng-if="!mybids.length && loader" class="text-center">
+                                <td colspan="9">
+                                    <span>
+                                        <img ng-src="images/contest_loader.gif" alt="loading " title="loading">
+                                    </span> 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row binding-pagination" ng-show="currentPage > 1">
+                <div class="pagnation-content">
+                    <div class="container">
+                        <div class="clearfix pagnation-inner">
+                            <uib-pagination total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="numPages" num-pages="noOfPages" ng-click="paginate()"></uib-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

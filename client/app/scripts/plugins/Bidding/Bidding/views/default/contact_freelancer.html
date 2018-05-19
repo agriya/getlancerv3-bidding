@@ -1,0 +1,58 @@
+<div class="section navbar-default">
+    <form class="form-horizontal adminpg-form" name="Contactfrm" role="form" ng-submit="submit(Contactfrm.$valid)" novalidate>
+        <div>
+            <div>
+                <div class="clearfix modal-msg">
+                    <div class="section navbar-default">
+                        <div class="panel clearfix message-block">
+                            <div class="panel-heading sep-bot"> 
+                                <button type="button" class="close pull-right" data-dismiss="modal" ng-click="closemodel()">&times;</button>
+                                <h4> {{'Send Message'|translate}}
+                                    </h4>
+                            </div>
+                             <ul class="list-unstyled builtin-list clearfix">
+                                    <li ng-if="ContactMessages.length > 0">
+                                        <a href="" class="btn btn-default btn-sm load-more pull-right" ng-hide="messageNoOfPages == MessagePage" ng-click='contactmessage_pagination()'>{{'Load more...' | translate}}  ( {{ConactmessageTotal}} )</a>
+                                    </li>
+                            </ul>
+                            <div class="media" ng-repeat="ContactMessage in ContactMessages | reverse">
+                                <div class="pull-left">
+                                    <span class="blog-user-img"><img ng-src="{{ContactMessage.user.user_avatar_url}}"  class="center-block img-circle user-small"></span>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="text-16"><span>{{ContactMessage.user.username}}</span> , <span class="text-12 text-normal text-lowercase grayc"> {{ ContactMessage.message_content.created_at | timeago}} </span></h4>
+                                    <p class="word-break" ng-bind-html="ContactMessage.message_content.message"> </p>
+                                </div>
+                            </div>
+                             <div class="panel-heading" ng-if="project_dispute === 'true'"> 
+                                <h4 class="text-center text-danger"> {{"Project under dispute. So you can't send message"|translate}}.</h4>
+                             </div>
+                             <div class="media">
+                                  <div class="pull-left media-top"> <img src="images/default.png" alt="[Image: USer]" class="img-circle center-block user-small"> </div>
+                                <div class="media-body"> 
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label for="inputDescription">{{'Enter your message'|translate}}
+                                                <span class="error">*</span> 
+                                            </label> 
+                                            <textarea rows="5" type="text" name="inputDescription" ng-model="data.message" class="form-control" id="inputDescription" ng-required="true"></textarea>
+                                            <span class="error" ng-show="(Contactfrm.$submitted || Contactfrm.inputDescription.$touched) && (Contactfrm.inputDescription.$pristine || Contactfrm.inputDescription.$invalid) && (Contactfrm.inputDescription.$error.required)">
+                                                {{'Required'| translate }} 
+                                            </span> 
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-xs-offset-1 col-sm-offset-2 col-xs-12 col-sm-10 message-block-xs"> 
+                            <div class="space">
+                                <button type="submit" ng-show="contact_freelancer" class="btn btn-primary" disabled>{{'Submit'|translate}}</button> 
+                                <button type="submit" class="btn btn-primary btn-sm" ng-show="!contact_freelancer">{{'Submit'|translate}}</button>                                
+                                <button type="button" class="btn btn-danger btn-sm" ng-click="closemodel()">{{'Cancel'|translate}}</button> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

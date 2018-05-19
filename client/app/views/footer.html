@@ -1,0 +1,110 @@
+<!-- BEGIN: FOOTER -->
+<footer>
+    <div class="container">
+        <div class="footer-blk">
+            <div class="row">
+                <div class="col-sm-8 animated wow fadeInLeft animated">
+                    <div class="footer-menu-list">
+                        <div class="row">
+                           
+                            <div class="col-xs-4">
+                                    <h6 class="text-uppercase text-primary" ng-if="!isAuth">{{'Browse' |translate}}</h6>
+                                    <ul class="list-unstyled">
+                                         <li ng-if="!isAuth"> <a href="freelancers" class="text-12 hvr-forward"> {{'Freelancers' |translate}}</a></li>
+                                        <li ng-if="(settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 && !isAuth)"><a href="quote_services" class="text-12 hvr-forward">{{'Services' |translate}}</a></li>
+                                    </ul>
+                                <h6 class="text-uppercase text-primary" ng-if="isAuth && ((Employer && settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') >-1) || settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1)">{{'Browse' |translate}}</h6>
+                                <ul class="list-unstyled">
+                                    <li ng-if="Employer && isAuth"> <a href="freelancers" class="text-12 hvr-forward"> {{'Freelancers' |translate}}</a></li>
+                                    <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1"><a href="projects" class="text-12 hvr-forward">{{'Projects' |translate}}</a></li>
+                                    <li ng-if="(Employer && settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1)"><a href="quote_services" class="text-12 hvr-forward">{{'Services' |translate}}</a></li>
+                                    <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1"><a href="contests" class="text-12 hvr-forward">{{'Contests' |translate}}</a></li>
+                                    <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1"><a href="jobs" class="text-12 hvr-forward">{{'Jobs'|translate}}</a></li>
+                                    <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1"><a href="portfolios" class="text-12 hvr-forward">{{'Portfolios' |translate}}</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-4">
+                                <h6 class="text-primary text-uppercase">{{'About'|translate}}</h6>
+                                <ul class="list-unstyled">
+                                    <li><a href="pages/14/how-it-works" class="text-12 hvr-forward">{{'How it works' |translate}}</a></li>
+                                    <li><a href="pages/2/about" class="text-12 hvr-forward">{{'About us' |translate}}</a></li>
+                                    <li><a href="pages/16/faq" class="text-12 hvr-forward">{{'FAQ' |translate}}</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-4">
+                                <h6 class="text-primary text-uppercase">{{'MORE' |translate}}</h6>
+                                <ul class="list-unstyled">
+                                    <li><a href="pages/7/terms-and-conditions" class="text-12 hvr-forward">{{'Terms and Conditions' |translate}}</a></li>
+                                    <li><a href="pages/9/privacy-policy" class="text-12 hvr-forward">{{'Privacy Policy' |translate}}</a></li>
+                                    <li><a href="pages/15/aup" class="text-12 hvr-forward">{{'Acceptable User Policy' |translate}}</a></li>
+                                    <li><a href="contact" class="text-12 hvr-forward">{{'Contact' |translate}}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <h6 class="text-primary text-uppercase footer-app-title">{{'Download the Appscript' |translate}}</h6>
+                    <div class="row app-btn">
+                        <div class="col-sm-6 col-xs-12">
+                            <a href="#" class="show navbar-btn"> <img src="images/appstore.png" alt="[Image: Appstore]" title="Appstore" class="img-responsive">                                </a>
+                        </div>
+                        <div class="col-sm-6 col-xs-12">
+                            <a href="#" class="show navbar-btn"> <img src="images/googleplay.png" alt="[Image: Googleplay]" title="Googleplay" class="img-responsive">                                </a>
+                        </div>
+                    </div>
+                    <ul class="list-unstyled socialmedia-blk clearfix">
+                        <li class="pull-left">
+                            <a class="twitter" title="Twitter" ng-if="settings.SITE_TWITTER_URL" href="{{settings.SITE_TWITTER_URL}}" target="_blank">
+                            <span><i class="fa fa-twitter text-white text-18 twitter-bg circle-icon"></i></span> </a>
+                        </li>
+                        <li class="pull-left">
+                            <a class="facebook" title="Facebook" ng-if="settings.SITE_FACEBOOK_URL" href="{{settings.SITE_FACEBOOK_URL}}" target="_blank">
+                            <span><i class="fa fa-facebook text-white text-18 facebook-bg circle-icon"></i></span> </a>
+                        </li>
+                        <li class="pull-left">
+                            <a class="pinterest" title="Pinterest" ng-if="settings.SITE_PINTEREST_URL" href="{{settings.SITE_PINTEREST_URL}}" target="_blank">
+                            <span><i class="fa fa-pinterest-p text-white text-18 pinterest-bg circle-icon"></i></span> </a>
+                        </li>
+                        <li class="pull-left">
+                            <a class="gplus" title="Google+" ng-if="settings.SITE_GOOGLEPLUS_URL" href="{{settings.SITE_GOOGLEPLUS_URL}}" target="_blank">
+                            <span><i class="fa fa-google-plus text-white text-18 googlep-bg circle-icon"></i></span> </a>
+                        </li>
+                        <li class="pull-left">
+                            <a class="linkedin" title="LinkedIn" ng-if="settings.SITE_LINKEDIN_URL" href="{{settings.SITE_LINKEDIN_URL}}" target="_blank">
+                            <span><i class="fa fa-linkedin text-white text-18 linked-bg circle-icon"></i></span> </a>                           
+                        </li>
+                        <li class="pull-left">                            
+                            <a class="youtube" title="YouTube" ng-if="settings.SITE_YOUTUBE_URL" href="{{settings.SITE_YOUTUBE_URL}}" target="_blank">
+                            <span><i class="fa fa-youtube text-white text-18 youtube-bg circle-icon"></i></span> </a>
+                        </li>
+                        <li class="pull-left">                            
+                            <a class="flickr" title="Flickr" ng-if="settings.SITE_FLICKR_URL" href="{{settings.SITE_FLICKR_URL}}" target="_blank">
+                            <span><i class="fa fa-flickr text-white text-18 flickr-bg circle-icon"></i></span> </a>
+                        </li>
+                        <li class="pull-left">                            
+                            <a class="tumblr" title="Tumblr" ng-if="settings.SITE_TUMBLR_URL" href="{{settings.SITE_TUMBLR_URL}}" target="_blank">
+                            <span><i class="fa fa-tumblr text-white text-18 tumblr-bg circle-icon"></i></span> </a>
+                        </li>
+                        <li class="pull-left">                            
+                            <a class="vimeo" title="Vimeo" ng-if="settings.SITE_VIMEO_URL" href="{{settings.SITE_VIMEO_URL}}" target="_blank">
+                            <span><i class="fa fa-vimeo text-white text-18 vimeo-bg circle-icon"></i></span> </a>
+                        </li>
+                        <li class="pull-left">                            
+                            <a class="foursquare" title="Foursquare" ng-if="settings.SITE_FOURSQUARE_URL" href="{{settings.SITE_FOURSQUARE_URL}}" target="_blank">
+                            <span><i class="fa fa-foursquare text-white text-18 foursquare-bg circle-icon"></i></span> </a>
+                        </li>
+                        <li class="pull-left">                            
+                            <a class="instagram" title="Instagram" ng-if="settings.SITE_INSTAGRAM_URL" href="{{settings.SITE_INSTAGRAM_URL}}" target="_blank">
+                            <span><i class="fa fa-instagram text-white text-18 instagram-bg circle-icon"></i></span> </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p class="text-muted list-group-item-heading bot-15-mspace text-12"> Copyright <i class="fa fa-copyright" aria-hidden="true"></i> {{settings.SITE_NAME}} . {{cdate | date:'yyyy'}}
+            <a
+                href="/" title="{{$root.settings['settings.SITE_NAME']}}" class="text-muted">{{$root.settings['settings.SITE_NAME']}}</a>, {{'All rights reserved.'|translate}} </p>
+    </div>
+</footer>
+<!-- END: FOOTER -->

@@ -1,0 +1,56 @@
+<!-- BEGIN: FOOTER -->
+<footer>
+    <div class="footer pr">
+        <div class="fooBg pa"></div>
+        <div class="container">
+            <!-- BEGIN: FOOTER -->
+            <div class="topFooter">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <ul class="list-unstyled">
+                            <li>
+                                <h3 class="text-20 text-black">{{'Company'|translate}} </h3>
+                            </li>
+                            <li><a class="text-14 text-black " href="pages/2/about" title="{{'About'|translate}}">{{'About'|translate}}</a></li>
+                            <li><a class="text-14 text-black " href="pages/7/term-and-conditions" title="{{'Term and conditions'|translate}}">{{'Term and conditions'|translate}}</a></li>
+                            <li><a class="text-14 text-black " href="pages/9/privacy" title="{{'Privacy'|translate}}">{{'Privacy'|translate}}</a></li>
+                            <li><a class="text-14 text-black " href="pages/15/aup" title="{{'Acceptable Use Policy'|translate}}">{{'Acceptable Use Policy'|translate}}</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3">
+                        <ul class="list-unstyled">
+                            <li>
+                                <h3 class="text-20 text-black">{{'Support'|translate}} </h3>
+                            </li>
+                            <li><a href="contact" title="{{'Contact us'|translate}}" class="text-14 text-black">{{'Contact us'|translate}} </a></li>
+                            <li><a class="text-14 text-black " href="pages/14/how-it-works" title="{{'How It Works'|translate}}">{{'How It Works'|translate}}</a></li>
+                        </ul>
+                    </div>
+                    <!-- BEGIN: FEATURE Service -->
+                    <quote_service_featured_categories></quote_service_featured_categories>
+                    <!-- END: FEATURE Service -->
+                    <div class="col-sm-3">
+                        <ul class="list-unstyled">
+                            <li>
+                                <h3 class="text-20 text-black">{{'Follow Us'|translate}}</h3>
+                            </li>
+                            <li class="fooSocialicon"> <a ng-if="settings.SITE_TWITTER_URL" href="{{settings.SITE_TWITTER_URL}}" target="_blank" title="{{'Twitter'|translate}} "><span><i class="fa fa-twitter text-white text-16 twitter-bg circle-icon"></i></span></a> <a ng-if="settings.SITE_FACEBOOK_URL"
+                                    href="{{settings.SITE_FACEBOOK_URL}}" target="_blank" title="{{'Facebook'|translate}}"><span><i class="fa fa-facebook text-white text-16 facebook-bg circle-icon"></i></span></a> <a ng-if="settings.SITE_PINTEREST_URL" href="{{settings.SITE_PINTEREST_URL}}"
+                                    title="{{'Pinterest'|translate}}" target="_blank"><span><i class="fa fa-pinterest-p text-white text-16 pinterest-bg circle-icon"></i></span></a> <a ng-if="settings.SITE_GOOGLEPLUS_URL" href="{{settings.SITE_GOOGLEPLUS_URL}}"
+                                    title="{{'Google Plus'|translate}} " target="_blank"><span><i class="fa fa-google-plus text-white text-16 googlep-bg circle-icon"></i></span></a> <a ng-if="settings.SITE_LINKEDIN_URL" href="{{settings.SITE_LINKEDIN_URL}}"
+                                    title="{{'Linkedin'|translate}} " target="_blank"><span><i class="fa fa-linkedin text-white text-16 linked-bg circle-icon"></i></span></a> <a ng-if="settings.SITE_YOUTUBE_URL" href="{{settings.SITE_YOUTUBE_URL}}" title="{{'Youtube'|translate}} "
+                                    target="_blank"><span><i class="fa fa-youtube text-white text-16 youtube-bg circle-icon"></i></span></a> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- END: FOOTER -->
+            <!-- BEGIN: FOOTER -->
+            <div class="btomFooter text-center top-big-space">
+                <p>&copy; {{cdate | date:'yyyy'}} <a href="/" title="{{settings.SITE_NAME}}" class="text-14">{{settings.SITE_NAME}}</a>, {{'All rights reserved.'|translate}} </p>
+            </div>
+            <!-- END: FOOTER -->
+        </div>
+    </div>
+</footer>
+<!-- BEGIN: FOOTER -->

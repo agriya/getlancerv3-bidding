@@ -1,0 +1,10 @@
+{
+	"name": "UserFollow", 
+	"class": "fa fa-2x fa-user-plus",
+	"description": "UserFollow",
+	"dependencies": "Common",
+	"module_id": "812",
+	"module_hash": "869cad733ddd3b116f5aa0241495458b",
+	"display_order": "17",
+	"plugin_name":"Common/UserFollow"
+}

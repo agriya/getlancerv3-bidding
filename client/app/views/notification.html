@@ -1,0 +1,16 @@
+<section class="contest-block">
+    <div class="container" ng-controller="NotificationsController">
+        <div class="clearfix">
+            <div class="clearfix row">
+                <ul class="list-unstyled" ng-repeat="notification in notifications">
+                    <li>{{notification.message_content.message}}</li>
+                    <li>{{notification.message_content.created_at}}</li>
+                    <li> {{notification.user.username}}</li>
+                </ul>
+            </div>
+            <div class="text-center " ng-show="!loader && notifications.length">
+                <uib-pagination ng-hide="!notifications.length " total-items="total_items" max-size="maxSize " items-per-page="items_per_page" ng-model="current_page " class="pagination-sm " boundary-links="true" num-pages="no_of_pages " ng-click="notificationPaginate() "></uib-pagination>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,125 @@
+<!--<div class="section">
+    <div class="container">
+        <div class="text-center howHead">
+            <h2 class="text-uppercase text-22 big-mspace howitH cuprumFont ng-binding">{{'Contact'| translate}} 
+                <span class="text-primary ng-binding">{{'us'|translate}}</span>
+            </h2>
+        </div>
+    </div>
+</div>-->
+<div class="section howitWork contactus" ng-controller='ContactController'>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 pr well top-mspace">
+                <h2 class="text-uppercase text-22 text-center cuprumFont ng-binding">{{'Contact us'| translate}}</h2>
+                <form class="" role="form" name="contactForm" ng-submit="save()" novalidate>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div> 
+                                    <label for="inputFirstName3" class="control-label">{{'First Name'|translate}}
+                                        <span class="required-label">*</span>
+                                    </label> 
+                                </div>
+                                <div> 
+                                    <input type="text" ng-model="contact.first_name" pattern="[a-zA-Z]+" title="Only enter letters" class="form-control" id="inputFirstName3" name="FirstName" autocomplete="off" ng-required="true"> 
+                                     <span class="error" ng-show="(contactForm.$submitted || contactForm.FirstName.$touched) && (contactForm.FirstName.$pristine || contactForm.FirstName.$invalid) && (contactForm.FirstName.$error.required)"> {{' Required '| translate }} </span> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div> 
+                                    <label for="inputLastName3" class="control-label">{{'Last Name'|translate}}
+                                        <span class="required-label">*</span>
+                                    </label> 
+                                </div>
+                                <div> 
+                                    <input type="text" ng-model="contact.last_name" pattern="[a-zA-Z]+" title="Only enter letters" class="form-control" id="inputLastName3" name="LastName" autocomplete="off" required> 
+                                     <span class="error" ng-show="(contactForm.$submitted || contactForm.LastName.$touched) && (contactForm.LastName.$pristine || contactForm.LastName.$invalid) && (contactForm.LastName.$error.required)"> {{' Required '| translate }} </span> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div> 
+                                    <label for="inputEmail3" class="control-label">{{'Email'|translate}}
+                                        <span class="required-label">*</span>
+                                    </label> 
+                                </div>
+                                <div> 
+                                    <input type="email" ng-model="contact.email" pattern="[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}" title="Please enter valid email address" class="form-control" id="inputEmail3" autocomplete="off" name="Email" required> 
+                                     <span class="error" ng-show="(contactForm.$submitted || contactForm.Email.$touched) && (contactForm.Email.$pristine || contactForm.Email.$invalid) && (contactForm.Email.$error.required)">
+                                    {{'Required'| translate }}                                    
+                                    </span> 
+                                    <span class="error" ng-show="contactForm.Email.$error.pattern">{{'Please enter valid email address'|translate}}</span> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div> 
+                                    <label for="inputMobile3" class="control-label">{{'Mobile'|translate}}
+                                        <span class="required-label">*</span>
+                                    </label> 
+                                </div>
+                                <div> 
+                                    <input type="number" title="Please enter valid mobile no" ng-model="contact.phone" class="form-control" id="inputMobile3" name = "inputPhoneNumber3" autocomplete="off" required> 
+                                    <span class="error" ng-show="(contactForm.$submitted || contactForm.inputPhoneNumber3.$touched) && (contactForm.inputPhoneNumber3.$pristine || contactForm.inputPhoneNumber3.$invalid) && (contactForm.inputPhoneNumber3.$error.required)"> {{' Required '| translate }} </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div> 
+                            <label for="inputUsername3" class="control-label">{{'Subject'|translate}}
+                                <span class="required-label">*</span>
+                            </label> 
+                        </div>
+                        <div> 
+                            <input type="text" ng-model="contact.subject" class="form-control" id="inputUsername3" autocomplete="off" required name="Subject"> 
+                            <span class="error" ng-show="(contactForm.$submitted || contactForm.Subject.$touched) && (contactForm.Subject.$pristine || contactForm.Subject.$invalid) && (contactForm.Subject.$error.required)"> {{' Required '| translate }} </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div> 
+                            <label for="inputMessage3" class="control-label">{{'Message'|translate}}
+                                <span class="required-label">*</span>
+                            </label> 
+                        </div>
+                        <div> 
+                            <textarea type="text" ng-model="contact.message" class="form-control" id="inputMessage3" autocomplete="off" required rows="3" ng-required="true" name="Message"></textarea> 
+                            <span class="error" ng-show="(contactForm.$submitted || contactForm.Message.$touched) && (contactForm.Message.$pristine || contactForm.Message.$invalid) && (contactForm.Message.$error.required)"> {{' Required '| translate }} </span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="settings.CAPTCHA_TYPE == 'Google reCAPTCHA'">
+                        <div class="google-recaptcha"> </div>
+                    </div>
+                    <div class="form-group" ng-if="settings.CAPTCHA_TYPE == 'Google reCAPTCHA'">
+                        <div> 
+                            <span class="required-label" ng-show="captchaErr">{{captchaErr}}</span> 
+                        </div>
+                    </div>
+                   <div class="form-group" ng-if="settings.CAPTCHA_TYPE == 'Normal'">
+                        <div class="normal-captcha text-18">
+                            <simple-captcha valid="captchaValid" form={{contactForm}}></simple-captcha>
+                        </div>
+                        <span class="error" ng-show="(contactForm.$submitted || contactForm.normalcapcha1.$touched) && (contactForm.normalcapcha1.$pristine || contactForm.normalcapcha1.$invalid)">
+                            <span ng-if="!captchaValid && contactForm.normalcapcha1.$error.required">Required.</span>
+                        </span>
+                            <span class="error" ng-show="(contactForm.$submitted || contactForm.normalcapcha2.$touched) && (contactForm.normalcapcha2.$pristine || contactForm.normalcapcha2.$invalid)">
+                            <span ng-if="!captchaValid && contactForm.normalcapcha2.$error.required">Required.</span>
+                        </span>
+                        <span class="error" ng-if="!captchaValid && (!contactForm.normalcapcha1.$error.required && !contactForm.normalcapcha2.$error.required)">Error, incorrect captcha.</span>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" ng-show="save_btn" class="btn btn-lg btn-primary" disabled>{{'Submit'|translate}}</button> 
+                        <button type="submit" ng-show="!save_btn" class="btn btn-lg btn-primary">{{'Submit'|translate}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="section navbar-default">
+    <div class="container">
+        <div class="text-center howHead">
+            <h2 class="text-uppercase text-44 bot-big-mspace howitH cuprumFont ng-binding">{{'Service'| translate}} <span class="text-primary ng-binding">{{'Listings' | translate}}</span></h2>
+        </div>
+    </div>
+</div>
+<div class="howitWork featuerdEquip service-search" ng-controller='QuoteServicesController'>
+    <div class="container">
+        <form name="quote_name" ng-hide="true" ng-if="settings.IS_ENABLE_GEO_AND_RADIUS_BASED_LISTING" ng-submit="setRadius()" class="form-inline">
+            <div class="text-right"> <select ng-model="quote_service_radius.radius" title="{{'Select radius'|translate}}" class="form-control" id="inputRadius3" autocomplete="off">
+                    <option ng-selected="quote_service_radius.radius == ''" ng-value="">{{'All'|translate}}</option>
+                    <option ng-selected="quote_service_radius.radius == 500" ng-value="500">500</option>
+                    <option ng-selected="quote_service_radius.radius == 1000" ng-value="1000">1000</option>
+                </select> <button type="submit" class="btn btn-primary">{{'Search'|translate}}</button> </div>
+        </form>
+        <div class="row">
+            <div class="col-sm-6 col-md-3" ng-repeat="quote_service in quote_services">
+                <div class="text-center bg-white ver-big-mspace pr howitBlocks qutoesBlock">
+                    <div class="bot-space">
+                        <a href="quote_service/{{quote_service.id}}/{{quote_service.slug}}" title="{{quote_service.business_name}}" class="img-circle center-block show pr feutrimgCont"> <img ng-src="{{quote_service.image_name}}" alt="{{quote_service.business_name}}" title="{{quote_service.business_name}}"> </a>
+                    </div>
+                    <h3 class="text-18 no-mar htruncate"><a href="quote_service/{{quote_service.id}}/{{quote_service.slug}}" title="{{quote_service.business_name}}" class="text-gray">{{quote_service.business_name}}</a></h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center" ng-hide="(quote_services.length > itemsPerPage) && currentPage==1">
+                <uib-pagination ng-hide="!quote_services.length" total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="noOfPages" ng-click="paginate_quote_services()"></uib-pagination>
+            </div>
+        </div>
+        <div ng-include="'views/loader.html'"></div>
+        <div class="col-xs-12">
+            <div class="alert alert-danger" ng-show="!loader && !quote_services.length">
+                <p class="text-center">{{'No Records'|translate}}</p>
+            </div>
+        </div>
+    </div>
+</div>

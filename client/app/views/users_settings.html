@@ -1,0 +1,138 @@
+<div class="gray-bg top-space top-mspace-10">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb panel">
+                    <li> <a href="/">{{'Home'|translate}}</a> </li>
+                    <li class="active">{{'My Account'|translate}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div ng-include="'views/users_account_left_side_menu.html'"></div>
+            </div>
+            <div class="col-md-8 col-lg-9 navbar-btn">
+                <div class="section navbar-default" ng-controller='UsersSettingsController'>
+                    <div class="panel" ng-show="!loader">
+                        <div class="panel-heading sep-bot">
+                            <h3 class="no-mar">{{'My Account'|translate}}</h3>
+                        </div>
+                        <div class="panel-heading">
+                            <form class="adminpg-form" role="form" enctype="multipart/form-data" name="userSettings" ng-submit="save(userSettings.$valid)"
+                                novalidate>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-4"> <label for="inputFirstName3" class="control-label required">{{'First Name'|translate}}<span class="error">&nbsp;*</span></label></div>
+                                        <div class="col-sm-8"> <input type="text" ng-model="usersSettings.first_name" pattern="[a-zA-Z]+" title="{{'Only enter letters'|translate}}"
+                                                class="form-control" id="inputFirstName3" autocomplete="off" name="inputFirstName3"
+                                                required> <span class="error" ng-show="(userSettings.$submitted || userSettings.inputFirstName3.$touched) && (userSettings.inputFirstName3.$pristine || userSettings.inputFirstName3.$invalid) && (userSettings.inputFirstName3.$error.required)">{{'Required'| translate}} </span>                                            </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-4"> <label for="inputLastName3" class="control-label required">{{'Last Name'|translate}}<span class="error">&nbsp;*</span></label></div>
+                                        <div class="col-sm-8"> <input type="text" ng-model="usersSettings.last_name" pattern="[a-zA-Z]+" title="{{'Only enter letters'|translate}}"
+                                                class="form-control" required="required" id="inputLastName3" name="inputLastName3"
+                                                autocomplete="off" required> <span class="error" ng-show="(userSettings.$submitted || userSettings.inputLastName3.$touched) && (userSettings.inputLastName3.$pristine || userSettings.inputLastName3.$invalid) && (userSettings.inputLastName3.$error.required)">{{'Required'| translate}} </span>                                            </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-4"> <label for="inputGender3" class="control-label required">{{'Gender'|translate}}<span class="error">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <select ng-model="usersSettings.gender_id" ng-options="i.value as i.name for i in gender_type" title="{{'Select Gender'|translate}}" class="form-control" required="required" id="inputGender3" autocomplete="off" name="inputGender3"
+                                                required></select>
+                                                <span class="error" ng-show="(userSettings.$submitted || userSettings.inputGender3.$touched) && (userSettings.inputGender3.$pristine || userSettings.inputGender3.$invalid) && (userSettings.inputGender3.$error.required)">{{'Required'| translate}} </span>
+                                                 </div>
+                                    </div>
+                                </div>-->
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-4"> <label for="designation" class="control-label required">{{'Designation'|translate}}<span class="error">&nbsp;*</span></label></div>
+                                        <div class="col-sm-8"> <input type="text" ng-model="usersSettings.designation" class="form-control" required="required"
+                                                id="inputLastName3" name="designation" autocomplete="off" required> <span class="error"
+                                                ng-show="(userSettings.$submitted || userSettings.designation.$touched) && (userSettings.designation.$pristine || userSettings.designation.$invalid) && (userSettings.designation.$error.required)">{{'Required'| translate}} </span>                                            </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-4"> <label for="Bio" class="control-label required">{{'Bio'|translate}}<span class="error">&nbsp;*</span></label></div>
+                                        <div class="col-sm-8"> <textarea type="text" rows="4" ng-model="usersSettings.about_me" class="form-control"
+                                                id="inputTitle" name="Bio" ng-required="true"></textarea> <span class="error"
+                                                ng-show="(userSettings.$submitted || userSettings.Bio.$touched) && (userSettings.Bio.$pristine || userSettings.Bio.$invalid) && (userSettings.Bio.$error.required)">{{'Required'| translate}} </span>                                            </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-4"> <label for="hourly_rate" class="control-label required">{{'Hourly Rate'|translate}}<span class="error">&nbsp;*</span></label></div>
+                                        <div class="col-sm-8"> <input type="number" number-only ng-model="usersSettings.hourly_rate" class="form-control"
+                                                required="required" id="hourly_rate" name="hourly_rate" autocomplete="off" min=1
+                                                required> <span class="error" ng-show="(userSettings.$submitted || userSettings.hourly_rate.$touched) && (userSettings.hourly_rate.$pristine || userSettings.hourly_rate.$invalid) && (userSettings.hourly_rate.$error.required)">{{'Required'| translate}} </span>                                            </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-4"> <label for="hourly_rate" class="control-label required">{{'Location'|translate}}<span class="error">&nbsp;*</span></label></div>
+                                        <div class="col-sm-8"> <input type="text" g-places-autocomplete ng-model="place" autocomplete="off" class="form-control"
+                                                id="inputLocation" ng-change="location()" name="location" placeholder="" ng-required="true">                                            <span class="error" ng-show="(userSettings.$submitted || userSettings.location.$touched) && (userSettings.location.$pristine || userSettings.location.$invalid) && (userSettings.location.$error.required)">
+                                        {{'Required'| translate }}
+                                        </span> </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-4"> <label for="zip_code" class="control-label required">{{'Zip Code'|translate}}<span class="error">&nbsp;*</span></label></div>
+                                        <div class="col-sm-8">
+                                            <input type="text" ng-model="usersSettings.zip_code" class="form-control" id="zip_code" name="inputZip" autocomplete="off"
+                                                ng-disabled="disable_zip" required ng-change="required()" number-only>
+                                            <span class="error" ng-show="(userSettings.$submitted || userSettings.inputZip.$touched) && (userSettings.inputZip.$pristine || userSettings.inputZip.$invalid) && (userSettings.inputZip.$error.required)">
+                                        {{'Required'| translate }}
+                                        </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-4"> <label class="control-label" for="inputUserAttachments">{{'Photo' | translate}}</label></div>
+                                        <div class="col-sm-8">
+                                            <div class="file-upload text-left">
+                                                <label for="real">
+                                                    <i class="fa fa-plus media-middle fa-fw"></i> {{'UPLOAD FILE'|translate}}
+                                                </label>
+                                                <input type="text" name="upload" class="form-control" id="custom-upload" />
+                                            </div>
+                                            <input type="file" ngf-select ng-model="file" name="file" id="real" class="realupload hide" ng-change="uploadUserAvatare(file)"
+                                                class="underline text-red" accept="image/*">
+                                            <div class="grayc">
+                                                <p ng-if='$root.settings.MAX_UPLOAD_SIZE_OF_USER_AVATAR' class="no-mar">
+                                                    <small>{{'Maximum allowed size:'|translate}} 
+                                            {{$root.settings.MAX_UPLOAD_SIZE_OF_USER_AVATAR}} {{'MB'|translate}}</small>
+                                                </p>
+                                                <p ng-if='$root.settings.ALLOWED_EXTENSIONS_OF_USER_AVATAR' class="no-mar"><small>{{'Allowed extensions:'|translate}} 
+                                            {{$root.settings.ALLOWED_EXTENSIONS_OF_USER_AVATAR}}</small>
+                                                </p>
+                                                <span class="error" ng-if="error_message && error_message !== ''">
+                                            {{error_message}}</span>
+                                            </div>
+                                            <div ng-if="usersSettings.image_name" class="navbar-btn"> <img ng-src="{{usersSettings.image_name}}" alt="{{usersSettings.first_name}}">                                                <span class="error" ng-show="(userSettings.$submitted || userSettings.file.$touched) && (userSettings.file.$pristine || userSettings.file.$invalid) && (userSettings.file.$error.required)">{{'Required'| translate}} </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-offset-4 col-sm-8"> <button type="submit" ng-show="save_btn" class="btn textb btn-primary disabled">{{'Save'|translate}}</button>                                            <button type="submit" ng-show="!save_btn" class="btn textb btn-primary">{{'Save'|translate}}</button>                                            </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="bidding-files bot-space-20" id="milestone">
+    <div class="milestone-block clearfix">
+        <div class="row">
+            <div class="col-xs-12 clearfix">
+                <h3 class="pull-left no-mar text-uppercase">{{'Transactions'|translate}}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="panel-heading row">
+        <div class="add-wallet-table">
+            <div class="table-responsive pg-table">
+                <table class="table table-striped no-mar">
+                    <thead>
+                        <tr>
+                            <th>{{'Date' |translate}}</th>
+                            <th>{{'Description'|translate}}</th>
+                            <th> {{'Credit'|translate}}<span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                                <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}})</span></th>
+                            <th>{{'Debit'|translate}} <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                                <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}})</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="transaction in transactions">
+                            <td>
+                                <p class="no-mar">{{transaction.created_at | date_format : 'MMM dd, yyyy'}}</p>
+                            </td>
+                            <td class="data-left"> <span ng-bind-html="transaction.transaction_message"> 
+                                                    {{transaction.transaction_message}}</span> </td>
+                            <td>{{transaction.transactionAmount.credit}}</td>
+                            <td>{{transaction.transactionAmount.debit}}</td>
+                        </tr>
+                        <tr ng-if="transactions.length === 0">
+                            <td colspan="8">
+                                <p class="text-center text-danger" ng-if="transactions.length === 0"> {{'No records available' | translate}}</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pull-right hired-view-total-page" ng-if="transactions.length > 0">
+                <nav aria-label="Page navigation">
+                    <uib-pagination total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPageTransaction"
+                        class="pagination-sm" boundary-links="true" num-pages="noOfPages" ng-click="paginateTransaction(currentPageTransaction)"></uib-pagination>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

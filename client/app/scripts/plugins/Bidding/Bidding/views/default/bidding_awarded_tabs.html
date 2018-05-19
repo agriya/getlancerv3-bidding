@@ -1,0 +1,25 @@
+<!--START: BIDDING TABS -->
+<div class="freelancer-tabs">
+    <ul class="nav nav-tabs">
+        <li ng-class="{'active':projectBid.action == 'messages'}"> 
+            <a ng-click="selectedTab('messages')">{{'Messages'|translate}}</a>
+        </li>
+        <li ng-class="{'active':projectBid.action == 'milestones'}" ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Milestone') > -1"> 
+            <a ng-click="selectedTab('milestones')">{{'Milestones'|translate}}</a> 
+        </li>
+        <li ng-class="{'active':projectBid.action == 'invoices'}" ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Invoice') > -1"> 
+            <a ng-click="selectedTab('invoices')">{{'Invoice'|translate}}</a> 
+        </li>
+        <li ng-class="{'active':projectBid.action == 'files'}"> 
+            <a ng-click="selectedTab('files')">{{'Files'|translate}}</a> 
+        </li>
+      <!--  <li ng-class="{'active':projectBid.action == 'activities'}"> 
+            <a ng-click="selectedTab('activities')">{{'Activities'|translate}}</a> 
+        </li>-->
+        <li ng-class="{'active':projectBid.action == 'transactions'}"> 
+            <a ng-click="selectedTab('transactions')">{{'Transactions'|translate}}</a> 
+        </li>
+    </ul>
+    <div ng-include=renderpage></div>
+</div>
+<!--END: BIDDING TABS -->

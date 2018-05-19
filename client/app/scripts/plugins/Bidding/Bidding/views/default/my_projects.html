@@ -1,0 +1,117 @@
+<div class="section navbar-default">
+    <div class="container">
+        <div class="row"> <br> <br>
+            <ul class="list-inline cursor">
+                <li ng-repeat="projstatus in projectStatus"> <span ng-click="getProjects(projstatus.id)">
+              {{projstatus.name}} 
+              <span class="badge badge-red">  {{projstatus.project_count}}</span> </span>
+                </li>
+                <!--<li ng-click="getProjects(projectConstant.Draft)" title="Draft">
+          {{'Draft' | translate}}
+          <span class="badge badge-blue">{{projectState.project_count}}</span>
+        </li>
+
+        <li ng-click="getProjects(projectConstant.PendingForApproval)" title="Pending for Approval">
+          {{'Pending for Approval' | translate}}
+          <span class="badge badge-blue">{{projectState.project_count}}</span>
+        </li>
+
+        <li ng-click="getProjects(projectConstant.OpenForBidding)" title="Open for Bidding">
+          {{'Open for Bidding' | translate}}
+          <span class="badge badge-blue">{{projectState.project_count}}</span>
+        </li>
+
+        <li ng-click="getProjects(projectConstant.BiddingExpired)" title="Bidding Expired">
+          {{'Bidding Expired' | translate}}
+          <span class="badge badge-blue">{{projectState.project_count}}</span>
+        </li>
+
+        <li ng-click="getProjects(projectConstant.WinnerSelected)" title="Winner Selected">
+          {{'Winner Selected' | translate}}
+          <span class="badge badge-blue">{{projectState.project_count}}</span>
+        </li>
+
+        <li ng-click="getProjects(projectConstant.WaitingForEscrow)" title="Waiting For Escrow">
+          {{'Waiting For Escrow' | translate}}
+          <span class="badge badge-blue">{{projectState.project_count}}</span>
+        </li>
+
+        <li ng-click="getProjects(projectConstant.Draft)" title="Draft">
+          {{'Draft' | translate}}
+          <span class="badge badge-blue">{{projectState.project_count}}</span>
+        </li>
+
+        <li ng-click="getProjects(projectConstant.Draft)" title="Draft">
+          {{'Draft' | translate}}
+          <span class="badge badge-blue">{{projectState.project_count}}</span>
+        </li>
+
+        <li ng-click="getProjects(projectConstant.Draft)" title="Draft">
+          {{'Draft' | translate}}
+          <span class="badge badge-blue">{{projectState.project_count}}</span>
+        </li>
+
+        <li ng-click="getProjects(projectConstant.Draft)" title="Draft">
+          {{'Draft' | translate}}
+          <span class="badge badge-blue">{{projectState.project_count}}</span>
+        </li>
+
+        <li ng-click="getProjects(projectConstant.Draft)" title="Draft">
+          {{'Draft' | translate}}
+          <span class="badge badge-blue">{{projectState.project_count}}</span>
+        </li>
+
+        <li ng-click="getProjects(projectConstant.Draft)" title="Draft">
+          {{'Draft' | translate}}
+          <span class="badge badge-blue">{{projectState.project_count}}</span>
+        </li>
+
+        <li ng-click="getProjects(projectConstant.Draft)" title="Draft">
+          {{'Draft' | translate}}
+          <span class="badge badge-blue">{{projectState.project_count}}</span>
+        </li>-->
+            </ul>
+            <div ng-include='scripts/plugins/Bidding/Bidding/views/default/my_project_draft.html'></div>
+            <!--<uib-tabset justified="false" active="activeStatus">
+                <uib-tab index="0" heading="{{'Pending for Payment'|translate}}" ng-click="getProjects(projectConstant.PaymentPending)"> <br>
+                    <div ng-include="'scripts/plugins/Bidding/Bidding/views/default/my_project_draft.html'"></div>
+                </uib-tab>
+                <uib-tab index="1" heading="{{'Draft'|translate}}" ng-click="getProjects(projectConstant.Draft)"> <br>
+                    <div ng-include="'scripts/plugins/Bidding/Bidding/views/default/my_project_draft.html'"></div>
+                </uib-tab>
+                <uib-tab index="2" heading="{{'Pending For Approval'|translate}}" ng-click="getProjects(projectConstant.PendingForApproval)"> <br>
+                    <div ng-include="'scripts/plugins/Bidding/Bidding/views/default/my_project_draft.html'"></div>
+                </uib-tab>
+                <uib-tab index="3" heading="{{'Open for Bidding'|translate}}" ng-click="getProjects(projectConstant.OpenForBidding)"> <br>
+                    <div ng-include="'scripts/plugins/Bidding/Bidding/views/default/my_project_draft.html'"></div>
+                </uib-tab>
+                <uib-tab index="4" heading="{{'Bidding Closed/Expired'|translate}}" ng-click="getProjects(projectConstant.BiddingExpired)"> <br>
+                    <div ng-include="'scripts/plugins/Bidding/Bidding/views/default/my_project_draft.html'"></div>
+                </uib-tab>
+                <uib-tab index="5" heading="{{'Winner Selected'|translate}}" ng-click="getProjects(projectConstant.WinnerSelected)"> <br>
+                    <div ng-include="'scripts/plugins/Bidding/Bidding/views/default/my_project_draft.html'"></div>
+                </uib-tab>
+                <uib-tab index="6" heading="{{'Under Developement'|translate}}" ng-click="getProjects(projectConstant.UnderDevelopment)"> <br>
+                    <div ng-include="'scripts/plugins/Bidding/Bidding/views/default/my_project_draft.html'"></div>
+                </uib-tab>
+                <uib-tab index="7" heading="{{'Final Review Pending'|translate}}" ng-click="getProjects(projectConstant.FinalReviewPending)"> <br>
+                    <div ng-include="'scripts/plugins/Bidding/Bidding/views/default/my_project_draft.html'"></div>
+                </uib-tab>
+                <uib-tab index="8" heading="{{'Closed'|translate}}" ng-click="getProjects(projectConstant.Closed)"> <br>
+                    <div ng-include="'scripts/plugins/Bidding/Bidding/views/default/my_project_draft.html'"></div>
+                </uib-tab>
+                <uib-tab index="9" heading="{{'Canceled By Admin'|translate}}" ng-click="getProjects(projectConstant.CanceledByAdmin)"> <br>
+                    <div ng-include="'scripts/plugins/Bidding/Bidding/views/default/my_project_draft.html'"></div>
+                </uib-tab>
+                <uib-tab index="10" heading="{{'Canceled'|translate}}" ng-click="getProjects(projectConstant.MutuallyCanceled)"> <br>
+                    <div ng-include="'scripts/plugins/Bidding/Bidding/views/default/my_project_draft.html'"></div>
+                </uib-tab>
+                <div class="clearfix"> 
+                    <span class="navbar-left"> 
+                        <a class="btn btn-primary" ui-sref="Bid_ProjectAdd()">{{'Post a Project'|translate}}</a> 
+                    </span> 
+                </div>
+            </uib-tabset>-->
+        </div>
+    </div>
+</div>

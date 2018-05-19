@@ -1,0 +1,9 @@
+<ul class="row" ng-repeat="faq_ans in faqs">
+    <li class="col-sm-6" ng-if="faqs.length" ng-repeat="faq in faq_ans">
+        <a href="" title="Arrow-right" class="media-left"> <img src="themes/ryan/images/arrow-right.png" alt="[Image: Arrow-right]" title="Arrow-right" class="media-object"> </a>
+        <div class="media-body">
+            <h3 class="h4 no-mar lin-heig22">{{faq.question | translate}}</h3>
+            <p class="lin-heig22 h5"> {{faq.answer | translate}} </p>
+        </div>
+    </li>
+</ul>

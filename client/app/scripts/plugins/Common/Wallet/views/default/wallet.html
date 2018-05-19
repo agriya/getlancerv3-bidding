@@ -1,0 +1,75 @@
+<div class="gray-bg top-space top-mspace-10">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb panel">
+                    <li> <a href="/">{{'Home'|translate}}</a> </li>
+                    <li class="active">{{'Add to wallet'|translate}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div ng-include="'views/users_account_left_side_menu.html'"></div>
+            </div>
+            <div class="col-md-8 col-lg-9 navbar-btn">
+                <div class="section navbar-default" ng-show="!loader" ng-controller='WalletController'>
+                    <div class="panel">
+                        <div class="panel-heading sep-bot">
+                            <h3 class="no-mar">{{'Add to wallet'|translate}}</h3>
+                        </div>
+                        <div class="panel-heading space-alert">
+                            <p ng-if='user_available_balance == 0 || user_available_balance == null ' class="alert alert-danger custom-alert">
+                                 <span>{{'Your Current Available Balance'|translate}}: </span>
+                                <span class="textb text-34"> 
+                                    <amount-display  amount='{{user_available_balance}}' ng-if="user_available_balance"></amount-display>  
+                                </span>
+                            </p>
+                            <p ng-if='user_available_balance > 0' class="alert alert-success custom-alert">
+                                <span>{{'Your Current Available Balance'|translate}}:</span> 
+                                <span class="textb text-34"><amount-display  amount='{{user_available_balance}}' ng-if="user_available_balance"></amount-display> </span>
+                            </p>
+                            <form class="clearfix form-horizontal wallet-form row"
+                                role="form" name="PaymentForm" ng-submit="WalletFormSubmit(PaymentForm.$valid)">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <div class="form-group col-sm-10" ng-class="{ 'has-error' : ((PaymentForm.$submitted || PaymentForm.amount.$touched) && (PaymentForm.amount.$pristine || PaymentForm.amount.$invalid)) || amountErr }">
+                                        <div class="row"> <label class="col-sm-4 control-label text-right" for="amount">{{'Amount'|translate}}</label>
+                                            <div class="col-sm-8"> <input type="number" min="{{minimum_wallet_amount}}" max="{{maximum_wallet_amount}}" class="form-control" name="amount" id="amount" placeholder="{{'Amount'|translate}}" ng-model="amount" ng-change="amountErr=''"
+                                                    required>
+                                                <div ng-show="((PaymentForm.$submitted || PaymentForm.amount.$touched) && (PaymentForm.amount.$pristine || PaymentForm.amount.$invalid)) || amountErr"> <span class="help-block error" ng-show="(PaymentForm.amount.$error.required)">
+                                    {{'You must enter the amount' | translate}}
+                                </span> <span class="help-block error" ng-show="(PaymentForm.amount.$error.number)">
+                                    {{'Please enter a valid amount' | translate}}
+                                </span> <span class="help-block error" ng-show="(PaymentForm.amount.$error.min)">
+                                    {{'Your field value is lesser than minimum value' | translate}}
+                                </span> <span class="help-block error" ng-show="(PaymentForm.amount.$error.max)">
+                                    {{'Your field value is greater than maximum value' | translate}}
+                                </span> <span class="help-block error" ng-show="amountErr">
+                                    {{amountErr}}
+                                </span> </div>
+                                            </div>
+                                        </div>
+                                        <ul class="list-unstyled col-sm-offset-4 space text-muted text-12">
+                                            <li>{{'Minimum Amount'|translate}}: <span>
+                                                <amount-display  amount='{{minimum_wallet_amount}}' ng-if="minimum_wallet_amount"></amount-display> 
+                                                </span></li>
+                                            <li>{{'Maximum Amount'|translate}}: <span>
+                                                 <amount-display  amount='{{maximum_wallet_amount}}' ng-if="maximum_wallet_amount"></amount-display> 
+                                                </span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div ng-include="'scripts/plugins/Common/Wallet/views/default/gateway.html'"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

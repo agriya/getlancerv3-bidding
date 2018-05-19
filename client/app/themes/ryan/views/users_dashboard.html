@@ -1,0 +1,29 @@
+<div class="section navbar-default ng-scope">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb navbar-btn">
+                    <li> <a href="/" class="ng-binding">{{'Home'|translate}}</a> </li>
+                    <li class="active ng-binding">{{'Dashboard'|translate}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section navbar-default ng-scope" ng-controller="UsersDashboardController">
+    <div class="container">
+        <div class="row">
+            <uib-tabset justified="false">
+                <uib-tab ng-if="CustomerPortal" index="0" heading="{{'My Request'|translate}}"> <br>
+                    <div ng-include="'views/quote_my_requests_dashboard.html'"></div>
+                </uib-tab>
+                <uib-tab ng-if="SupplierPortal" index="1" heading="{{'My Services'|translate}}" ng-click="getMyServices()"> <br>
+                    <div ng-include="'views/quote_my_services_dashboard.html'"></div>
+                </uib-tab>
+                <uib-tab ng-if="SupplierPortal" index="2" heading="{{'My Works'|translate}}" ng-click="getMyWorks()"> <br>
+                    <div ng-include="'views/quote_my_works_dashboard.html'"></div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+</div>

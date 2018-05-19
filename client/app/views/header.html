@@ -1,0 +1,256 @@
+<!-- BEGIN: HEADER -->
+<header class="dashboard-header">
+    
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header"> <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> 
+                    <span class="sr-only">{{'Toggle navigation'|translate}}</span>
+                    <span class="icon-bar bar1"></span>
+                    <span class="icon-bar bar2"></span>
+                    <span class="icon-bar bar3"></span>
+                </button>
+                 <h1 ng-if='isAuth && Employer' class="h3 no-mar"> 
+                    <a href="" ng-click="switch_portal('Employer')" title="{{settings.SITE_NAME}}" class="site-logo" ng-click="$root.ShowSearch=true"><img alt="{{settings.SITE_NAME}}" ng-src="images/logo.png"></a>
+                </h1>
+                <h1 ng-if='isAuth && Freelancer' class="h3 no-mar"> 
+                    <a href="" ng-click="switch_portal('Freelancer')" title="{{settings.SITE_NAME}}" class="site-logo" ng-click="$root.ShowSearch=true"><img alt="{{settings.SITE_NAME}}" ng-src="images/logo.png"></a>
+                </h1>
+                <h1 ng-if='!isAuth' class="h3 no-mar">
+                    <a href="/" title="{{settings.SITE_NAME}}" class="site-logo" ng-click="$root.ShowSearch=true"><img alt="{{settings.SITE_NAME}}" ng-src="images/logo.png"></a>
+                </h1>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <div class="header-menu clearfix">
+                    <ul class="nav navbar-nav">
+                        <li class="home-header-searchblk">
+                            <form class="navbar-form navbar-left no-mar" ng-click="openSearch()">
+                                <div class="visible-sm serch-sm"> <i class="fa fa-search"></i> </div>
+                                <div class="input-group serch-box">
+                                    <div class="input-group-btn"> <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        	<span> <i class="fa fa-times" aria-hidden="true" ng-show="!ShowSearch"></i></span>
+                                        	<span class="home-seacrch-icon" ng-show="ShowSearch"></span> 
+                                        </button> </div> <input class="form-control text-uppercase cursor" aria-label="Text input with dropdown button" placeholder="SEARCH" ng-readonly="true"> </div>
+                            </form>
+                        </li>
+                        <!--Befor Login Menu -->
+                        <li class="dropdown" ng-if="!isAuth"> <a href="" class="dropdown-toggle text-uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{'Hire Freelancers'|translate}} <span class="left-space grayc"><i class="fa fa-angle-down"></i></span></a>
+                            <ul class="dropdown-menu  dropdown-menu-right">
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                                <a href ="projects/add">{{'Post a Project'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1"><a href="contest_types">{{'Post a Contest'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1"><a href="jobs/add">{{'Post a Job'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1"><a href="service_category">{{'Request a Service'|translate}}</a></li>
+                                <li ng-if="(settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1)"><a href="freelancers">{{'Browse Freelancers'|translate}}</a></li>
+                                <li><a href="quote_services" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1">{{'Browse Services'|translate}}</a></li>
+                                <li><a href="portfolios" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 && Employer">{{'Browse Portfolios'|translate}}</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown" ng-if="!isAuth && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 ||settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1)"> <a href="" class="dropdown-toggle text-uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{'Find Works'|translate}}<span class="left-space grayc"><i class="fa fa-angle-down"></i></span></a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1">
+                                <a href="quote_service/add">{{'List Your Service'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1"><a href="projects">{{'Browse Projects'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1"><a href="contests">{{'Browse Contests'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1"><a href="jobs">{{'Browse Jobs'|translate}} </a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown" ng-if="!isAuth && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 =='false' && settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 =='false' && settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 =='false' &&
+                        settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 =='false')"> <a href="" class="dropdown-toggle text-uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{'Find Works'|translate}}<span class="left-space grayc"><i class="fa fa-angle-down"></i></span></a>
+                            <ul class="dropdown-menu  dropdown-menu-right">
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1">
+                                <a href="quote_service/add">{{'List Your Service'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1"><a href="projects">{{'Browse Projects'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1"><a href="contests">{{'Browse Contests'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1"><a href="jobs">{{'Browse Jobs'|translate}} </a></li>
+                            </ul>
+                        </li>
+                      
+                        <!--After Login Menu -->
+                        <li class="dropdown" ng-if="isAuth && Employer"> <a href="" class="dropdown-toggle text-uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{'Hire Freelancers'|translate}} <span class="left-space grayc"><i class="fa fa-angle-down"></i></span></a>
+                            <ul class="dropdown-menu  dropdown-menu-right">
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                                <a href="projects/add">{{'Post a Project'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1">
+                                <a href="contest_types">{{'Post a Contest'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1">
+                                <a href="jobs/add">{{'Post a Job'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1">
+                                <a href="service_category">{{'Request a Service'|translate}}</a></li>
+                                <li ng-if="Employer && (settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1)"><a href="freelancers">{{'Browse Freelancers'|translate}}</a></li>
+                                <li><a href="quote_services" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1">{{'Browse Services'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 && Employer"><a href="portfolios">{{'Browse Portfolios'|translate}} </a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown" ng-if="isAuth && !Freelancer && (settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1) && (!settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1) && (!settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1) && (!settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1) && (!settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1) && (!settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) && !Employer"> <a href="" class="dropdown-toggle text-uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{'Find Works'|translate}} <span class="left-space grayc"><i class="fa fa-angle-down"></i></span></a>
+                            <ul class="dropdown-menu  dropdown-menu-right">
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1">
+                                <a href="quote_service/add">{{'List Your Service'|translate}}</a></li>
+                                 <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                                 <a href="projects?type=my_skills">{{'Projects with My Skills'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1"><a href="projects">{{'Browse Projects'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1"><a href="contests">{{'Browse Contests'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1"><a href="jobs">{{'Browse Jobs'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1"><a href="projects?type=bookmarked">{{'Bookmarked Projects'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1"><a href="">{{'Bookmarked Contests'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Exam') > -1"><a href="exams">{{'Get Certified'|translate}}</a></li>
+                                <li ng-if="Employer && (settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1)"><a href="freelancers">{{'Browse Freelancers'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 && Employer"><a href="portfolios">{{'Browse Portfolios'|translate}} </a></li>
+                            </ul>
+                        </li>
+                         <li class="dropdown" ng-if="isAuth && Freelancer && (settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === false ||settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1)"> <a href="" class="dropdown-toggle text-uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{'Find Work'|translate}} <span class="left-space grayc"><i class="fa fa-angle-down"></i></span></a>
+                            <ul class="dropdown-menu  dropdown-menu-right">
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1">
+                                <a href="quote_service/add">{{'List Your Service'|translate}}</a></li>
+                                 <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                                 <a href="projects?type=my_skills">{{'Projects with My Skills'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1"><a href="projects">{{'Browse Projects'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1"><a href="contests">{{'Browse Contests'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1"><a href="jobs">{{'Browse Jobs'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1"><a href="projects?type=bookmarked">{{'Bookmarked Projects'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1"><a href="">{{'Bookmarked Contests'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Exam') > -1"><a href="exams">{{'Get Certified'|translate}}</a></li>
+                                <li ng-if="Employer && (settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1)"><a href="freelancers">{{'Browse Freelancers'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 && Employer"><a href="portfolios">{{'Browse Portfolios'|translate}} </a></li>
+                            </ul>
+                        </li>
+                        <!--<li><a href="#contact" class="text-uppercase">manage <i class="fa fa-angle-down fa-fw"></i></a></li>-->
+                        <!--<li ng-if="isAuth && (settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1) && (!settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1) && (!settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1) && (!settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1) && (!settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1)
+                        && !Employer" class="dropdown">
+                        -->
+                         <li ng-if="isAuth && (settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 || (settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 && !Employer))" class="dropdown"> 
+                         <a href="" class="text-uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{'Manage'|translate}} <span class="left-space grayc"><i class="fa fa-angle-down"></i></span></a>
+                            <ul class="dropdown-menu  dropdown-menu-right">
+                                <li ng-if="Employer && settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1"><a href="users/dashboard?type=my_projects">{{'My Projects'|translate}}</a></li>
+                                <li ng-if="Employer && settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1"><a href="users/dashboard?type=my_contests">{{'My Contests'|translate}}</a></li>
+                                <li ng-if="Employer && settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1"><a href="users/dashboard?type=my_jobs">{{'My Jobs'|translate}}</a></li>
+                                <li ng-if="Employer && settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1"><a href="users/dashboard?type=applied_resumes">{{'Applied Resumes'|translate}}</a></li>
+                                <li ng-if="Employer && settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1"><a 
+                                href ="quote_bids/my_requests/all/{{ConstQuoteStatuses.UnderDiscussion}}/under_discussion">{{'My Service Requests'|translate}}</a></li>
+                                <li ng-if="Freelancer && settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1"><a href="users/dashboard?type=projects">{{'My Projects'|translate}}</a></li>
+                                <li ng-if="Freelancer && settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1"><a href="users/dashboard?type=projects&status=active_bids">{{'Active Bids'|translate}}</a></li>
+                                <li ng-if="Freelancer && settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1"><a href="users/dashboard?type=my_entries">{{'My Entries'|translate}}</a></li>
+                                <li ng-if="Freelancer && settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1"><a href="users/dashboard?type=jobs_applies">{{'Jobs Applied'|translate}}</a></li>
+                                <li ng-if="Freelancer && settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1"><a href="quote_services/my_services">{{'My Services'|translate}}</a></li>
+                                <li ng-if="Freelancer && settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1"><a href="my_works">{{'My Service Works'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1"><a href="users/dashboard?type=portfolios&status=my_portfolios">{{'My Portfolios'|translate}} </a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                               <a href="pages/14/how-it-works" class="text-uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            {{'How it works'|translate}} </a>
+                        </li>
+                         <!--<li ng-if="isAuth && (settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1) && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1) && (settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1) && (settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) && (settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1) && Employer" class="dropdown"> <a href="" class="text-uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{'Manage'|translate}} <span class="left-space grayc"><i class="fa fa-angle-down"></i></span></a>
+                            <ul class="dropdown-menu">
+                                <li ng-if="Employer && settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1"><a href="users/dashboard?type=my_projects">{{'My Projects'|translate}}</a></li>
+                                <li ng-if="Employer && settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1"><a href="users/dashboard?type=my_contests">{{'My Contests'|translate}}</a></li>
+                                <li ng-if="Employer && settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1"><a href="users/dashboard?type=my_jobs">{{'My Jobs'|translate}}</a></li>
+                                <li ng-if="Employer && settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1"><a href="users/dashboard?type=applied_resumes">{{'Applied Resumes'|translate}}</a></li>
+                                <li ng-if="Employer && settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1"><a href="users/dashboard?type=requests">{{'My Service Requests'|translate}}</a></li>
+                                <li ng-if="Freelancer && settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1"><a href="users/dashboard?type=projects">{{'My Projects'|translate}}</a></li>
+                                <li ng-if="Freelancer && settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1"><a href="users/dashboard?type=active_bidding">{{'Active Biddings'|translate}}</a></li>
+                                <li ng-if="Freelancer && settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1"><a href="users/dashboard?type=my_entries">{{'My Entries'|translate}}</a></li>
+                                <li ng-if="Freelancer && settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1"><a href="users/dashboard?type=jobs_applies">{{'Job Applies'|translate}}</a></li>
+                                <li ng-if="Freelancer && settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1"><a href="quote_services/my_services">{{'My Services'|translate}}</a></li>
+                                <li ng-if="Freelancer && settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1"><a href="my_works">{{'My Service Works'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1"><a href="portfolios/my_portfolios">{{'My Portfolios'|translate}} </a></li>
+                            </ul>
+                        </li>-->
+                        <!--After Admin Login dashboard -->
+                          <li class="dropdown" ng-if="isAuth && user.role_id == ConstUserRole.Admin">  
+                              <a class="text-uppercase" ng-click="navigate_dashbooard()">{{'Admin Dashboard'|translate}}</a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right list-unstyled">
+                        <li ng-if="!isAuth"> <a href="" title="{{'Signup'|translate}}" class="text-uppercase" ng-click="openLoginModal('register')"><span class="signup-icon "></span>{{'Signup'|translate}}</a> </li>
+                        <li ng-if="!isAuth"> <a href="" title="{{'Login'|translate}}" class="text-uppercase" ng-click="openLoginModal('login')"><span class="login-icon"></span>{{'Login'|translate}}</a> </li>
+                        <li ng-translate-language-select ng-if="settings.USER_IS_ALLOW_SWITCH_LANGUAGE"></li>
+                       
+                        <header_notification> </header_notification>
+                        <!-- <li ng-if="isAuth" class="dropdown">
+                            <a href="" class="dropdown-toggle text-uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 
+                            <span><i class="fa fa-bell-o fa-lg"></i></span><span class="notifications"><i class="fa fa-circle"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <div ng-repeat="activity in activities">
+                                    <p> 
+                                        <span ng-bind-html="activity.contest_status">{{activity.contest_status}}</span> <span ng-bind-html="activity.contestuser_status">{{activity.contestuser_status}}</span> <span ng-bind-html="activity.message">{{activity.message}}</span>                       <span ng-bind-html="activity.contestuser_newentry">{{activity.contestuser_newentry}}</span>
+                                        <hr> 
+                                    </p>
+                                </div> 
+                                <li>
+                                    <a href="activities"> {{'See All Activities'|translate}}</a> 
+                                </li>
+                            </ul>
+                        </li> -->
+                        <!--<li ng-if="isAuth"><a href="activities" class="text-uppercase"><span><i class="fa fa-bell-o fa-lg"></i></span><span class="notifications"><i class="fa fa-circle"></i></span></a></li>-->
+                        <!-- <li ng-if="isAuth">
+                            <a href="#" class="text-uppercase"> <span class="sprite comment-icon"></span></a>
+                        </li> -->
+                        <li class="dropdown dashboard-user" ng-if="isAuth">                           
+                            <a href="" class="dropdown-toggle text-uppercase" ng-if="user.userimage" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img ng-src="{{user.userimage}}" alt="{{user.username}}" title="{{user.username}}" class="img-circle"> <span class="">{{user.username}}</span><i class="fa fa-angle-down fa-fw"></i></a>
+                            <a href="" class="dropdown-toggle text-uppercase" ng-if="!user.userimage" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img ng-src="images/default.png" alt="{{user.username}}" title="{{user.username}}" class="img-circle"> <span class="">{{user.username}}</span><i class="fa fa-angle-down fa-fw"></i></a>
+                            <ul class="dropdown-menu  dropdown-menu-right">
+                                <li class="clearfix avl-bal" ng-if="(settings.SITE_ENABLED_PLUGINS.indexOf('Common/Wallet') > -1)"> <span class="grayc">{{'Available Balance:' | translate}} 
+                                        <span> {{$root.my_user.available_wallet_amount | customCurrency}} </span>
+                                            <!--<amount-display  amount='{{my_user.available_wallet_amount}}' ng-if="my_user.available_wallet_amount" id='user_available_wallet_amount'></amount-display>
+                                            
+                                            </span> -->
+                                        </span>
+                                    <!--<a href="#" title="close" class="pull-right sprite sprite-clse"></a>-->
+                                    <div class="deposite-amt">
+                                        <a href="wallets"> <span class="sprite sprite-deposite"></span> <span>{{'Deposit Amount' |translate}}</span> </a>
+                                    </div>
+                                </li>
+                                <!--<li class="deposite-amt clearfix">
+                                    <a href="wallets">
+                                        <span class="sprite sprite-deposite"></span>
+                                        <span>{{'Deposite Amount' |translate}}</span>
+                                    </a>
+                                </li>-->
+                                <li class="clearfix switch-link" ng-if='user.role_id == ConstUserRole.User || user.role_id == ConstUserRole.Admin'>
+                                    <a href="" class="btn btn-default employer col-xs-6" ng-click="switch_portal('Employer')" ng-class="{active:Employer}"> <span class="pull-left show">
+                                            <span class="show">{{'Switch to'|translate}}</span> <span class="text-uppercase text-b">{{'Employer'|translate}}</span> </span> <span class="pull-right show">
+                                            <span class="sprite sprite-head-check2"></span> </span>
+                                    </a>
+                                    <a href="" class="btn btn-default freelancer col-xs-6" ng-click="switch_portal('Freelancer')" ng-class="{active:Freelancer}"> <span class="pull-left show">
+                                            <span class="show">{{'Switch to'|translate}}</span> <span class="text-uppercase text-b">{{'Freelancer'|translate}}</span> </span> <span class="pull-right show">
+                                            <span class="sprite sprite-head-check2"></span> </span>
+                                    </a>
+                                </li>
+
+
+                                <li ng-show="Freelancer && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1  || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 ||  settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > 1)"><a href="" ng-click="switch_portal('Freelancer')" title="{{'Dashboard' | translate}}"><i class="fa fa-angle-right fa-fw fa-lg"></i>{{'Dashboard'|translate}}</a></li>
+
+                                <!--<li ng-show="(Freelancer && settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') === -1 && settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') === -1 && settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') === -1)">
+                                    <a href="my_works" title="{{'Dashboard' | translate}}"> <i class="fa fa-angle-right fa-fw fa-lg"></i>{{'Dashboard'|translate}}</a>
+                                </li>-->
+                    <!--quote enable employer freelancer starts-->
+                                <li ng-show="Freelancer && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') === -1 && settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') === -1 &&settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') === -1 && settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1)">
+                                            <a href="" title="{{'Dashboard' | translate}}" ng-click="onlydashbord('freelancer')"> <i class="fa fa-angle-right fa-fw fa-lg"></i>{{'Dashboard'|translate}}</a>
+                                        </li>
+
+                                <li ng-show="Employer && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') === -1 && settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') === -1 &&settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') === -1 && settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1)">
+                                    <a href="" ng-click="onlydashbord('employer')" title="{{'Dashboard' | translate}}"> <i class="fa fa-angle-right fa-fw fa-lg"></i>{{'Dashboard'|translate}}</a>
+                                </li>
+                    <!--quote enable employer freelancer ends-->
+                                <li ng-show="Employer && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 ||settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') >-1 && settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1)"><a href="" ng-click="switch_portal('Employer')" title="{{'Dashboard' | translate}}"><i class="fa fa-angle-right fa-fw fa-lg"></i>{{'Dashboard'|translate}}</a></li>
+                                <!--profile-->
+                                <li><a href="users/{{user.id}}/{{user.username}}" title="{{'Profile' | translate}}"><i class="fa fa-angle-right fa-fw fa-lg"></i>{{'Profile'|translate}}</a></li>
+                                 <!--profile-->
+                                <li><a href="users/settings" title="{{'My Account' | translate}}"><i class="fa fa-angle-right fa-fw fa-lg"></i>{{'My Account'|translate}}</a></li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 == false || (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 ||
+                                 settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') >  -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1)"><a title="{{'Transactions'|translate}}" href="transactions"><i class="fa fa-angle-right fa-fw fa-lg"></i>{{'Transactions'|translate}}</a></li>
+                                <li ng-if="(settings.SITE_ENABLED_PLUGINS.indexOf('Common/Withdrawal') > -1)"><a title="{{'Cash Withdrawals'|translate}}" href="users/cash_withdrawals"><i class="fa fa-angle-right fa-fw fa-lg"></i>{{'Cash Withdrawals'|translate}}</a></li>
+                                <li ng-if="Freelancer && (settings.SITE_ENABLED_PLUGINS.indexOf('Common/Subscription') > -1)"><a title="{{'Credit Purchase Log'|translate}}" href="purchase_logs"><i class="fa fa-angle-right fa-fw fa-lg"></i>{{'Credit Purchase Log'|translate}}</a></li>
+							<!--<li><a href="newsfeeds" title="{{'News Feeds' | translate}}"><i class="fa fa-angle-right fa-fw fa-lg"></i>{{'News Feed'|translate}}</a></li>-->
+                                <li class="logout"><a href="users/logout" title="{{'logout'|translate}}" class="btn btn-info clearfix"><span class="pull-left fa-inverse">{{'logout'|translate}}</span><span class="pull-right fa-inverse"> <i class="fa fa-angle-right fa-fw fa-lg"></i></span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+</header>
+<!-- END: HEADER -->

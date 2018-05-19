@@ -1,0 +1,1116 @@
+<div id="main" class="profile-page" ng-if='show_response_page == true'>
+    <div class="home-banner banner-profile">
+        <div class="container">
+            <div class="banner-content pr">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="profile-image">
+                            <div class="user-image">
+                                <span class="viewers">
+                                    <img ng-src="{{userprofile.image_name}}" class="img-responsive center-block" alt="{{userprofile.username}}" title="{{userprofile.username}}">
+                                    <div class="viewers-blk" ng-show="showedit">   
+                                        <div class="professional-image">
+                                            <div class="image-content">
+                                                <input id="file" type="file" ngf-select ng-model="file" name="file" ng-change="uploadUserImage(file)" class="hide underline text-red" accept="image/*">
+                                                <label for="file"><i class="fa fa-camera"></i></label>
+                                                <div ng-if='$root.settings.ALLOWED_EXTENSIONS_OF_USER_AVATAR'>
+                                                <span class="grayc help-block">{{'Allowed extensions:'|translate}} 
+                                                {{$root.settings.ALLOWED_EXTENSIONS_OF_USER_AVATAR}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </span>
+                             </div>
+                            <div class="user-detail">
+                                <div class="media-body text-center">
+                                    <div ng-if='$root.settings.ALLOWED_EXTENSIONS_OF_USER_AVATAR'>
+                                     <span class="error bot-space" ng-if="error_message && error_message !== ''">
+                                            {{error_message}}</span>
+                                    </div>
+                                    <p class="h5 blue-text no-mar fa-inverse" class="cursor">{{userprofile.username}}</p>
+                                    <ul class="list-inline socialmedia-blk clearfix">
+                                        <li ng-if="userprofile.is_email_confirmed">
+                                            <a class="mail status-show">
+                                                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                                <span>{{'Email Verified'|translate}}</span>
+                                            </a>
+                                        </li>
+                                        <li ng-if="!userprofile.is_email_confirmed">
+                                            <a class="grey-bg status-show">
+                                                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                                <span>{{'Email till not verified'|translate}}</span>
+                                            </a>
+                                        </li>
+                                        <li ng-if="userprofile.is_made_deposite == true">
+                                            <a class="printerest status-show">
+                                                <i class="fa fa-credit-card" aria-hidden="true"></i>
+                                                <span>{{'Payment Verified'|translate}}</span>
+                                            </a>
+                                        </li>
+                                         <li ng-if="userprofile.is_made_deposite == false">
+                                            <a class="grey-bg status-show">
+                                                <i class="fa fa-credit-card" aria-hidden="true"></i>
+                                                <span>{{'Payment till not made'|translate}}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div ng-show="isAuth && userprofile.id === user.id && showedit" class="photo-image" ngf-select="" ng-model="file" ngf-drop=""
+                                ngf-model-invalid="invalidFiles" ng-change="uploadUserImage(file)" ngf-model-options="modelOptionsObj"
+                                ngf-multiple="multiple" ngf-pattern="pattern" ngf-accept="acceptSelect" ng-disabled="disabled"
+                                ngf-capture="capture" ngf-drag-over-class="dragOverClassObj" ngf-validate="validateObj" ngf-resize="{width: 520, height: 560}"
+                                ngf-resize-if="resizeIfFn($file, $width, $height)" ngf-dimensions="dimensionsFn($file, $width, $height)"
+                                ngf-duration="durationFn($file, $duration)" ngf-keep="keepDistinct ? 'distinct' : keep" ngf-fix-orientation="orientation"
+                                ngf-max-files="maxFiles" ngf-ignore-invalid="ignoreInvalid" ngf-run-all-validations="runAllValidations"
+                                ngf-allow-dir="allowDir" class="drop-box ng-pristine ng-valid" ngf-drop-available="dropAvailable">
+                            </div>
+                            <ul class="list-inline text-center">
+                                <li><profile_view_share></profile_view_share></li>
+                                <li><profile_view_follower></profile_view_follower></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="text-18 fa-inverse" ng-show="!editname">{{userprofile.first_name}} {{userprofile.last_name}}
+                            <i ng-show="showedit" class="fa fa-pencil text-14 text-muted edit" aria-hidden="true" ng-click="editname =true"></i>
+                        </p>
+                        <form class="form-horizontal adminpg-form" role="form" name="username" ng-show="editname && showedit" ng-submit="userDetailUpdate(username.$valid)"
+                            novalidate>
+                            <div class="profile-inputs row">
+                                <div class="bottom-mar-5 col-md-6">
+                                    <input type="text" placeholder="First name" ng-model="userdetail.first_name" class="form-control" id="inputFirstName" name="inputFirstName"
+                                        required>
+                                    <span class="error" ng-show="(username.$submitted || username.inputFirstName.$touched) && (username.inputFirstName.$pristine || username.inputFirstName.$invalid) && (username.inputFirstName.$error.required)">{{'Required'| translate }}
+                                    </span>
+                                </div>
+                                <div class="bottom-mar-5 col-md-6">
+                                    <input type="text" placeholder="Last name" ng-model="userdetail.last_name" class="form-control" id="inputLastName" name="inputLastName"
+                                        required>
+                                    <span class="error" ng-show="(username.$submitted || username.inputLastName.$touched) && (username.inputLastName.$pristine || username.inputLastName.$invalid) && (username.inputLastName.$error.required)">{{'Required'| translate }}
+                                    </span>
+                                </div>
+                                <div class="bot-20-mar col-md-12">
+                                    <button type="submit" class="btn btn-primary" ng-click="editname=false" ng-disabled="username.$invalid">{{'Submit'|translate}}</button>
+                                    <a href="" class="btn btn-danger" ng-click="editname=false">{{'Cancel'|translate}}</a>
+                                </div>
+                            </div>
+                        </form>
+                        <p class="multiline-ellipsis fa-inverse" ng-show="!editdesignation">{{userprofile.designation}}
+                            <span ng-click="editdesignation =true"><i ng-show="showedit" class="fa fa-pencil text-14 text-muted edit" aria-hidden="true" ng-click="editdesignation =true"></i></span>
+                        </p>
+                        <form class="form-horizontal adminpg-form" role="form" name="userdesignation" ng-show="editdesignation && showedit" ng-submit="userDetailUpdate(userdesignation.$valid)"
+                            novalidate>
+                            <div class="profile-inputs">
+                                <div class="bottom-mar-5">
+                                    <textarea type="text" placeholder="{{'Designation'|translate}}" ng-model="userdetail.designation" class="form-control" id="inputdesignation"
+                                        name="inputdesignation" ng-required="true"></textarea>
+                                    <span class="error" ng-show="(userdesignation.$submitted || userdesignation.inputdesignation.$touched) && (userdesignation.inputdesignation.$pristine || userdesignation.inputdesignation.$invalid) && (userdesignation.inputdesignation.$error.required)">{{'Required'| translate }}
+                                    </span>
+                                </div>
+                                <div class="bot-20-mar">
+                                    <button type="submit" class="btn btn-primary" ng-click="editdesignation=false" ng-disabled="userdesignation.$invalid">{{'Submit'|translate}}</button>
+                                    <a href="" class="btn btn-danger" ng-click="editdesignation=false">{{'Cancel'|translate}}</a>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="info-skills">
+                            <ul class="list-inline">
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1"><span class="label label-default">{{rating_count | numCheck}}</span></li>
+                                
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1">
+                                    <input-stars ng-model="rating_count" max=5 readonly="true"></input-stars>
+                                </li>
+                                <li ng-if="!free_emp_stats && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1)">
+                                    <div class="currency fa-inverse">{{review_count}} Reviews</div>
+                                </li>
+                                <li ng-if="free_emp_stats && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1)">
+                                    <div class="currency fa-inverse">{{review_count}} Reviews</div>
+                                </li>
+                                <li>
+                                    <button type="button" ng-show="showedit && userprofile.id == user.id" class="btn btn-default text-uppercase" ng-click="View()">{{'View Profile'| translate }}<i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" ng-show="!showedit && userprofile.id == user.id" class="btn btn-default text-uppercase" ng-click="Edit()">{{'Edit Profile'| translate}}<i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                       
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="text-center">
+                            <div class="price">
+                                <div ng-show="!editMoney || !showedit">
+                                    <span class="visible-xs">{{'Price'|translate}}
+                                        <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                                                     <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span>:</span>
+                                    <span class="fa-inverse" ng-show="userdetail.role.id != ConstUserRole.Employer">
+                                        <span ng-if="userprofile.hourly_rate != '0' && userprofile.hourly_rate != null"> {{userprofile.hourly_rate | customCurrency}} </span>
+                                        <span class="timings">
+                                            <span ng-if="$root.settings.CURRENCY_SYMBOL !== '' && userprofile.hourly_rate != '0' && userprofile.hourly_rate != null">({{settings.CURRENCY_SYMBOL}}) {{user_profile_hourly_rate}}</span>
+                                                     <span ng-if="$root.settings.CURRENCY_SYMBOL === '' && userprofile.hourly_rate != '0' && userprofile.hourly_rate != null">({{settings.CURRENCY_CODE}}) / hr </span> 
+                                            <i ng-show="showedit" class="fa fa-pencil text-14 edit" aria-hidden="true" ng-click="editMoney=true"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                                <form class="form-horizontal adminpg-form" role="form" name="userHourlyRate" ng-show="editMoney && showedit && userdetail.role.id != ConstUserRole.Employer" ng-submit="userDetailUpdate(userHourlyRate.$valid)"
+                                    novalidate>
+                                    <div class="profile-inputs">
+                                        <div class="bottom-mar-5">
+                                            <input type="number" ng-model="userdetail.hourly_rate" placeholder="{{'Hourly Rate'|translate}}" class="form-control" id="inputTitle"
+                                                name="inputTitle" ng-required="true" min=1 number-only required>
+                                        </div>
+                                        <div class="text-left">
+                                            <button type="submit" class="btn btn-primary" ng-click="editMoney=false" ng-disabled="userHourlyRate.$invalid">{{'Submit'|translate}}</button>
+                                            <a href="" class="btn btn-danger" ng-click="editMoney=false">{{'Cancel'|translate}}</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="apply-now" 
+                            ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                                <button type="button" class="btn btn-primary text-uppercase gradi-rnd-btn" ng-show="userprofile.id !== user.id && $root.user.role_id <= 3" ng-click="HireMe()">{{'Hire Me'|translate}}</button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="country-time">
+        <div class="container">
+            <div class="col-md-offset-3">
+                <ul class="list-inline clearfix no-mar">
+                    <li ng-if="userprofile.country.name || userprofile.city.name">
+                        <p>
+                            <i class="flag-icon flag-icon-{{userprofile.country.iso_alpha2 | lowercase}}"> </i>{{userprofile.city.name}}<span ng-if="userprofile.city.name || userprofile.country.name">, </span>{{userprofile.country.name}}
+                            <i ng-show="showedit && !editLocation" class="fa fa-pencil text-14 text-muted cur-pointer edit-bg" aria-hidden="true" ng-click="Location()"></i>
+                        </p>
+                    </li> 
+                    <li><p ng-if="userdetail.created_at != null"> {{'Member since'|translate}} {{userdetail.created_at | date_format : 'MMMM yyyy'}} </p></li>
+                    <li ng-if="profile_name"><p><strong><a ng-click="viewProfile(role_id)"> {{profile_name}}</a></strong></p></li>
+                    <profile_view_flag></profile_view_flag>
+                </ul>
+                <form class="form-horizontal adminpg-form" role="form" name="userdetails" ng-show="editLocation && showedit" ng-submit="userDetailUpdate(userdetails.$valid)"
+                    novalidate>
+                    <div class="form-group profile-inputs bot-space address-edit">
+                        <p ng-show="!editLocation">
+                            <div class="col-lg-6 col-sm-12">
+                                <!--<input type="text" autocomplete="off" g-places-autocomplete class="form-control" id="inputLocation" ng-change="location()" ng-model="place"
+                                    name="location" placeholder="" ng-required="true">-->
+                                     <input type="text" g-places-autocomplete ng-model="userprofile.full_address" autocomplete="off" class="form-control" id="inputLocation" ng-change="location()" name="location" placeholder="location" ng-required="true">
+                            </div>
+                            <div class="col-lg-6 col-sm-12">
+                                <button type="submit" class="btn btn-primary">{{'Submit'|translate}}</button>
+                                <a href="" class="btn btn-danger" ng-click="editLocations()">{{'Cancel'|translate}}</a>
+                            </div>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- BEGIN: MY ABOUT BLOCK -->
+    <section id="cmd" class="abt-proj-blk About-project-block">
+        <div class="about-inner">
+            <div class="container" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                <div class="col-md-12">
+                    <div class="col-md-offset-3">
+                        <ul class="list-inline text-center media-proj clearfix mar-bot-0">
+                            <!--<li class="media no-mar">
+                                <div class="media-body text-center">
+                                    <p class="h5 blue-text no-mar ">{{userprofile.username}}</p>
+                                    <ul class="list-inline socialmedia-blk clearfix">
+                                        <li> <a href="#" class="mail"><i class="fa fa-envelope-o" aria-hidden="true"></i> </a> </li>
+                                        <li> <a href="#" class="printerest"><i class="fa fa-credit-card" aria-hidden="true"></i></a> </li>
+                                    </ul>
+                                </div>
+                            </li>-->
+                            <!--Freelancer Stats-->
+                            <li class="media no-mar" ng-if="free_emp_stats">
+                                <div class="media-body text-center">
+                                    <p class="h5 no-mar green-text"> {{freelancer_stats.job_completed}}%</p>
+                                    <span class="h5 no-mar">{{'Projects Completed'|translate}}</span>
+                                </div>
+                            </li>
+                            <li class="media no-mar" ng-if="free_emp_stats">
+                                <div class="media-body text-center">
+                                    <p class="h5 no-mar green-text">{{freelancer_stats.on_budget}}%</p>
+                                    <span class="h5 no-mar">{{'On Budget'|translate}}</span>
+                                </div>
+                            </li>
+                            <li class="media no-mar" ng-if="free_emp_stats">
+                                <div class="media-body text-center">
+                                    <p class="h5 no-mar green-text">{{freelancer_stats.on_time}}%</p>
+                                    <span class="h5 no-marr">{{'On Time'|translate}}</span>
+                                </div>
+                            </li>
+                            <li class="media no-mar" ng-if="free_emp_stats">
+                                <div class="media-body text-center">
+                                    <p class="h5 no-mar green-text">{{freelancer_stats.repeat_hire_rate}}%</p>
+                                    <span class="h5 no-mar">{{'Repeat Hire Rate'|translate}}</span>
+                                </div>
+                            </li>
+
+                            <!--Employer Stats-->
+                            <li class="media no-mar" ng-if="!free_emp_stats">
+                                <div class="media-body text-center">
+                                    <p class="h5 no-mar green-text"> {{employer_stats.open_project_count}}</p>
+                                    <span class="h5 no-mar">{{'Open projects'|translate}}</span>
+                                </div>
+                            </li>
+                            <li class="media no-mar" ng-if="!free_emp_stats">
+                                <div class="media-body text-center">
+                                    <p class="h5 no-mar green-text">{{employer_stats.active_project_count}}</p>
+                                    <span class="h5 no-mar">{{'Active projects'|translate}}</span>
+                                </div>
+                            </li>
+                            <li class="media no-mar" ng-if="!free_emp_stats">
+                                <div class="media-body text-center">
+                                    <p class="h5 no-mar green-text">{{ employer_stats.past_project_count}}</p>
+                                    <span class="h5 no-marr">{{'Past projects'|translate}}</span>
+                                </div>
+                            </li>
+                            <li class="media no-mar" ng-if="!free_emp_stats">
+                                <div class="media-body text-center">
+                                    <p class="h5 no-mar green-text">{{ employer_stats.total_project_count}}</p>
+                                    <span class="h5 no-mar">{{'Total projects'|translate}}</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="about-contents">
+                <h4 class="h3 text-left text-uppercase">
+                    <strong>{{'Why should people hire me'|translate}}?</strong>
+                    <i ng-show="showedit && !editAbout" class="fa fa-pencil text-14 text-muted edit-bg cur-pointer" aria-hidden="true" ng-click="editAbout=true"></i>
+                </h4>
+                <form class="form-horizontal adminpg-form" role="form" name="userAbout" ng-show="editAbout && showedit" ng-submit="userDetailUpdate(userAbout.$valid)"
+                    novalidate>
+                    <div class="">
+                        <textarea ng-show="editAbout" ng-model="userdetail.about_me" rows="6" cols="50"> </textarea>
+                        <div class="">
+                            <button type="submit" ng-show="abt_btn" class="btn btn-primary" disabled>{{'Submit'|translate}}</button>
+                            <button type="submit" class="btn btn-primary" ng-show="!abt_btn" ng-click="editAbout=false"> {{'Submit'|translate}}</button>
+                            <a href="" class="btn btn-danger" ng-click="editAbout=false">{{'Cancel'|translate}}</a>
+                        </div>
+                    </div>
+                </form>
+                <p ng-show="!editAbout" ng-bind-html="userprofile.about_me | nl2br"></p>
+            </div>
+        </div>
+    </section>
+    <!-- BEGIN: MY PORTFOLIO BLOCK -->
+<div id="portfolios">
+    <section class="portfolio-lists my-portfolio-block" ng-if="((userprofile.portfolio_count == 0 &&  userprofile.id == user.id) || 
+    (userprofile.portfolio_count > 0 && userprofile.id !== user.id || userprofile.id == user.id)) 
+    && (settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1)">
+        <div class="container">
+            <div>
+                <div class="clearfix port-blk">
+                    <div class="pull-left">
+                        <h2 class="text-uppercase text-18 textb montserrat-bold no-mar">{{'My Portfolio'|translate}} </h2>
+                    </div>
+                    <div class="pull-right" ng-show="showedit">
+                        <a href="portfolios/my_portfolios" title="Edit Portfolio" class="btn btn-default text-uppercase">
+                            {{'Edit Portfolio'|translate}}
+                            <i class="fa fa-pencil fa-fw text-muted text-13" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="portfolio-info-blk" ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1">
+                    <portfolio_home_block></portfolio_home_block>
+                </div>
+                <div class="text-center" ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1">
+                    <div class="vie-blk">
+                        <a ui-sref="Portfolio_Userprofile({id: userprofile.id})" title="View Portfolios" class="btn btn-primary text-uppercase">
+                            <img src="images/icon-add.png" alt="[Image: View-portfolio]" title="View-profile" class="img-responsive">
+                            <span> {{'View Portfolios'| translate}} </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+    <!-- BEGIN: MY CONTEST BLOCK -->
+    <!-- <div class="bg-white">
+        <contest_user_view></contest_user_view>
+    </div>-->
+    <!-- BEGIN: EXPERIENCE, EDUCATION ,CERTIFICATION, VERIFICATION , SKILLS BLOCK -->
+    <section class="education-experience-blk bg-grey">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-7">
+                    <!-- BEGIN: RECENT REVIEWS BLOCK -->
+                    <div class="informations-block" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1">
+                        <div class="inner-design clearfix">
+                            <div class="Inner-border">
+                                <div class="clearfix">
+                                    <div class="pull-left">
+                                        <h4 class="text-uppercase no-mar"> {{'recent reviews'|translate}} </h4>
+                                    </div>
+                                    <!--<div class="pull-right"> <a href="#">view more review</a> </div>-->
+                                </div>
+                            </div>
+                            <div class="informations recent-reviews">
+                                <div class="panel" ng-repeat="review in reviewLists">
+                                    <div class="media">
+                                        <div class="navbar-left">
+                                            <a ui-sref="user_profile({id: review.user.id,slug: review.user.username})" class="viewers">
+                                                <img ng-src="{{review.review_url}}" title="{{review.user.username}}" alt="[Image: Recent-viewer1]" class="img-circle img-responsive user-med center-block">
+                                            </a>
+                                        </div>
+                                        <div class="media-body">
+                                            <p><a href="users/{{review.user.id}}/{{review.user.username}}" class="blackc">{{review.user.username}}</a></p>
+                                            <div class="h6 list-group-item-text info-skills no-mar">
+                                                <span class="label label-default info-label">{{review.rating | number:1}}</span>
+                                                <input-stars ng-model="review.rating" max=5 readonly="true"></input-stars>
+                                            </div>
+                                            <p class="ver-space10 no-mar"> {{review.message}}</p>
+                                            <p class="grey-text" ng-if="review.class == 'Bid'">{{review.bid.project.name}}</p>
+                                            <p class="grey-text" ng-if="review.class == 'QuoteRequest'">{{review.category.name}}</p>
+                                            <!--<img src="images/reviewer-country.png" class="left-space" title="Reviewer-Country"
+                                                    alt="[Image: Reviewer-Country]"> / Feb 2, 2017</p>
+                                            <p class="grey-text">PHP, Website Design, Development, CSS Codedesignter, HTML/CSS/JS</p>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="!reviewLists || !reviewLists.length" class="text-center">
+                                    <p class="text-danger no-mar">{{'No reviews added yet.'| translate}}</p>
+                                </div>
+                                <!--<div class="panel">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <a href="#" class="viewers"><img src="images/recent-view2.png" title="Recent-viewer2" alt="[Image: Recent-viewer2]"
+                                                    class="img-circle"></a>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="no-mar">I would like to hire a Photoshop Designer</p>
+                                            <div class="h6 list-group-item-text info-skills no-mar"><span class="label label-default info-label">4.6</span>
+                                                <a href="#"> <i class="fa fa-star fa-lg text-lig-green" aria-hidden="true"></i> </a>
+                                                <a href="#"> <i class="fa fa-star fa-lg" aria-hidden="true"></i> </a>
+                                                <a href="#"> <i class="fa fa-star fa-lg" aria-hidden="true"></i> </a>
+                                                <a href="#"> <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i> </a>
+                                                <a href="#"> <i class="fa fa-star-o fa-lg" aria-hidden="true"></i> </a> <span class="currency">$75.00 USD</span></div>
+                                            <p class="ver-space10 no-mar"> Highly recommended! Great freelancer! </p>
+                                            <p class="grey-text"> Faridisk <img src="images/reviewer-country.png" class="left-space" title="Reviewer-Country"
+                                                    alt="[Image: Reviewer-Country]"> / 30 Jan 2017</p>
+                                            <p class="grey-text">Adobe Photoshop, Photo Editing</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <a href="#" class="viewers"><img src="images/recent-view3.png" title="Recent-viewer3" alt="[Image: Recent-viewer3]"
+                                                    class="img-circle"></a>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="no-mar"> I would like to hire a Graphic Designer</p>
+                                            <div class="h6 list-group-item-text info-skills no-mar"><span class="label label-default info-label">4.6</span>
+                                                <a href="#"> <i class="fa fa-star fa-lg text-lig-green" aria-hidden="true"></i> </a>
+                                                <a href="#"> <i class="fa fa-star fa-lg" aria-hidden="true"></i> </a>
+                                                <a href="#"> <i class="fa fa-star fa-lg" aria-hidden="true"></i> </a>
+                                                <a href="#"> <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i> </a>
+                                                <a href="#"> <i class="fa fa-star-o fa-lg" aria-hidden="true"></i> </a> <span class="currency"> $599.00 USD</span></div>
+                                            <p class="ver-space10 no-mar"> “This was the first time I had used Freelancer and I selected wisely by awarding
+                                                the job to graphicking61 who was great with communicating and making all
+                                                the changes in a quick and professional way. I am really pleased with what
+                                                we have had done and I will most certainly be using again.” </p>
+                                            <p class="grey-text"> rross3829 <img src="images/reviewer-country.png" class="left-space" title="Reviewer-Country"
+                                                    alt="[Image: Reviewer-Country]"> / Jan 26, 2017 </p>
+                                            <p class="grey-text">Adobe Photoshop, Illustator, Indesign, Corel Draw</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <a href="#" class="viewers"><img src="images/recent-view4.png" title="Recent-viewer4" alt="[Image: Recent-viewer4]"
+                                                    class="img-circle"></a>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="no-mar"> Create Professional Powerpoint Presentation Template </p>
+                                            <div class="h6 list-group-item-text info-skills no-mar"><span class="label label-default info-label">4.6</span>
+                                                <a href="#"> <i class="fa fa-star fa-lg text-lig-green" aria-hidden="true"></i> </a>
+                                                <a href="#"> <i class="fa fa-star fa-lg" aria-hidden="true"></i> </a>
+                                                <a href="#"> <i class="fa fa-star fa-lg" aria-hidden="true"></i> </a>
+                                                <a href="#"> <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i> </a>
+                                                <a href="#"> <i class="fa fa-star-o fa-lg" aria-hidden="true"></i> </a> <span class="currency"> $599.00 USD</span></div>
+                                            <p class="ver-space10 no-mar"> “I am really pleased with what we have had done and I will most certainly be
+                                                using again.”</p>
+                                            <p class="grey-text"> - miguelbmann <img src="images/reviewer-country.png" class="left-space" title="Reviewer-Country"
+                                                    alt="[Image: Reviewer-Country]"> / 3 months ago</p>
+                                            <p class="grey-text"> Adobe Photoshop, Powerpoint, word, excel</p>
+                                        </div>
+                                    </div>
+                                </div>-->
+                                <div class="col-xs-12 text-center bot-20-mar">
+                                    <button title="View Profile" class="btn btn-primary text-uppercase" ng-click="loadmore()" ng-if="currentpage < 1">{{'view more review'| translate}} </button>
+                                    <!--<a href="#" title="View Profile" class="btn btn-primary text-uppercase" ng-click="loadmore()"> 
+                                        view more review</a>         -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- BEGIN: EXPERIENCE BLOCK -->
+					<div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1" class="informations-block" ng-show="(userprofile.work_profile_count == 0 &&  userprofile.id == user.id) || ((userprofile.work_profile_count > 0) &&  (userprofile.id !== user.id || userprofile.id == user.id))">
+                        <div class="inner-design">
+                            <div class="exp-head-blk">
+                                <div class="clearfix">
+                                    <div class="pull-left">
+                                        <h4 class="text-uppercase no-mar">{{'Past experience'| translate}}</h4>
+                                    </div>
+                                    <div class="pull-right">
+                                        <p class="pull-right no-mar exp-add-btn" ng-click="showExp=true" ng-show="!showExp && showedit">
+                                            <a><i class="fa fa-plus" aria-hidden="true"></i> Add</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="informations">
+                                <div class="add-exp-form" ng-show="showExp">
+                                    <form class="form-horizontal" name="experienceForm" role="form" ng-submit="userExperience(experienceForm.$valid, experienceForm)"
+                                        novalidate>
+                                        <div class="form-group">
+                                            <div class="input">
+                                                <input type="text" placeholder="Title" class="form-control" id="inputexp" name="inputexp" ng-model="experience.title" ng-required="true">
+                                                <span class="error" ng-show="(experienceForm.$submitted || experienceForm.inputexp.$touched) && (experienceForm.inputexp.$pristine || experienceForm.inputexp.$invalid) && (experienceForm.inputexp.$error.required)">{{'Required'| translate }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input"> <input type="text" placeholder="{{'Company Name'|translate}}" class="form-control"
+                                                    id="inputCompany" name="inputCompany" ng-model="experience.company" ng-required="true">
+                                                <span class="error" ng-show="(experienceForm.$submitted || experienceForm.inputCompany.$touched) && (experienceForm.inputCompany.$pristine || experienceForm.inputCompany.$invalid) && (experienceForm.inputCompany.$error.required)">{{'Required'| translate }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="textarea">
+                                                <textarea class="form-control" rows="5" placeholder="{{'About your Job'|translate}}" name="inputSummary" id="inputSummary"
+                                                    ng-model="experience.description" ng-required="true"></textarea>
+                                                <span class="error" ng-show="(experienceForm.$submitted || experienceForm.inputSummary.$touched) &&   (experienceForm.inputSummary.$pristine || experienceForm.inputSummary.$invalid) && (experienceForm.inputSummary.$error.required)">
+                                                    {{'Required'| translate }}                                    
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="form-group">
+                                                <input type="checkbox" ng-model="check" name="currentyear" id="currentyear" ng-change="checked()">                                                {{checked}}
+                                                <label for="currentyear" class="control-label"> {{'Currently working here'|translate}}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="frm-select">
+                                                        <month-show ng-model="experience.from_month_year" name="Start_month" id="Start_month"></month-show>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="frm-select">
+                                                        <select id="year" name="year" ng-model="experience.Start_year" class="form-control">
+                                                            <option value="">{{'Select Start Year'|translate}}</option>
+                                                            <option ng-repeat="year in years">{{year}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="frm-select">
+                                                        <month-show ng-disabled="check" ng-model="experience.to_month_year" name="end_month"> </month-show>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="frm-select">
+                                                        <select id="eyear" name="eyear" ng-disabled="check" ng-model="experience.end_year" class="form-control">
+                                                            <option value="">{{'Select End Year'|translate}}</option>
+                                                            <option ng-repeat="year in years">{{year}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <p class="error" ng-show="experience.Start_year > experience.end_year">End year must be later than start year</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="req-btn no-mar">
+                                                <button type="submit" ng-show="save_btn" class="btn btn-primary" disabled>{{'Submit'|translate}}</button>
+                                                <button type="submit" class="btn btn-primary" ng-show="!save_btn">{{'Submit'|translate}}</button>
+                                                <a href="" class="btn btn-danger" ng-click="[FormExperience(experienceForm),showExp=false]" ng-show="showExp">{{'Cancel'|translate}}</a>
+                                            </p>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="edu-desc">
+                                    <ul class="list-unstyled education-add">
+                                        <li ng-repeat="workdetail in workdetails">
+                                            <div class="clearfix">
+                                                <p class="work-details">{{workdetail.title}}</p>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <p>{{workdetail.company}}</p>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <span class="work-details">{{workdetail.title}}</span> -
+                                                        <span>( {{workdetail.from_month}} {{workdetail.from_month_year.split('-')[1]}}
+                                                        {{'to'|translate}} {{workdetail.to_month}} {{ workdetail.to_month_year.split('-')[1]}})</span>
+                                                        <p class="desc">{{workdetail.description}}</p>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div ng-show="showedit">
+                                                            <ul class="list-inline icons">
+                                                                <li>
+                                                                    <i class="fa fa-trash grayc cursor" aria-hidden="true" ng-click="deleteExperience(workdetail.id);$event.stopPropagation()"
+                                                                        title="Delete"></i>
+                                                                </li>
+                                                                <li>
+                                                                    <i class="fa fa-pencil grayc cursor" aria-hidden="true" ng-click="editExperience(workdetail.id);$event.stopPropagation()"
+                                                                        title="Edit"></i>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--<div class="navbar-left">
+                                                    <p class="headings"> 
+                                                        <span class="work-details">{{workdetail.title}}</span> 
+                                                        <i class="desc">{{'at'|translate}}</i> {{workdetail.company}}
+                                                    </p>
+                                                    <p class="desc">{{workdetail.description}}</p>
+                                                    <p>( {{workdetail.from_month}} {{workdetail.from_month_year.split('-')[1]}}
+                                                        {{'to'|translate}} {{workdetail.to_month}} {{ workdetail.to_month_year.split('-')[1]}})</p>
+                                                </div>
+                                                <div class="navbar-right" ng-show="showedit">
+                                                    <ul class="list-inline icons">
+                                                        <li>
+                                                            <i class="fa fa-trash grayc cursor" aria-hidden="true" ng-click="deleteExperience(workdetail.id);$event.stopPropagation()"
+                                                            title="Delete"></i>
+                                                        </li>
+                                                        <li>
+                                                            <i class="fa fa-pencil grayc cursor" aria-hidden="true" ng-click="editExperience(workdetail.id);$event.stopPropagation()"
+                                                            title="Edit"></i>
+                                                        </li>
+                                                    </ul>
+                                                </div>-->
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div ng-show="!showExp" ng-if="workdetails.length == 0">
+                                    <p class="text-danger text-center">{{'No records available'| translate}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- BEGIN: EDUCATION BLOCK -->
+                    <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1" class="informations-block" ng-show="(userprofile.education_count == 0 &&  userprofile.id == user.id) || ((userprofile.education_count > 0) &&  (userprofile.id !== user.id || userprofile.id == user.id))">
+                        <div class="inner-design">
+                            <div class="exp-head-blk">
+                                <div class="clearfix">
+                                    <div class="pull-left">
+                                        <h4 class="text-uppercase no-mar">{{'Educational Qualifications'| translate}}</h4>
+                                    </div>
+                                    <div class="pull-right">
+                                        <!--<p class="pull-right no-mar exp-add-btn"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i> Add</a></p>-->
+                                        <p class="pull-right no-mar exp-add-btn" ng-click="showEdu=true" ng-show="!showEdu && showedit">
+                                            <a><i class="fa fa-plus" aria-hidden="true"></i> Add</a>
+                                        </p>
+                                        <!--<p class="pull-right btn btn-danger" ng-click="showEdu=false" ng-show="showEdu">cancel</p>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="informations">
+                                <div class="add-exp-form" ng-show="showEdu">
+                                    <form class="form-horizontal" role="form" name="educationForm" ng-submit="userEducation(educationForm.$valid, educationForm)"
+                                        novalidate>
+                                        <div class="form-group">
+                                            <div class="input">
+                                                <div class="frm-select">
+                                                    <select name="country" id="inputCategory" ng-model="education.country_id" class="form-control" ng-required="true">
+                                                        <option value="{{countrie.id}}">{{'Select Country'|translate}}</option>
+                                                        <option value="{{countrie.id}}" ng-repeat="countrie in countries  | orderBy:'name'" >{{countrie.name}}</option>
+                                                </select>
+                                                </div>
+                                                <span class="error" ng-show="(educationForm.$submitted || educationForm.country.$touched) &&   (educationForm.country.$pristine || educationForm.country.$invalid) && (educationForm.country.$error.required)">{{'Required'| translate }}
+                                               </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input">
+                                                <input type="text" placeholder="Degree" ng-model="education.title" class="form-control" id="inputTitle" name="inputTitle"
+                                                    ng-required="true" ng-minlength="2">
+                                                <span class="error" ng-show="(educationForm.$submitted || educationForm.inputTitle.$touched) && (educationForm.inputTitle.$pristine || educationForm.inputTitle.$invalid) && (educationForm.inputTitle.$error.required)">{{'Required'| translate }} </span>
+                                                <span class="error" ng-show="(educationForm.$submitted || educationForm.inputTitle.$touched) && (educationForm.inputTitle.$pristine || educationForm.inputTitle.$invalid) && (educationForm.inputTitle.$error.minlength)">
+                                                {{'Minimum length is 2'| translate }} 
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="frm-select">
+                                                        <select id="startyear" name="startyear" ng-model="education.from_year" class="form-control" ng-required="true">
+                                                            <option value="">{{'Select Start Year'|translate}}</option>
+                                                            <option ng-repeat="year in years">{{year}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <span class="error" ng-show="(educationForm.$submitted || educationForm.startyear.$touched) && (educationForm.startyear.$pristine || educationForm.startyear.$invalid) && (educationForm.startyear.$error.required)">{{'Required'| translate }}  </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="frm-select">
+                                                        <select id="endyear" name="endyear" ng-model="education.to_year" class="form-control" ng-required="true">
+                                                            <option value="">{{'Select End Year'|translate}}</option>
+                                                            <option ng-repeat="year in years">{{year}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <span class="error" ng-show="(educationForm.$submitted || educationForm.endyear.$touched) && (educationForm.endyear.$pristine || educationForm.endyear.$invalid) && (educationForm.endyear.$error.required)">{{'Required'| translate }}  </span>
+                                                    <span class="error" ng-show="education.from_year > education.to_year">End year must be later than start year</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <p class="req-btn no-mar">
+                                                    <button type="submit" ng-show="edu_btn" class="btn btn-primary" disabled>{{'Submit'|translate}}</button>
+                                                    <button type="submit" class="btn btn-primary" ng-show="!edu_btn">{{'Submit'|translate}}</button>
+                                                    <a href="" class="btn btn-danger" ng-click="[FormEducation(educationForm),showEdu=false]" ng-show="showEdu">{{'Cancel'|translate}}</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="edu-desc">
+                                    <ul class="list-unstyled education-add">
+                                        <li ng-repeat="education in educations">
+                                            <div class="clearfix">
+                                                <p class="headings"> {{education.title}}</p>
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <span class="work-details"> {{education.country.iso_alpha2}} </span>
+                                                        <span>({{ education.from_year}} - {{ education.to_year}}) ({{ education.to_year-
+                                                        education.from_year}} 
+                                                            <span ng-show="education.to_year - education.from_year == 1"> year)</span>
+                                                        <span ng-show="education.to_year -education.from_year != 1"> years)</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div ng-show="showedit">
+                                                            <ul class="list-inline icons">
+                                                                <li>
+                                                                    <i class="fa fa-trash grayc cursor" aria-hidden="true" ng-click="deleteEducation(education.id);$event.stopPropagation()"
+                                                                        title="Delete"></i>
+                                                                </li>
+                                                                <li>
+                                                                    <i class="fa fa-pencil grayc cursor" aria-hidden="true" ng-click="editEducation(education.id);$event.stopPropagation()" title="Edit"></i>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--<div class="navbar-left">
+                                                    <p class="headings"> {{education.title}}</p>
+                                                    <p> <span class="work-details"> {{education.country.iso_alpha2}} </span></p>
+                                                    <p class="desc">({{ education.from_year}} - {{ education.to_year}}) ({{ education.to_year-
+                                                        education.from_year}} 
+                                                        <span ng-show="education.to_year - education.from_year == 1"> year)</span>    
+                                                        <span ng-show="education.to_year -education.from_year != 1"> years)</span>
+                                                    </p>
+                                                </div>
+                                                <div class="navbar-right" ng-show="showedit">
+                                                    <ul class="list-inline icons">
+                                                        <li>
+                                                            <i class="fa fa-trash" aria-hidden="true" ng-click="deleteEducation(education.id);$event.stopPropagation()"
+                                                            title="Delete"></i>
+                                                        </li>
+                                                        <li>
+                                                            <i class="fa fa-pencil" aria-hidden="true" ng-click="editEducation(education.id);$event.stopPropagation()"
+                                                            title="Edit"></i>
+                                                        </li>
+                                                    </ul>
+                                                </div>-->
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div ng-show="!showEdu" ng-if="educations.length == 0">
+                                    <p class="text-danger text-center bot-mspace">{{'No records available'| translate}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--BEGIN: CERTIFICATION BLOCK -->
+                    <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1" class="informations-block" ng-show="(userprofile.certificate_count == 0 &&  userprofile.id == user.id) || ((userprofile.certificate_count > 0) &&  (userprofile.id !== user.id || userprofile.id == user.id))">
+                        <div class="inner-design">
+                            <div class="exp-head-blk">
+                                <div class="clearfix">
+                                    <div class="pull-left">
+                                        <h4 class="text-uppercase no-mar">{{'Certifications'| translate}}</h4>
+                                    </div>
+                                    <div class="pull-right">
+                                        <!--<p class="pull-right no-mar exp-add-btn"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i> Add</a></p>-->
+                                        <p class="pull-right no-mar exp-add-btn" ng-click="showCer=true" ng-show="!showCer && showedit">
+                                            <a><i class="fa fa-plus" aria-hidden="true"></i> {{'Add'|translate}}</a>
+                                        </p>
+                                        <!--<p class="pull-right btn btn-danger" ng-click="showCer=false" ng-show="showCer">cancel</p>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="informations">
+                                <div class="add-exp-form" ng-show="showCer">
+                                    <form class="form-horizontal" role="form" name="certificationForm" ng-submit="userCertification(certificationForm.$valid)"
+                                        novalidate>
+                                        <div class="form-group">
+                                            <div class="input">
+                                                <input type="text" placeholder="Professional certificate or award" ng-model="certification.title" class="form-control" id="inputProfe"
+                                                    name="inputProfe" ng-required="true">
+                                                <span class="error" ng-show="(certificationForm.$submitted || certificationForm.inputProfe.$touched) && (certificationForm.inputProfe.$pristine || certificationForm.inputProfe.$invalid) && (certificationForm.inputProfe.$error.required)">{{'Required'| translate}} </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input">
+                                                <input type="text" placeholder="Conferring organization" ng-model="certification.conferring_organization" class="form-control"
+                                                    id="inputOrgan" name="inputOrgan" ng-required="true">                                                <span class="error" ng-show="(certificationForm.$submitted || certificationForm.inputOrgan.$touched) && (certificationForm.inputOrgan.$pristine || certificationForm.inputOrgan.$invalid) && (certificationForm.inputOrgan.$error.required)">{{'Required'| translate }} </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="textarea">
+                                                <textarea class="form-control" rows="5" placeholder="Describe cerification" name="inputDesc" id="inputDesc" ng-model="certification.description"
+                                                    ng-required="true"></textarea>
+                                                <span class="error" ng-show="(certificationForm.$submitted || certificationForm.inputDesc.$touched) &&   (certificationForm.inputDesc.$pristine || certificationForm.inputDesc.$invalid) && (certificationForm.inputDesc.$error.required)">
+                                                {{'Required'| translate }}                                    
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="frm-select">
+                                                <select id="startyear" name="startyear" ng-model="certification.year" class="form-control" ng-required="true">
+                                                    <option value="">{{'Select Year'|translate}}</option>
+                                                    <option ng-repeat="year in years">{{year}}</option>
+                                                </select>
+                                            </div>
+                                            <span class="error" ng-show="(certificationForm.$submitted || certificationForm.startyear.$touched) && (certificationForm.startyear.$pristine || certificationForm.startyear.$invalid) && (certificationForm.startyear.$error.required)">{{'Required'| translate }}  </span>
+                                        </div>
+                                        <div>
+                                            <p class="req-btn no-mar">
+                                                <button type="submit" ng-show="cer_btn" class="btn btn-primary" disabled>{{'Submit'|translate}}</button>
+                                                <button type="submit" class="btn btn-primary" ng-show="!cer_btn">{{'Submit'|translate}}</button>
+                                                <a href="" class="btn btn-danger" ng-click="[Formcertificate(certificationForm),showCer=false]" ng-show="showCer">{{'Cancel'|translate}}</a>
+                                            </p>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="edu-desc">
+                                    <ul class="list-unstyled education-add">
+                                        <li ng-repeat="Certification in Certifications">
+                                            <div class="clearfix">
+                                                <p class="headings"> {{Certification.title}}</p>
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <p>
+                                                            <span class="work-details">{{Certification.title}} ({{Certification.year}}) </span>                                                            <span>{{Certification.conferring_organization}}</span>
+                                                        </p>
+                                                        <p class="desc">{{Certification.description}}</p>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div ng-show="showedit">
+                                                            <ul class="list-inline icons">
+                                                                <li>
+                                                                    <i class="fa fa-trash grayc cursor" aria-hidden="true" ng-click="deleteCertificate(Certification.id);$event.stopPropagation()"
+                                                                        title="Delete"></i>
+                                                                </li>
+                                                                <li>
+                                                                    <i class="fa fa-pencil grayc cursor" aria-hidden="true" ng-click="EditCertification(Certification.id);$event.stopPropagation()"
+                                                                        title="Edit"></i>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div ng-show="!showCer" ng-if="Certifications.length == 0">
+                                    <p class="text-danger text-center bot-mspace">{{'No records available'| translate}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--END CERTIFICATION BLOCK -->
+
+                    <!--BEGIN: PUBLICATION BLOCK -->
+                    <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1" class="informations-block" ng-show="(userprofile.publication_count == 0 &&  userprofile.id == user.id) || ((userprofile.publication_count > 0) &&  (userprofile.id !== user.id || userprofile.id == user.id))">
+                        <div class="inner-design">
+                            <div class="exp-head-blk">
+                                <div class="clearfix">
+                                    <div class="pull-left">
+                                        <h4 class="text-uppercase no-mar">{{'PUBLICATIONS'|translate}}</h4>
+                                    </div>
+                                    <div class="pull-right">
+                                        <!--<p class="pull-right no-mar exp-add-btn"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i> Add</a></p>-->
+                                        <p class="pull-right no-mar exp-add-btn" ng-click="showPub=true" ng-show="!showPub && showedit">
+                                            <a><i class="fa fa-plus" aria-hidden="true"></i> Add</a>
+                                        </p>
+                                        <!--<p class="pull-right btn btn-danger" ng-click="showPub=false" ng-show="showPub">cancel</p>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="informations">
+                                <div class="add-exp-form" ng-show="showPub">
+                                    <form class="form-horizontal" role="form" name="publicationForm" ng-submit="userPublication(publicationForm.$valid)" novalidate>
+                                        <div class="form-group">
+                                            <div class="input">
+                                                <input type="text" placeholder="Publication title" ng-model="publication.title" class="form-control" id="inputTitle" name="inputTitle"
+                                                    ng-required="true">
+                                                <span class="error" ng-show="(publicationForm.$submitted || publicationForm.inputTitle.$touched) && (publicationForm.inputTitle.$pristine || publicationForm.inputTitle.$invalid) && (publicationForm.inputTitle.$error.required)">{{' Required'| translate }} </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input">
+                                                <input type="text" placeholder="Publisher" ng-model="publication.publisher" class="form-control" id="inputPublisher" name="inputPublisher"
+                                                    ng-required="true">
+                                                <span class="error" ng-show="(publicationForm.$submitted || publicationForm.inputPublisher.$touched) && (publicationForm.inputPublisher.$pristine || publicationForm.inputPublisher.$invalid) && (publicationForm.inputPublisher.$error.required)">{{'Required'| translate }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="textarea">
+                                                <textarea ng-model="publication.description" placeholder="Summary" class="form-control" name="inputSummary" id="inputSummary"
+                                                    ng-required="true">
+                                                </textarea>
+                                                <span class="error" ng-show="(publicationForm.$submitted || publicationForm.inputSummary.$touched) &&    (publicationForm.inputSummary.$pristine || publicationForm.inputSummary.$invalid) && (publicationForm.inputSummary.$error.required)">
+                                                 {{'Required'| translate }}</span>
+                                            </div>
+                                        </div>
+                                        <p class="req-btn no-mar">
+                                            <button type="submit" ng-show="pub_btn" class="btn btn-primary" disabled>{{'Submit'|translate}}</button>
+                                            <button type="submit" class="btn btn-primary" ng-show="!pub_btn"> {{'Submit'|translate}}</button>
+                                            <a href="" class="btn btn-danger" ng-click="[FormPublication(publicationForm),showPub=false]" ng-show="showPub">{{'Cancel'|translate}}</a>
+                                        </p>
+                                    </form>
+                                </div>
+                                <div class="edu-desc">
+                                    <ul class="list-unstyled education-add">
+                                        <li ng-repeat="publication in publications">
+                                            <div class="clearfix">
+                                                <p class="headings">{{publication.title}}</p>
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <p> <span class="work-details">{{publication.publisher}} </span> </p>
+                                                        <p class="desc">{{publication.description}}</p>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div ng-show="showedit">
+                                                            <ul class="list-inline icons">
+                                                                <li>
+                                                                    <i class="fa fa-trash grayc cursor" aria-hidden="true" ng-click="deletePublications(publication.id);$event.stopPropagation()"
+                                                                        title="Delete"></i>
+                                                                </li>
+                                                                <li>
+                                                                    <i class="fa fa-pencil grayc cursor" aria-hidden="true" ng-click="EditPublication(publication.id);$event.stopPropagation()"
+                                                                        title="Edit"></i>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div ng-show="!showPub" ng-if="publications.length == 0">
+                                    <p class="text-danger text-center">{{'No records available'| translate}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--END PUBLICATION BLOCK -->
+
+                <div class="col-md-4 col-sm-5">
+                    <!-- BEGIN: CERTIFICATIONS BLOCK -->
+                    <div class="info-blk">
+                        <div class="informations-block" ng-if="((userprofile.certificate_count == 0 &&  userprofile.id == user.id) || ((userprofile.certificate_count > 0) &&  (userprofile.id !== user.id || userprofile.id == user.id))) && (settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Exam') > -1)">
+                            <div class="inner-design">
+                                <div class="Inner-border">
+                                    <div class="clearfix certification-blk">
+                                        <h4 class="pull-left text-uppercase no-mar">{{'certifications'| translate}}</h4>
+                                        <p class="no-mar exp-add-btn pull-right" ng-if="userprofile.id == user.id"><a ui-sref="Exam">{{'Get Certification'| translate}}</a></p>
+                                    </div>
+                                </div>
+                                <ul class="list-unstyled">
+                                    <li ng-repeat="examCertification in examCertifications">
+                                        <div class="media">
+                                            <div class="pull-left top-space-10">
+                                                <div class="thumbnail no-mar">
+                                                    <img class="img-responsive img-min" ng-src="{{examCertification.logo_url}}" alt="{{examCertification.title}}"/> 
+                                                </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="clearfix">
+                                                    <div class="pull-left">
+                                                        <h5>{{examCertification.exam.title}} ({{examCertification.exam.exam_level.name}})
+                                                            {{examCertification.exam_user_per |number:0}}%</h5>
+                                                    </div>
+                                                </div>
+                                                <form>
+                                                    <uib-progress>
+                                                        <uib-bar value="examCertification.exam_user_per" type="{{bar.type}}">
+                                                            <span>{{examCertification.exam_user_per}}%</span>
+                                                        </uib-bar>
+                                                    </uib-progress>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div ng-if="examCertifications.length == 0" class="bot-space-10">
+                                    <p class="text-danger text-center">{{'No records available'| translate}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- BEGIN: VERIFICATIONS BLOCK -->
+                        <div class="informations-block">
+                            <div class="inner-design verifications">
+                                <div class="Inner-border">
+                                    <div class="clearfix">
+                                        <div class="pull-left">
+                                            <h4 class="text-uppercase no-mar">{{'verifications'| translate}}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hor-space16">
+                                    <ul class="no-mar no-pad">
+                                        <!-- <li>
+                                            <div class="clearfix">
+                                                <div class="pull-left"> <a href="#"><i class="fa fa-facebook fa-fw grey-icon right-sspace fa-lg" aria-hidden="true"></i>Facebook Connected </a>                                                    </div>
+                                                <div class="pull-right FB-connect"> <a href=""><i class="fa fa-facebook fa-fw" aria-hidden="true"></i> <span>CONNECT</span> </a></div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="clearfix">
+                                                <div class="pull-left preffered-freelancer"> <a href="#" class="pr"><i class="fa fa-user fa-fw grey-icon fa-lg" aria-hidden="true"></i> <i class="fa fa-star grey-icon" aria-hidden="true"></i> Preferred Freelancer </a></div>
+                                                <div class="pull-right">
+                                                    <a href="#"> <span class="label label-default">Join</span> </a>
+                                                </div>
+                                            </div>
+                                        </li>-->
+                                        <li>
+                                            <div class="clearfix">
+                                                <div class="pull-left">
+                                                    <i class="fa fa-credit-card fa-fw fa-lg" aria-hidden="true"></i> {{'Payment
+                                                    Verified' | translate}}
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fa fa-check fa-fw fa-lg greenc" ng-if="userprofile.is_made_deposite == true"></i>
+                                                    <i class="fa fa-times fa-fw fa-lg text-danger" ng-if="userprofile.is_made_deposite == false"></i>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!--<li>
+                                            <div class="clearfix">
+                                                <div class="pull-left"> <a href="#"><i class="fa fa-phone fa-fw fa-lg" aria-hidden="true"></i> Phone Verified </a></div>
+                                                <div class="pull-right">
+                                                    <a href="#"><img src="images/verification-img.png" alt="[Image: Verification-Tick]"
+                                                            title="Verification-Tick" class="img-responsive"> </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="clearfix">
+                                                <div class="pull-left"> <a href="#"><i class="fa fa-user fa-fw fa-lg" aria-hidden="true"></i> Identity Verified </a></div>
+                                                <div class="pull-right">
+                                                    <a href="#"><img src="images/verification-img.png" alt="[Image: Verification-Tick]"
+                                                            title="Verification-Tick" class="img-responsive"> </a>
+                                                </div>
+                                            </div>
+                                        </li>-->
+                                        <li>
+                                            <div class="clearfix">
+                                                <div class="pull-left">
+                                                    <i class="fa fa-envelope-o fa-fw fa-lg" aria-hidden="true"></i> Email
+                                                    Verified
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fa fa-check fa-fw fa-lg greenc" ng-if="userprofile.is_email_confirmed == true"></i>
+                                                    <i class="fa fa-times fa-fw fa-lg text-danger" ng-if="userprofile.is_email_confirmed == false"> </i>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- BEGIN: SKILLS BLOCK -->
+                        <div ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1" class="informations-block add-skills-block" ng-show="(userprofile.skill_users.length == 0 &&  userprofile.id == user.id) || ((userprofile.skill_users.length > 0) &&  (userprofile.id !== user.id || userprofile.id == user.id))">
+                            <div class="inner-design">
+                                <div class="Inner-border">
+                                    <div class="clearfix certification-blk">
+                                        <h4 class="text-uppercase no-mar pull-left">{{'Skills'| translate}}</h4>
+                                        <p class="pull-right no-mar exp-add-btn" ng-if="userprofile.id == user.id">
+                                            <a ng-click="Userskills()"><i class="fa fa-plus" aria-hidden="true"></i> {{'Add Skills'| translate}}</a>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="info-skills" ng-if="userprofile.skill_users.length !== 0">
+                                    <span class="label label-default" ng-repeat="skilles in userprofile.skill_users"> {{skilles.skills.name}} </span>
+                                </div>
+                                <div ng-if="userprofile.skill_users.length == 0">
+                                    <p class="text-danger text-center top-mar">{{'No records available'| translate}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         
+    </section>
+    <!-- BEGIN: GET STARTED TODAY BLOCK -->
+    <section class="bg-primary get-start-blk"  ng-if="user.role_id != 4">
+        <div class="container">
+            <div class="ver-top-mspace30 ver-space10">
+                <div class="text-center">
+                    <h4 class="h3 no-mar text-uppercase Montserrat text-22"><strong>{{'Get started today'|translate}}</strong></h4>
+                    <p class="ver-mspace15 text-16 lin-heig22">{{settings.SITE_NAME}} {{'is a one-stop destination that helps you find the top-class freelancer for varied projects'|translate}}. 
+                    </p>
+                    <ul class="list-inline ver-mspace30 started-list">
+                        <li  ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1">
+                            <a href="projects/add" title="Post a Project" class="btn btn-default btn-lg text-uppercase navbar-btn">{{'Post a Project'|translate}}</a>
+                        </li>
+                         <li ng-if="settings.Employer.indexOf('Contest/Contest') > -1">
+                            <a href="contest_types" title="Post a Contest" class="btn btn-default btn-lg text-uppercase navbar-btn">{{'Post a Contest'|translate}}</a>
+                        </li>
+                         <li  ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1">
+                            <a href="jobs/add" title="Post a Job" class="btn btn-default btn-lg text-uppercase navbar-btn">{{'Post a Job'|translate}}</a>
+                        </li>
+                         <li  ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 && Employer">
+                            <a href="quote_services" title="Post a Request" class="btn btn-default btn-lg text-uppercase navbar-btn">{{'Post a Request'|translate}}</a>
+                        </li>
+                         <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 && Freelancer">
+                            <a href="quote_service/add" title="Post a Service" class="btn btn-default btn-lg text-uppercase navbar-btn">{{'Post a Service'|translate}}</a>
+                        </li>
+                        <li ng-if="Employer">
+                            <a href="freelancers" title="Find Service Pro" class="btn btn-default btn-lg text-uppercase navbar-btn">{{'Find Service Pro'|translate}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+</div>

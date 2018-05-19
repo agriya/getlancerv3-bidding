@@ -1,0 +1,10 @@
+{
+	"name": "Bidding", 
+	"class": "fa fa-2x fa-gavel",
+	"description": "Bidding",
+	"dependencies": "Bidding",
+	"module_id": "821",
+	"module_hash": "8fa9b358ee1cc7d2de694687fa848ce4",
+	"display_order": "1",
+	"plugin_name":"Bidding/Bidding"
+}

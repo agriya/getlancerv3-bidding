@@ -1,0 +1,121 @@
+<section class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="project-contest">
+                    <div class="clearfix">
+                        <div class="navbar-left">
+                            <p class="grayc">Showing <strong class="blackc">{{totalItems}}</strong></p>
+                        </div>
+                        <ul class="list-inline navbar-right">
+                            <li>
+                                <ul class="list-inline">
+                                    <li class="grayc">Sort by:</li>
+                                    <li class="sort">
+                                        <div class="dropdown"> <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Newest<span><i class="fa fa-angle-down fa-fw"></i></span>
+                        </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                <li><a href="#">Newest</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <ul class="list-inline">
+                                    <li class="grayc">View</li>
+                                    <li>
+                                        <div class="dropdown view"> <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <i class="fa fa-th fa-fw"></i><span><i class="fa fa-angle-down fa-fw"></i></span>
+                        </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                <li><a href="#"><i class="fa fa-th"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-list"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="visible-xs">
+                                <ul class="list-inline">
+                                    <li class="grayc">Date:</li>
+                                    <li><a href="#" class="btn btn-default text-uppercase">started <i class="fa fa-angle-down"></i></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clearfix">
+                        <ul class="list-group custom-binding">
+                            <li class="list-group-item project-heading hidden-xs">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h5>PROJECT NAME</h5>
+                                    </div>
+                                    <div class="col-sm-6 text-center">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Budget</h5>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Status</h5>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Action</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item project-content" ng-if="projects.length > 0" ng-repeat="project in projects">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h5 class="visible-xs">PROJECT NAME</h5>
+                                        <h5 class="text-18"><a ui-sref="Bid_ProjectView({id:project.id,slug:project.slug})">{{project.name}}</a></h5>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col-sm-4"> <span class="visible-xs">Budget</span> <span class="content">
+                                                 <amount-display amount='{{project.project_range.min_amount}}' ng-if="project.project_range.min_amount"></amount-display> - <amount-display amount='{{project.project_range.max_amount}}' ng-if="project.project_range.max_amount"></amount-display>
+                                                </span>                                               
+                                            </div>
+                                            <div class="col-sm-4"> <span class="visible-xs">Status</span> <span class="content">--</span> </div>
+                                            <div class="col-sm-4"> <span class="visible-xs">Action</span> <span class="content">
+                                                    <a ng-if="project.project_status_id < OpenForBidding" ui-sref="Bid_ProjectEdit({'id':project.id})">
+                                                        {{'Edit'| translate}}
+                                                    </a>
+                                                    <a ng-if="project.project_status_id == BiddingExpired || project.project_status_id == BiddingClosed" ui-sref="Bid_ProjectEdit({'id':project.id,'status':'request_to_open'})">
+                                                        {{'Reopen'| translate}}
+                                                    </a>
+                                                    <a href="javascript:void(0);" ng-click="deleteProject(project.id)">
+                                                        {{'Delete'| translate}}
+                                                    </a>
+                                                    <a ui-sref="Bid_ProjectPayment({id:project.id,slug:project.slug})" ng-if="PaymentPending == project.project_status_id">
+                                                        {{'Pay Listing Fee'| translate}}
+                                                    </a>
+                                                </span> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li ng-if="mybids.length == 0" class="list-group-item project-content">
+                                <p class="no-mar text-center">{{'No Bids'| translate}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- project-contest: END -->
+        </div>
+        <!-- pagtion-Blk: START -->
+        <div class="row binding-pagination">
+            <div class="pagnation-content">
+                <div class="container">
+                    <div class="clearfix pagnation-inner">
+                        <uib-pagination total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="numPages" num-pages="noOfPages" ng-click="paginate()"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

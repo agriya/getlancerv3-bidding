@@ -1,0 +1,317 @@
+.home-banner {	
+	min-height:100px;
+	max-width:1440px;
+	margin:0 auto;
+	text-align:center;		
+}
+.vcenter {
+	display: table;
+	position: relative;
+	width: 100%;
+	height: 100px;
+	> div {
+		display:table-cell;
+		vertical-align:middle;
+	}
+}
+
+.help-block-error {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #FA8072;
+}
+
+/* [ Portfolio - Listing Page] */
+.hyphens {
+	/* Warning: Needed for oldIE support, but words are broken up letter-by-letter */  
+	-ms-word-break: break-all;      
+	word-break: break-all;       
+	/* Non standard for webkit */      
+	word-break: break-word;  
+	-webkit-hyphens: auto;    
+	-moz-hyphens: auto;     
+	-ms-hyphens: auto;         
+	hyphens: auto;
+}
+.htruncate {
+	overflow: hidden;
+    text-overflow: ellipsis;	
+    white-space:nowrap;
+	line-height: 22px;
+}
+.img-block {
+	.row {
+		> div {
+			margin:15px 0;
+		}
+	}
+	ul.list-inline {
+		li {
+			display:table-cell;
+		}
+	}		
+}
+.img-block , .designers {
+	.breadcrumb {
+		padding:20px 15px;
+		margin-bottom: 30px;
+		li {
+			padding: 0 11px;
+		}
+	}
+}
+/* Hover Effect
+	============ */
+
+.hover {
+	float: left;
+    position: relative;
+    cursor: default;
+	a img {
+		display: block;
+		position: relative;
+	}	
+	.overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		.vcenter {
+			height:125px;
+			padding: 0 20px;
+			> div {
+				vertical-align:bottom;	
+			}
+		}	
+		i {
+			margin-right: 5px;	
+		}	
+	}
+	h3 {
+		position: relative;		
+		padding: 10px;		
+	}	
+	.vcenter {
+		opacity: 0;
+		-webkit-transition: all .2s ease-in-out;
+		transition: all .2s ease-in-out;
+	}
+	.img-bg {
+		background-color: #E6E6E6;
+		min-width: 385px;
+		min-height: 400px;
+		clear: both;
+		display: block;
+	}
+}
+.hover ,.overlay {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	cursor: pointer;
+}
+.ehover1:hover {
+	.overlay {
+	    opacity: 1;	
+	}
+	h3 {
+		opacity: 1;
+		-ms-transform: translatey(0);
+		-webkit-transform: translatey(0);
+		transform: translatey(0);
+	}
+	.vcenter {
+	    -webkit-transition-delay: .2s;
+		transition-delay: .2s;
+		opacity: 1;
+		-ms-transform: translatey(0);
+		-webkit-transform: translatey(0);
+		transform: translatey(0);
+	}	
+}
+.ehover1 {
+	a img {
+		-webkit-transition: all .4s linear;
+		transition: all .4s linear;
+	}
+	.overlay {
+	    opacity: 0;
+		background-color: rgba(0,0,0,.4);
+		-webkit-transition: all .4s ease-in-out;
+		transition: all .4s ease-in-out;
+	}
+	h3 {
+		-ms-transform: translatey(-100px);
+		-webkit-transform: translatey(-100px);
+		transform: translatey(-100px);
+		opacity: 0;
+		-webkit-transition: all .2s ease-in-out;
+		transition: all .2s ease-in-out;
+	}
+}
+
+/* [ Portfolio - photo/{id} page] */
+.photo-view {
+	padding:110px 0 0;
+}
+.no-pad {
+	padding:0;
+}
+.js-photo-view {
+	.mCustomScrollbar {
+		height: 450px;
+	}
+	.resp-carousel {
+	    padding-right: 30px;
+	}
+}
+@media(min-width:768px) and (max-width:991px) {
+	.js-photo-view {
+		.modal-dialog {
+			width: 660px;
+			top: 100px;
+			.resp-carousel  {
+				overflow-y: auto;
+				max-height: 339px;
+				padding-right: 20px;
+			}
+		}
+	}
+	.block-images {
+		.overlay {
+			h3 {
+				 font-size: 24px;
+    			line-height: 30px;
+			}
+			.vcenter {
+				height: 100%;
+    			margin-top: -52px;
+			}
+		}
+	}
+	.upload2 {
+		.resp-modal {
+			overflow-y: auto;
+			max-height: 271px;
+		}
+		.modal-dialog {
+		    width: 744px;
+			top:60px;
+		}
+	}
+	header form {
+	    min-width: 320px;
+	}
+	.profile-banner {
+		.bottom-text {
+			.text-left {
+			    padding-left: 90px !important;
+			}
+		}
+	}
+}
+@media(min-width: 992px) and (max-width: 1199px) { 
+	.js-photo-view {
+		.modal-dialog {
+			width: 900px !important;
+			top: 100px;
+			.resp-carousel  {
+				overflow-y: auto;
+				height: 380px;
+				padding-right: 20px;
+			}
+		}
+	}
+	.block-images {
+		.overlay {
+			.vcenter {
+				height:50px;
+			}
+		}
+	}
+} 
+
+@media(min-width: 1200px) and (max-width: 1320px) {
+	.js-photo-view {
+		.modal-dialog {
+			width: 1100px !important;	
+			.resp-carousel  {
+				overflow-y: auto;
+				height: 495px;
+			}
+		}		
+	}
+}
+@media (max-width: 767px) {
+	body {
+		background-color:#fff;
+	}
+}
+
+
+/* [ Portfolio pop up ] */
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+}
+.vertical-align-center {
+    display: table-cell;
+    vertical-align: middle;
+}
+/* Modal 
+	=========*/
+
+.js-photo-view {
+	.carousel-control {
+		height: 0px;
+		width: 20px;
+		margin: auto -36px auto -36px;
+		opacity:1;
+	}		
+	.modal-content {
+		border-radius:0;		
+		.media {
+			padding: 19px 3px;
+			margin:0;
+		}			
+	}
+	.close {
+		position: absolute;
+		top: -20px;
+		right: -80px;
+		border: 2px solid transparent;
+		border-radius: 50%;
+		padding: 5px;
+		opacity: 1;
+	}
+	.btn-link {
+		i {
+			font-size:7px;
+		}
+	}
+	.btn-lg {
+		padding: 6px 25px;
+    	font-size: 11px;
+	}	
+	.media-left {
+		.fa-heart-o ,.fa-heart {
+			margin-top: 4px;
+		}
+	}
+}
+.js-flag-view {	
+	/*top: 34%;
+    left: 18.5%;
+    width: 80%;
+    margin-left: -10%;*/
+	ul {
+		.btn {
+			font-size:18px;
+		    color: #737070;
+			&:hover {
+				color:#333;
+			}	
+		}
+	}
+}

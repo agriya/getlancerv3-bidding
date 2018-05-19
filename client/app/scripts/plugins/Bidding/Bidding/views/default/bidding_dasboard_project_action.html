@@ -1,0 +1,63 @@
+<div class="dropdown"> <button class="request-btn btn btn-primary dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{'Action'|translate}} <i class="fa fa-angle-down fa-fw" aria-hidden="true"></i> </button>
+    <ul
+        class="dropdown-menu dropdown-menu-right">
+        <!--payment pending-->
+         <li>
+            <a href="projects/view/{{projid}}/{{projname}}"> <i class="fa fa-eye fa-fw"></i> {{'View'|translate}}</a>
+        </li>
+        <li ng-if="projstatus == projectConstant.Draft">
+            <a ui-sref="Bid_ProjectEdit({'id':projid})"> <i class="fa fa-edit fa-fw"></i> {{'Edit'| translate}} </a>
+        </li>
+        <li ng-if="projstatus ==  projectConstant.Draft">
+            <a ui-sref="Bid_ProjectPayment({'id':projid})"> <i class="fa fa-credit-card fa-fw"> </i>{{'Pay Listing Fee'|translate}} </a>
+        </li>
+        <li ng-if="projstatus == projectConstant.OpenForBidding">
+            <a ui-sref="Bid_ProjectEdit({'id':projid})"> <i class="fa fa-edit fa-fw"></i> {{'Edit'| translate}} </a>
+        </li>
+        <li ng-if="projstatus ==  projectConstant.OpenForBidding">
+            <a href="" ng-click="CancelProject(projid)"> <i class="fa fa-close fa-fw"></i>{{'Cancel'|translate}}</a>
+        </li>
+        <li ng-if="projstatus ==  projectConstant.BiddingExpired || projstatus == projectConstant.BiddingClosed">
+            <a href="" ng-click="reopen(projid)"> <i class="fa fa-refresh fa-fw"></i>{{'Reopen for Bidding'|translate}}</a>
+        </li>
+        <li ng-if="projstatus ==  projectConstant.WinnerSelected && (projisreachedresponseenddateforfreelancer == 'true')">
+            <a href="javascript:void(0);" ng-click="withdrawfreelancer(1,projid)"> <i class="fa fa-close fa-fw"></i>{{'Withdraw Freelancer'|translate}} </a>
+        </li>
+        <!--UnderDevelopment -->
+         <li ng-if="projstatus ==  projectConstant.UnderDevelopment" ng-click="contactFreelancer(projbidid, projname, bidusername, disputestatus)">
+            <a> <i class="fa fa-comment-o"></i> {{'View / Send Message'|translate}}</a>
+        </li>
+          <!--Completed -->
+         <li ng-if="projectstatusid == projectConstant.Completed"> 
+             <a a href="javascript:void(0);" ng-click="AcceptCompleted(projid,'accept')"> <i class="fa fa-check"></i>
+          {{'Accept as Completed'| translate}}</a> </li>
+        <li ng-if="projectstatusid == projectConstant.Completed"> 
+             <a a href="javascript:void(0);" ng-click="AcceptCompleted(projid,'reject')"> <i class="fa fa-close"></i>
+          {{'Not Completed, Move to Under Development'| translate}}</a> </li>
+
+
+      <!--  <li ui-sref="Bid_ProjectView({'id':projid})" ng-if="projstatus ==  projectConstant.UnderDevelopment">
+            <a> <i class="fa fa-edit fa-fw"></i> {{'Accept Cancel'|translate}}</a>
+        </li>
+        <li ui-sref="Bid_ProjectView({'id':projid})" ng-if="projstatus ==  projectConstant.UnderDevelopment">
+            <a> <i class="fa fa-close fa-fw"></i> {{'Mutual Cancel'|translate}}</a>
+        </li>-->
+        <!--pending for approvel-->
+        <li ng-if="projstatus == projectConstant.PendingForApproval">
+            <a ui-sref="Bid_ProjectEdit({'id':projid})"> <i class="fa fa-edit fa-fw"></i> {{'Edit'| translate}} </a>
+        </li>
+        <li ng-if="projstatus == projectConstant.PendingForApproval">
+            <a href="javascript:void(0);" ng-click="deleteProject(projid)"> <i class="fa fa-close fa-fw"></i>{{'Delete'|translate}} </a>
+        </li>
+        <!--final review pending-->
+        <li ng-if="projstatus == projectConstant.FinalReviewPending"> 
+            <a ui-sref="Bid_ProjectView({'id':projid})"><i class="fa fa-envelope-o"></i> {{'View / Send Message'| translate}} </a>
+        </li>
+        <li ng-if="projstatus == projectConstant.FinalReviewPending"> 
+            <a ui-sref="Bid_ProjectView({'id':projid})"><i class="fa fa-plus fa-fw"></i>{{'Add Review'|translate}} / {{'Update'| translate}} </a> 
+        </li>
+        <li ng-if="projstatus == projectConstant.Draft">
+            <a href="javascript:void(0);" ng-click="deleteProject(projid)"> <i class="fa fa-close fa-fw"></i>{{'Delete'|translate}} </a>
+        </li>
+        </ul>
+</div>

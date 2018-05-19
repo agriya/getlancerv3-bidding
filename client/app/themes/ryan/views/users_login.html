@@ -1,0 +1,24 @@
+<div class="section" ng-controller='UsersLoginController'>
+    <div class="container">
+        <div class="row">
+            <div class="user-login clearfix">
+                <ul class="nav nav-justified nav-tabs">
+                    <li class="active"> <a href="">{{'Login'|translate}}</a> </li>
+                    <li> <a href="users/register">{{'Register'|translate}}</a> </li>
+                </ul>
+                <form class="user-ascess-form" role="form" name="userLogin" ng-submit="save()">
+                    <div class="form-group"> <input type="{{settings.USER_USING_TO_LOGIN === 'email' ? 'email' : 'text'}}" ng-model="user.username" class="form-control" id="inputUsername3" placeholder="{{settings.USER_USING_TO_LOGIN === 'email' ? 'Email' : 'Username'}}" autocomplete="off" required> </div>
+                    <div
+                        class="form-group"> <input type="password" ng-model="user.password" class="form-control" id="inputPassword3" placeholder="{{'Password'|translate}}" autocomplete="off" required> </div>
+            <div class="form-group clearfix">
+                <div class="checkbox pull-left"> <label>
+                            <input type="checkbox"><span> {{'Remember me'|translate}}</span></label></div> <a class="pull-right forgot-pwd" href="users/forgot_password">{{'Forgot password'|translate}}</a> </div>
+            <div class="form-group"> <button type="submit" ng-show="save_btn" class="btn btn-primary disabled">{{'Login'|translate}}</button> <button type="submit" ng-show="!save_btn" class="btn btn-primary btn-lg">{{'Login'|translate}}</button> </div>
+            <div class="reg-or-blk"
+                ng-if="providers.length"><span class="cls_slogin_or_blk">{{'OR'|translate}}</span></div>
+            <div class="form-group social-btn"> <a ng-repeat="provider in providers" data-provider="{{provider.name}}" ng-click="authenticate(provider.slug)" class="btn btn-lg  {{provider.button_class}}"><span class="fa {{provider.icon_class}} fa-fw"></span> {{'Login with'|translate}} {{provider.name}}</a></div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,60 @@
+<div class="section" ng-controller='UsersLoginController'>
+    <form class="user-ascess-form" role="form" name="userLogin" ng-submit="save()" novalidate>
+        <div class="table-row">
+            <div class="col-sm-5 hidden-xs">
+                <figure>
+                    <img src="images/logo.png" alt="logo">
+                </figure>
+                <ul class="social-btn list-unstyled no-mar">
+                    <li class="" ng-repeat="provider in providers">
+                        <a data-provider="{{provider.name}}" ng-click="authenticate(provider.slug)" class="btn btn-lg {{provider.button_class}}"> 
+                            <span class="fa {{provider.icon_class}} fa-fw"></span> {{'Login with'|translate}} {{provider.name}} 
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-7">
+                <div class="form-group material"> 
+                    <input type="{{settings.USER_USING_TO_LOGIN === 'email' ? 'email' : 'text'}}" ng-model="user_name" class="form-control" id="inputUsername3" placeholder="{{settings.USER_USING_TO_LOGIN === 'email' ? 'Email' : 'Username'}}" autocomplete="off" ng-keydown="save($event)"
+                    name="username" required>
+                    <span class="error" ng-show="(userLogin.$submitted || userLogin.username.$touched) && (userLogin.username.$pristine || userLogin.username.$invalid) && 
+                    (userLogin.username.$error.required)">{{'Required'| translate }} </span> 
+                     <span class="error" 
+                     ng-show="settings.USER_USING_TO_LOGIN === 'email' && (userLogin.username.$error.email && !userLogin.username.$error.required)">{{'Enter a valid Email'| translate }} </span> 
+                </div>
+                <div class="form-group material" ng-class="{active:contest_status_id == null}" data-class="tabType"> 
+                    <input type="password" ng-model="user.password" class="form-control" id="inputPassword3" placeholder="{{'Password'|translate}}" autocomplete="off" name="inputPassword3" ng-keydown="save($event)" ng-minlength="6" required> 
+                    <span class="error" ng-show="(userLogin.$submitted || userLogin.inputPassword3.$touched) && (userLogin.inputPassword3.$pristine || userLogin.inputPassword3.$invalid) && 
+                    (userLogin.inputPassword3.$error.required)">{{'Required'| translate }}</span> 
+
+                    <span class="error" ng-show="(userLogin.$submitted || userLogin.inputPassword3.$touched) && (userLogin.inputPassword3.$pristine || userLogin.inputPassword3.$invalid) && (userLogin.inputPassword3.$error.minlength)">{{'Must have at least 6 characters'| translate }}</span>
+                </div>
+                <div class="form-group clearfix">
+                    <div class="checkbox pull-left no-mar"> 
+                        <label><input type="checkbox"><span> {{'Remember me'|translate}}</span></label> 
+                    </div>
+                    <p class="pull-right"><a href="users/forgot_password" ng-click="forgot_password()">{{'Forgot password'|translate}}?</a></p>
+                </div>
+                <div class="form-group"> 
+                    <button type="submit" ng-show="save_btn" class="btn btn-primary" disabled>{{'Log in'|translate}}</button>
+                    <button type="submit" ng-show="!save_btn" class="btn btn-primary">{{'Log in'|translate}}</button> 
+                 </div>
+                <!--<div class="reg-or-blk" ng-if="providers.length">
+                    <span class="cls_slogin_or_blk">{{'OR'|translate}}</span>
+                </div>-->
+            </div>
+            <div class="col-sm-5 visible-xs">
+                <figure>
+                    <img src="images/logo.png" alt="logo">
+                </figure>
+                <ul class="social-btn list-unstyled no-mar">
+                    <li class="" ng-repeat="provider in providers">
+                        <a data-provider="{{provider.name}}" ng-click="authenticate(provider.slug)" class="btn btn-lg {{provider.button_class}}"> 
+                            <span class="fa {{provider.icon_class}} fa-fw"></span> {{'Login with'|translate}} {{provider.name}} 
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>

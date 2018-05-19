@@ -1,0 +1,77 @@
+<!--START: BIDDING FILES -->
+<div class="bidding-files">
+    <div class="milestone-block">
+        <div class="clearfix" ng-if="projectstatus == ProjectStatusConstant.UnderDevelopment">
+            <h3 class="pull-left no-mar text-uppercase">{{'FILES'|translate}}</h3>
+            <p ng-show="!project_is_dispute" class="pull-right cursor btn btn-default" ng-class="(!is_show_upload_form)?'request-btn':'text-danger'" ng-click="showUpload(is_show_upload_form)">
+                {{(!is_show_upload_form)?'Add File':'Cancel' | translate}}
+            </p>
+        </div>
+        <div ng-if="is_show_upload_form">
+            <form class="proj-form" role="form" name="fileFrm" ng-submit="PostFiles(fileFrm.$valid, fileFrm)" novalidate>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6"> 
+                            <label class="fileinput-button btn-block">
+                                <input type="file" ngf-select ng-model="file" name="file" ng-change="uploadFile(file)" class="underline text-red" ng-required="true"> 
+                                <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                                {{'Upload Files'|translate}}
+                            </label> 
+                            <span class="error" ng-show="(fileFrm.$submitted || fileFrm.file.$touched) && (fileFrm.file.$pristine || fileFrm.file.$invalid) && (fileFrm.file.$error.required)"> {{'Required'| translate }} </span>
+                            <div ng-if="$root.settings.ALLOWED_EXTENSIONS_FOR_PROJECT_DOCUMENT_FILE">                                    
+                            <span class="grayc help-block">{{'Allowed extensions:'|translate}} 
+                                            {{$root.settings.ALLOWED_EXTENSIONS_FOR_PROJECT_DOCUMENT_FILE}}</span>
+                            <span class="error bot-space" ng-if="error_message && error_message !== ''">
+                                            {{error_message}}</span>
+                            </div>
+                            <img ngf-src="file" alt="[Image: Group]" title="Group" class="img-responsive center-block" id="resetAttr">
+                            <div ng-bind="file.name" id="resetFile"></div>
+                            <p> <small>{{'Drag'|translate}} & {{'drop your project related files here'|translate}}... </small></p>
+                        </div>
+                        <!--<div class="col-sm-4 ver-mar-20">
+                            <p> {{'Drag'|translate}} & {{'drop your project related files here'|translate}}... </p>
+                        </div>-->
+                        <div class="col-sm-12 ver-mar-20">
+                            <div> 
+                                <button type="submit" ng-show="file_Frm" class="btn btn-primary text-uppercase" disabled>{{'Submit'|translate}}</button> 
+                                <button type="submit" class="btn btn-primary text-uppercase" ng-show="!file_Frm">{{'Submit'|translate}}</button>      
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--START: TABLE -->
+        <div class="top-space-10">
+            <div class="add-wallet-table">
+                <div class="table-responsive pg-table">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr ng-if="ProjectFiles.length > 0">
+                                <th>{{'Filename'|translate}}</th>
+                                <th class="text-center">{{'Download'|translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ProjectFile in ProjectFiles">
+                                <td>{{ProjectFile.filename}}</td>
+                                <td class="text-center">
+                                    <p class="no-mar">
+                                        <file-download attachment="{{ProjectFile}}" downloadlable="<i class='fa fa-download'> </i>"></file-download>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <p ng-if="ProjectFiles.length == 0"  colspan="8" class="text-center text-danger"> {{'No records available' | translate}} </p>
+                                 <!--<p ng-if="project_is_dispute" colspan="8" class="text-center text-danger">
+                                    {{"Project under dispute. So you can't send message." | translate}} </p>-->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--END: TABLE -->
+    </div>
+</div>
+<!--END: BIDDING FILES -->

@@ -1,0 +1,50 @@
+<div class="gray-bg section top-mspace">
+    <div class="container">
+        <div class="row big-space top-space">
+            <div class="col-lg-8 mar-top40 col-lg-offset-2 panel clearfix">
+                <ul class="list-inline text-center" ng-if="provider_login == 'twitter'">
+                    <li class="active">
+                        <h4 class="text-muted museo-sans-500 top-mspace">{{'Please enter your email address. To complete registration process.'|translate}}</h4>
+                    </li>
+                </ul>
+                 <ul class="list-inline text-center" ng-if="provider_login == 'google' || provider_login == 'facebook'">
+                    <li class="active">
+                        <h4 class="text-muted museo-sans-500 top-mspace">{{'Please choose any one field. To complete registration process.'|translate}}</h4>
+                    </li>
+                </ul>
+                <div class="col-xs-12 bot-space-20 get-email">
+                    <form class="form-horizontal" role="form" name="twitterEmail" ng-submit="loginNow(twitterEmail.$valid)" novalidate>
+                        <div class="form-group" ng-if="provider_login == 'twitter'">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <div class="input-group col-sm-12"> <input type="email" name="email" ng-model="$root.user_email" class="form-control" id="email" placeholder="Enter Email" ng-required="true"> </div>
+                                <div ng-show="(twitterEmail.$submitted || twitterEmail.email.$touched) && (twitterEmail.email.$pristine || twitterEmail.email.$invalid)">
+                                <span class="error" ng-show="(twitterEmail.email.$error.required)">{{'Required' | translate }}</span> <span class="error" ng-show="(twitterEmail.email.$error.email)">{{ 'Enter valid email' | translate }}</span> </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <ul class="list-inline">
+                                <li class="radio no-mar"> <label for="inputIsFreelancer">
+                                    <input type="radio"  id="inputIsFreelancer" ng-model="userChoose" value="freelancer" required>
+                                    <span>{{'I want to Work'|translate}}</span></label> </li>
+                                <li class="radio no-mar"> <label for="inputIsEmployer">
+                                        <input type="radio" id="inputIsEmployer" ng-model="userChoose" value="empolyer" required>
+                                        <span>{{'I want to Hire'|translate}}</span>
+                                    </label> </li> <span ng-show="$root.settings.IS_ENABLED_DUAL_REGISTER != 0 && $root.settings.IS_ENABLED_DUAL_REGISTER !=''">
+                                    <li class="radio no-mar top-mar">
+                                        <label for="inputIsBoth">
+                                            <input type="radio" id="inputIsBoth" ng-model="userChoose" value="both" required> 
+                                            <span>{{'I want to perform both'|translate}}</span> </label>
+                                </li>
+                                </span>
+                            </ul>
+                            <span class="error" ng-show="(twitterEmail.$submitted && !userChoose)">
+                                    {{'Required'| translate}}                   
+                            </span> 
+                        </div>
+                        <div class="form-group text-center"> <button type="submit" class="btn btn-success" ng-show="save_btn" disabled> {{'Submit'|translate}}</button> <button type="submit" class="btn btn-success" ng-show="!save_btn">{{'Submit'|translate}}</button> </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

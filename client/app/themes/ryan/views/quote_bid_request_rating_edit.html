@@ -1,0 +1,13 @@
+<div class="modal-header"><button type="button" class="close" ng-click="close_review()">x</button>
+    <h3>{{'Update Review' | translate}}</h3>
+</div>
+<div class="modal-body">
+    <form name="ratingForm" ng-submit="updateRequestReview()">
+        <div class="form-group"> <label>{{'Rate'|translate}}</label> <span class="myrating" uib-rating ng-model="reviews.rating" on-hover="hoveringOver(value)" max="max" read-only="false" state-on="'fa fa-star fa-lg'" state-off="'fa fa-star-o fa-lg'"></span> </div>
+        <div class="form-group">
+        <label>{{'Message'|translate}}</label> <textarea ng-model="reviews.message" class="form-control"></textarea> </div>
+        <div class="form-group"> <!--<input type="submit" name="saveReview" class="btn textb btn-primary"> -->
+         <button type="submit" class="btn textb btn-primary">{{'Submit'| translate}}</button>
+         </div>
+    </form>
+</div>

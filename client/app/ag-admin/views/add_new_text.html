@@ -1,0 +1,27 @@
+<div class="row js-loader-off" id="create-view">
+    <h3>Add New Text</h3>
+	<form class="col-lg-12" name="translationTextAdd" novalidate>
+			<div class="form-group">
+				<label>English</label>
+				<div class="">
+					<textarea type="text" name="translationTextAdd.english_text" ng-model="translationTextAdd.english_text" class="form-control" placeholder="Enter new text"></textarea>
+				</div>				
+			</div>            
+            <div class="form-group" ng-repeat="language in translateLanguageList">
+                <label>{{language.name}} :</label>
+                <div class="">
+					<textarea name="translationTextAdd.{{language.name}}" id="{{language.name}}-{{language.id}}-{{$index}}" class="form-control js-addtext-translate"></textarea>
+				</div>
+            </div>
+            <div class="form-group">
+				<div class="">
+				<button class="btn btn-primary" type="submit" ng-click="translationTextAdd()"><span class="glyphicon glyphicon-ok"></span> Text Add</button>
+				</div>
+			</div>
+	</form>
+</div>
+<div class="js-loader-on hide">
+	<p class="hor-space alert alert-green textb text-center">
+		Please Wait updating Files <img src="../assets/img/loader.gif" class="loader-custom-img"/>..........
+	</p>
+</div>

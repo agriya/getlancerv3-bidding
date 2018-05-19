@@ -1,0 +1,67 @@
+
+<div class="submit-review-block clearfix milestone-submit sep-top" id="mutual-cancel">
+    <h3 class="text-uppercase clearfix" ng-if="isprojectcancel == 'false'"> <span class=""> {{'Project Cancellation Request'|translate}} </span> <span class="pull-right"> 
+    </span> </h3>
+    <div ng-if="isprojectcancel == 'false'">
+        <form class="form-horizontal" name="mutualFrm" ng-submit="mutualCancel(mutualFrm.$valid, data)" novalidate>
+            <div class="form-group top-space bot-20-space"> <label for="review" class="col-lg-2 col-sm-2 control-label">{{'Cancellation Note'|translate}}:</label>
+                <div class="col-lg-10 col-sm-10">
+                    <textarea name="mutual_cancel_note" ng-model="data.mutual_cancel_note" class="form-control" rows="3" placeholder="{{'Enter Your Note about Requesting Cancellation'|translate}}" ng-required="true"></textarea>
+                    <span class="error" ng-show="(mutualFrm.$submitted || mutualFrm.mutual_cancel_note.$touched) && (mutualFrm.mutual_cancel_note.$pristine || mutualFrm.mutual_cancel_note.$invalid) && (mutualFrm.mutual_cancel_note.$error.required)"> {{'Required'| translate }} </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" ng-show="mutual_Cancel" class="text-uppercase btn btn-primary" disabled>{{'Submit'|translate}}</button> <button type="submit" class="text-uppercase btn btn-primary" ng-show="!mutual_Cancel">{{'Submit'|translate}}</button>
+                    <button class="text-uppercase btn btn-danger" ng-click="closefrm()">{{'Cancel'|translate}}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+       <div ng-if="isprojectcancel != 'false'">
+            <p class="alert alert-info" ng-if="projectstatus == ProjectStatusConstant.UnderDevelopment && isfreelancercancel && $root.Employer &&isemployercancel == 'false'">
+                 {{userinfo}} {{'sent project cancel Request' | translate}}.
+            </p> 
+            <p class="alert alert-info" ng-if="projectstatus == ProjectStatusConstant.UnderDevelopment && isfreelancercancel == 'false' && $root.Employer && isemployercancel">
+                  {{'You have sent project cancel Request' | translate}}.
+            </p> 
+            <p class="alert alert-info" ng-if="projectstatus == ProjectStatusConstant.UnderDevelopment && isemployercancel && $root.Freelancer &&isfreelancercancel == 'false'">
+                  {{userinfo}} {{'sent project cancel Request' | translate}}.
+            </p> 
+            <p class="alert alert-info" ng-if="projectstatus == ProjectStatusConstant.UnderDevelopment && isemployercancel == 'false' && $root.Freelancer && isfreelancercancel">
+                  {{'You have sent project cancel Request' | translate}}.
+            </p>
+
+            <div class="comments-msg"  ng-if="projectstatus == ProjectStatusConstant.UnderDevelopment">                    
+                <div class="media">
+                    <div class="pull-left">
+                        <a class="blog-user-img center-block" href="users/{{userid}}/{{userinfo}}"><img ng-src="{{user_image}}" title="{{userinfo}}" alt="[Image: {{userinfo}}]" class="center-block img-circle"></a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="text-16"><a href="users/{{userid}}/{{userinfo}}">{{userinfo}}</a> , <span class="text-12 text-normal text-lowercase grayc"> {{ created_at | timeago}}</span></h4>
+                        <p>{{'Reason'| translate}}: {{mutualcancelnote}} </p>
+                    </div>
+                </div>                    
+            </div>
+        </div>
+     <div class="mspace">
+    <p class="alert alert-info" ng-if="projectstatus == ProjectStatusConstant.MutuallyCanceled && !is_show_accept"> 
+            {{'Project Mutually Canceled' | translate}} 
+        </p>
+    </div>
+     </div>
+       <!-- <div class="clearfix top-mar-20" ng-if="isprojectcancel != 'false'"> 
+            <h4>{{'Reason' | translate}}</h4> 
+            <p ng-if="mutualcancelnote"> {{mutualcancelnote}} </p> 
+        </div>-->  
+        <div class="mutual-cancel-button top-space-10" ng-if="projectstatus != ProjectStatusConstant.MutuallyCanceled"> 
+            <button class="btn btn-primary" ng-click="cancelreponse(4)" ng-if="isfreelancercancel == 'true' && ($root.user.id == projectuser)"> 
+          {{'Accept Cancel Request'|translate}}  
+        </button> 
+         <button class="btn btn-primary" ng-click="cancelreponse(4)" ng-if="isemployercancel=='true' && ($root.user.id == biduser)"> 
+          {{'Accept Cancel Request'|translate}}  
+        </button> 
+        <button class="btn btn-danger" ng-click="cancelreponse(5)" ng-if="isemployercancel=='true' && ($root.user.id == biduser)">{{'Reject Cancel Request'|translate}} </button> 
+         <button class="btn btn-danger" ng-click="cancelreponse(5)" ng-if="isfreelancercancel == 'true' && ($root.user.id == projectuser)">{{'Reject Cancel Request'|translate}} </button> 
+    </div>
+</div>

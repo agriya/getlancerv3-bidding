@@ -1,0 +1,19 @@
+<div class="howitWork featuerdEquip" ng-if="quote_service_categories.length">
+    <div class="container">
+        <div class="text-center howHead">
+            <h2 class="text-uppercase text-44 bot-big-mspace howitH cuprumFont">{{'Featured'|translate}} <span class="text-primary">{{'Service'|translate}}</span></h2>
+            <p class="center-block text-18 howP bot-big-mspace"> {{'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'|translate}}</p>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-3" ng-repeat="quote_service_category in quote_service_categories">
+                <div class="text-center bg-white ver-big-mspace pr howitBlocks qutoesBlock">
+                    <div class="bot-space">
+                        <a href="service_category/{{quote_service_category.id}}/{{quote_service_category.slug}}" title="{{quote_service_category.name}}" class="img-circle center-block show pr feutrimgCont"> <img ng-src="{{quote_service_category.image_name}}" alt="{{quote_service_category.name}}" title="{{quote_service_category.name}}"> </a>
+                    </div>
+                    <h3 class="text-18 htruncate no-mar"> <a href="service_category/{{quote_service_category.id}}/{{quote_service_category.slug}}" title="{{quote_service_category.name}}" class="text-gray">{{quote_service_category.name}}</a></h3>
+                </div>
+            </div>
+        </div>
+        <div class="text-center ver-big-mspace"> <a href="service_category" title="{{'More Services'|translate}}" class="btn btn-primary text-uppercase text-18 viewBtun">{{'More Services'|translate}}</a> </div>
+    </div>
+</div>

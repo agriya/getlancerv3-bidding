@@ -1,0 +1,182 @@
+<section class="bg-grey analystics-blk">
+    <div class="container">
+        <div class="row">
+            <div class="width-block">
+                <div class="media research-blk">
+                    <div class="pull-left">
+                        <div class="panel"> <img ng-src="{{quote_service_image}}" alt="{{quote_service.business_name}}" title="{{quote_service.business_name}}" class="img-responsive img-thumbnail"> </div>
+                    </div>
+                    <div class="media-body">
+                        <div class="media-heading">
+                            <h4 class="h3 ver-mspace15">{{quote_service.business_name}}</span>
+                            </h4>
+                        </div>
+                        <p class="ver-mspace15 text-16"> <i class="fa fa-map-marker" aria-hidden="true"></i> {{quote_service.full_address}} </p> <span ng-show="quote_service.total_rating > 0" class="myrating" uib-rating ng-model="quote_service.total_rating" max="5" read-only="true" state-on="'fa fa-star fa-lg'"
+                            state-off="'fa fa-star-o fa-lg'"></span> <a ng-show="quote_service.total_rating > 0" href="" title="{{quote_service.total_rating}} {{'Review'| translate}}" class="h4 text-16 reviews">{{quote_service.total_rating}} {{'Review'| translate}}</a>
+                    </div>
+                </div>
+                <form class="ver-mspace">
+                    <div class="form-group clearfix">
+                        <div class="input-group quote-group">
+                            <input type="text" class="form-control" placeholder="{{'Get up to five quotes from project like'|translate}} {{quote_service.business_name}} {{'within hours.'|translate}} ">
+                            <span class="input-group-btn left-quote">
+                                <a href=""  ng-if="!$root.isAuth"  ng-click="openLoginModal('login')" class="btn btn-primary  Montserrat">{{'GET QUOTE'|translate}}</a>
+                                <a href="" ng-if="$root.isAuth"  ng-click="openQuoteRequestModal('null',quote_service.id,'service')" class="btn btn-primary  Montserrat">{{'GET QUOTE'|translate}}</a>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <div id="nav">
+                    <ul class="list-inline list-block text-center">
+                        <li role="presentation" ng-show="quote_service_media_total > 0">
+                            <a href="quote_service/{{quote_service.id}}/{{quote_service.slug}}" class="text-16 h4 " ng-click="quoteServiceViewScroll('photos')">
+                                {{'Photos'|translate}}                        
+                                ({{quote_service.quote_service_photo_count ? quote_service.quote_service_photo_count : 0}}) /
+                                {{'Videos'|translate}}
+                                ({{quote_service.quote_service_video_count ? quote_service.quote_service_video_count : 0}}) / 
+                                {{'Audios'|translate}}
+                                ({{quote_service.quote_service_audio_count? quote_service.quote_service_audio_count : 0}}) 
+                         </a>
+                         </li>
+                        <li role="presentation">
+                            <a href="quote_service/{{quote_service.id}}/{{quote_service.slug}}" ng-click="quoteServiceViewScroll('cmd')" class="text-16 h4 text-muted smoothScroll">{{'About Projects'|translate}}</a>
+                        </li>
+                        <li role="presentation" ng-hide="true">
+                            <a href="quote_service/{{quote_service.id}}/{{quote_service.slug}}" ng-click="quoteServiceViewScroll('cmr')" class="text-16 h4 text-muted smoothScroll">{{'Review'|translate}}</a>
+                        </li>
+                        <li role="presentation" ng-show="quote_service.quote_faq_answer_count > 0">
+                            <a href="quote_service/{{quote_service.id}}/{{quote_service.slug}}" ng-click="quoteServiceViewScroll('cmq')" class="text-16 h4 text-muted smoothScroll">{{'FAQs'|translate}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <hr> </div>
+        </div>
+        <div class="width-block" id="photos" ng-show="quote_service_media_total > 0">
+            <div class="well-lg ver-mspace15 text-center img-section">
+                <div class="row">
+                    <!-- BEGIN: Quote Photos -->
+                    <quote_service_photos></quote_service_photos>
+                    <!-- END:  Quote Photos -->
+                    <!-- BEGIN: Quote Photos -->
+                    <quote_service_videos></quote_service_videos>
+                    <!-- END:  Quote Photos -->
+                    <!-- BEGIN: Quote Photos -->
+                    <quote_service_audios></quote_service_audios>
+                    <!-- END:  Quote Photos -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="cmd" class="abt-proj-blk">
+    <div class="container">
+        <div class="row">
+            <div class="width-block">
+                <div class="ver-mspace30 ver-space10">
+                    <h4 class="h3 text-center no-mar">{{'About This Project'|translate}}</h4>
+                </div>
+                <ul class="list-inline text-center media-proj">
+                    <li ng-show="quote_service.website_url" class="media">
+                        <a href="{{quote_service.website_url}}" target="_blank" title="{{quote_service.website_url}}" class="media-left"> <img src="themes/ryan/images/website-ecosys.png" alt="{{quote_service.website_url}}" title="{{quote_service.website_url}}" class="media-object"> </a>
+                        <div class="media-body text-left">
+                            <p class="h5 no-mar">{{'Website'|translate}}</p>
+                            <p>{{quote_service.website_url}}</p>
+                        </div>
+                    </li>
+                    <li class="media">
+                        <a href="" title="{{'Background check'|translate}}" class="media-left"> <img src="themes/ryan/images/checked.png" alt="{{'Background check'|translate}}" title="{{'Background check'|translate}}" class="media-object"> </a>
+                        <div class="media-body text-left">
+                            <p class="h5 no-mar">{{'Background check'|translate}}</p>
+                            <p>{{'Completed'|translate}}</p>
+                        </div>
+                    </li>
+                    <li ng-show="quote_service.year_founded" class="media">
+                        <a href="" title="{{'Since in Business'|translate}}" class="media-left"> <img src="themes/ryan/images/clk.png" alt="{{'Since in Business'|translate}}" title="{{'Since in Business'|translate}}" class="media-object"> </a>
+                        <div class="media-body text-left">
+                            <p class="h5 no-mar">{{'Since in Business'|translate}}</p>
+                            <p>{{quote_service.year_founded}}</p>
+                        </div>
+                    </li>
+                    <li ng-show="quote_service.number_of_employees" class="media">
+                        <a href="" title="{{'Number of employees'|translate}}" class="media-left"> <img src="themes/ryan/images/users.png" alt="{{'Number of employees'|translate}}" title="{{'Number of employees'|translate}}" class="media-object"> </a>
+                        <div class="media-body text-left">
+                            <p class="h5 no-mar">{{'Number of employees'|translate}} </p>
+                            <p>{{quote_service.number_of_employees}}+</p>
+                        </div>
+                    </li>
+                    <li ng-show="quote_service.hired_count" class="media">
+                        <a href="" title="{{'Times hired on quote'|translate}}" class="media-left"> <img src="themes/ryan/images/trophy.png" alt="{{'Times hired on quote'|translate}}" title="{{'Times hired on quote'|translate}}" class="media-object"> </a>
+                        <div class="media-body text-left">
+                            <p class="h5 no-mar">{{'Times hired on quote'|translate}}</p>
+                            <p> {{quote_service.hired_count}}</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="ver-mspace30">
+                    <p class="text-15"> {{'How does your service stand out'|translate}} </p>
+                    <p class="text-15"> {{quote_service.how_does_your_service_stand_out}} </p>
+                    <p class="text-15"> {{'What do you enjoy about the work you do'|translate}} </p>
+                    <p class="text-15"> {{quote_service.what_do_you_enjoy_about_the_work_you_do}} </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="cmr" class="bg-grey reviews-blk" ng-if="quote_service_views_reviews.length">
+    <div class="container">
+        <div class="ver-mspace30 ver-space10">
+            <div class="text-center">
+                <h4 class="h3 ver-mspace15">{{'Reviews'| translate}}</h4>
+                <div class="bot-mspace" ng-if="quote_service.total_rating > 0"> <span class="myrating" uib-rating ng-model="quote_service.total_rating" max="5" read-only="true" state-on="'fa fa-star fa-lg'" state-off="'fa fa-star-o fa-lg'"></span> <a href="" title="{{quote_service.total_rating}} {{'Review'| translate}}"
+                        class="h4 text-16 ver-lft-space5"> {{quote_service.total_rating}} {{'Review'| translate}} </a> </div>
+                <div class="row" ng-if="quote_service_views_reviews.length" ng-repeat="quote_service_views_review in quote_service_views_reviews">
+                    <div class="col-sm-4" ng-repeat="review in quote_service_views_review">
+                        <div class="panel well-lg">
+                            <h4 class="h6 no-mar">
+                                <a href="" title="{{review.user.username}}" class="text-primary h5"> <strong>{{review.user.username}},</strong> </a> <span>{{review.created_at | timeago}}</span></h4>
+                            <div class="h6 list-group-item-text"> <span class="myrating" uib-rating ng-model="review.rating" max="5" read-only="true" state-on="'fa fa-star fa-lg'" state-off="'fa fa-star-o fa-lg'"></span> </div>
+                            <div class="ver-space10"> </div>
+                            <p class="ver-mspace15 text-14 truncate-4"> {{review.message}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="" class="btn btn-default btn-sm load-more top-mspace" ng-hide="noOfPages == loadPage && quote_service_views_reviews.length > 0" ng-click='review_pagination()'>{{'Load more' | translate}}</a>
+        </div>
+    </div>
+</section>
+<section id="cmq" class="faq-blk" ng-show="quote_service.quote_faq_answer_count > 0">
+    <div class="container">
+        <div class="ver-space10">
+            <div class="ver-mspace30 ver-space10">
+                <div class="text-center">
+                    <h4 class="h3 no-mar"> {{'FAQs'|translate}} </h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="media-list ver-mspace15">
+                        <!-- BEGIN: Quote Photos -->
+                        <quote_service_faqs></quote_service_faqs>
+                        <!-- END:  Quote Photos -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-primary">
+    <div class="container">
+        <div class="ver-top-mspace30 ver-space10">
+            <div class="text-center">
+                <h4 class="h3 no-mar text-uppercase Montserrat text-22"> <strong>{{'Get started today'|translate}}</strong> </h4>
+                <p class="h4 ver-mspace15 text-16 lin-heig22"> {{'Excesses apply for Quote Workers. Learn more about Insurance and services for task to raise the location.'|translate}} </p>
+                <ul class="list-inline ver-mspace30 started-list">
+                    <li> <a href="quote_service/add" title="{{'Post Service'|translate}}" class="btn btn-default btn-lg text-uppercase navbar-btn">{{'Post Service'|translate}}</a> </li>
+                    <li> <a href="service_category" title="{{'Purchase Quote'|translate}}" class="btn btn-default btn-lg text-uppercase navbar-btn">{{'Purchase Quote'|translate}}</a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

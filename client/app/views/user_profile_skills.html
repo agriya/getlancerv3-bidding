@@ -1,0 +1,22 @@
+<div class="clearfix">
+    <div class="col-md-12">
+        <div class="modal-header">
+            <button type="button" class="close pull-right line-height-28" data-dismiss="modal" ng-click="closemodel()">&times;</button>
+            <h3 class="no-mar top-mar-5">Skills:</h3>
+        </div>
+        <form class="form-horizontal adminpg-form" role="form" name="userskills" ng-submit="UserSkills(skill_select)" novalidate>
+            <div class="form-group clearfix">
+                <div class="col-sm-4" data-ng-repeat="skill in skills | orderBy:'name'">
+                    <div class="checkbox"> <label for="checkbox{{$index}}">
+                     <input type="checkbox" id="checkbox{{$index}}" name="user_skill" checklist-model="skill_select" ng-model="skill_select" checklist-value="skill.id" ng-change="check(skill.id, checked)" required>
+                     <span>{{skill.name | capitalize}}</span>
+                </label> </div>
+                </div>
+            </div> 
+               <div class="clearfix"> <span class="error" ng-if="(userskills.$submitted || userskills.skill_select.$touched) && (skill_select.length < 1)"> {{'Required'| translate }}</span></div>
+            <div class="bot-mspace pull-right">
+                <div> <button type="submit" class="btn btn-primary">{{'Submit'|translate}}</button> </div>
+            </div>
+        </form>
+    </div>
+</div>

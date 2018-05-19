@@ -1,0 +1,83 @@
+<!-- BEGIN: HEADER -->
+<header>
+    <!-- BEGIN: TOP HEADER -->
+    <div class="topHeader">
+        <nav class="navbar-inverse no-rad">
+            <div class="container">
+                <ul class="nav navbar-nav hidden-xs">
+                    <li ng-if="settings.SITE_FACEBOOK_URL"><a href="{{settings.SITE_FACEBOOK_URL}}" title="{{'Facebook'|translate}}"><i class="fa fa-facebook text-white text-16"></i></a></li>
+                    <li ng-if="settings.SITE_GOOGLEPLUS_URL"><a href="{{settings.SITE_GOOGLEPLUS_URL}}" title="{{'Google Plus'|translate}}"><i class="fa fa-google-plus text-white text-16"></i></a></li>
+                    <li ng-if="settings.SITE_TWITTER_URL"><a href="{{settings.SITE_TWITTER_URL}}" title="{{'Twitter'|translate}}"><i class="fa fa-twitter text-white text-16"></i></a></li>
+                    <li ng-if="settings.SITE_PINTEREST_URL"><a href="{{settings.SITE_PINTEREST_URL}}" title="{{'Pinterest'|translate}}"><i class="fa fa-pinterest-p text-white text-16"></i></a></li>
+                    <li ng-if="settings.SITE_LINKEDIN_URL"><a href="{{settings.SITE_LINKEDIN_URL}}" title="{{'Linkedin'|translate}}"><i class="fa fa-linkedin text-white text-16"></i></a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right hidden-xs reglogBlock">
+                    <li ng-show="!isAuth"><a href="" title="{{'Login'|translate}}" class="font-wlight pr" ng-click="openLoginModal('login')"><span class="logIcon"></span>{{'Login'|translate}}</a></li>
+                    <li ng-show="!isAuth"> <a href="" title="{{'Register'|translate}}" class="font-wlight pr" ng-click="openLoginModal('register')"><span class="regIcon"></span>{{'Register'|translate}}</a></li>
+                    <li ng-show="user.role_id == ConstUserRole.Admin && isAuth"> <a href="{{site_url}}" target="_blank" title="{{'Admin Dashboard'|translate}}" class="font-wlight pr"><span class="fa fa-fw fa-user"></span>{{'Admin Dashboard'|translate}}</a></li>
+                    <li ng-show="isAuth" class="dropdown user-img">
+                        <a href="" data-toggle="dropdown" class="dropdown-toggle"> <span class="pull-left"> <img ng-src="{{user.userimage}}" width="30" height="30" class="img-circle" alt="[Image: {{user.username}}]" title="{{user.username}}"></span> <span class="caret"></span> </a>
+                        <ul class="dropdown-menu">
+                            <li ng-if="user.role_id == ConstUserRole.User" ng-hide="CustomerPortal"><a href="" ng-click="switch_portal('CustomerPortal')" title="{{'Switch to Customer Portal'|translate}}">{{'Switch to Customer Portal'|translate}}</a> </li>
+                            <li ng-if="user.role_id == ConstUserRole.User" ng-hide="SupplierPortal"><a href="" ng-click="switch_portal('SupplierPortal')" title="{{'Switch to Supplier Portal'|translate}}">{{'Switch to Supplier Portal'|translate}}</a> </li>
+                            <li ng-show="SupplierPortal"><a href="quote_service/my_services" title="{{'My Services'|translate}}">{{'My Services'|translate}}</a> </li>
+                            <li ng-if="settings.IS_BUY_OPTION_ENABLED != ConstQuoteBuyOption.Enabled" ng-show="SupplierPortal"><a href="my_works" title="{{'My Works'|translate}}">{{'My Works'|translate}}</a> </li>
+                            <li ng-if="settings.IS_BUY_OPTION_ENABLED == ConstQuoteBuyOption.Enabled" ng-show="SupplierPortal"><a href="my_works" title="{{'Rental Quote'|translate}}">{{'Rental Quote'|translate}}</a> </li>
+                            <li ng-if="settings.IS_BUY_OPTION_ENABLED == ConstQuoteBuyOption.Enabled" ng-show="SupplierPortal"><a href="my_works?type=sales" title="{{'Sales Quote'|translate}}">{{'Sales Quote'|translate}}</a> </li>
+                            <li ng-show="CustomerPortal">
+                                <li><a href="users/settings" title="{{'My Account' | translate}}">{{'My Account'|translate}}</a> </li>
+                                <li><a href="users/logout" title="{{'Log out'|translate}}">{{'Log out'|translate}}</a> </li>
+                        </ul>
+                        </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!-- END: TOP HEADER -->
+    <!-- BEGIN: NAV HEADER -->
+    <div class="navHeader">
+        <nav class="navbar navbar-default list-group-item-text no-rad">
+            <div class="container">
+                <div class="navbar-header"> <button type="button" class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse"> 
+                        <span class="sr-only">Toggle navigation</span> 
+                        <span class="icon-bar"></span> 
+                        <span class="icon-bar"></span> 
+                        <span class="icon-bar"></span> 
+                    </button>
+                    <h1 class="no-mar">
+                        <a href="" title="{{settings.SITE_NAME}}" class="navbar-brand show logoA"><img alt="{{settings.SITE_NAME}}" ng-src="themes/ryan/images/logo.png"></a>
+                    </h1>
+                </div>
+                <ul class="collapse navbar-collapse nav navbar-nav navbar-right headMenu">
+                    <li class="visible-xs bg-black top-big-mspace">
+                        <ul class="list-inline mobiTopnav">
+                            <li ng-if="settings.SITE_FACEBOOK_URL"><a href="{{settings.SITE_FACEBOOK_URL}}" target="_blank" title="{{'Facebook'|translate}} "><i class="fa fa-facebook text-white text-16"></i></a></li>
+                            <li ng-if="settings.SITE_GOOGLEPLUS_URL"><a href="{{settings.SITE_GOOGLEPLUS_URL}}" target="_blank" title="{{'Google Plus'|translate}} "><i class="fa fa-google-plus text-white text-16"></i></a></li>
+                            <li ng-if="settings.SITE_TWITTER_URL"><a href="{{settings.SITE_TWITTER_URL}}" target="_blank" title="{{'Twitter'|translate}} "><i class="fa fa-twitter text-white text-16"></i></a></li>
+                            <li ng-if="settings.SITE_PINTEREST_URL"><a href="{{settings.SITE_PINTEREST_URL}}" target="_blank" title="{{'Pinterest'|translate}} "><i class="fa fa-pinterest-p text-white text-16"></i></a></li>
+                            <li ng-if="settings.SITE_LINKEDIN_URL"><a href="{{settings.SITE_LINKEDIN_URL}}" target="_blank" title="{{'Linkedin'|translate}} "><i class="fa fa-linkedin text-white text-16"></i></a></li>
+                        </ul>
+                    </li>
+                    <li ng-show="!isAuth" class="visible-xs"><a href="users/login" title="{{'Login'|translate}}" class="font-wlight pr reglogXs"><span class="logIcon"></span>{{'Login'|translate}}</a></li>
+                    <li ng-show="!isAuth" class="visible-xs"><a href="users/register" title="{{'Register'|translate}}" class="font-wlight pr reglogXs"><span class="regIcon"></span>{{'Register'|translate}}</a></li>
+                    <li ng-show="isAuth" class="visible-xs"><a href="users/settings" title="{{'Account Settings'|translate}}" class="font-wlight pr reglogXs"><span class="regIcon"></span>{{'Account Settings'|translate}}</a></li>
+                    <li ng-show="isAuth" class="visible-xs"><a href="users/logout" title="{{'Logout'|translate}}" class="font-wlight pr reglogXs"><span class="logIcon"></span>{{'Logout'|translate}}</a></li>
+                    <li><a href="business" title="{{'Service Listings'|translate}}" class="text-uppercase">{{'Service Listings'|translate}}</a></li>
+                    <li><a href="page/employer" title="{{'For Brokers'|translate}}" class="text-uppercase">{{'For Brokers'|translate}}</a></li>
+                    <li><a href="page/freelancer" title="{{'For Suppliers'|translate}}" class="text-uppercase">{{'For Suppliers'|translate}}</a></li>
+                    <li><a href="" ng-click="homePageScroll('how_it_works')" title="{{'How it Works'|translate}}" class="text-uppercase">{{'How it Works'|translate}}</a></li>
+                    <li class="home-search">
+                        <ui-select ng-model="search_category" on-select="PutCollection($item)">
+                            <ui-select-match placeholder="Search" class="">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices position="down" class="banner-select" repeat="collection in search_categories track by $index" refresh="getCategories($select.search)" refresh-delay="0">
+                                <div class="s-name" ng-bind-html="collection.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!-- END: NAV HEADER -->
+</header>
+<!-- END: HEADER -->

@@ -1,0 +1,29 @@
+      <section class="team-block bidding-cat">
+            <div class="container-fluid">
+                <h4 class="h3 text-center text-uppercase Montserrat no-mar"> <strong> {{'Work with someone perfect for your team'|translate}} </strong> </h4>
+                <div class="text-center">
+                    <div class="team-list panel">
+                        <div class="row">
+                            <div class="col-sm-3" ng-repeat="project_category in project_categories | limitTo: 4:0">
+                                <div class="list-space bor-right">
+                                <span class="grayc"><i class="{{project_category.icon_class}}" title="{{project_category.name}}"></i></span>
+                                <p class=""> <a href="projects?project_categories={{project_category.id}}" title="{{project_category.name}}" class="text-info"> {{project_category.name}} </a> </p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <hr class="no-mar">
+                            </div>
+                             <div class="col-sm-3" ng-repeat="project_category in project_categories | limitTo: 4:4">
+                                <div class="list-space bor-right">
+                               <span class="grayc"><i class="{{project_category.icon_class}}" title="{{project_category.name}}"> </i></span>
+                                <p> <a href="projects?project_categories={{project_category.id}}" title="{{project_category.name}}" class="text-info"> {{project_category.name}} </a> </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="projects" title="{{'See more projects'|translate}}" class="btn btn-primary btn-catergory text-uppercase"> {{'See more projects'|translate}} </a>
+                    </div>
+                </div>
+            </div>
+        </section>

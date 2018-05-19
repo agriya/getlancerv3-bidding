@@ -1,0 +1,19 @@
+<div class="section" ng-controller='UsersLoginController'>
+    <form class="user-ascess-form" role="form" name="userLogin" ng-submit="save()">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group"> <input type="{{settings.USER_USING_TO_LOGIN === 'email' ? 'email' : 'text'}}" ng-model="user.username" class="form-control" id="inputUsername3" placeholder="{{settings.USER_USING_TO_LOGIN === 'email' ? 'Email' : 'Username'}}" autocomplete="off" required> </div>
+                <div class="form-group">
+                <input type="password" ng-model="user.password" class="form-control" id="inputPassword3" placeholder="{{'Password'|translate}}" autocomplete="off" required> </div>
+                <div class="form-group clearfix">
+                    <div class="checkbox pull-left"> <label><input type="checkbox"><span> {{'Remember me'|translate}}</span></label> </div>
+                    <p class="pull-right forgot-pwd"><a href="users/forgot_password">{{'Forgot password'|translate}}</a></p>
+                </div>
+                <div class="form-group"> <button type="submit" ng-show="save_btn" class="btn btn-primary disabled">{{'Log in'|translate}}</button> <button type="submit" ng-show="!save_btn" class="btn btn-primary">{{'Log in'|translate}}</button> </div>
+                <div class="reg-or-blk"
+                    ng-if="providers.length"><span class="cls_slogin_or_blk">{{'OR'|translate}}</span></div>
+                <div class="form-group"> <a ng-repeat="provider in providers" data-provider="{{provider.name}}" ng-click="authenticate(provider.slug)" class="btn btn-lg {{provider.button_class}}"><span class="fa {{provider.icon_class}} fa-fw"></span> {{'Login with'|translate}} {{provider.name}}</a>                    </div>
+            </div>
+        </div>
+    </form>
+</div>

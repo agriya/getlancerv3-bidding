@@ -1,0 +1,66 @@
+<section class="my-contests" ng-controller="biddingProjectDashboardCtrl">
+    <div class="row">
+        <div class="col-xs-12 top-mspace">
+            <div class="table-block">
+                <div class="table-responsive">
+                    <table class="table table-striped table-center table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="data-left">{{'Project Details'|translate}}</th>
+                                <th class="data-left">{{'Employer Details'|translate}}</th>
+                                <th>{{'Assigned Amount'|translate}} 
+                                        <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                                        <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span>
+                                </th>
+                                <th ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Milestone') > -1"> {{'Milestones'|translate}} </th>
+                                <th ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Invoice') > -1">{{'Invoices'|translate}}</th>
+                                <th> {{'Total Amount Received'|translate}}
+                                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                                        <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="" ng-repeat="bid in mybids" ng-if="mybids.length > 0">
+                                <td>
+                                    <h5 class="visible-xs">{{'PROJECT NAME'|translate}}</h5>
+                                    <h5 class="text-14 no-mar"><a ui-sref="Bid_ProjectView({id:bid.project.id,slug:bid.project.slug})">{{bid.project.name}}</a></h5>
+                                </td>
+                                <td> <span class="visible-xs">{{'Employer <Details></Details>'|translate}}</span> <span class="content">{{bid.project.user.username}}</span>                                    </td>
+                                <td> <span class="visible-xs">{{'Awarded Bid'|translate}}</span>
+                                    <span class="content text-right">{{bid.amount}}</span>
+                                <td ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Milestone') > -1"> <span class="visible-xs">{{'Milestones'|translate}}</span>
+                                    <span class="content">{{bid.milestone_count}}</span> </td>
+                                <td ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Invoice') > -1"> <span class="visible-xs">{{'Invoices'|translate}}</span>
+                                    <span class="content">{{bid.project.project_bid_invoice_count}}</span> </td>
+                                <td>
+                                    <span class="content text-right">
+                                        {{bid.paid_escrow_amount}}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr ng-if="mybids.length == 0" class="text-center">
+                                <td colspan="8"> <span class="text-danger">{{'No records available'|translate}}</span> </td>
+                            </tr>
+                            <tr ng-if="!mybids.length && loader" class="text-center">
+                                <td colspan="8"> <span>
+                                <img ng-src="images/contest_loader.gif" alt="loading " title="loading">
+                                </span> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row binding-pagination" ng-show="currentPage > 1">
+            <div class="pagnation-content">
+                <div class="container">
+                    <div class="clearfix pagnation-inner">
+                        <uib-pagination total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm"
+                            boundary-links="true" num-pages="numPages" num-pages="noOfPages" ng-click="paginate()"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

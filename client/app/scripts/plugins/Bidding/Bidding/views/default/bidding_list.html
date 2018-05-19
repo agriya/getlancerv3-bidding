@@ -1,0 +1,510 @@
+<ul class="list-unstyled no-pad" ng-if="projectstatus == ProjectStatusConstant.WinnerSelected || projectstatus == ProjectStatusConstant.WaitingForEscrow || projectstatus == ProjectStatusConstant.FundedInEscrow || projectstatus == ProjectStatusConstant.EmployerCanceled || projectstatus == ProjectStatusConstant.UnderDevelopment || projectstatus == ProjectStatusConstant.MutuallyCanceled || projectstatus == ProjectStatusConstant.FinalReviewPending || projectstatus == ProjectStatusConstant.Completed || projectstatus == ProjectStatusConstant.Closed">
+    <li class="list-group-item clsfreelancher-heading hidden-xs">
+        <div class="row">
+            <div class="col-sm-6">
+                <h5>{{'FREELANCERS AWARDED'|translate}} </h5>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h5>{{'Reputation'|translate}} </h5>
+                    </div>
+                    <div class="col-sm-5">
+                        <h5> {{'Price'|translate}}
+                         <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                        <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}})</span></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="list-group-item freelancher-innerblock border-none" ng-if="awardLoader">
+        <div class="row">
+            <div class="col-sm-12 text-center"> <i class="fa fa-spinner fa-spin fa-3x"></i> </div>
+        </div>
+    </li>
+    <!-- Accepted List -->
+    <li class="pad-big list-group-item freelancher-innerblock border-none" ng-repeat="bidding in awarded" ng-if="!awardLoader" ng-mouseleave="showhideSkills(0,2)">
+        <div class="row">
+            <div class="col-sm-6">
+                <h5 class="visible-xs">{{'FREELANCERS AWARDED '|translate}}</h5>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="freelancherprotfolio">
+                            <div class="media freelancer-media">
+                                <div class="media-left">
+                                    <div class="freelancheruserimage">
+                                        <a href="users/{{bidding.user.id}}/{{bidding.user.username}}"> 
+                                            <img ng-src="{{bidding.user.user_avatar_url}}" title="{{bidding.user.username}}" class="img-resposnive center-block user-med">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <div class="freelancherprotfolio">
+                                        <div class="freelancherdetail">
+                                            <a href="users/{{bidding.user.id}}/{{bidding.user.username}}">
+                                                <h3 class="no-mar">{{bidding.user.username}}, </h3>
+                                            </a> 
+                                            <span class="clstimesmanage"> {{bidding.created_at | timeago}} </span> 
+                                            <!--<span class="freelancheruserflag">
+                                                <img src="images/flag1.jpg" title="Flag" alt="[Image: Flag]">
+                                            </span>--> 
+                                            <i class="flag-icon flag-icon-{{bidding.user.country.iso_alpha2 | lowercase}}"> </i>
+                                             <span ng-if="((bidding.user_id == auth.id) || (projectuser == auth.id)) && bidding.description"><show-more text="bidding.description" limit="150"> </show-more></span>
+                                            <div>
+                                                <ul class="list-inline show-Skills">
+                                                    <li class="skill-certificate" ng-mouseover="showhideSkills(bidding.user.id, 1)" ng-if="exam_user.user_id == bidding.user.id">
+                                                        <a href="#"><img ng-src="{{exam_user.exam_image}}" title="{{exam_user.exam.title}}" alt="[Image:
+                                                {{exam_user.exam.title}}]" class="center-block"></a>
+                                                    </li>
+                                                    <li>
+                                                        <div class="user-certificate-skills" id="skills-{{bidding.user.id}}" ng-mouseleave="showhideSkills(bidding.user.id,2)">
+                                                            <h5 class="text-b"> {{'Passed Freelancer Certifications' | translate}}</h5>
+                                                            <div  ng-repeat="exam_user in bidding.exams_users">
+                                                                <div class="certificates-list">
+                                                                    <ul class="list-unstyled no-mar">
+                                                                        <li ng-if="exam_user.user_id == bidding.user.id">
+                                                                            <a href="#" title="{{exam_user.exam.title}}" class="text-info">
+                                                                                {{exam_user.exam.title}} {{exam_user.exam_level.name}}
+                                                                            </a> 
+                                                                            ({{exam_user.exam_user_per |number:0}}%, {{exam_user.percentile_rank}} percentile) 
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1">
+                                            <p class="freelancherportfolio" ng-if="bidding.user.portfolio_count > 0"> 
+                                                <a href='' ng-click='focusPortfolio(bidding.user.id,bidding.user.username)'> {{'View Portfolio'|translate}} </a>
+                                            </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="user-awarded" ng-if="projectuser == auth.id">
+                                <p class="text-left not-accepted" ng-if="projectstatus == ProjectStatusConstant.WinnerSelected"> 
+                                    <i class="fa fa-info" aria-hidden="true"></i> {{'Not yet accepted' | translate}} 
+                                </p>
+                                 <span class="freelancherportfolio left-space" ng-if="bidding.message_count == 0 && (bidding.user_id == auth.id || projectuser == auth.id) && projectstatus == ProjectStatusConstant.WinnerSelected"> 
+                                    <a href='' ng-click="contactFreelancer(bidding.id, bidding.message_count)">{{'Send Message'|translate}} </a>
+                                </span>
+                                <span class="freelancherportfolio left-space" ng-if="bidding.message_count > 0 && (bidding.user_id == auth.id || projectuser == auth.id) && projectstatus == ProjectStatusConstant.WinnerSelected"> 
+                                    <a href='' ng-click="contactFreelancer(bidding.id, bidding.message_count)">{{'See Conversions'|translate}} </a>
+                                </span>
+                            </div>
+                            
+                          <!--  <p class="text-left greenc" ng-if="(bidding.user_id == auth.id || projectuser == auth.id) && bidding.project.project_status_id > ProjectStatusConstant.WinnerSelected"> 
+                                <i class="fa fa-check" aria-hidden="true"></i> {{'Accepted'|translate}} 
+                            </p>-->
+                        </div>
+                    </div>
+                    <div class="clearfix col-sm-12" ng-if="(bidding.project.project_status_id == ProjectStatusConstant.WinnerSelected) && (projectuser == auth.id || bidding.user.id == auth.id)">
+                        <bidding-awarded project="{{bidding.project_id}}" projectuser="{{projectuser}}" bidid="{{bidding.id}}"> </bidding-awarded>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-7 view-xs">
+                        <h5 class="visible-xs">{{ 'Reputation'|translate}} </h5>
+                        <div class="freelancherreputation">
+                              <div class="info-skills">
+                            <ul class="list-inline" ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || $root.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || $root.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1">
+                                <li><span class="label label-default">{{bidding.user.total_rating_as_freelancer |number:1}}</span></li>
+                                <li>
+                                <bidding-stars ng-model="bidding.user.total_rating_as_freelancer" max=5 readonly="true" class="list-ratings"></bidding-stars>
+                                    </li>
+                                    </ul>
+                                </div>
+                            <p class="freelancherreviewpoint blackc" ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || $root.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || $root.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1">{{bidding.user.review_count_as_freelancer}} {{'reviews'|translate}}</p>
+                            <p class="freelancherreviewpoint" ng-if="(bidding.user.project_completed_count > 0 || bidding.user.project_failed_count > 0)"> {{'Completion Rate'|translate}}: {{bidding.completetion_rate |number:0}}% </p>
+                            <p class="freelancherreviewpoint" ng-if="(bidding.user.project_completed_count == 0 && bidding.user.project_failed_count == 0)">{{'Completion Rate'|translate}}: N/A </p>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 view-xs">
+                        <h5 class="visible-xs"> Price 
+                             <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                        <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}})</span></h5>
+                        <div class="freelancheramount">
+                            <h3>
+                                <amount-display  amount='{{bidding.amount}}' ng-if="bidding.amount"></amount-display>
+                                </h3>
+                            <p>in {{bidding.duration}} {{'days'|translate}}</p>
+                            <!--<button class="btn btn-default">Change My Bid</button>-->
+                            <div ng-if="bidding.user_id == user.id">
+                                <bidding-actions bidid="{{bidding.id}}" project="{{bidding.project_id}}" biduser="{{bidding.user_id}}" projectuser="{{projectuser}}" projectstatus="{{projectstatus}}">
+                                     </bidding-actions>
+                            </div>
+                            <!--Here for bidding tabs-->
+                            <div ng-if="(bidding.project.project_status_id > ProjectStatusConstant.WinnerSelected && (bidding.user_id == auth.id || projectuser == auth.id) && !mutual_cancel)">
+                                <bidding-project-action bidid="{{bidding.id}}" project="{{bidding.project_id}}" biduser="{{bid.user_id}}" projectuser="{{projectuser}}" projectstatus="{{projectstatus}}" isprojectcancel="{{isprojectcancel}}" isdispute="{{isdispute}}">
+                                </bidding-project-action>
+                            </div>
+                            <!-- <div ng-if="projectstatus == ProjectStatusConstant.WinnerSelected">
+                                <bidding-actions bidid="{{bidding.id}}" project="{{bidding.project_id}}" biduser="{{bidding.user_id}}" projectuser="{{projectuser}}" projectstatus="{{projectstatus}}"> </bidding-actions>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="clearfix" ng-if="(bidding.project.project_status_id == ProjectStatusConstant.WinnerSelected) && (projectuser == auth.id || bidding.user.id == auth.id)">
+            <bidding-awarded project="{{bidding.project_id}}" projectuser="{{projectuser}}"> </bidding-awarded>
+        </div>-->
+        <div class="" ng-if="(bidding.user_id == auth.id) || (projectuser == auth.id)">
+            <div ng-if="projectstatus > ProjectStatusConstant.WinnerSelected">
+                <bidding-awarded-tabs bidid="{{bidding.id}}" project="{{project}}" projectuser="{{projectuser}}" projectstatus="{{projectstatus}}" hiddienbid="{{hiddienbid}}" isbid="{{isbid}}" projectbidid="{{projectbidid}}" isprojectcancel="{{isprojectcancel}}"
+                isdispute="{{isdispute}}"></bidding-awarded-tabs>
+            </div>
+        </div>
+        <div ng-if="(bidding.user_id == auth.id || projectuser == auth.id)">
+            <div class="">
+                <div ng-if="mutual_cancel || isprojectcancel != 'false'">
+                    <!--Here for bidding mutual cancel form--> 
+                    <bidding-mutual-cancel ng-if="bidding.id" bidid="{{bidding.id}}" project="{{bidding.project_id}}"  isfreelancercancel = {{bidding.project.is_cancel_request_freelancer}} isemployercancel = {{bidding.project.is_cancel_request_employer}} biduser="{{bidding.user_id}}" projectuser="{{projectuser}}" projectstatus="{{projectstatus}}" isprojectcancel="{{isprojectcancel}}" id="cancel_scroll"></bidding-mutual-cancel>
+                </div>
+                <div ng-if="project_dispute || isdispute != 'false'" class="sep-top text-left">
+                    <!--Here for bidding mutual cancel form-->
+                    <bidding-dispute bidid="{{bidding.id}}" project="{{bidding.project_id}}" biduser="{{bidding.user_id}}" projectuser="{{projectuser}" projectstatus="{{projectstatus}}" isdispute="{{isdispute}}" id="dispute_scroll"></bidding-dispute>
+                </div>
+            </div>
+        </div>
+        <div ng-if="project_review && $root.userReview && $root.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1" id="update" class="freelancer-tabs">
+            <div class="sep-top">
+                <h3 class="montserrat-bold text-18 bot-20-space">{{'Add Review'| translate}}</h3>
+                <!--Here for bidding mutual cancel form-->
+                <bidding-review bidid="{{bidding.id}}" project="{{bidding.project_id}}" biduser="{{bidding.user_id}}" projectuser="{{projectuser}" projectstatus="{{projectstatus}}" isdispute="{{isdispute}}" id="add_review_scroll"></bidding-review>
+            </div>
+        </div>
+    </li>
+    <!-- Lost List -->
+    <li class="list-group-item clsfreelancher-heading hidden-xs" ng-mouseleave="showhideSkills(0,2)" ng-if="is_show_lost && projectstatus != ProjectStatusConstant.Closed">
+        <div class="row">
+            <div class="col-sm-6">
+                <h5>{{'Freelancers Bidding'|translate}}<span ng-if="hiddienbidShow"> ({{biddings.length}}) </span></h5>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h5> {{'Reputation'|translate}} </h5>
+                    </div>
+                    <div class="col-sm-5">
+                        <h5 class="text-left"> {{'Price'|translate}} 
+            <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                        <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}})</span></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="list-group-item freelancher-innerblock border-none" ng-if="showLoader && is_show_lost && projectstatus != ProjectStatusConstant.Closed">
+        <div class="row">
+            <div class="col-sm-12 text-center"> <i class="fa fa-spinner fa-spin fa-3x"></i> </div>
+        </div>
+    </li>
+    <li class="list-group-item freelancher-innerblock border-none" ng-repeat="bidding in biddings" ng-if="hiddienbidShow && is_show_lost &&   projectstatus != ProjectStatusConstant.Closed" ng-mouseleave="showhideSkills(0,2)">
+        <div class="row">
+            <div class="col-sm-6">
+                <h5 class="visible-xs">{{'FREELANCERS AWARDED'|translate}}</h5>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="media freelancer-media">
+                            <div class="media-left">
+                                <div class="freelancherprotfolio">
+                                    <div class="freelancheruserimage">
+                                        <div class="navbar-left">
+                                            <div class="freelancheruserimage">
+                                                <a href="users/{{bidding.user.id}}/{{bidding.user.username}}"> 
+                                                    <img ng-src="{{bidding.user.user_avatar_url}}" class="img-resposnive center-block user-med" title="{{bidding.user.username}}">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <div class="freelancherprotfolio">
+                                    <div class="freelancherdetail">
+                                        <a href="users/{{bidding.user.id}}/{{bidding.user.username}}">
+                                            <h3 class="no-mar">{{bidding.user.username}}, </h3>
+                                        </a> 
+                                        <span class="clstimesmanage"> {{bidding.created_at | timeago}} </span> 
+                                        <span class="freelancheruserflag">
+                                         <i class="flag-icon flag-icon-{{bidding.user.country.iso_alpha2 | lowercase}}"> </i>
+                                        </span>
+                                   <span ng-if="((bidding.user_id == auth.id) || (projectuser == auth.id)) && bidding.description"><show-more text="bidding.description" limit="150"> </show-more></span>
+                                    <div>
+                                        <ul class="list-inline show-Skills" ng-mouseover="showhideSkills(bidding.user.id, 1)">
+                                            <li class="skill-certificate"  ng-if="exam_user.user_id == bidding.user.id" ng-repeat="exam_user in  bidding.exams_users">
+                                                <a href="#"><img ng-src="{{exam_user.exam_image}}" title="{{exam_user.exam.title}}" alt="[Image:
+                                        {{exam_user.exam.title}}]" class="center-block"></a>
+                                            </li>
+                                            <li>
+                                                <div class="user-certificate-skills" id="skills-{{bidding.user.id}}" ng-mouseleave="showhideSkills(bidding.user.id,2)">
+                                                    <h5 class="text-b"> {{'Passed Freelancer Certifications' | translate}}</h5>
+                                                    <div  ng-repeat="exam_user in  bidding.exams_users">
+                                                        <div class="certificates-list">
+                                                            <ul class="list-unstyled no-mar">
+                                                                <li ng-if="exam_user.user_id == bidding.user.id">
+                                                                    <a href="#" title="{{exam_user.exam.title}}" class="text-info">
+                                                                        {{exam_user.exam.title}} {{exam_user.exam_level.name}}
+                                                                    </a> 
+                                                                    ({{exam_user.exam_user_per |number:0}}%, {{exam_user.percentile_rank}} percentile) 
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                        <div ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1">
+                                        <p class="freelancherportfolio" ng-if="bidding.user.portfolio_count > 0"> 
+                                           <a href='' ng-click='focusPortfolio(bidding.user.id,bidding.user.username)'>{{'View Portfolio'|translate}} </a>
+                                        </p>
+                                        </div>                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class=" col-sm-7 view-xs">
+                        <h5 class="visible-xs"> {{'Reputation'|translate}} </h5>
+                        <div class="freelancherreputation">
+                             <div class="info-skills">
+                            <ul class="list-inline" ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || $root.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || $root.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1">
+                                <li><span class="label label-default">{{bidding.user.total_rating_as_freelancer |number:1}}</span></li>
+                                    <li>
+                                    <bidding-stars ng-model="bidding.user.total_rating_as_freelancer" max=5 readonly="true" class="list-ratings"></bidding-stars>
+                                    </li>
+                                    </ul>
+                                </div>
+                            <p class="freelancherreviewpoint blackc" ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || $root.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || $root.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1">{{bidding.user.review_count_as_freelancer}} {{'reviews'|translate}}</p>
+                            <p class="freelancherreviewpoint" ng-if="(bidding.user.project_completed_count > 0 || bidding.user.project_failed_count > 0)">{{'Completion Rate'|translate}}: {{bidding.completetion_rate |number:0}}%  </p>
+                            <p class="freelancherreviewpoint" ng-if="(bidding.user.project_completed_count == 0 && bidding.user.project_failed_count == 0)">{{'Completion Rate'|translate}}: N/A </p>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 view-xs">
+                        <h5 class="visible-xs"> {{'Price'|translate}}
+                              <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                        <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}})</span></h5>
+                        <div class="freelancheramount">
+                            <h3><amount-display  amount='{{bidding.amount}}' ng-if="bidding.amount"></amount-display></h3>
+                            <p>in {{bidding.duration}} {{'days'|translate}}</p>
+                            <!--<a class="freelancherclosebuuton">
+                    <bidding-flag classname="User" foreignid="{{bidding.user.id}}" appendhtml='<i class="fa fa-times" aria-hidden="true"></i>'> </bidding-flag>
+                </a>-->
+                            <!--<button class="btn btn-default">Change My Bid</button>-->
+                            <div ng-if="bidding.user_id == user.id">
+                                <bidding-actions bidid="{{bidding.id}}" project="{{bidding.project_id}}" biduser="{{bidding.user_id}}" projectuser="{{projectuser}}" projectstatus="{{projectstatus}}"> </bidding-actions>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="list-group-item freelancher-innerblock border-none" ng-if="(!hiddienbidShow || biddings.length == 0) && !showLoader && is_show_lost">
+        <div class="row">
+            <div class="col-sm-12">
+                <p class=" no-mar text-center" ng-if="!showLoader"> 
+                    <span ng-if="!hiddienbidShow"> {{"Bids are sealed" | translate }} </span> 
+                    <span ng-if="hiddienbidShow && biddings.length == 0"> {{"No Records available" | translate }} </span> 
+                </p>
+            </div>
+        </div>
+    </li>
+    <li class="pad-big list-group-item freelancher-innerblock border-none" ng-if="($root.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1) && ($root.user.id == AwardedUserId || projectuser == $root.user.id || $root.user.role_id == ConstUserRole.Admin)">
+        <div>
+            <h3 class="montserrat-bold text-18 no-mar" ng-show="(reviewsLists.length > 0) && ($root.user.id == AwardedUserId || projectuser == $root.user.id || ConstUserRole.Admin)">{{'Reviews'|translate}} </h3>
+       </div>
+        <div class="media bot-20-space" ng-repeat="reviewList in reviewsLists">
+            <div class="pull-left">
+                <a class="blog-user-img center-block" href="users/{{reviewList.user.id}}/{{reviewList.user.username}}">
+                    <img ng-src="{{reviewList.user.user_avatar_url}}" title="{{reviewList.user.username}}" alt="[Image: {{reviewList.user.username}}]" class="center-block img-circle">
+                </a>
+            </div>  
+            <div class="media-body">
+                <h4 class="text-16">
+                    <a href="users/{{reviewList.user.id}}/{{reviewList.user.username}}">{{reviewList.user.username}}</a>
+                </h4>
+                <p>
+                    <input-stars ng-model="reviewList.rating" max="5" readonly="true"></input-stars>
+                </p>
+                <p>{{reviewList.message}}</p>
+            </div>
+        </div>
+        <div ng-if="project_review && !$root.userReview" id="update">
+            <div class="freelancer-tabs">
+                <div class="submit-review-block">
+                    <h4 class="montserrat-bold text-18 bot-mar-25 no-top-mspace">{{'Update Review'| translate}}</h4>
+                    <!--Here for bidding mutual cancel form-->
+                    <bidding-review bidid="{{bidding.id}}" project="{{bidding.project_id}}" biduser="{{bidding.user_id}}" projectuser="{{projectuser}" projectstatus="{{projectstatus}}" isdispute="{{isdispute}}"></bidding-review>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+<!-- Before Accept Bid List -->
+<div class="alert alert-info" ng-if="$root.withdrawthisfreelancer && $root.newFreelancerSelect">
+  <strong>Info!</strong> You can choose a new freelancer here
+</div>
+<ul class="list-unstyled no-pad" ng-if="projectstatus <= ProjectStatusConstant.OpenForBidding || projectstatus == ProjectStatusConstant.Closed ||projectstatus == ProjectStatusConstant.BiddingClosed || projectstatus == ProjectStatusConstant.BiddingExpired || $root.withdrawthisfreelancer">
+    <li class="list-group-item clsfreelancher-heading hidden-xs" id="withdaw_scroll">
+        <div class="row">
+            <div class="col-sm-6">
+                <h5>{{'Freelancers Bidding'|translate}} <span ng-if="hiddienbidShow && projectstatus != ProjectStatusConstant.Closed">
+                     ({{projectbidcount}})</span>
+                     <span ng-if="hiddienbidShow && projectstatus == ProjectStatusConstant.Closed">
+                     ({{projectbidcount - 1}})</span>
+                    </h5>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h5 class="cursor"> {{'Reputation'|translate}}</h5>
+                    </div>
+                    <div class="col-sm-5">
+                        <h5 class="text-left"> {{'Price'|translate}}
+                            <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                        <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}})</span></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="list-group-item freelancher-innerblock border-none" ng-if="showLoader">
+        <div class="row">
+            <div class="col-sm-12 text-center"> <i class="fa fa-spinner fa-spin fa-3x"></i> </div>
+        </div>
+    </li>
+    <li class="list-group-item freelancher-innerblock border-none" ng-repeat="bidding in biddings" ng-mouseleave="showhideSkills(0,2)" ng-if="bidding.user_id != bidding.project_bid.user_id">
+        <div class="row">
+            <div class="col-sm-6">
+                <h5 class="visible-xs">{{'Freelancers Bidding'|translate}} <span ng-if="hiddienbidShow || projectstatus == ProjectStatusConstant.Closed"> ({{projectbidcount}}) </span></h5>
+                <div class="col-sm-12">
+                    <div class="media freelancer-media">
+                        <div class="media-left">
+                            <div class="freelancherprotfolio">
+                                <div class="navbar-left">
+                                    <div class="freelancheruserimage">
+                                        <a href="users/{{bidding.user.id}}/{{bidding.user.username}}">
+                                            <img ng-src="{{bidding.user.user_avatar_url}}" class="img-resposnive center-block user-med" title="{{bidding.user.username}}">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <div class="freelancherprotfolio">
+                                <div class="freelancherdetail">
+                                    <a href="users/{{bidding.user.id}}/{{bidding.user.username}}">
+                                        <h3 class="no-mar">{{bidding.user.username}},</h3>
+                                    </a> 
+                                    <span class="clstimesmanage"> {{bidding.created_at | timeago}} </span> 
+                                    <span class="freelancheruserflag">
+                                        <i class="flag-icon flag-icon-{{bidding.user.country.iso_alpha2 | lowercase}}"> </i>
+                                    </span>
+                                     <span ng-if="((bidding.user_id == auth.id) || (projectuser == auth.id)) && (bidding.description != empty)"><show-more  text="bidding.description" limit="150"> </show-more></span>
+                                    <div>
+                                        <ul class="list-inline show-Skills" >
+                                            <li ng-repeat="exam_user in  bidding.exams_users" ng-mouseover="showhideSkills(bidding.user.id, 1)" class="skill-certificate" ng-if="exam_user.user_id == bidding.user.id">
+                                                <a href="#"><img ng-src="{{exam_user.exam_image}}" title="{{exam_user.exam.title}}" alt="[Image:
+                                        {{exam_user.exam.title}}]" class="center-block"></a>
+                                            </li>
+                                            <li>
+                                                <div class="user-certificate-skills" id="skills-{{bidding.user.id}}" ng-mouseleave="showhideSkills(bidding.user.id,2)">
+                                                    <h5 class="text-b"> {{'Passed Freelancer Certifications' | translate}}</h5>
+                                                    <div  ng-repeat="exam_user in  bidding.exams_users">
+                                                        <div class="certificates-list">
+                                                            <ul class="list-unstyled no-mar">
+                                                                <li ng-if="exam_user.user_id == bidding.user.id">
+                                                                    <a href="#" title="{{exam_user.exam.title}}" class="text-info">
+                                                                        {{exam_user.exam.title}} {{exam_user.exam_level.name}}
+                                                                    </a> 
+                                                                    ({{exam_user.exam_user_per |number:0}}%, {{exam_user.percentile_rank}} percentile) 
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1">
+                                    <span class="freelancherportfolio" ng-if="bidding.user.portfolio_count > 0"> 
+                                         <a href='' ng-click='focusPortfolio(bidding.user.id,bidding.user.username)'> {{'View Portfolio'|translate}}  </a>
+                                    </span>
+                                        <span class="freelancherportfolio left-space" ng-if="bidding.message_count == 0 && (bidding.user_id == auth.id || projectuser == auth.id)"> 
+                                           <a href='' ng-click="contactFreelancer(bidding.id, bidding.message_count)">{{'Send Message'|translate}} </a>
+                                        </span>
+                                         <span class="freelancherportfolio left-space" ng-if="bidding.message_count > 0 && (bidding.user_id == auth.id || projectuser == auth.id)"> 
+                                           <a href='' ng-click="contactFreelancer(bidding.id, bidding.message_count)">{{'See Conversions'|translate}} </a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-7 view-xs">
+                        <h5 class="visible-xs"> {{'Reputation'|translate}} </h5>
+                        <div class="freelancherreputation">
+                              <div class="info-skills">
+                                    <ul class="list-inline" ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || $root.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || $root.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1">
+                                        <li><span class="label label-default">{{bidding.user.total_rating_as_freelancer |number:1}}</span></li>
+                                        <li>
+                                            <bidding-stars ng-model="bidding.user.total_rating_as_freelancer" max=5 readonly="true" class="list-ratings"></bidding-stars>
+                                        </li>
+                                    </ul>
+                               </div>
+                                 <p class="freelancherreviewpoint blackc" ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || $root.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || $root.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1">{{bidding.user.review_count_as_freelancer}} {{'reviews'|translate}}</p>
+                            <p class="freelancherreviewpoint" ng-if="(bidding.user.project_completed_count > 0 || bidding.user.project_failed_count > 0)"> {{'Completion Rate'|translate}}: {{bidding.completetion_rate |number:0}}% </p>
+                            <p class="freelancherreviewpoint" ng-if="(bidding.user.project_completed_count == 0 && bidding.user.project_failed_count == 0)">{{'Completion Rate'|translate}}: N/A</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 view-xs">
+                        <h5 class="visible-xs"> {{'Price'|translate}} 
+                            <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                        <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}})</span></h5>
+                        <div class="freelancheramount">
+                            <h3>
+                                <amount-display  amount='{{bidding.amount}}' ng-if="bidding.amount"></amount-display> 
+                               </h3>
+                            <p>in {{bidding.duration}} {{'days'|translate}}</p>
+                            <!--<button class="btn btn-default">Change My Bid</button>-->
+                            <div ng-if="(bidding.user_id == auth.id || projectuser == auth.id) && (projectstatus != ProjectStatusConstant.BiddingClosed && projectstatus != ProjectStatusConstant.BiddingExpired)">
+                                <bidding-actions bidid="{{bidding.id}}" project="{{bidding.project_id}}" biduser="{{bidding.user_id}}" projectuser="{{projectuser}}" projectstatus="{{projectstatus}}"> </bidding-actions>
+                            </div>
+                            <!--<div ng-if="(bidding.user_id != auth.id) || (projectuser == auth.id)"> <a class="freelancherclosebuuton">
+                    <bidding-flag classname="User" foreignid="{{bidding.user.id}}" appendhtml='<i class="fa fa-times" aria-hidden="true"></i>'>
+                    </bidding-flag>
+                    </a> </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="list-group-item freelancher-innerblock border-none" ng-if="!showLoader && !hiddienbidShow || biddings.length == 0 ">
+        <div class="row">
+            <div class="col-sm-12">
+                <p class=" no-mar text-danger text-center" ng-if="!showLoader"> 
+                    <span ng-if="!hiddienbidShow"> {{"Bids are sealed" | translate }} </span> 
+                    <span ng-if="hiddienbidShow && biddings.length == 0"> {{"No bids available" | translate }} </span> 
+                </p>
+            </div>
+        </div>
+    </li>
+</ul>

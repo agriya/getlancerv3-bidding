@@ -1,0 +1,100 @@
+<div ng-show="user.role_id != ConstUserRole.Freelancer">
+    <div class="modal-header"> <button type="button" ng-click="quota_requestcancel()" class="close"><span aria-hidden="true">&times;</span></button>
+        <h3>{{'Request a Quote'|translate}}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="my-works">
+            <div ng-show="form1" class="panel">
+                <form name="SelectCategoryfrom" role="form">
+                    <div class="form-group clearfix">
+                        <h3> {{'Category'|translate}} </h3>
+                        <ul class="list-inline order-list radio-list clearfix">
+                            <li class="col-sm-6 col-md-4" ng-repeat="categeory in quote_categories_quote_services"> <img ng-src="{{categeory.image_name}}">
+                                <div class="radio text-left"> <label> <input type="radio" id="checkbox{{$index}}" name="select_categeory_id"  ng-model="select_categeory_id" value ="{{categeory.quote_category_id}}" ng-click="selectCategory(categeory.quote_category_id)" required> <span> {{categeory.quote_categories.name}} </span> </label></div>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div ng-show="form2" class="panel">
+                <div class="panel-heading">
+                    <form class="form-horizontal adminpg-form " role="form" enctype="multipart/form-data" name="frmquoteRequestAdd" ng-submit="QuotaFormSave(frmquoteRequestAdd.$valid)">
+                        <div class="">
+                            <h3> {{'Basic Information'|translate}} </h3>
+                            <div class="form-group" ng-if="settings.IS_BUY_OPTION_ENABLED == ConstQuoteBuyOption.Enabled">
+                                <div class="col-sm-4"> <label for="inputIsRequestForBuy" class="control-label">{{'Quote Type'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                <div class="col-sm-8" ng-init="quoteRequest.is_request_for_buy = 0">
+                                    <ul class="list-inline">
+                                        <li class="checkbox"> <label for="inputIsRental" class="custom-checkbox"> 
+                                             <input type="radio" ng-model="quoteRequest.is_request_for_buy" 
+                                              title="{{'Rental Quote'|translate}}" id="inputIsRental"  
+                                               ng-value="0" ng-required="quoteRequest.is_request_for_buy == null " placeholder="{{'Rental Quote'|translate}}" > 
+                                                <span>{{'Rental Quote'|translate}}</span></label></li>
+                                        <li class="checkbox hor-big-mspace"> <label for="inputIsSales" class="custom-checkbox"> <input type="radio" ng-model="quoteRequest.is_request_for_buy" ng-required="quoteRequest.is_request_for_buy == null"  title="{{'Sales Quote'|translate}}" id="inputIsSales"  ng-value="1"  placeholder="{{'Sales Quote'|translate}}"> <span>{{'Sales Quote'|translate}}</span> </label></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4"> <label for="inputTitle3" class="control-label">{{'Title'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                <div class="col-sm-8"> <input type="text" ng-model="quoteRequest.title" class="form-control" id="inputTitle3" autocomplete="off" placeholder="{{'Title'|translate}}" required> </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4"> <label for="inputDescription3" class="control-label">{{'Description'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                <div class="col-sm-8"> <textarea ng-model="quoteRequest.description" class="form-control" id="inputDescription3" autocomplete="off" placeholder="{{'Description'|translate}}" required> </textarea> </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4"> <label for="inputBestDayTimeForWork3" class="control-label">{{'Best Day Time For Work'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                <div class="col-sm-8"> <input type="text" ng-model="quoteRequest.best_day_time_for_work" class="form-control" autocomplete="off" id="inputBestDayTimeForWork3" placeholder="{{'Best Day Time For Work'|translate}}" required> </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4"> <label for="inputPhoneNo" class="control-label">{{'Phone Number'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                <div class="col-sm-8"> <input type="text" ng-model="quoteRequest.phone_no" class="form-control" id="inputPhoneNo3" autocomplete="off" placeholder="{{'Phone No'|translate}}" required> </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4"> <label for="inputFullAddress3" class="control-label">{{'Work Location'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                <div class="col-sm-8"> <input class="form-control" id="inputFullAddress3" g-places-autocomplete force-selection="true" name="inputFullAddress" ng-change="location_quote();" ng-model="quoteRequest.place" required autocomplete="off" />
+                                    <p class="help-block"
+                                        class="form-text text-muted">{{'You must select address from autocomplete'|translate}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4"> <label for="inputZipCode3" class="control-label">{{'Zip code'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                <div class="col-sm-8"> <input class="form-control" id="inputZipCode3" ng-model="quoteRequest.zip_code" required /> </div>
+                            </div>
+                            <div class="form-group" ng-if="type === 'service'">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-8"> <label for="inputIsSendRequestToOtherServiceProviders" class="control-label help-block">
+								<input type="checkbox" ng-true-value="1" ng-false-value="0"  ng-model="quoteRequest.is_send_request_to_other_service_providers" name="inputIsSendRequestToOtherServiceProviders" id="inputIsSendRequestToOtherServiceProviders">
+                                
+{{'Would you to like to get competing bids from other qualified service professionals?'|translate}}
+
+                               
+								</label> </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-8 col-sm-offset-4"> <button type="button" ng-if="type === 'service'" ng-click="showMainFormService()" class="btn btn-textb btn-primary">{{'Prevoius'|translate}}</button> <button type="submit" class="btn btn-textb btn-primary"><span>{{'Submit'|translate}}</span></button>                                    </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="">
+                <div class="panel-heading customcls" ng-repeat="form_field in form_fields_all track by form_field.id">
+                    <div ng-if="showfrms[$index+1]">
+                        <h4>{{form_field.name}}</h4>
+                        <hr>
+                        <div ng-model="quoteRequest.form_fields[$index]" fb-form="{{'default-'+($index+1)}}" fb-default="defaultValue"></div>
+                        <div class="form-group"> <button type="button" ng-hide="$index==0" ng-click="serviceShowprevious($index+1)" class="btn btn-textb btn-primary">{{'Prevoius'|translate}}</button> <button type="button" ng-show="$index==0" ng-click="showMainForm()" class="btn btn-textb btn-primary">{{'Prevoius'|translate}}</button>                            <button type="button" ng-click="serviceSavenew($index+1)" class="btn btn-textb btn-primary">{{'Submit'|translate}}</button> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-show="user.role_id == ConstUserRole.Freelancer">
+    <div class="modal-header"> <button type="button" ng-click="quota_requestcancel()" class="close"><span aria-hidden="true">&times;</span></button>
+        <h3>{{'Request a Quote'|translate}}</h3>
+    </div>
+    <div class="modal-body">
+        <p>{{'Sorry !. Supplier cannot request quote for this service'|translate }}</p>
+    </div>

@@ -1,0 +1,19 @@
+<div class="howitWork featuerdEquip" ng-if="featured_lists.length">
+    <div class="container">
+        <div class="text-center howHead">
+            <h2 class="text-uppercase text-44 bot-big-mspace howitH cuprumFont">{{'Featured'|translate}} <span class="text-primary">{{'Service'|translate}}</span></h2>
+            <p class="center-block text-18 howP bot-big-mspace"> {{'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'|translate}}</p>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-3" ng-repeat="featured_list in featured_lists">
+                <div class="text-center bg-white ver-big-mspace pr howitBlocks qutoesBlock">
+                    <div class="bot-space">
+                        <a href="quote_service/{{featured_list.id}}/{{featured_list.slug}}" title="{{featured_list.business_name}}" class="img-circle center-block show pr feutrimgCont"> <img ng-src="{{featured_list.image_name}}" alt="featured_list.business_name" title="{{featured_list.business_name}}"> </a>
+                    </div>
+                    <h3 class="text-18 no-mar text-gray htruncate">{{featured_list.business_name}}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="text-center ver-big-mspace"> <a href="quote_services" title="{{'View More'|translate}}" class="btn btn-primary text-uppercase text-18 viewBtun">{{'View More'|translate}}</a> </div>
+    </div>
+</div>

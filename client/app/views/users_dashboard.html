@@ -1,0 +1,130 @@
+<div id="main">
+    <section class="dashboard" ng-controller="UsersDashboardController">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- tab section -->
+                    <div class="tabs-block">
+                        <!--freelancer -->
+                        <div class="freelancer-dashboard" ng-if="Freelancer">
+                            <ul class="nav nav-tabs">
+                                 <li ng-class="{active:tab=='news_feed'}" data-class="projects">
+                                    <a ng-click="tabChange('news_feed')" title="{{'Dashboard'|translate}}"> 
+                                        <i class="fa fa-dashboard"></i>
+                                        <span class="show">{{'Dashboard'|translate}}</span> 
+                                    </a>
+                                </li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1" ng-class="{active:tab=='projects'}" data-class="projects">
+                                    <a ng-click="tabChange('projects')" title="{{'My Projects'|translate}}"> <span class="sprite sprite-projects"></span> <span class="show">{{'My Projects'|translate}}</span> </a>
+                                </li>
+                                <!--<li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1" ng-class="{active:tab=='active_bidding'}" data-class="active_bidding">
+                                    <a ng-click="tabChange('active_bidding')" title="{{'Active Bidding'|translate}}"> <span class="sprite sprite-projects"></span> <span class="show">{{'Active Bidding'|translate}}</span> </a>
+                                </li>-->
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1" ng-class="{active:tab=='my_entries'}" data-class="my_entries">
+                                    <a ng-click="tabChange('my_entries')" title="{{'My Entries'|translate}}"> 
+                                        <i class="fa fa-pencil-square-o"></i> 
+                                        <span class="show">{{'My Entries'|translate}}</span> 
+                                    </a>
+                                </li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1" ng-class="{active:tab=='jobs_applies'}" data-class="jobs_applies">
+                                    <a ng-click="tabChange('jobs_applies')" title="{{'Job Applies'|translate}}"> <span class="sprite sprite-jobs"></span> <span class="show">{{'Job Applies'|translate}}</span> </a>
+                                </li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1" ng-class="{active:tab=='my_service_active'}" data-class="my_service_active">
+                                    <a ng-click="tabChange('my_service_active')" title="{{'My Services'|translate}}"> 
+                                        <i class="fa fa-cog"></i>
+                                        <span class="show">{{'My services'|translate}}</span> 
+                                    </a>
+                                </li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1" ng-class="{active:tab=='my_works'}" data-class="my_works">
+                                    <a ng-click="tabChange('my_works')" title="{{'My Works'|translate}}"> 
+                                        <i class="fa fa-users"></i>
+                                        <span class="show">{{'My Works'|translate}}</span> 
+                                    </a>
+                                </li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1" ng-class="{active:tab=='portfolios'}" data-class="portfolios">
+                                    <a ng-click="tabChange('portfolios')" title="{{'My Portfolios'|translate}}"> 
+                                        <i class="fa fa-briefcase"></i>
+                                        <span class="show">{{'My Portfolios'|translate}}</span>
+                                     </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--empolyer-->
+                        <div class="empolyer-dashboard" ng-if="Employer">
+                            <ul class="nav nav-tabs">
+                                <li ng-class="{active:tab=='news_feed'}" data-class="projects">
+                                    <a ng-click="tabChange('news_feed')" title="{{'Dashboard'|translate}}"> 
+                                        <i class="fa fa-dashboard"></i> 
+                                        <span class="show">{{'Dashboard'|translate}}</span> 
+                                    </a>
+                                </li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1" ng-class="{active:tab=='my_projects'}" data-class="my_projects">
+                                    <a ng-click="tabChange('my_projects')" title="{{'My Projects'|translate}}"> <span class="sprite sprite-projects"></span> <span class="show">{{'My Projects'|translate}}</span> </a>
+                                </li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1" ng-class="{active:tab=='my_contests'}" data-class="my_contests">
+                                    <a ng-click="tabChange('my_contests')" title="{{'My Contests'|translate}}"> 
+                                        <span class="sprite sprite-contests"></span> 
+                                        <span class="show">{{'My Contests'|translate}}</span> 
+                                    </a>
+                                </li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1" ng-class="{active:tab=='my_jobs'}" data-class="my_jobs">
+                                    <a ng-click="tabChange('my_jobs')" title="{{'My Jobs'|translate}}"> <span class="sprite sprite-jobs"></span> <span class="show">{{'My Jobs'|translate}}</span> </a>
+                                </li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1" ng-class="{active:tab=='applied_resumes'}" data-class="applied_resumes">
+                                    <a ng-click="tabChange('applied_resumes')" title="{{'Applied Resumes'|translate}}"> 
+                                        <span class="sprite sprite-requests"></span> 
+                                        <span class="show">{{'Applied Resumes'|translate}}</span> 
+                                    </a>
+                                </li>
+                                <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1" ng-class="{active:tab=='requests'}" data-class="requests">
+                                    <a ng-click="tabChange('requests')" title="{{'My Requests'|translate}}"> 
+                                        <i class="fa fa-share-square-o"></i>
+                                        <span class="show">{{'My Requests'|translate}}</span> 
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div ng-include="renderPage"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!--
+<div class="section navbar-default ng-scope photo-view">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb navbar-btn">
+                    <li> <a href="/" class="ng-binding">{{'Home'|translate}}</a> </li>
+                    <li class="active ng-binding">{{'Dashboard'|translate}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section navbar-default ng-scope" ng-controller="UsersDashboardController">
+    <div class="container">
+        <div class="row">
+            <uib-tabset justified="false">
+                <uib-tab ng-if="Freelancer" index="3" heading="{{'My Jobs'|translate}}"> <br>
+                    <div ng-include="'scripts/plugins/Job/Job/views/default/my_jobs.html'"><span>gfdgfdgdfg</span></div>
+                </uib-tab>
+                <uib-tab ng-if="Freelancer" index="4" heading="{{'Applied Resumes'|translate}}"> <br>
+                    <div ng-include="'scripts/plugins/Job/Job/views/default/job_applies_list.html'"></div>
+                </uib-tab>
+                <uib-tab ng-if="Freelancer" index="5" heading="{{'My Applied Resume'|translate}}"> <br>
+                    <div ng-include="'scripts/plugins/Job/Job/views/default/job_applied.html'"></div>
+                </uib-tab>
+                <quote_services_my_services_dashboard active="{{my_service_active}}"></quote_services_my_services_dashboard>
+                <quote_services_my_work_dashboard></quote_services_my_work_dashboard>
+                <quote_services_my_request_dashboard active="{{my_request_active}}"></quote_services_my_request_dashboard>
+                <my_contest_dashboard active="{{my_contest_active}}"></my_contest_dashboard>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+</div>-->

@@ -1,0 +1,8 @@
+<div ng-controller="PageViewController">
+    <div class="container">
+        <div class="page-content normal-para">
+            <h2 class="page-title"><span>{{page.title}}</span></h2>
+            <p class="grayc" ng-bind-html="page.content | unsafe"></p>
+        </div>
+    </div>
+</div>

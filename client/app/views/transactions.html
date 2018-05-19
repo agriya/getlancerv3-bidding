@@ -1,0 +1,133 @@
+<div class="gray-bg top-space top-mspace-10">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb panel">
+                    <li> <a href="/">{{'Home'|translate}}</a> </li>
+                    <li class="active">{{'Transactions'|translate}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div ng-include="'views/users_account_left_side_menu.html'"></div>
+            </div>
+            <div class="col-md-8 col-lg-9 navbar-btn">
+                <div class="section navbar-default" ng-show="!loader" ng-controller='TransactionsController'>
+                    <div class="panel">
+                        <div class="panel-heading sep-bot">
+                            <h3 class="no-mar">{{'Transactions'|translate}}<span class="pull-right trans-amount line-height-28 text-16">{{'Total Wallet Amount'|translate}} : <span class="greenc" ng-if="!loader">{{wallet_amount | customCurrency}}</span></span></h3>
+                        </div>
+                        <div class="panel-heading">
+							<ul class="list-inline top-mspace text-center project-lists text-center">
+								<li class="cursor" ng-click="getTransactions('all','','')" title="All" 
+                                ng-class="{active:value == 'all'}"
+          data-class="value"> 
+								  <p class="no-mar">{{'All'| translate}}</p>          
+								</li>
+								<li class="cursor" ng-click="getTransactions('today','','')" title="Today" ng-class="{active:value == 'today'}"
+          data-class="value">
+								  <p class="no-mar">{{'Today' | translate}}</p> 
+									<!--<input type="radio" name="transaction_filter" ng-model="transaction_filter" value="" lable="{{Today| translate}}" /> -->
+								</li>
+								<li class="cursor" ng-click="getTransactions('this_week','','')" title="This Week"  ng-class="{active:value == 'this_week'}"
+          data-class="value"> 
+								  <p class="no-mar">{{'This Week'| translate}}</p>          
+								</li>
+								<li class="cursor" ng-click="getTransactions('this_month','','')" title="This Month" ng-class="{active:value == 'this_month'}"
+          data-class="value">
+								  <p class="no-mar">{{'This Month' | translate}}</p>
+								</li>
+								<li class="cursor" ng-click="customDateForm('custom')" title="Custom Date" ng-class="{active:custom_date == 'custom'}"
+          data-class="custom_date">
+								  <p class="no-mar">{{'Custom Date' | translate}}</p>
+								</li>
+							</ul>
+							<div class="hide js-date row">
+								<form class="proj-form" role="form" name="customFilter" ng-submit="filterDate(customFilter.$valid)" novalidate>
+									<div class="form-group col-sm-5 col-xs-12"> 
+                                        <label>{{'From Date'|translate}}</label> 
+                                        <input type="text" name="from_date" class="form-control" uib-datepicker-popup="{{format}}" ng-model="from_date" is-open="popup1.opened" datepicker-options="dateOptions"
+                                        close-text="Close" alt-input-formats="altInputFormats" ng-focus="open1()" ng-required="true"/> 
+                                        <span class="error" ng-show="(customFilter.$submitted || customFilter.from_date.$touched) && (customFilter.from_date.$pristine || customFilter.from_date.$invalid) && (customFilter.from_date.$error.required)">{{'Required' | translate }}</span>
+                                        <span class="error" ng-show="error_message">{{'To date should be greater than from date' | translate }}</span>
+
+                                    </div>
+									<div class="form-group col-sm-5 col-xs-12"> 
+                                        <label>{{'To Date'|translate}}</label> 
+                                        <input type="text" name="to_date" class="form-control" uib-datepicker-popup="{{format}}" ng-model="to_date" is-open="popup2.opened" datepicker-options="dateOptions"
+                                        close-text="Close" alt-input-formats="altInputFormats" ng-focus="open2()" ng-required="true" /> 
+                                        <span class="error" ng-show="(customFilter.$submitted || customFilter.to_date.$touched) && (customFilter.to_date.$pristine || customFilter.to_date.$invalid) && (customFilter.to_date.$error.required)">{{'Required' | translate }}</span>
+                                    </div>
+									<div class="form-group col-sm-2 col-xs-12 date-filter"> 
+                                        <button title="Filter" type="submit" class="btn btn-primary">{{'Filter'|translate}}</button>
+                                    </div>
+								</form>
+							</div>
+                            <div class="add-wallet-table">
+                                <div class="table-responsive pg-table">
+									<table class="table table-striped table-bordered no-mar table-center">
+                                        <thead ng-if="transactions.length && !loader">
+                                            <tr>
+                                                <th width="105">{{'Date' | translate}}</th>
+                                                <!--<th>{{'To'|translate}}</th> -->
+												<th class="data-left">{{'Description'| translate}}</th>
+                                                <th width="80">{{'Credit'| translate}}  
+                                                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                                                     <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span>
+                                                </th>
+												<th width="75">{{'Debit'| translate}}
+                                                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
+                                                    <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{settings.CURRENCY_CODE}})</span>
+                                                    </th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="transaction in transactions" ng-if="transactions.length && !loader">
+                                                <td>{{transaction.created_at | date_format : 'MMM dd, yyyy'}}</td>
+                                                <!--<td>{{transaction.other_user.username}}</td> -->
+												<td class="data-left"> <span ng-bind-html="transaction.transaction_message"> 
+                                                    {{transaction.transaction_message}}</span> </td>
+                                                <td>{{transaction.transactionAmount.credit}}</td>
+												<td>{{transaction.transactionAmount.debit}}</td>
+												
+                                            </tr>
+											<tr ng-if="!loader && !transactions.length" class="text-center">
+                                                <td colspan="8" class="text-danger"> {{'No records available'|translate}} </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="binding-pagination">
+                                    <div class="pagnation-content">
+                                        <div class="clearfix pagnation-inner">
+                                            <div class="col-md-12 text-center" ng-hide="(transactions.length > itemsPerPage) && currentPage==1">
+                                                <uib-pagination ng-hide="!transactions.length" previous-text="Previous" next-text="Next" total-items="totalItems" num-pages="numPages"  num-pages="noOfPages" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true"
+                                                rotate="false" items-per-page="itemsPerPage" ng-change="paginate_transaction()"></uib-pagination>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="row">
+                                    <div class="col-md-12 text-center" ng-hide="(transactions.length > itemsPerPage) && currentPage==1">
+                                        <uib-pagination ng-hide="!transactions.length" previous-text="Previous" next-text="Next" total-items="totalItems" num-pages="numPages" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true"
+                                            rotate="false" items-per-page="itemsPerPage" ng-change="paginate_transaction()"></uib-pagination>
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+                        <div ng-include="'views/loader.html'"></div>
+                        <!--<div class="panel-heading">
+                            <div class="no-mar" ng-show="!loader && !transactions.length">
+                                <p class="text-center text-danger">{{'No records available'|translate}}</p>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

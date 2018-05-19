@@ -1,0 +1,8 @@
+<div class="bidding-accept-actions">
+    <div ng-if="is_freelancer"> <label class="label label-success cursor" ng-click="awardedprocess(1)">{{'Accept this Project'| translate}} </label> <label class="label label-danger cursor" ng-click="awardedprocess(2)"> {{'Reject this Project'| translate}}</label> </div>
+    <ul class="bidding-employer-info list-unstyled" ng-if="!is_freelancer && bidEndDate && !$root.withdrawthisfreelancer">
+        <li class="label label-info" ng-click="reopen(1)" ng-if="$root.newFreelancerSelect">{{'Withdraw this freelancer and select existing bidder'| translate }} 
+        </li>
+        <li class="label label-info label-red" ng-click="reopen(2)"> {{'Im not interest existing bidders and move this project to open for bidding again'| translate}}</li>
+    </ul>
+</div>

@@ -1,0 +1,65 @@
+<div class="section navbar-default">
+  <div class="panel-heading sep-bot">
+     <button type="button" class="close pull-right line-height-28" data-dismiss="modal" ng-click="closemodel()">&times;</button>
+      <h4 class="top-mar"> {{'Invite to Bid My Project'|translate}}</h4>
+    </div>
+    <form class="form-horizontal adminpg-form" name="Hire" role="form" ng-submit="submit(Hire.$valid)" novalidate>
+        <div class="clearfix">
+            <div class="section navbar-default hire-me-form">
+                <div class="col-xs-12 text-center" ng-if="!projects.length && loader">
+                        <img ng-src="images/contest_loader.gif" alt="loading" title="loading"> 
+                 </div>
+                <div class="panel no-mar">
+                    <div class="panel-heading clearfix">
+                        <div class="col-xs-12">
+                            <div class="form-group no-mar">                                
+                                <label for="inputMessage" class="control-label">{{'Private Note'|translate}}
+                                    <span class="error">*</span>
+                                </label>       
+                                <textarea type="text" rows="5" name="inputMessage" ng-model="$root.message" class="form-control" id="inputMessage" ng-required="true"></textarea> 
+                                <span class="error" ng-show="(Hire.$submitted || Hire.inputMessage.$touched) && (Hire.inputMessage.$pristine || Hire.inputMessage.$invalid) && (Hire.inputMessage.$error.required)">
+                                    {{'Required'| translate }} 
+                                </span>                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel-heading no-pad">
+                        <div class="col-xs-12">
+                            <h5>{{'Select your listed project to ask this profile to place bid.'|translate}}?</h5>
+                            <div class="form-group clearfix">
+                                <div class="col-sm-12" data-ng-repeat="project in projects | orderBy:'name'">
+                                    <div class="checkbox"> 
+                                        <label for="checkbox{{$index}}" class="custom-checkbox">
+                                            <input type="checkbox" id="checkbox{{$index}}" name="user_skill" checklist-model="project_select" ng-model="project_select" checklist-value="project.id" ng-change="check(project.id, checked)">
+                                            <span>{{project.name}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <span class="error col-sm-12" ng-if="(Hire.$submitted || Hire.project_select.$touched) && (project_select.length < 1)"> {{'Required'| translate }}</span>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="!projects.length">
+                             <div class="col-xs-12" ng-if="!projects.length && !loader">
+                                <p class="text-center text-danger">{{'No Active Projects'| translate }}</p>
+                            </div>
+                            <div class="col-xs-12 text-center bot-mspace-10">
+                               <a ui-sref="Bid_ProjectAdd" ng-click="closemodel()" class="btn btn-default">{{'Add Project'|translate}}</a> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <div class="col-xs-12"> 
+                            <button type="submit" class="btn btn-primary" ng-if="!projects.length" disabled>{{'Submit'|translate}}</button> 
+                            <button type="submit" class="btn btn-primary" ng-if="projects.length">{{'Submit'|translate}}</button> 
+                            <button type="button" class="btn btn-danger" ng-click="closemodel()">{{'Cancel'|translate}}</button> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+             
+        </div>
+    </form>
+</div>

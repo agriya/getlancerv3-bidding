@@ -1,0 +1,71 @@
+<div class="section navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb navbar-btn">
+                    <li> <a href="/">{{'Home'|translate}}</a> </li>
+                    <li class="active">{{'My Services'|translate}} </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div ng-include="'views/users_account_left_side_menu.html'"></div>
+            </div>
+            <div class="col-md-9 navbar-btn">
+                <div class="section navbar-default" ng-show="!loader" ng-controller='QuoteServicesUserController'>
+                    <div class="panel service-lists clearfix">
+                        <div class="panel-heading sep-bot bot-mspace top-small-mspace">
+                            <h3 style="display:inline;">{{'My Services'|translate}} </h3> <a class="txt-dec span6 pull-right btn btn-primary text-uppercase" title="{{'Add' | translate}}" href="quote_service/add"><i class="fa fa-plus "></i> {{'Add'|translate}}</a> </div>
+                        <div
+                            class="col-sm-4" ng-if="quote_services_user.length > 0" ng-repeat='quote_service in quote_services_user'>
+                            <div class="text-center bg-white howitBlocks qutoesBlock">
+                                <div class="bot-small-space pr">
+                                    <a href="quote_service/{{quote_service.id}}/{{quote_service.slug}}" target="_blank" title="{{quote_service.business_name}}" class="img-circle center-block show pr feutrimgCont"> <img ng-src="{{quote_service.image_name}}" alt="{{quote_service.business_name}}" title="{{quote_service.business_name}}"> </a>
+                                    <ul class="list-inline details">
+                                        <li>
+                                            <a title="{{'Photos' | translate}}" href="quote_service_photos/{{quote_service.id}}"> <i class="fa fa-picture-o"></i> <sup> ({{quote_service.quote_service_photo_count}})</sup> </a>
+                                        </li>
+                                        <li>
+                                            <a title="{{'Videos' | translate}}" href="quote_service_videos/{{quote_service.id}}"> <i class="fa fa-video-camera"></i> <sup> ({{quote_service.quote_service_video_count}})</sup> </a>
+                                        </li>
+                                        <li>
+                                            <a title="{{'Audios' | translate}}" href="quote_service_audios/{{quote_service.id}}"> <i class="fa fa-volume-up"></i> <sup> ({{quote_service.quote_service_audio_count}}) </sup> </a>
+                                        </li>
+                                        <li>
+                                            <a title="{{'FAQs' | translate}}" href="quote_service_faqs/{{quote_service.id}}"> <i class="fa fa-question-circle"></i> <sup> ({{quote_service.quote_faq_answer_count}}) </sup> </a>
+                                        </li>
+                                    </ul>
+                                    <div class="edit-icon"> <a title="{{'Edit' | translate}}" href="user/quote_service/edit/{{quote_service.id}}"><i class="fa fa-edit fa-inverse"></i> </a> </div>
+                                </div>
+                                <h3 class="text-18 no-mar htruncate text-left"><a href="quote_service/{{quote_service.id}}/{{quote_service.slug}}" target="_blank" title="{{quote_service.business_name}}">{{quote_service.business_name}}</a> </h3>
+                                <hr>
+                                <ul class="list-inline clearfix hor-vsmall-mspace text-14 text-grayl">
+                                    <li> {{'New'}} ({{quote_service.quote_bid_new_count}}) </li>
+                                    <li> {{'Hired'| translate}} ({{quote_service.hired_count}}) </li>
+                                    <li> {{'Discussion'| translate}} ({{quote_service.under_discussion_count}}) </li>
+                                    <li> {{'Completed'| translate}} ({{quote_service.completed_count}}) </li>
+                                </ul>
+                            </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="text-center" ng-hide="(quote_services_user.length > itemsPerPage) && currentPage==1">
+                            <uib-pagination ng-hide="!quote_services_user.length" total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="noOfPages" ng-click="paginate_user()"></uib-pagination>
+                        </div>
+                    </div>
+                    <div ng-include="'views/loader.html'"></div>
+                    <div class="col-sm-12">
+                        <div class="alert alert-danger" ng-show="!loader && !quote_services_user.length">
+                            <p class="text-center">{{'No Records'|translate}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

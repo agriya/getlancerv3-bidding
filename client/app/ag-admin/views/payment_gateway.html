@@ -1,0 +1,26 @@
+<div class="list-header"><div><div class="content-top clearfix">
+    <h1 class="al-title"><span class="ng-scope">payment gateways</span></h1>
+    <ul class="breadcrumb al-breadcrumb">
+        <li><a href="#/dashboard">Home</a></li>
+        <li class="ng-binding">Payment Gateways</li>
+    </ul>
+</div>
+<div ng-controller="PaymentGatewayCtrl">   
+    <form class="form-horizontal" id="show-view" role="form" name="contactForm" ng-submit="save()">
+        <div class="clearfix" ng-repeat="payment_gateway in payment_gateways">
+            <div class="panel panel-blur with-scroll animated zoomIn">
+                <div class="panel-heading clearfix">
+                    <h3> {{payment_gateway.gateway_name}}
+                        <h3>
+                </div>
+                <div class="panel-body">                   
+                    <div class="row" ng-repeat="fields in payment_gateway.fields">
+                        <label class="col-sm-2 control-label">&nbsp;&nbsp;{{fields.fields.label}} &nbsp;&nbsp;</label>
+                        <div class="col-sm-6 col-md-4"><input type="text" ng-model="payment_gateways_values.payment_gateway[payment_gateway.gateway_id][fields.field_name]" class="form-control" style="margin-bottom:10px;" ng-required="{{fields.fields.required}}"></div>
+                    </div>                   
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"> <button type="submit" class="btn btn-primary text-center"><span class="glyphicon glyphicon-ok"></span>&nbsp;<span class="hidden-xs">Save changes</span></button> </div>
+    </form>   
+</div>

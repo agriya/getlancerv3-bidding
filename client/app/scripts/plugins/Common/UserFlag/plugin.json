@@ -1,0 +1,10 @@
+{
+	"name": "UserFlag", 
+	"class": "fa fa-2x fa-flag",
+	"description": "UserFlag",
+	"dependencies": "Common",
+	"module_id": "813",
+	"module_hash": "2e01823aac9fbdf5fe45b262f9e1ede6",
+	"display_order": "14",
+	"plugin_name":"Common/UserFlag"
+}

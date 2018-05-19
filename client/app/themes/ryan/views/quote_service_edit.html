@@ -1,0 +1,137 @@
+<div class="section navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb navbar-btn">
+                    <li> <a href="/">{{'Home'|translate}}</a> </li>
+                    <li><a href="quote_service/my_services">{{'My Services'|translate}}</a></li>
+                    <li class="active">{{'Edit Service'|translate}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div ng-include="'views/users_services_left_side_menu.html'"></div>
+            </div>
+            <div class="col-md-8 col-lg-9 navbar-btn">
+                <div class="section navbar-default" ng-controller="QuoteServiceEditController">
+                    <form class="form-horizontal adminpg-form" role="form" enctype="multipart/form-data" name="frmuser_quote_service_update" ng-submit="save()">
+                        <div class="panel">
+                            <div class="panel-heading sep-bot">
+                                <h3 style="display:inline;">{{'Basic Informations'|translate}}</h3>
+                            </div>
+                            <div class="panel-heading">
+                                <div class="">
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputBusinessName3" class="control-label">{{'Business Name'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <textarea ng-model="user_quote_service_update.business_name" class="form-control" id="inputBusinessName3" autocomplete="off" placeholder="{{'Business Name'|translate}}" required> </textarea></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputHowDoesYourServiceStandOut3" class="control-label">{{'How Does Your Service Stand Out'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <textarea ng-model="user_quote_service_update.how_does_your_service_stand_out" class="form-control" id="inputHowDoesYourServiceStandOut3" placeholder="{{'How Does Your Service Stand Out'|translate}}" required> </textarea>                                            </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputWhatDoYouEnjoyAboutTheWorkYouDo3" class="control-label">{{'What Do You Enjoy About The Work You Do'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <input autocomplete="off" type="text" ng-model="user_quote_service_update.what_do_you_enjoy_about_the_work_you_do" class="form-control" id="inputWhatDoYouEnjoyAboutTheWorkYouDo3" placeholder="{{'What Do You Enjoy About The Work You Do'|translate}}"
+                                                required> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputWebsiteUrl3" class="control-label">{{'Website URL'|translate}}</label> </div>
+                                        <div class="col-sm-8"> <input autocomplete="off" type="url" ng-model="user_quote_service_update.website_url" class="form-control" id="inputWebsiteUrl3" placeholder="{{'Website URL'|translate}}"> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputPhoneNumber3" class="control-label">{{'Phone Number'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <input autocomplete="off" type="text" ng-model="user_quote_service_update.phone_number" class="form-control" id="inputPhoneNumber3" placeholder="{{'Phone Number'|translate}}"> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputNumberOfEmployees3" class="control-label">{{'Number Of Employees'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <input autocomplete="off" type="number" ng-model="user_quote_service_update.number_of_employees" string-to-number class="form-control" id="inputNumberOfEmployees3" placeholder="{{'Number Of Employees'|translate}}"
+                                                required> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputYearFounded3" class="control-label">{{'Year Founded'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <select ng-model="user_quote_service_update.year_founded" id="inputYearFounded3" required class="form-control" ng-options="year for year in years"></select> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel">
+                            <div class="panel-heading sep-bot">
+                                <h3 style="display:inline;">{{'Category'|translate}} <span class="text-danger">&nbsp;*</span></h3>
+                            </div>
+                            <div class="panel-heading">
+                                <div class="">
+                                    <div data-ng-repeat="quote_service_category in quote_service_categories">
+                                        <div class="">
+                                            <div class="form-group">
+                                                <div class="col-sm-6 col-md-4" ng-repeat="parent in quote_service_category">
+                                                    <div class="checkbox"> <label class="custom-checkbox">
+                                                                            <input type="checkbox" ng-checked="checkStatus(parent.id, category_selected)"  ng-click="select_child(parent.children,parent.id)" ng-model="user_quote_service_update.quote_categories_add[parent.id]" name="quote_categories_add[{{parent.id}}]" value="{{parent.id}}" ng-required="!user_quote_service_update.quote_categories_add" >
+                                                                            <span>{{parent.name}}</span>
+                                                                        </label> </div>
+                                                    <ul ng-if="parent.children.length">
+                                                        <div ng-repeat="child in parent.children">
+                                                            <li>
+                                                                <div class="checkbox"> <label class="custom-checkbox">
+                                                                            <input ng-click="select_parent(parent.id)" ng-checked="checkStatus(child.id, category_selected)"  type="checkbox" ng-model="user_quote_service_update.quote_categories_add[child.id]"  name="quote_categories_add[{{child.id}}]" value="{{child.id}}" ng-required="!user_quote_service_update.quote_categories_add" >
+                                                                            <span>{{child.name}}</span>
+                                                                        </label> </div>
+                                                            </li>
+                                                        </div>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel">
+                            <div class="panel-heading sep-bot">
+                                <h3 style="display:inline;">{{'Work Location'|translate}}</h3>
+                            </div>
+                            <div class="panel-heading">
+                                <div class="">
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputFullAddress3" class="control-label">{{'Full Address'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <input autocomplete="off" class="form-control" id="inputFullAddress3" g-places-autocomplete force-selection="true" ng-change="location()" ng-model="place" />
+                                            <p class="help-block" class="form-text text-muted">{{'You must select address from autocomplete'|translate}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputZip3" class="control-label">{{'Zip Code'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <input autocomplete="off" type="text" ng-model="user_quote_service_update.zip_code" class="form-control" id="inputZip3" ng-disabled="disable_zip" placeholder="{{'Zip'|translate}}" required> </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-4"> <label for="inputIsCustomerTravelToMe3" class="control-label">{{'Where Do You Need It Done?'|translate}}</label> </div>
+                                    <div class="col-sm-8">
+                                        <div class="checkbox"> <label for="inputIsCustomerTravelToMe3"><input autocomplete="off" type="checkbox" id="inputIsCustomerTravelToMe3" ng-model="user_quote_service_update.is_customer_travel_to_me" ng-true-value="1" ng-false-value="0" > <span> {{'Customer Travel To Me'|translate}}</span></label>                                            </div>
+                                        <div class="checkbox pull-left right-vmall-mspace"> <label for="inputServiceProviderTravelsUpto3"><input autocomplete="off" type="checkbox" ng-model="user_quote_service_update.is_service_provider_travel_to_customer_place" ng-true-value="1" ng-false-value="0"> <span> {{'I will travel up to'|translate}}</span></label>                                            </div>
+                                        <div> <input autocomplete="off" type="number" min="0" ng-model="user_quote_service_update.service_provider_travels_upto" ng-required="user_quote_service_update.is_service_provider_travel_to_customer_place == 1"><span> {{'KM'|translate}} </span>                                            </div>
+                                        <div class="checkbox"> <label for="is_over_phone_or_internet"><input autocomplete="off"  type="checkbox" id="is_over_phone_or_internet" ng-true-value="1" ng-false-value="0" ng-model="user_quote_service_update.is_over_phone_or_internet" > <span> {{'Neither (over phone or internet)'|translate}}</span></label>                                            </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-4"> <label class="control-label" for="inputTaskAttachments">{{'Photo' | translate}}</label></div>
+                                    <div class="col-sm-8"> <input type="file" ngf-select ng-model="file" name="file" ng-change="uploadServicePhotoEdit(file)" class="underline text-red" accept="image/*"> <img ng-src="{{quote_service_image}}" alt="{{quote_service.business_name}}"
+                                            title="{{quote_service.business_name}}" class="img-responsive top-mspace"> </div>
+                                </div>
+                            </div>
+                            <div class="form-group bot-big-mspace">
+                                <div class="col-sm-offset-4 col-sm-8"> <button type="submit" ng-show="save_btn" ng-click="user_quote_service_update.is_active=0" class="btn  btn-primary disabled">{{'Update'|translate}} & {{'Continue'|translate}}</button> <button type="submit" ng-show="!save_btn"
+                                        ng-click="user_quote_service_update.is_active=0" class="btn  btn-primary ">{{'Update'|translate}} & {{'Continue'|translate}}</button> <button type="submit" ng-show="save_btn" ng-click="user_quote_service_update.is_active=1"
+                                        class="btn  btn-primary disabled">{{'Update'|translate}} & {{'Publish'|translate}}</button> <button type="submit" ng-show="!save_btn" ng-click="user_quote_service_update.is_active=1" class="btn  btn-primary ">{{'Update'|translate}} & {{'Publish'|translate}} </button>                                    </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

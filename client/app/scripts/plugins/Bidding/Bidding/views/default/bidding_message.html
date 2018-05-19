@@ -1,0 +1,50 @@
+<div class="tab-content">
+    <div class="tab-pane active" id="conversation">
+        <section class="comments-block coment-setion">
+            <div class="row">
+                 <ul class="list-unstyled builtin-list">
+                        <li ng-if="messages.length > 0">
+                            <a href="" class="btn btn-default btn-sm load-more pull-right" ng-hide="messageNoOfPages == MessagePage" ng-click='message_pagination()'>{{'Load more...' | translate}}  ( {{messageTotal}} )</a>
+                        </li>
+                  </ul>
+                <div class="col-xs-12">
+                    <div class="clearfix comment-msg">
+                        <div class="media" ng-repeat="message in messages | reverse">
+                            <div class="pull-left">
+                                <a class="blog-user-img center-block" href="users/{{message.user.id}}/{{message.user.username}}"><img ng-src="{{message.user.user_avatar_url}}" title="{{message.user.username}}" alt="[Image: {{message.user.username}}]" class="center-block img-circle user-small"></a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="text-16"><a href="users/{{message.user.id}}/{{message.user.username}}">{{message.user.username}}</a> , <span class="text-12 text-normal text-lowercase grayc"> {{ message.created_at | timeago}} </span></h4>
+                                <p ng-bind-html="message.message_content.message" class="word-break"> </p>
+                            </div>
+                        </div>
+                        <div class="media" ng-show="!project_is_dispute && projectstatus != ProjectStatusConstant.MutuallyCanceled">
+                            <div class="pull-left media-top"> <img src="images/default.png" alt="[Image: USer]" class="img-circle center-block user-small"> </div>
+                            <div class="media-body">
+                                <form role="form" name="messageFrm" ng-submit="PostMessages(messageFrm,messageFrm.$valid)" class="top-mspace-10" novalidate>
+                                    <div class="form-group"> 
+                                        <label for="comments1" class="sr-only">comment</label> 
+                                        <textarea id="comments1" class="form-control" ng-model="data.message" name="message" placeholder="Write your messages..." rows="3" ng-required="true"></textarea>                                        
+                                        <span class="error" ng-show="(messageFrm.$submitted || messageFrm.message.$touched) && (messageFrm.message.$pristine || messageFrm.message.$invalid) && (messageFrm.message.$error.required)"> {{'Required'| translate }} </span>    
+                                    </div>
+                                    <div class="clearfix text-left">
+                                        <div class="pull-right xs-float-none"> 
+                                            <button type="submit" ng-if="message_Frm" class="gradi-rnd-btn btn btn-primary" disabled>{{'Send'|translate}}</button> 
+                                            <button type="submit" class="gradi-rnd-btn btn btn-primary" title="send" ng-if="!message_Frm">Send</button>                                            
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div ng-if="project_is_dispute">
+                            <p colspan="8" class="text-center text-danger space"> {{"Project under dispute. So you can't send message." | translate}} </p>
+                        </div>
+                    </div>
+                    <div ng-if="projectstatus == ProjectStatusConstant.MutuallyCanceled">
+                        <p colspan="8" class="text-center text-danger space"> {{"Project Mutually Cancelled. So you can't send message." | translate}} </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

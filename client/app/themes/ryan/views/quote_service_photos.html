@@ -1,0 +1,3 @@
+<div ng-repeat="quote_service_photo in quote_service_photos">
+    <div class="col-sm-3" ng-repeat="imagename in quote_service_photo.attachment"> <img ng-src="{{imagename.image_name}}" alt="{{quote_service_photo.business_name | translate}}" title="{{quote_service_photo.business_name | translate}}" class="img-thumbnail"> </div>
+</div>

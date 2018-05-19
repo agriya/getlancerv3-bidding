@@ -1,0 +1,65 @@
+<!--START: BIDDING ADD -->
+<div class="amountbid clearfix" ng-if="is_bid_enable">
+    <form class="clearfix bot-mar-25" name="postbidFrm" ng-submit="postBid(postbidFrm.$valid, data)" novalidate>
+        <div class="row">
+            <div class="amountpaid col-sm-6"> 
+                <div class="form-group">
+                    <label class="control-label">{{'Bid Amount'| translate}}</label>
+                    <div class="input-group"> 
+                    <span  class="input-group-addon" ng-if="$root.settings.CURRENCY_SYMBOL !== ''">
+                        {{$root.settings.CURRENCY_SYMBOL}}</span>
+                        <span class="input-group-addon" ng-if="$root.settings.CURRENCY_SYMBOL === ''">{{$root.settings.CURRENCY_CODE}}</span>
+                        <input type="number" number-only name="amount" ng-model="data.amount" ng-required="true" class="form-control" min="1"> 
+                    </div>
+                    <div class="error" ng-if="(postbidFrm.$submitted || postbidFrm.amount.$touched) && (postbidFrm.amount.$pristine || postbidFrm.amount.$invalid) && (postbidFrm.amount.$error.required)">
+                    {{'Required'| translate}} </div> 
+                    <span class="error" ng-show="postbidFrm.amount.$error.min && !postbidFrm.amount.$error.required">Enter the valid amount</span>
+                </div>
+            </div>
+            <div class="deliverybids col-sm-6"> 
+                <div class="form-group">
+                    <label class="control-label">{{'Deliver In'| translate}}</label>
+                    <div class="input-group"> 
+                        <input type="number" name="duration" class="form-control" min="1" ng-model="data.duration" ng-required="true" number-only /> 
+                        <span class="input-group-addon" id="basic-addon1">Days</span> 
+                    </div>
+                    <div class="error" ng-if="(postbidFrm.$submitted || postbidFrm.duration.$touched) && (postbidFrm.duration.$pristine || postbidFrm.duration.$invalid) && (postbidFrm.duration.$error.required)">
+                    {{'Required'| translate }} </div> 
+                    <span class="error" ng-show="postbidFrm.duration.$error.min && !postbidFrm.duration.$error.required">Enter the valid day</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="bid-description col-sm-12"> 
+                    <label class="control-label">{{'Additional Note'| translate}}</label> 
+                    <textarea rows="9" name="description" ng-model="data.description" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="bidding-btn">
+            <div class="clearfix bids-btn">
+                <span ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Common/Subscription') > -1  && ($root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT !== '' || $root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT !== '0') && available_credit_count < $root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT">
+                    <button type="submit" class="btn btn-primary" disabled>{{buttonText}}</button>
+                </span> 
+                <span ng-if="($root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT == '' || $root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT == '0' || !($root.settings.SITE_ENABLED_PLUGINS.indexOf('Common/Subscription') > -1))">     
+                    <button type="submit" class="btn btn-primary" ng-show="save_btn" disabled> {{buttonText}} </button>
+                    <button type="submit" class="btn btn-primary" ng-show="!save_btn"> {{buttonText}} </button>
+                </span> 
+                <button ng-click="cancleBid()" class="btn btn-danger">{{'Cancel'| translate}}</button>
+            </div>
+        </div>
+    </form>
+    <div class="alert alert-warning top-space" ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Common/Subscription') > -1  && ($root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT !== '' || $root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT !== '0') && available_credit_count < $root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT && buttonText == 'Place Bid'">
+        <span>{{'Currently you dont have enough credit point to send your quote'|translate}}. {{'Please'|translate}} 
+            <a href="purchase_plan">{{'click here'|translate}}</a> 
+            {{'to purchase the plan and continue your business'|translate}}.
+            <p>{{'Your current available credit points'|translate}}:  {{available_credit_count}}</p>
+        </span> 
+    </div>
+    <div class="alert alert-info top-space" ng-if="($root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT == '' || $root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT == '0' || available_credit_count >= $root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT) && buttonText == 'Place Bid'">
+        <span> {{'You need to pay' | translate }} {{$root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT }} {{'credit point to send your quote. System will get required points from your current available credit points' | translate}}.</span>
+        <p>{{'Your current available credit points'|translate}}: {{available_credit_count}}</p>
+    </div>
+</div>
+<!--END: BIDDING ADD -->

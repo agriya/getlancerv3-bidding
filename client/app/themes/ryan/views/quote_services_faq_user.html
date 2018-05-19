@@ -1,0 +1,84 @@
+<div class="section navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb navbar-btn">
+                    <li> <a href="/">{{'Home'|translate}}</a> </li>
+                    <li> <a href="quote_service/my_services">{{'My Services'|translate}}</a> </li>
+                    <li> <a href="user/quote_service/edit/{{quoteServiceId}}">{{business_name}}</a> </li>
+                    <li class="active">{{'FAQs'|translate}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div ng-include="'views/users_services_left_side_menu.html'"></div>
+            </div>
+            <div class="col-md-8 col-lg-9 navbar-btn">
+                <div class="section navbar-default" ng-show="!loader" ng-controller='QuoteServiceFaqsManageController'>
+                    <div class="panel" ng-if="quote_service_faqs_templates.length">
+                        <div class="panel-heading sep-bot">
+                            <h3 style="display:inline;">{{business_name}} - {{'FAQ'|translate}} </h3>
+                        </div>
+                        <div class="panel-heading" ng-show="quote_service_faqs_templates.length">
+                            <div class="add-wallet-table">
+                                <div class="table-responsive pg-table">
+                                    <table class="table table-striped no-mar">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'Questions'|translate}}</th>
+                                                <th>{{'Action'|translate}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="quote_service_faqs_template in quote_service_faqs_templates">
+                                                <td>{{quote_service_faqs_template.question}}</td>
+                                                <td> <a href="" class="btn btn-primary" title="{{'Answer for this question' | translate}}" ng-click='QuoteFaqTemplateAnswer(quote_service_faqs_template.id)' role="answer">{{'Answer for this question' | translate}}</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-heading sep-bot">
+                            <h3 style="display:inline;">{{'Own FAQs'|translate}}</h3> <a class="txt-dec span6 pull-right btn btn-primary text-uppercase" href="" ng-click='QuoteFaqAdd(quoteServiceId)'><i class="fa fa-plus "></i> {{'Add your own question and answer'|translate}}</a></div>
+                        <div class="panel-heading" ng-show="quote_service_faqs.length">
+                            <div class="add-wallet-table">
+                                <div class="table-responsive pg-table">
+                                    <table class="table table-striped no-mar">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'Questions'|translate}}</th>
+                                                <th>{{'Answers'|translate}}</th>
+                                                <th>{{'Action'|translate}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="list in quote_service_faqs">
+                                                <td>{{list.question}}</td>
+                                                <td>{{list.answer}}</td>
+                                                <td> <a href="" class="btn btn-danger" title="{{'Delete' | translate}}" ng-click='QuoteFaqDelete(list.id)' role="delete">{{'Delete' | translate}}</a> </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-include="'views/loader.html'"></div>
+                        <div class="panel-heading">
+                            <div class="alert alert-danger" ng-show="!quote_service_faqs.length">
+                                <p class="text-center">{{'No Records'|translate}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

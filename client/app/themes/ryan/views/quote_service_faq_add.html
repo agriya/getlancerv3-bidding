@@ -1,0 +1,8 @@
+<div class="modal-header"> <button type="button" class="close" ng-click="ok()">x</button>
+    <h3 class="top-mar">{{'Add FAQs' | translate}}</h3>
+</div>
+<div class="modal-body" ng-controller="QuoteServiceFaqsManageController">
+    <form name="myForm" ng-submit="add()" enctype="multipart/form-data">
+        <div class="form-group"> <label for="question">{{'Question' | translate}}</label> <textarea ng-model="question" id="question" required class="form-control"></textarea> </div>
+        <div class="form-group"> <label for="answer">{{'Answer' | translate}}</label> <textarea ng-model="answer" id="answer" required class="form-control"></textarea> </div> <button type="submit" class="btn btn-textb btn-primary">{{'Submit' | translate}}</button> </form>
+</div>

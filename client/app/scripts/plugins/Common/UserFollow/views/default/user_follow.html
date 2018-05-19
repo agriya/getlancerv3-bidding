@@ -1,0 +1,24 @@
+<div ng-show="(userprofile.id != user.id && settings.SITE_ENABLED_PLUGINS.indexOf('Common/UserFollow') > -1)"
+    class="space no-pad">
+    <ul ng-show="!isfollow && isAuth" class="list-inline share user-share">
+        <li>
+            <ul class="list-inline">
+                <li class="share-border cursor">
+                    <a href="" ng-click="userFollow()" class="text-primary"><i class="fa fa-heart"></i></a>
+                </li>
+                <li>
+                    <a href="" ng-click="userFollow()" class="grayc" title="{{'Follow'| translate}}">{{'Follow'| translate}}</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul ng-show="isfollow && isAuth" class="list-inline share user-share">
+        <li>
+            <ul class="list-inline">
+                <li class="share-border"><a href="" ng-click="UserUnFollow(follow_id)" class="text-primary"><i class="fa fa-heart"></i></a></li>
+                <li><a href="" ng-click="UserUnFollow(follow_id)" class="grayc" title="{{'Unfollow'| translate}}">{{'Unfollow'| translate}}</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+

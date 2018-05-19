@@ -1,0 +1,15 @@
+<ul class="list-unstyled navbar-btn menu-left-sidebar panel">
+    <li ng-class="{active:url_split == 'settings'}"> <a title="{{'My Account'|translate}}" href="users/settings"><i class="fa fa-fw fa-user"></i> {{'My Account'|translate}}</a></li>
+    <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Common/Withdrawal') > -1" 
+    ng-class="{active:url_split == 'cash_withdrawals'}">
+     <a title="{{'Cash Withdrawals'|translate}}" href="users/cash_withdrawals"><i class="fa fa-fw fa-money"></i> {{'Cash Withdrawals'|translate}}</a>
+     </li>
+    <li ng-class="{active:url_split == 'money_transfer_account'}" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Common/Withdrawal') > -1"> <a title="{{'Money Transfer Account'|translate}}" href="users/money_transfer_account"><i class="fa fa-fw fa-book"></i> {{'Money Transfer Account'|translate}}</a></li>
+    <li ng-class="{active:url_split == 'transactions'}"> <a title="{{'Transactions'|translate}}" href="transactions"><i class="fa fa-fw fa-credit-card-alt"></i> {{'Transactions'|translate}}</a></li>
+    <li ng-class="{active:url_split == 'wallets'}" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Common/Wallet') > -1"> <a class="wallet-icon" title="{{'Add to Wallet'|translate}}" href="wallets"> <span>{{'Add to Wallet'|translate}}</span></a></li>
+    <li ng-class="{active:url_split == 'purchase_plan'}" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Common/Subscription') > -1" ng-show="Freelancer"> <a title="{{'Purchase Plan'|translate}}" href="purchase_plan"><i class="fa fa-fw fa-credit-card "></i> {{'Purchase Plan'|translate}}</a></li>
+    <li ng-class="{active:url_split == 'purchase_logs'}" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Common/Subscription') > -1" ng-show="Freelancer">
+    <a title="{{'Credit Purchase Log'|translate}}" href="purchase_logs"><i class="fa fa-shopping-cart"></i> {{'Credit Purchase Log'|translate}}</a></li>
+    <li ng-class="{active:url_split == 'change_password'}"> <a title="{{'Change Password'|translate}}" href="users/change_password"><i class="fa fa-key fa-fw"></i> {{'Change Password'|translate}}</a></li>
+    <li ng-class="{active:url_split == 'logout'}"> <a title="{{'Logout'|translate}}" href="users/logout"><i class="fa fa-fw fa-sign-out "></i> {{'Logout'|translate}}</a></li>
+</ul>

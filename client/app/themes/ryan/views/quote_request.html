@@ -1,0 +1,117 @@
+<div class="section navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="navbar-btn">
+                <div class="section navbar-default" ng-controller="QuoteRequestController">
+                    <form class="form-horizontal" role="form" enctype="multipart/form-data" name="frmquoteRequestAdd" ng-submit="save()">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <h1>{{'Request a Free Quote'|translate}}</h1>
+                                    <ul class="nav nav-pills nav-justified thumbnail">
+                                        <li ng-class="{'active' : form1 === true}">
+                                            <a ng-click="changeState('form1');" href="">
+                                                <h4 class="list-group-item-heading">{{'Step 1'|translate}}</h4>
+                                                <p class="list-group-item-text">{{'Choose the below category'|translate}}</p>
+                                            </a>
+                                        </li>
+                                        <li ng-class="{'active' : form2 === true}">
+                                            <a ng-click="changeState('form2');" href="">
+                                                <h4 class="list-group-item-heading">{{'Step 2'|translate}}</h4>
+                                                <p class="list-group-item-text">{{'Fill the quote'|translate}}</p>
+                                            </a>
+                                        </li>
+                                        <li ng-class="{'active' : form3 === true}">
+                                            <a ng-click="changeState('form3');" href="">
+                                                <h4 class="list-group-item-heading">{{'Step 3'|translate}}</h4>
+                                                <p class="list-group-item-text">{{'Finished'|translate}}</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="form1" class="panel col-md-8 col-md-offset-2">
+                            <div class="panel-heading sep-bot">
+                                <h3 style="display:inline;">{{'Select Category'|translate}}</h3>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4"> <label for="inputQuoteCategoryId3" class="control-label">{{'Category'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                <div class="col-sm-8"> <select ng-model="quoteRequest.quote_category_id">
+                                            <option ng-repeat="option in quote_request_add.quote_categories_quote_services" value="{{option.quote_category_id}}">{{option.quote_categories.name}}</option>
+                                            </select></div>
+                            </div>
+                        </div>
+                        <div ng-show="form2" class="panel col-md-8 col-md-offset-2">
+                            <div class="panel-heading">
+                                <div class="">
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputTitle3" class="control-label">{{'Title'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <input type="text" ng-model="quoteRequest.title" class="form-control" id="inputTitle3" placeholder="{{'Title'|translate}}" required> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputDescription3" class="control-label">{{'Description'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <input type="text" ng-model="quoteRequest.description" class="form-control" id="inputDescription3" placeholder="{{'Description'|translate}}" required> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputBestDayTimeForWork3" class="control-label">{{'Best Day Time For Work'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <input type="text" ng-model="quoteRequest.best_day_time_for_work" class="form-control" id="inputBestDayTimeForWork3" placeholder="{{'Best Day Time For Work'|translate}}" required> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputPhoneNo" class="control-label">{{'Phone No'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <input type="text" ng-model="quoteRequest.phone_no" class="form-control" id="inputPhoneNo3" placeholder="{{'Phone No'|translate}}" required> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputIsSendRequestToOtherServiceProviders" class="control-label">{{'Is Send Request To Other Service Providers'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8">
+                                        <select ng-init="quoteServiceAdd.is_send_request_to_other_service_providers=''" id="inputIsSendRequestToOtherServiceProviders" ng-model="quoteRequest.is_send_request_to_other_service_providers" class="form-control"
+                                                required>
+                                                <option value="">{{'Select'|translate}}</option>
+                                                <option value="0">{{'No'|translate}}</option>
+                                                <option value="1">{{'Yes'|translate}}</option>
+                                                </select> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="form3" class="panel col-md-8 col-md-offset-2">
+                            <div class="panel-heading">
+                                <div class="">
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputFullAddress3" class="control-label">{{'Full Address'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <input class="form-control" id="inputFullAddress3" g-places-autocomplete force-selection="true" ng-change="location_quote();" ng-model="quoteRequest.full_address" required />
+                                            <p class="help-block" class="form-text text-muted">{{'You must select address from autocomplete'|translate}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputAddress3" class="control-label">{{'Address'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <input type="text" ng-model="quoteRequest.address" class="form-control" id="inputAddress3" placeholder="{{'Address'|translate}}" required> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="city" class="control-label">{{'City'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <input type="text" ng-model="quoteRequest.city_name" class="form-control" id="city" ng-disabled="disable_city" placeholder="{{'City'|translate}}" required> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="state" class="control-label">{{'State'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <input type="text" ng-model="quoteRequest.state_name" class="form-control" id="state" ng-disabled="disable_state" placeholder="{{'State'|translate}}" required> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="country" class="control-label">{{'Country'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <input type="text" ng-model="quoteRequest.country_iso2" class="form-control" id="country" ng-disabled="disable_country" placeholder="{{'Country'|translate}}" required> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label for="inputZip3" class="control-label">{{'Zip code'|translate}}<span class="text-danger">&nbsp;*</span></label> </div>
+                                        <div class="col-sm-8"> <input type="text" ng-model="quoteRequest.zip_code" class="form-control" id="inputZip3" ng-disabled="disable_zip" placeholder="{{'Zip'|translate}}" required> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-sm-8"> <button type="submit" ng-show="save_btn" class="btn  btn-primary disabled">{{'Submit'|translate}}</button> <button type="submit" ng-show="!save_btn" class="btn  btn-primary">{{'Submit'|translate}}</button> </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

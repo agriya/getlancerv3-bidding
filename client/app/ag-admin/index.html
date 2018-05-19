@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- build:css styles/admin.cache.css -->
+    <link rel="stylesheet" href="styles/ng-admin.min.css">
+    <link rel="stylesheet" href="../../bower_components/angular-google-places-autocomplete/src/autocomplete.css" />
+    <link rel="stylesheet" href="../ag-admin/styles/vendor.css">
+    <link rel="stylesheet" href="../ag-admin/styles/app.css">
+    <link rel="stylesheet" href="../ag-admin/styles/custom.css">
+	<link rel="stylesheet" href="../../bower_components/ng-tags-input/ng-tags-input.min.css">
+    <!-- endbuild -->
+    <title ng-bind-html="settings.SITE_NAME + ' | Admin'"></title>
+</head>
+
+<body class="blur-theme">
+    <main ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" class="auth-main js-collaps-main">
+    <div ui-view class="wid-100"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBvXPoR4YXSSib7aucIvrYHrmMknzMEaHM"></script>
+    <!-- build:js scripts/vendor.cache.js -->
+    <script src="../../bower_components/jquery/dist/jquery.js"></script>
+    <script src="scripts/ng-admin.min.js" type="text/javascript"></script>
+    <!-- endbuild -->
+    <!-- build:js scripts/admin.cache.js -->
+    <script src="../../bower_components/angular-http-auth/src/http-auth-interceptor.js" type="text/javascript"></script>
+    <script src="../../bower_components/angular-resource/angular-resource.js"></script>
+    <script src="../../bower_components/angular-md5/angular-md5.js"></script>
+    <script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="../../bower_components/angular-deferred-bootstrap/angular-deferred-bootstrap.min.js"></script>
+    <script src="../../bower_components/angular-filter/dist/angular-filter.min.js"></script>
+    <script src="../../bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="../../bower_components/angular-ui-sortable/sortable.js"></script>
+	<script src="../../bower_components/ng-tags-input/ng-tags-input.js"></script>
+    <script src="libs/jquery.ui.sortable.js" type="text/javascript"></script>
+    <script src="scripts/ng-admin.app.js" type="text/javascript"></script>
+    <script src="scripts/services/admin_token_service.js" type="text/javascript"></script>
+    <script src="scripts/services/oauth_token_injector.js" type="text/javascript"></script>
+    <script src="scripts/services/interceptor.js" type="text/javascript"></script>
+    <script src="scripts/services/project_dispute.js" type="text/javascript"></script>
+    <script src="scripts/services/payment_gateways.js" type="text/javascript"></script>
+	<script src="scripts/services/servicelocation.js" type="text/javascript"></script>
+    <script src="scripts/services/cancellation_request.js" type="text/javascript"></script>
+    <script src="scripts/services/get_gateways.js" type="text/javascript"></script>
+    <script src="scripts/services/post_gateways.js" type="text/javascript"></script>
+    <script src="scripts/services/zazpay_synchronize.js" type="text/javascript"></script>
+    <script src="scripts/services/refresh_token.js" type="text/javascript"></script>
+    <script src="scripts/services/translation.js" type="text/javascript"></script>
+    <script src="scripts/services/change_password.js" type="text/javascript"></script>
+    <script src="scripts/controllers/payment_gateway.js" type="text/javascript"></script>
+    <script src="scripts/controllers/cancellation_requests.js" type="text/javascript"></script>
+	<script src="scripts/controllers/transaction.js" type="text/javascript"></script>
+    <script src="scripts/controllers/project_disputes.js" type="text/javascript"></script>
+	<script src="scripts/controllers/servicelocation.js" type="text/javascript"></script>
+    <script src="scripts/controllers/plugins.js" type="text/javascript"></script>
+    <script src="scripts/controllers/users_login.js" type="text/javascript"></script>
+    <script src="scripts/controllers/users_logout.js" type="text/javascript"></script>
+    <script src="scripts/controllers/translation.js" type="text/javascript"></script>
+    <script src="scripts/controllers/change_password.js" type="text/javascript"></script>
+	
+    <!-- endbuild -->
+    </main>
+</body>
+
+</html>
