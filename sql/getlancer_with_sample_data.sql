@@ -2,16 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.4
--- Dumped by pg_dump version 9.5.4
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
-SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -357,7 +353,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: activities; Type: TABLE; Schema: public; Owner: -
+-- Name: activities; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE activities (
@@ -404,7 +400,7 @@ ALTER SEQUENCE activities_id_seq OWNED BY activities.id;
 
 
 --
--- Name: apns_devices; Type: TABLE; Schema: public; Owner: -
+-- Name: apns_devices; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE apns_devices (
@@ -416,11 +412,11 @@ CREATE TABLE apns_devices (
     devicename character varying(510),
     devicemodel character varying(200),
     deviceversion character varying(50),
-    pushbadge character varying(200) DEFAULT 'enabled',
-    pushalert character varying(200) DEFAULT 'enabled',
-    pushsound character varying(200) DEFAULT 'enabled',
-    development character varying(200) DEFAULT 'production' NOT NULL,
-    status character varying(200) DEFAULT 'registered' NOT NULL,
+    pushbadge character varying(200) DEFAULT 'enabled'::character varying,
+    pushalert character varying(200) DEFAULT 'enabled'::character varying,
+    pushsound character varying(200) DEFAULT 'enabled'::character varying,
+    development character varying(200) DEFAULT 'production'::character varying NOT NULL,
+    status character varying(200) DEFAULT 'registered'::character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     user_id bigint NOT NULL
@@ -440,7 +436,7 @@ CREATE SEQUENCE attachments_id_seq
 
 
 --
--- Name: attachments; Type: TABLE; Schema: public; Owner: -
+-- Name: attachments; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE attachments (
@@ -451,7 +447,7 @@ CREATE TABLE attachments (
     foreign_id bigint NOT NULL,
     filename character varying(510) NOT NULL,
     dir character varying(200) NOT NULL,
-    mimetype character varying(200) ,
+    mimetype character varying(200),
     filesize bigint,
     height bigint,
     width bigint,
@@ -485,7 +481,7 @@ CREATE SEQUENCE bid_statuses_id_seq
 
 
 --
--- Name: bid_statuses; Type: TABLE; Schema: public; Owner: -
+-- Name: bid_statuses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE bid_statuses (
@@ -510,7 +506,7 @@ CREATE SEQUENCE bids_id_seq
 
 
 --
--- Name: bids; Type: TABLE; Schema: public; Owner: -
+-- Name: bids; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE bids (
@@ -572,7 +568,7 @@ CREATE SEQUENCE certifications_id_seq
 
 
 --
--- Name: certifications; Type: TABLE; Schema: public; Owner: -
+-- Name: certifications; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE certifications (
@@ -600,7 +596,7 @@ CREATE SEQUENCE cities_id_seq
 
 
 --
--- Name: cities; Type: TABLE; Schema: public; Owner: -
+-- Name: cities; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE cities (
@@ -613,10 +609,10 @@ CREATE TABLE cities (
     slug character varying(90) NOT NULL,
     latitude double precision,
     longitude double precision,
-    timezone character varying(20) ,
+    timezone character varying(20),
     dma_id integer,
-    county character varying(50) ,
-    code character varying(8) ,
+    county character varying(50),
+    code character varying(8),
     is_active boolean DEFAULT false NOT NULL,
     project_count integer DEFAULT 0 NOT NULL,
     quote_service_count integer DEFAULT 0 NOT NULL,
@@ -639,7 +635,7 @@ CREATE SEQUENCE contacts_id_seq
 
 
 --
--- Name: contacts; Type: TABLE; Schema: public; Owner: -
+-- Name: contacts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE contacts (
@@ -648,11 +644,11 @@ CREATE TABLE contacts (
     updated_at timestamp without time zone NOT NULL,
     user_id bigint,
     first_name character varying(200) NOT NULL,
-    last_name character varying(200) ,
+    last_name character varying(200),
     email character varying(510) NOT NULL,
-    subject character varying(510) ,
+    subject character varying(510),
     message text NOT NULL,
-    phone character varying(40) ,
+    phone character varying(40),
     ip_id bigint
 );
 
@@ -682,15 +678,15 @@ CREATE SEQUENCE contest_statuses_id_seq
 
 
 --
--- Name: contest_statuses; Type: TABLE; Schema: public; Owner: -
+-- Name: contest_statuses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE contest_statuses (
     id integer DEFAULT nextval('contest_statuses_id_seq'::regclass) NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    name character varying(255) ,
-    slug character varying(255) ,
+    name character varying(255),
+    slug character varying(255),
     message text,
     contest_count bigint DEFAULT 0 NOT NULL
 );
@@ -709,13 +705,13 @@ CREATE SEQUENCE contest_types_id_seq
 
 
 --
--- Name: contest_types; Type: TABLE; Schema: public; Owner: -
+-- Name: contest_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE contest_types (
     id integer DEFAULT nextval('contest_types_id_seq'::regclass) NOT NULL,
     resource_id integer,
-    name character varying(45) ,
+    name character varying(45),
     description text,
     next integer,
     contest_count bigint,
@@ -755,7 +751,7 @@ CREATE SEQUENCE contest_types_pricing_days_id_seq
 
 
 --
--- Name: contest_types_pricing_days; Type: TABLE; Schema: public; Owner: -
+-- Name: contest_types_pricing_days; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE contest_types_pricing_days (
@@ -781,7 +777,7 @@ CREATE SEQUENCE contest_types_pricing_packages_id_seq
 
 
 --
--- Name: contest_types_pricing_packages; Type: TABLE; Schema: public; Owner: -
+-- Name: contest_types_pricing_packages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE contest_types_pricing_packages (
@@ -809,7 +805,7 @@ CREATE SEQUENCE contest_user_downloads_id_seq
 
 
 --
--- Name: contest_user_downloads; Type: TABLE; Schema: public; Owner: -
+-- Name: contest_user_downloads; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE contest_user_downloads (
@@ -870,16 +866,16 @@ CREATE SEQUENCE contest_user_statuses_id_seq
 
 
 --
--- Name: contest_user_statuses; Type: TABLE; Schema: public; Owner: -
+-- Name: contest_user_statuses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE contest_user_statuses (
     id integer DEFAULT nextval('contest_user_statuses_id_seq'::regclass) NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    name character varying(255) ,
-    description character varying(255) ,
-    slug character varying(255) ,
+    name character varying(255),
+    description character varying(255),
+    slug character varying(255),
     contest_user_count bigint DEFAULT 0 NOT NULL
 );
 
@@ -897,7 +893,7 @@ CREATE SEQUENCE contest_users_id_seq
 
 
 --
--- Name: contest_users; Type: TABLE; Schema: public; Owner: -
+-- Name: contest_users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE contest_users (
@@ -935,7 +931,7 @@ CREATE SEQUENCE contests_id_seq
 
 
 --
--- Name: contests; Type: TABLE; Schema: public; Owner: -
+-- Name: contests; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE contests (
@@ -950,8 +946,8 @@ CREATE TABLE contests (
     resource_id integer,
     pricing_package_id integer,
     pricing_day_id integer,
-    name character varying(255) ,
-    slug character varying(255) ,
+    name character varying(255),
+    slug character varying(255),
     description text,
     maximum_entry_allowed integer,
     maximum_entry_allowed_per_user bigint DEFAULT 0,
@@ -1005,7 +1001,7 @@ CREATE TABLE contests (
     affiliate_commission_amount double precision DEFAULT 0,
     zazpay_gateway_id bigint,
     zazpay_payment_id bigint,
-    zazpay_pay_key character varying(250) ,
+    zazpay_pay_key character varying(250),
     zazpay_revised_amount double precision,
     upgrade text,
     participant_count bigint DEFAULT 0 NOT NULL,
@@ -1030,7 +1026,7 @@ CREATE SEQUENCE countries_id_seq
 
 
 --
--- Name: countries; Type: TABLE; Schema: public; Owner: -
+-- Name: countries; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE countries (
@@ -1072,7 +1068,7 @@ CREATE SEQUENCE coupons_id_seq
 
 
 --
--- Name: coupons; Type: TABLE; Schema: public; Owner: -
+-- Name: coupons; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE coupons (
@@ -1092,7 +1088,7 @@ CREATE TABLE coupons (
 
 
 --
--- Name: credit_purchase_logs; Type: TABLE; Schema: public; Owner: -
+-- Name: credit_purchase_logs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE credit_purchase_logs (
@@ -1117,7 +1113,7 @@ CREATE TABLE credit_purchase_logs (
 
 
 --
--- Name: credit_purchase_plans; Type: TABLE; Schema: public; Owner: -
+-- Name: credit_purchase_plans; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE credit_purchase_plans (
@@ -1148,7 +1144,7 @@ CREATE SEQUENCE discount_types_id_seq
 
 
 --
--- Name: discount_types; Type: TABLE; Schema: public; Owner: -
+-- Name: discount_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE discount_types (
@@ -1172,16 +1168,16 @@ CREATE SEQUENCE dispute_closed_types_id_seq
 
 
 --
--- Name: dispute_closed_types; Type: TABLE; Schema: public; Owner: -
+-- Name: dispute_closed_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE dispute_closed_types (
     id bigint DEFAULT nextval('dispute_closed_types_id_seq'::regclass) NOT NULL,
-    name character varying(510) ,
+    name character varying(510),
     dispute_open_type_id bigint,
     project_role_id bigint,
-    reason character varying(510) ,
-    resolve_type character varying(510) ,
+    reason character varying(510),
+    resolve_type character varying(510),
     action_list text NOT NULL
 );
 
@@ -1199,14 +1195,14 @@ CREATE SEQUENCE dispute_open_types_id_seq
 
 
 --
--- Name: dispute_open_types; Type: TABLE; Schema: public; Owner: -
+-- Name: dispute_open_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE dispute_open_types (
     id bigint DEFAULT nextval('dispute_open_types_id_seq'::regclass) NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    name character varying(510) ,
+    name character varying(510),
     project_role_id bigint,
     is_active boolean
 );
@@ -1225,14 +1221,14 @@ CREATE SEQUENCE dispute_statuses_id_seq
 
 
 --
--- Name: dispute_statuses; Type: TABLE; Schema: public; Owner: -
+-- Name: dispute_statuses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE dispute_statuses (
     id bigint DEFAULT nextval('dispute_statuses_id_seq'::regclass) NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    name character varying(510) 
+    name character varying(510)
 );
 
 
@@ -1249,7 +1245,7 @@ CREATE SEQUENCE educations_id_seq
 
 
 --
--- Name: educations; Type: TABLE; Schema: public; Owner: -
+-- Name: educations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE educations (
@@ -1277,7 +1273,7 @@ CREATE SEQUENCE email_templates_id_seq
 
 
 --
--- Name: email_templates; Type: TABLE; Schema: public; Owner: -
+-- Name: email_templates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE email_templates (
@@ -1312,7 +1308,7 @@ CREATE SEQUENCE exam_answers_id_seq
 
 
 --
--- Name: exam_answers; Type: TABLE; Schema: public; Owner: -
+-- Name: exam_answers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE exam_answers (
@@ -1341,7 +1337,7 @@ CREATE SEQUENCE exam_attends_id_seq
 
 
 --
--- Name: exam_attends; Type: TABLE; Schema: public; Owner: -
+-- Name: exam_attends; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE exam_attends (
@@ -1368,7 +1364,7 @@ CREATE SEQUENCE exam_categories_id_seq
 
 
 --
--- Name: exam_categories; Type: TABLE; Schema: public; Owner: -
+-- Name: exam_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE exam_categories (
@@ -1393,7 +1389,7 @@ CREATE SEQUENCE exam_levels_id_seq
 
 
 --
--- Name: exam_levels; Type: TABLE; Schema: public; Owner: -
+-- Name: exam_levels; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE exam_levels (
@@ -1418,7 +1414,7 @@ CREATE SEQUENCE exam_statuses_id_seq
 
 
 --
--- Name: exam_statuses; Type: TABLE; Schema: public; Owner: -
+-- Name: exam_statuses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE exam_statuses (
@@ -1455,7 +1451,7 @@ CREATE SEQUENCE exams_id_seq
 
 
 --
--- Name: exams; Type: TABLE; Schema: public; Owner: -
+-- Name: exams; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE exams (
@@ -1466,7 +1462,7 @@ CREATE TABLE exams (
     topics_covered text NOT NULL,
     instructions text NOT NULL,
     splash_content text,
-    title character varying(100) ,
+    title character varying(100),
     slug character varying(100) NOT NULL,
     duration integer DEFAULT 0 NOT NULL,
     fee double precision DEFAULT 0 NOT NULL,
@@ -1505,7 +1501,7 @@ CREATE SEQUENCE exams_questions_id_seq
 
 
 --
--- Name: exams_questions; Type: TABLE; Schema: public; Owner: -
+-- Name: exams_questions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE exams_questions (
@@ -1531,7 +1527,7 @@ CREATE SEQUENCE exams_users_id_seq
 
 
 --
--- Name: exams_users; Type: TABLE; Schema: public; Owner: -
+-- Name: exams_users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE exams_users (
@@ -1555,7 +1551,7 @@ CREATE TABLE exams_users (
     payment_gateway_id bigint,
     zazpay_gateway_id bigint,
     zazpay_payment_id bigint,
-    zazpay_pay_key character varying(510) ,
+    zazpay_pay_key character varying(510),
     zazpay_revised_amount double precision,
     taken_time double precision DEFAULT 0 NOT NULL,
     percentile_rank integer,
@@ -1600,7 +1596,7 @@ CREATE SEQUENCE flag_categories_id_seq
 
 
 --
--- Name: flag_categories; Type: TABLE; Schema: public; Owner: -
+-- Name: flag_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE flag_categories (
@@ -1627,7 +1623,7 @@ CREATE SEQUENCE flags_id_seq
 
 
 --
--- Name: flags; Type: TABLE; Schema: public; Owner: -
+-- Name: flags; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE flags (
@@ -1644,7 +1640,7 @@ CREATE TABLE flags (
 
 
 --
--- Name: followers; Type: TABLE; Schema: public; Owner: -
+-- Name: followers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE followers (
@@ -1690,26 +1686,26 @@ CREATE SEQUENCE form_field_groups_id_seq
 
 
 --
--- Name: form_field_groups; Type: TABLE; Schema: public; Owner: -
+-- Name: form_field_groups; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE form_field_groups (
     id integer DEFAULT nextval('form_field_groups_id_seq'::regclass) NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    name character varying(255) ,
-    slug character varying(255) ,
+    name character varying(255),
+    slug character varying(255),
     foreign_id bigint,
     info text,
     "order" bigint,
-    class character varying(255) ,
+    class character varying(255),
     is_deletable boolean DEFAULT true,
     is_editable boolean DEFAULT true
 );
 
 
 --
--- Name: form_field_submissions; Type: TABLE; Schema: public; Owner: -
+-- Name: form_field_submissions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE form_field_submissions (
@@ -1755,16 +1751,16 @@ CREATE SEQUENCE form_fields_id_seq
 
 
 --
--- Name: form_fields; Type: TABLE; Schema: public; Owner: -
+-- Name: form_fields; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE form_fields (
     id bigint DEFAULT nextval('form_fields_id_seq'::regclass) NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    name character varying(510) ,
-    label character varying(510) ,
-    info character varying(510) ,
+    name character varying(510),
+    label character varying(510),
+    info character varying(510),
     length bigint,
     options text,
     class character varying,
@@ -1806,7 +1802,7 @@ CREATE SEQUENCE hire_requests_id_seq
 
 
 --
--- Name: hire_requests; Type: TABLE; Schema: public; Owner: -
+-- Name: hire_requests; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE hire_requests (
@@ -1834,15 +1830,15 @@ CREATE SEQUENCE input_types_id_seq
 
 
 --
--- Name: input_types; Type: TABLE; Schema: public; Owner: -
+-- Name: input_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE input_types (
     id bigint DEFAULT nextval('input_types_id_seq'::regclass) NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    name character varying(200) ,
-    value character varying(200) 
+    name character varying(200),
+    value character varying(200)
 );
 
 
@@ -1859,14 +1855,14 @@ CREATE SEQUENCE ips_id_seq
 
 
 --
--- Name: ips; Type: TABLE; Schema: public; Owner: -
+-- Name: ips; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE ips (
     id bigint DEFAULT nextval('ips_id_seq'::regclass) NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    ip character varying(510) ,
+    ip character varying(510),
     host character varying(200) NOT NULL,
     city_id bigint,
     state_id bigint,
@@ -1890,7 +1886,7 @@ CREATE SEQUENCE job_applies_id_seq
 
 
 --
--- Name: job_applies; Type: TABLE; Schema: public; Owner: -
+-- Name: job_applies; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE job_applies (
@@ -1920,7 +1916,7 @@ CREATE SEQUENCE job_applies_portfolios_id_seq
 
 
 --
--- Name: job_applies_portfolios; Type: TABLE; Schema: public; Owner: -
+-- Name: job_applies_portfolios; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE job_applies_portfolios (
@@ -1943,7 +1939,7 @@ CREATE SEQUENCE job_apply_clicks_id_seq
 
 
 --
--- Name: job_apply_clicks; Type: TABLE; Schema: public; Owner: -
+-- Name: job_apply_clicks; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE job_apply_clicks (
@@ -1969,7 +1965,7 @@ CREATE SEQUENCE job_apply_statuses_id_seq
 
 
 --
--- Name: job_apply_statuses; Type: TABLE; Schema: public; Owner: -
+-- Name: job_apply_statuses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE job_apply_statuses (
@@ -1994,7 +1990,7 @@ CREATE SEQUENCE job_categories_id_seq
 
 
 --
--- Name: job_categories; Type: TABLE; Schema: public; Owner: -
+-- Name: job_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE job_categories (
@@ -2022,7 +2018,7 @@ CREATE SEQUENCE job_statuses_id_seq
 
 
 --
--- Name: job_statuses; Type: TABLE; Schema: public; Owner: -
+-- Name: job_statuses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE job_statuses (
@@ -2048,7 +2044,7 @@ CREATE SEQUENCE job_types_id_seq
 
 
 --
--- Name: job_types; Type: TABLE; Schema: public; Owner: -
+-- Name: job_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE job_types (
@@ -2074,7 +2070,7 @@ CREATE SEQUENCE jobs_id_seq
 
 
 --
--- Name: jobs; Type: TABLE; Schema: public; Owner: -
+-- Name: jobs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE jobs (
@@ -2112,7 +2108,7 @@ CREATE TABLE jobs (
     payment_gateway_id bigint,
     zazpay_gateway_id bigint,
     zazpay_payment_id bigint,
-    zazpay_pay_key character varying(510) DEFAULT '',
+    zazpay_pay_key character varying(510) DEFAULT ''::character varying,
     job_apply_click_count bigint DEFAULT 0 NOT NULL,
     job_apply_count bigint DEFAULT 0 NOT NULL,
     is_featured boolean DEFAULT false NOT NULL,
@@ -2144,7 +2140,7 @@ CREATE SEQUENCE jobs_skills_id_seq
 
 
 --
--- Name: jobs_skills; Type: TABLE; Schema: public; Owner: -
+-- Name: jobs_skills; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE jobs_skills (
@@ -2169,7 +2165,7 @@ CREATE SEQUENCE languages_id_seq
 
 
 --
--- Name: languages; Type: TABLE; Schema: public; Owner: -
+-- Name: languages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE languages (
@@ -2196,7 +2192,7 @@ CREATE SEQUENCE message_contents_id_seq
 
 
 --
--- Name: message_contents; Type: TABLE; Schema: public; Owner: -
+-- Name: message_contents; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE message_contents (
@@ -2233,7 +2229,7 @@ CREATE SEQUENCE messages_id_seq
 
 
 --
--- Name: messages; Type: TABLE; Schema: public; Owner: -
+-- Name: messages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE messages (
@@ -2274,7 +2270,7 @@ CREATE SEQUENCE milestone_statuses_id_seq
 
 
 --
--- Name: milestone_statuses; Type: TABLE; Schema: public; Owner: -
+-- Name: milestone_statuses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE milestone_statuses (
@@ -2302,7 +2298,7 @@ CREATE SEQUENCE milestones_id_seq
 
 
 --
--- Name: milestones; Type: TABLE; Schema: public; Owner: -
+-- Name: milestones; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE milestones (
@@ -2341,7 +2337,7 @@ CREATE SEQUENCE money_transfer_accounts_id_seq
 
 
 --
--- Name: money_transfer_accounts; Type: TABLE; Schema: public; Owner: -
+-- Name: money_transfer_accounts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE money_transfer_accounts (
@@ -2356,7 +2352,7 @@ CREATE TABLE money_transfer_accounts (
 
 
 --
--- Name: oauth_access_tokens; Type: TABLE; Schema: public; Owner: -
+-- Name: oauth_access_tokens; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE oauth_access_tokens (
@@ -2369,7 +2365,7 @@ CREATE TABLE oauth_access_tokens (
 
 
 --
--- Name: oauth_authorization_codes; Type: TABLE; Schema: public; Owner: -
+-- Name: oauth_authorization_codes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE oauth_authorization_codes (
@@ -2395,7 +2391,7 @@ CREATE SEQUENCE oauth_clients_id_seq
 
 
 --
--- Name: oauth_clients; Type: TABLE; Schema: public; Owner: -
+-- Name: oauth_clients; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE oauth_clients (
@@ -2417,7 +2413,7 @@ CREATE TABLE oauth_clients (
 
 
 --
--- Name: oauth_jwt; Type: TABLE; Schema: public; Owner: -
+-- Name: oauth_jwt; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE oauth_jwt (
@@ -2428,7 +2424,7 @@ CREATE TABLE oauth_jwt (
 
 
 --
--- Name: oauth_refresh_tokens; Type: TABLE; Schema: public; Owner: -
+-- Name: oauth_refresh_tokens; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE oauth_refresh_tokens (
@@ -2441,7 +2437,7 @@ CREATE TABLE oauth_refresh_tokens (
 
 
 --
--- Name: oauth_scopes; Type: TABLE; Schema: public; Owner: -
+-- Name: oauth_scopes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE oauth_scopes (
@@ -2463,7 +2459,7 @@ CREATE SEQUENCE pages_id_seq
 
 
 --
--- Name: pages; Type: TABLE; Schema: public; Owner: -
+-- Name: pages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE pages (
@@ -2475,12 +2471,12 @@ CREATE TABLE pages (
     title_es character varying(510),
     content text,
     content_es text,
-    template character varying(510) ,
+    template character varying(510),
     draft boolean,
     lft bigint,
     rght bigint,
     level integer DEFAULT 0 NOT NULL,
-    meta_keywords character varying(510) ,
+    meta_keywords character varying(510),
     description_meta_tag text,
     url text,
     slug character varying(510) NOT NULL,
@@ -2501,7 +2497,7 @@ CREATE SEQUENCE payment_gateway_settings_id_seq
 
 
 --
--- Name: payment_gateway_settings; Type: TABLE; Schema: public; Owner: -
+-- Name: payment_gateway_settings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE payment_gateway_settings (
@@ -2532,7 +2528,7 @@ CREATE SEQUENCE payment_gateways_id_seq
 
 
 --
--- Name: payment_gateways; Type: TABLE; Schema: public; Owner: -
+-- Name: payment_gateways; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE payment_gateways (
@@ -2540,7 +2536,7 @@ CREATE TABLE payment_gateways (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     name character varying(510) NOT NULL,
-    slug character varying(510) ,
+    slug character varying(510),
     description text NOT NULL,
     is_test_mode boolean NOT NULL,
     is_active boolean NOT NULL,
@@ -2609,7 +2605,7 @@ CREATE SEQUENCE portfolios_id_seq
 
 
 --
--- Name: portfolios; Type: TABLE; Schema: public; Owner: -
+-- Name: portfolios; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE portfolios (
@@ -2653,7 +2649,7 @@ CREATE SEQUENCE pricing_days_id_seq
 
 
 --
--- Name: pricing_days; Type: TABLE; Schema: public; Owner: -
+-- Name: pricing_days; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE pricing_days (
@@ -2679,14 +2675,14 @@ CREATE SEQUENCE pricing_packages_id_seq
 
 
 --
--- Name: pricing_packages; Type: TABLE; Schema: public; Owner: -
+-- Name: pricing_packages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE pricing_packages (
     id integer DEFAULT nextval('pricing_packages_id_seq'::regclass) NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    name character varying(100) ,
+    name character varying(100),
     description text,
     global_price double precision DEFAULT 0,
     participant_commision double precision DEFAULT 0,
@@ -2709,7 +2705,7 @@ CREATE SEQUENCE project_bid_invoice_items_id_seq
 
 
 --
--- Name: project_bid_invoice_items; Type: TABLE; Schema: public; Owner: -
+-- Name: project_bid_invoice_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE project_bid_invoice_items (
@@ -2735,7 +2731,7 @@ CREATE SEQUENCE project_bid_invoices_id_seq
 
 
 --
--- Name: project_bid_invoices; Type: TABLE; Schema: public; Owner: -
+-- Name: project_bid_invoices; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE project_bid_invoices (
@@ -2774,7 +2770,7 @@ CREATE SEQUENCE project_bids_id_seq
 
 
 --
--- Name: project_bids; Type: TABLE; Schema: public; Owner: -
+-- Name: project_bids; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE project_bids (
@@ -2812,7 +2808,7 @@ CREATE SEQUENCE project_categories_id_seq
 
 
 --
--- Name: project_categories; Type: TABLE; Schema: public; Owner: -
+-- Name: project_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE project_categories (
@@ -2840,7 +2836,7 @@ CREATE SEQUENCE project_disputes_id_seq
 
 
 --
--- Name: project_disputes; Type: TABLE; Schema: public; Owner: -
+-- Name: project_disputes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE project_disputes (
@@ -2876,7 +2872,7 @@ CREATE SEQUENCE project_ranges_id_seq
 
 
 --
--- Name: project_ranges; Type: TABLE; Schema: public; Owner: -
+-- Name: project_ranges; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE project_ranges (
@@ -2906,7 +2902,7 @@ CREATE SEQUENCE project_statuses_id_seq
 
 
 --
--- Name: project_statuses; Type: TABLE; Schema: public; Owner: -
+-- Name: project_statuses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE project_statuses (
@@ -2932,7 +2928,7 @@ CREATE SEQUENCE projects_id_seq
 
 
 --
--- Name: projects; Type: TABLE; Schema: public; Owner: -
+-- Name: projects; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE projects (
@@ -3009,7 +3005,7 @@ CREATE SEQUENCE projects_project_categories_id_seq
 
 
 --
--- Name: projects_project_categories; Type: TABLE; Schema: public; Owner: -
+-- Name: projects_project_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE projects_project_categories (
@@ -3046,7 +3042,7 @@ CREATE SEQUENCE provider_users_id_seq
 
 
 --
--- Name: provider_users; Type: TABLE; Schema: public; Owner: -
+-- Name: provider_users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE provider_users (
@@ -3076,7 +3072,7 @@ CREATE SEQUENCE providers_id_seq
 
 
 --
--- Name: providers; Type: TABLE; Schema: public; Owner: -
+-- Name: providers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE providers (
@@ -3107,7 +3103,7 @@ CREATE SEQUENCE publications_id_seq
 
 
 --
--- Name: publications; Type: TABLE; Schema: public; Owner: -
+-- Name: publications; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE publications (
@@ -3134,7 +3130,7 @@ CREATE SEQUENCE question_answer_options_id_seq
 
 
 --
--- Name: question_answer_options; Type: TABLE; Schema: public; Owner: -
+-- Name: question_answer_options; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE question_answer_options (
@@ -3160,14 +3156,14 @@ CREATE SEQUENCE question_categories_id_seq
 
 
 --
--- Name: question_categories; Type: TABLE; Schema: public; Owner: -
+-- Name: question_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE question_categories (
     id bigint DEFAULT nextval('question_categories_id_seq'::regclass) NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    name character varying(500) ,
+    name character varying(500),
     question_count integer DEFAULT 0 NOT NULL
 );
 
@@ -3185,14 +3181,14 @@ CREATE SEQUENCE question_display_types_id_seq
 
 
 --
--- Name: question_display_types; Type: TABLE; Schema: public; Owner: -
+-- Name: question_display_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE question_display_types (
     id integer DEFAULT nextval('question_display_types_id_seq'::regclass) NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    name character varying(510) 
+    name character varying(510)
 );
 
 
@@ -3209,7 +3205,7 @@ CREATE SEQUENCE questions_id_seq
 
 
 --
--- Name: questions; Type: TABLE; Schema: public; Owner: -
+-- Name: questions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE questions (
@@ -3218,7 +3214,7 @@ CREATE TABLE questions (
     updated_at timestamp without time zone NOT NULL,
     question_category_id bigint NOT NULL,
     question text NOT NULL,
-    info_tip character varying(510) ,
+    info_tip character varying(510),
     is_active boolean,
     exams_question_count bigint DEFAULT 0
 );
@@ -3273,7 +3269,7 @@ CREATE SEQUENCE quote_bids_id_seq
 
 
 --
--- Name: quote_bids; Type: TABLE; Schema: public; Owner: -
+-- Name: quote_bids; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE quote_bids (
@@ -3347,7 +3343,7 @@ CREATE SEQUENCE quote_categories_id_seq
 
 
 --
--- Name: quote_categories; Type: TABLE; Schema: public; Owner: -
+-- Name: quote_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE quote_categories (
@@ -3379,7 +3375,7 @@ CREATE SEQUENCE quote_categories_quote_services_id_seq
 
 
 --
--- Name: quote_categories_quote_services; Type: TABLE; Schema: public; Owner: -
+-- Name: quote_categories_quote_services; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE quote_categories_quote_services (
@@ -3442,7 +3438,7 @@ CREATE SEQUENCE quote_faq_answers_id_seq
 
 
 --
--- Name: quote_faq_answers; Type: TABLE; Schema: public; Owner: -
+-- Name: quote_faq_answers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE quote_faq_answers (
@@ -3469,7 +3465,7 @@ CREATE SEQUENCE quote_faq_question_templates_id_seq
 
 
 --
--- Name: quote_faq_question_templates; Type: TABLE; Schema: public; Owner: -
+-- Name: quote_faq_question_templates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE quote_faq_question_templates (
@@ -3494,7 +3490,7 @@ CREATE SEQUENCE quote_form_submission_fields_id_seq
 
 
 --
--- Name: quote_request_form_fields; Type: TABLE; Schema: public; Owner: -
+-- Name: quote_request_form_fields; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE quote_request_form_fields (
@@ -3520,7 +3516,7 @@ CREATE SEQUENCE quote_requests_id_seq
 
 
 --
--- Name: quote_requests; Type: TABLE; Schema: public; Owner: -
+-- Name: quote_requests; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE quote_requests (
@@ -3533,15 +3529,15 @@ CREATE TABLE quote_requests (
     title character varying(510) NOT NULL,
     description text NOT NULL,
     best_day_time_for_work character varying(510) NOT NULL,
-    full_address character varying(510) ,
-    address character varying(510) ,
+    full_address character varying(510),
+    address character varying(510),
     city_id bigint,
     state_id bigint,
     country_id bigint,
-    zip_code character varying(510) ,
+    zip_code character varying(510),
     latitude double precision,
     longitude double precision,
-    phone_no character varying(100) ,
+    phone_no character varying(100),
     quote_bid_count integer DEFAULT 0 NOT NULL,
     is_archived boolean DEFAULT false NOT NULL,
     is_send_request_to_other_service_providers boolean DEFAULT false NOT NULL,
@@ -3574,7 +3570,7 @@ CREATE SEQUENCE quote_service_audios_id_seq
 
 
 --
--- Name: quote_service_audios; Type: TABLE; Schema: public; Owner: -
+-- Name: quote_service_audios; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE quote_service_audios (
@@ -3599,7 +3595,7 @@ CREATE SEQUENCE quote_service_photos_id_seq
 
 
 --
--- Name: quote_service_photos; Type: TABLE; Schema: public; Owner: -
+-- Name: quote_service_photos; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE quote_service_photos (
@@ -3607,7 +3603,7 @@ CREATE TABLE quote_service_photos (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     quote_service_id bigint NOT NULL,
-    caption character varying(255) 
+    caption character varying(255)
 );
 
 
@@ -3624,7 +3620,7 @@ CREATE SEQUENCE quote_service_videos_id_seq
 
 
 --
--- Name: quote_service_videos; Type: TABLE; Schema: public; Owner: -
+-- Name: quote_service_videos; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE quote_service_videos (
@@ -3650,7 +3646,7 @@ CREATE SEQUENCE quote_services_id_seq
 
 
 --
--- Name: quote_services; Type: TABLE; Schema: public; Owner: -
+-- Name: quote_services; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE quote_services (
@@ -3666,7 +3662,7 @@ CREATE TABLE quote_services (
     city_id bigint,
     state_id bigint NOT NULL,
     country_id bigint NOT NULL,
-    zip_code character varying(510) ,
+    zip_code character varying(510),
     latitude double precision NOT NULL,
     longitude double precision NOT NULL,
     website_url character varying(200),
@@ -3715,7 +3711,7 @@ CREATE SEQUENCE quote_statuses_id_seq
 
 
 --
--- Name: quote_statuses; Type: TABLE; Schema: public; Owner: -
+-- Name: quote_statuses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE quote_statuses (
@@ -3739,7 +3735,7 @@ CREATE SEQUENCE quote_user_faq_questions_id_seq
 
 
 --
--- Name: quote_user_faq_questions; Type: TABLE; Schema: public; Owner: -
+-- Name: quote_user_faq_questions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE quote_user_faq_questions (
@@ -3764,16 +3760,16 @@ CREATE SEQUENCE resources_id_seq
 
 
 --
--- Name: resources; Type: TABLE; Schema: public; Owner: -
+-- Name: resources; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE resources (
     id integer DEFAULT nextval('resources_id_seq'::regclass) NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    name character varying(255) ,
+    name character varying(255),
     description text,
-    folder_name character varying(255) ,
+    folder_name character varying(255),
     contest_count bigint,
     contest_user_count bigint,
     revenue double precision,
@@ -3794,7 +3790,7 @@ CREATE SEQUENCE resume_downloads_id_seq
 
 
 --
--- Name: resume_downloads; Type: TABLE; Schema: public; Owner: -
+-- Name: resume_downloads; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE resume_downloads (
@@ -3820,7 +3816,7 @@ CREATE SEQUENCE resume_ratings_id_seq
 
 
 --
--- Name: resume_ratings; Type: TABLE; Schema: public; Owner: -
+-- Name: resume_ratings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE resume_ratings (
@@ -3836,7 +3832,7 @@ CREATE TABLE resume_ratings (
 
 
 --
--- Name: reviews; Type: TABLE; Schema: public; Owner: -
+-- Name: reviews; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE reviews (
@@ -3890,7 +3886,7 @@ ALTER SEQUENCE reviews_id_seq OWNED BY reviews.id;
 
 
 --
--- Name: roles; Type: TABLE; Schema: public; Owner: -
+-- Name: roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE roles (
@@ -3934,7 +3930,7 @@ CREATE SEQUENCE salary_types_id_seq
 
 
 --
--- Name: salary_types; Type: TABLE; Schema: public; Owner: -
+-- Name: salary_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE salary_types (
@@ -3959,7 +3955,7 @@ CREATE SEQUENCE setting_categories_id_seq
 
 
 --
--- Name: setting_categories; Type: TABLE; Schema: public; Owner: -
+-- Name: setting_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE setting_categories (
@@ -3984,7 +3980,7 @@ CREATE SEQUENCE settings_id_seq
 
 
 --
--- Name: settings; Type: TABLE; Schema: public; Owner: -
+-- Name: settings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE settings (
@@ -4016,7 +4012,7 @@ CREATE SEQUENCE skills_id_seq
 
 
 --
--- Name: skills; Type: TABLE; Schema: public; Owner: -
+-- Name: skills; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE skills (
@@ -4047,7 +4043,7 @@ CREATE SEQUENCE skills_portfolios_id_seq
 
 
 --
--- Name: skills_portfolios; Type: TABLE; Schema: public; Owner: -
+-- Name: skills_portfolios; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE skills_portfolios (
@@ -4072,7 +4068,7 @@ CREATE SEQUENCE skills_projects_id_seq
 
 
 --
--- Name: skills_projects; Type: TABLE; Schema: public; Owner: -
+-- Name: skills_projects; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE skills_projects (
@@ -4095,7 +4091,7 @@ CREATE SEQUENCE skills_users_id_seq
 
 
 --
--- Name: skills_users; Type: TABLE; Schema: public; Owner: -
+-- Name: skills_users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE skills_users (
@@ -4120,7 +4116,7 @@ CREATE SEQUENCE states_id_seq
 
 
 --
--- Name: states; Type: TABLE; Schema: public; Owner: -
+-- Name: states; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE states (
@@ -4160,7 +4156,7 @@ CREATE SEQUENCE timezones_id_seq
 
 
 --
--- Name: timezones; Type: TABLE; Schema: public; Owner: -
+-- Name: timezones; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE timezones (
@@ -4201,7 +4197,7 @@ CREATE SEQUENCE transactions_id_seq
 
 
 --
--- Name: transactions; Type: TABLE; Schema: public; Owner: -
+-- Name: transactions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE transactions (
@@ -4251,7 +4247,7 @@ CREATE SEQUENCE upload_hosters_id_seq
 
 
 --
--- Name: upload_hosters; Type: TABLE; Schema: public; Owner: -
+-- Name: upload_hosters; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE upload_hosters (
@@ -4280,7 +4276,7 @@ CREATE SEQUENCE upload_service_settings_id_seq
 
 
 --
--- Name: upload_service_settings; Type: TABLE; Schema: public; Owner: -
+-- Name: upload_service_settings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE upload_service_settings (
@@ -4288,8 +4284,8 @@ CREATE TABLE upload_service_settings (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     upload_service_id integer,
-    name character varying(255) ,
-    value character varying(255) 
+    name character varying(255),
+    value character varying(255)
 );
 
 
@@ -4306,15 +4302,15 @@ CREATE SEQUENCE upload_service_types_id_seq
 
 
 --
--- Name: upload_service_types; Type: TABLE; Schema: public; Owner: -
+-- Name: upload_service_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE upload_service_types (
     id integer DEFAULT nextval('upload_service_types_id_seq'::regclass) NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    name character varying(20) ,
-    slug character varying(20) 
+    name character varying(20),
+    slug character varying(20)
 );
 
 
@@ -4331,15 +4327,15 @@ CREATE SEQUENCE upload_services_id_seq
 
 
 --
--- Name: upload_services; Type: TABLE; Schema: public; Owner: -
+-- Name: upload_services; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE upload_services (
     id integer DEFAULT nextval('upload_services_id_seq'::regclass) NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    name character varying(20) ,
-    slug character varying(20) ,
+    name character varying(20),
+    slug character varying(20),
     total_quota bigint DEFAULT 0,
     total_upload_count bigint,
     total_upload_filesize bigint,
@@ -4360,14 +4356,14 @@ CREATE SEQUENCE upload_statuses_id_seq
 
 
 --
--- Name: upload_statuses; Type: TABLE; Schema: public; Owner: -
+-- Name: upload_statuses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE upload_statuses (
     id integer DEFAULT nextval('upload_statuses_id_seq'::regclass) NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    name character varying(255) 
+    name character varying(255)
 );
 
 
@@ -4384,7 +4380,7 @@ CREATE SEQUENCE uploads_id_seq
 
 
 --
--- Name: uploads; Type: TABLE; Schema: public; Owner: -
+-- Name: uploads; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE uploads (
@@ -4396,14 +4392,14 @@ CREATE TABLE uploads (
     user_id bigint,
     contest_user_id bigint,
     upload_status_id integer,
-    video_url character varying(255) ,
-    vimeo_video_id character varying(255) ,
-    youtube_video_id character varying(255) ,
-    vimeo_thumbnail_url character varying(255) ,
-    youtube_thumbnail_url character varying(255) ,
-    video_title character varying(255) ,
+    video_url character varying(255),
+    vimeo_video_id character varying(255),
+    youtube_video_id character varying(255),
+    vimeo_thumbnail_url character varying(255),
+    youtube_thumbnail_url character varying(255),
+    video_title character varying(255),
     filesize bigint,
-    failure_message character varying(255) ,
+    failure_message character varying(255),
     soundcloud_audio_id character varying(255),
     audio_url character varying(255)
 );
@@ -4434,7 +4430,7 @@ CREATE SEQUENCE user_cash_withdrawals_id_seq
 
 
 --
--- Name: user_cash_withdrawals; Type: TABLE; Schema: public; Owner: -
+-- Name: user_cash_withdrawals; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE user_cash_withdrawals (
@@ -4470,7 +4466,7 @@ CREATE SEQUENCE user_logins_id_seq
 
 
 --
--- Name: user_logins; Type: TABLE; Schema: public; Owner: -
+-- Name: user_logins; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE user_logins (
@@ -4496,7 +4492,7 @@ CREATE SEQUENCE users_id_seq
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -
+-- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE users (
@@ -4578,7 +4574,7 @@ CREATE TABLE users (
 
 
 --
--- Name: vaults; Type: TABLE; Schema: public; Owner: -
+-- Name: vaults; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE vaults (
@@ -4628,7 +4624,7 @@ ALTER SEQUENCE vaults_id_seq OWNED BY vaults.id;
 
 
 --
--- Name: views; Type: TABLE; Schema: public; Owner: -
+-- Name: views; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE views (
@@ -4662,7 +4658,7 @@ ALTER SEQUENCE views_id_seq OWNED BY views.id;
 
 
 --
--- Name: wallet_transaction_logs; Type: TABLE; Schema: public; Owner: -
+-- Name: wallet_transaction_logs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE wallet_transaction_logs (
@@ -4672,8 +4668,8 @@ CREATE TABLE wallet_transaction_logs (
     foreign_id bigint DEFAULT 0 NOT NULL,
     class character varying(100) NOT NULL,
     amount double precision DEFAULT 0 NOT NULL,
-    status character varying(100) DEFAULT '',
-    payment_type character varying(100) DEFAULT ''
+    status character varying(100) DEFAULT ''::character varying,
+    payment_type character varying(100) DEFAULT ''::character varying
 );
 
 
@@ -4697,7 +4693,7 @@ ALTER SEQUENCE wallet_transaction_logs_id_seq OWNED BY wallet_transaction_logs.i
 
 
 --
--- Name: wallets; Type: TABLE; Schema: public; Owner: -
+-- Name: wallets; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE wallets (
@@ -4745,7 +4741,7 @@ CREATE SEQUENCE work_profiles_id_seq
 
 
 --
--- Name: work_profiles; Type: TABLE; Schema: public; Owner: -
+-- Name: work_profiles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE work_profiles (
@@ -4775,7 +4771,7 @@ CREATE SEQUENCE zazpay_ipn_logs_id_seq
 
 
 --
--- Name: zazpay_ipn_logs; Type: TABLE; Schema: public; Owner: -
+-- Name: zazpay_ipn_logs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE zazpay_ipn_logs (
@@ -4800,14 +4796,14 @@ CREATE SEQUENCE zazpay_payment_gateways_id_seq
 
 
 --
--- Name: zazpay_payment_gateways; Type: TABLE; Schema: public; Owner: -
+-- Name: zazpay_payment_gateways; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE zazpay_payment_gateways (
     id bigint DEFAULT nextval('zazpay_payment_gateways_id_seq'::regclass) NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    zazpay_gateway_name character varying(510) ,
+    zazpay_gateway_name character varying(510),
     zazpay_gateway_id bigint,
     zazpay_payment_group_id bigint NOT NULL,
     zazpay_gateway_details text,
@@ -4829,7 +4825,7 @@ CREATE SEQUENCE zazpay_payment_gateways_users_id_seq
 
 
 --
--- Name: zazpay_payment_gateways_users; Type: TABLE; Schema: public; Owner: -
+-- Name: zazpay_payment_gateways_users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE zazpay_payment_gateways_users (
@@ -4854,7 +4850,7 @@ CREATE SEQUENCE zazpay_payment_groups_id_seq
 
 
 --
--- Name: zazpay_payment_groups; Type: TABLE; Schema: public; Owner: -
+-- Name: zazpay_payment_groups; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE zazpay_payment_groups (
@@ -4862,7 +4858,7 @@ CREATE TABLE zazpay_payment_groups (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     zazpay_group_id bigint NOT NULL,
-    name character varying(400) ,
+    name character varying(400),
     thumb_url text
 );
 
@@ -4880,7 +4876,7 @@ CREATE SEQUENCE zazpay_transaction_logs_id_seq
 
 
 --
--- Name: zazpay_transaction_logs; Type: TABLE; Schema: public; Owner: -
+-- Name: zazpay_transaction_logs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE zazpay_transaction_logs (
@@ -4890,17 +4886,17 @@ CREATE TABLE zazpay_transaction_logs (
     user_id bigint,
     amount double precision NOT NULL,
     payment_id bigint,
-    class character varying(100) ,
+    class character varying(100),
     foreign_id bigint,
-    zazpay_pay_key character varying(510) ,
+    zazpay_pay_key character varying(510),
     merchant_id bigint,
     gateway_id integer,
-    gateway_name character varying(510) ,
-    status character varying(100) ,
-    payment_type character varying(100) ,
+    gateway_name character varying(510),
+    status character varying(100),
+    payment_type character varying(100),
     buyer_id bigint,
-    buyer_email character varying(510) ,
-    buyer_address character varying(510) 
+    buyer_email character varying(510),
+    buyer_address character varying(510)
 );
 
 
@@ -5990,6 +5986,7 @@ COPY email_templates (id, created_at, updated_at, "from", reply_to, name, descri
 66	2015-07-02 16:11:45	2015-07-02 16:11:45	##FROM_EMAIL##		Quote - Feedback Updated Notification	we will send this mail, when user update the feedback.	Feedback updated for "##REQUEST_NAME##"	Hi ##FREELANCER##,\n\nFeedback updated for "##REQUEST_NAME##" from ##EMPLOYER##\nClick below link for more information.\n##RESPONSE_URL##\n\nThanks,\n##SITE_NAME##\n##SITE_URL##		\N	SITE_NAME, SITE_URL,FREELANCER,EMPLOYER,RESPONSE_URL,BUSINESSNAME,RESPONSE_URL	f	f	Quote - Feedback Updated Notification
 86	2017-01-05 12:16:22	2017-01-05 12:16:22	##FROM_EMAIL##	##REPLY_TO_EMAIL##	contestactivityalert	we will send this mail, when we change the contest status.	[##CONTEST_NAME##] Status changed: ##PREVIOUS_STATUS## -> ##CURRENT_STATUS##	Dear ##USERNAME##,\n\nThe status of the contest "##CONTEST_NAME##" is changed from "##PREVIOUS_STATUS##" to "##CURRENT_STATUS##".\n\n##CONTEST_URL##\n\nThanks,\n##SITE_NAME##\n##SITE_URL##		\N		f	t	Activity Alert Mail
 67	2015-07-02 16:11:45	2015-07-02 16:11:45	##FROM_EMAIL##		Hired Notification	we will send this mail, when provider hired by the requestor.	##REQUESTOR## hired you for "##REQUEST_NAME##"	Hi ##FREELANCER##,\n\n##EMPLOYER## hired you for "##REQUEST_NAME##"\nClick below link for more information.\n##RESPONSE_URL##\n\nThanks,\n##SITE_NAME##\n##SITE_URL##		\N	SITE_NAME, SITE_URL,FREELANCER,EMPLOYER,RESPONSE_URL,BUSINESSNAME,RESPONSE_URL	f	f	Hired Notification
+1	2009-02-20 10:24:49	2015-04-17 12:40:54	##FROM_EMAIL##		forgotpassword	we will send this mail, when user submit the forgot password form.	[##SITE_NAME##] Forgot password	Hi ##USERNAME##, \n\nWe have changed new password as per your requested.\n\nNew password: \n\n##PASSWORD##\n\nThanks, \n##SITE_NAME## \n##SITE_URL##		\N	USERNAME,RESET_URL,SITE_NAME	f	f	Forgot Password
 69	2015-07-02 16:11:45	2015-07-02 16:11:45	##FROM_EMAIL##		New Quote Request Received Notification	System will send this mail to freelancer when new quote request received.	[##SITE_NAME##] Quote request received for ##CATEGORY_NAME##	Hi ##FREELANCER##,\n\n##EMPLOYER## requested quote for ##CATEGORY_NAME##.\n\nRequest: ##REQUEST_TITLE##\nDescription: ##REQUEST_DESCRIPTION##\nTime: ##PREFERRED_TIME##\nLocation: ##WORK_LOCATION##\n\nManage quote requests and works: ##MY_WORK_PAGE_LINK##\n\nThanks,\n##SITE_NAME##\n##SITE_URL##		\N	SITE_NAME, SITE_URL,FREELANCER,EMPLOYER,RESPONSE_URL,BUSINESSNAME,RESPONSE_URL	f	f	New Quote Request Received Notification
 56	2014-05-12 19:39:00	2015-04-11 08:48:06	##FROM_EMAIL##	##REPLY_TO_EMAIL##	Project Favorite Added	This is sent to project owner when project is favorited.	[##SITE_NAME##][##PROJECT_NAME##] Project has been favorited	Dear ##USERNAME##,\n\nThe project ##PROJECT_NAME## has been favorited by ##FAV_USERNAME##.\n\nPlease click the following link to view the project,\n##PROJECT_LINK##\n\nThanks,\n##SITE_NAME##\n##SITE_URL##		##FAV_USERNAME## favorited project ##PROJECT_NAME##.	USERNAME, PROJECT_NAME, SITE_NAME, SITE_URL, FAV_USERNAME, PROJECT_LINK	f	t	Project Favorite Added
 55	2014-05-12 19:28:00	2015-04-11 08:47:12	##FROM_EMAIL##	##REPLY_TO_EMAIL##	Job Expired Alert	This is sent to admin, job employer when job is expired.	[##SITE_NAME##][##JOB_NAME##] Job has been expired	Dear ##USERNAME##,\n\nThe job ##JOB_NAME## has been expired on ##SITE_NAME##.\n\nPlease click the following link to view the job,\n##JOB_LINK##\n\nThanks,\n##SITE_NAME##\n##SITE_URL##		The job ##JOB_NAME## has been expired.	USERNAME, JOB_NAME, SITE_NAME, SITE_URL	f	t	Job Expired Alert
@@ -6020,7 +6017,6 @@ COPY email_templates (id, created_at, updated_at, "from", reply_to, name, descri
 3	2009-02-20 10:15:19	2015-04-10 14:14:02	##FROM_EMAIL##		newuserjoin	we will send this mail to admin, when a new user registered in the site. For this you have to enable "admin mail after register" in the settings page.	[##SITE_NAME##] New user joined in ##SITE_NAME## account	Hi, \n\nA new user named "##USERNAME##" has joined in ##SITE_NAME## account. \n\nUsername: ##USERNAME##\nEmail: ##USEREMAIL##\nSignup IP: ##SIGNUPIP##\n\n\nThanks,\n##SITE_NAME##\n##SITE_URL##		\N	SITE_NAME,USERNAME	f	f	New User Join
 2	2009-02-20 10:15:57	2015-05-07 08:29:31	##FROM_EMAIL##		activationrequest	we will send this mail, when user registering an account he/she will get an activation request.	[##SITE_NAME##] Please activate your ##SITE_NAME## account	Hi ##USERNAME##,\n\nYour account has been created. \nPlease visit the following URL to activate your account.\n##ACTIVATION_URL##\n\nThanks,\n##SITE_NAME##\n##SITE_URL##		\N	SITE_NAME,USERNAME,ACTIVATION_URL	f	f	Activation Request
 24	2015-07-02 16:11:45	2015-04-10 15:41:37	##FROM_EMAIL##	##REPLY_TO_EMAIL##	Admin Dispute Alert	we will send this when a project dispute opened.	[##SITE_NAME##][##PROJECT_NAME##] Dispute opened 	Hi,\n\nNew dispute opened for project "##PROJECT_NAME##".\nDisputer: ##DISPUTER## (##DISPUTERTYPE##)\nDisputed: ##DISPUTED## (##DISPUTEDTYPE##)\nDispute Reason: ##DISPUTETYPE##\nReason/Comments: ##REASON## \n\nPlease click the following link to view the project,\n##PROJECT_URL## \n\nThanks,\n##SITE_NAME##\n##SITE_URL## 		\N		f	f	Admin Dispute Alert
-1	2009-02-20 10:24:49	2015-04-17 12:40:54	##FROM_EMAIL##		forgotpassword	we will send this mail, when user submit the forgot password form.	[##SITE_NAME##] Forgot password	Hi ##USERNAME##, \n\nWe have changed new password as per your requested.\n\nNew password: \n\n##PASSWORD##\n\nThanks, \n##SITE_NAME## \n##SITE_URL##		\N	USERNAME,RESET_URL,SITE_NAME	f	f	Forgot Password
 5	2009-05-22 16:51:14	2015-04-10 14:19:22	##FROM_EMAIL##		welcomemail	we will send this mail, when user register in this site and get activate.	[##SITE_NAME##] Welcome to ##SITE_NAME##	Hi ##USERNAME##,\n\nWe wish to say a quick hello and thanks for registering at ##SITE_NAME##.\n\nIf you did not request this account and feel this is in error, please\ncontact us at ##CONTACT_MAIL##\n\nThanks,\n##SITE_NAME##\n##SITE_URL##		\N	SITE_NAME, USERNAME, SUPPORT_EMAIL	f	f	Welcome Email
 73	2015-07-02 16:11:45	2015-07-02 16:11:45	##FROM_EMAIL##		Quote Updated Notification	we will send this mail, when user update the quote.	[##SITE_NAME##] Updated quote received for ##REQUEST_NAME##	Hi ##EMPLOYER##,\n\nYou have received updated quote for ##REQUEST_NAME## sent by ##FREELANCER##.\nClick below link to send response.\n##RESPONSE_URL##\n\nService Provider: ##BUSINESS_NAME##\nQuote: ##QUOTE_AMOUNT## / ##PRICE_TYPE##\n\nThanks,\n##SITE_NAME##\n##SITE_URL##		\N	SITE_NAME, SITE_URL,FREELANCER,EMPLOYER,RESPONSE_URL,BUSINESSNAME,RESPONSE_URL	f	f	Quote Updated Notification
 99	2017-05-25 12:16:22	2017-05-25 12:16:22	##FROM_EMAIL##	##REPLY_TO_EMAIL##	New Invoice Received Notification	 System will send this mail to employer when new invoice created by freelancer	[##SITE_NAME##][##PROJECT_NAME##] New invoice received	Hi ##EMPLOYER##,\n\nNew invoice raised by ##FREELANCER## for the ##PROJECT_NAME##.\n\nDetail: ##DESCRIPTION## (ID: ##INVOICE_ID##)\nAmount: ##CURRENCY####AMOUNT##\n\nManage this project: ##PROJECT_URL##\n\nThanks,\n##SITE_NAME##\n##SITE_URL##	\N	\N	SITE_NAME,SITE_URL,EMPLOYER	f	f	New Invoice Received Notification
@@ -6056,6 +6052,8 @@ COPY email_templates (id, created_at, updated_at, "from", reply_to, name, descri
 25	2015-07-02 16:11:45	2015-04-10 15:43:47	##FROM_EMAIL##	##REPLY_TO_EMAIL##	Dispute Alert	we will send this when a project dispute opened.	[##SITE_NAME##][##PROJECT_NAME##] Dispute opened 	Hi ##DISPUTED##,\n\nNew dispute opened for project "##PROJECT_NAME##".\nDisputer: ##DISPUTER## (##DISPUTERTYPE##)\nDispute Reason: ##DISPUTETYPE## \nReason/Comments: ##REASON## \n\nPlease click the following link to view the project, ##PROJECT_URL## \n\nThanks,\n##SITE_NAME##\n##SITE_URL## 		\N		f	f	Dispute Alert
 111	2017-06-16 17:55:52	2017-06-16 17:55:52	##FROM_EMAIL##	##REPLY_TO_EMAIL##	Project Published Notification	System will sent this mail to employer when project was opened for bidding.\n	[##SITE_NAME##][##PROJECT_NAME##] has been published	Hi ##USERNAME##\n\n"##PROJECT_NAME##" was opened for bidding in ##SITE_NAME##\n\nManage this project: ##PROJECT_URL##\n\nThanks,\n##SITE_NAME##\n##SITE_URL##\n	\N	\N	MESSAGE, POST_DATE, SITE_NAME, CONTACT_URL, FIRST_NAME, LAST_NAME, SUBJECT, SITE_URL	f	f	Project Published Notification
 122	2017-07-20 12:16:22	2017-07-20 12:16:22	##FROM_EMAIL##	##REPLY_TO_EMAIL##	Credit plan expired	When the Credit plan expired then mail to user	[##SITE_NAME##] Your current plan expired	Hi ##USER##,\n\nYour credit plan ##PLAN_NAME## was expired in ##SITE_NAME##.\n\nThanks,\n##SITE_NAME##\n##SITE_URL##	\N	\N	USERNAME,PROJECT_NAME,PROJECT_LINK,FAV_USERNAME	f	f	Credit plan expired
+123	2018-06-15 12:16:22	2018-06-15 12:16:22	##FROM_EMAIL##	##REPLY_TO_EMAIL##	newmessage	we will send this mail, when a\r\nuser get new message	##USERNAME## sent you a message on ##SITE_NAME##...	 ##USERNAME## sent you a message.\r\n\r\n--------------------\r\n##MESSAGE##\r\n--------------------\r\n\r\nTo view this message, follow the link below:\r\n##MESSAGE_LINK##\r\n\r\nThanks,\r\n##SITE_NAME##\r\n##SITE_URL##	\N	\N	USERNAME,MESSAGE,MESSAGE_LINK,SITE_NAME	f	t	New Message
+124	2018-06-20 12:16:22	2018-06-20 12:16:22	##FROM_EMAIL##		Contact Us	we will send this mail to admin, when user submit the contact us form.	[##SITE_NAME##] RE: ##SUBJECT##	 Hi,\r\n\r\nThe user has submitted the contact request.\r\n\r\n----------------------------------------\r\nFirst Name: ##FIRST_NAME##\r\nLast Name: ##LAST_NAME##\r\nEmail: ##FROM_EMAIL##\r\nMobile: ##TELEPHONE##\r\nSubject: ##SUBJECT##\r\nMessage: ##MESSAGE##\r\nIP : ##IP##\r\n\r\n\r\nThanks,\r\n##SITE_NAME##\r\n##SITE_URL##	 Hi,\r\n\r\nThe user has submitted the contact request.\r\n\r\n----------------------------------------\r\nFirst Name: ##FIRST_NAME##\r\nLast Name: ##LAST_NAME##\r\nEmail: ##FROM_EMAIL##\r\nMobile: ##TELEPHONE##\r\nSubject: ##SUBJECT##\r\nMessage: ##MESSAGE##\r\nIP : ##IP##\r\n\r\n\r\nThanks,\r\n##SITE_NAME##\r\n##SITE_URL##	\N	MESSAGE, POST_DATE, SITE_NAME, CONTACT_URL, FIRST_NAME, LAST_NAME, SUBJECT, SITE_URL	f	t	Contact Us
 \.
 
 
@@ -6063,7 +6061,7 @@ COPY email_templates (id, created_at, updated_at, "from", reply_to, name, descri
 -- Name: email_templates_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('email_templates_id_seq', 122, true);
+SELECT pg_catalog.setval('email_templates_id_seq', 124, true);
 
 
 --
@@ -6927,6 +6925,7 @@ COPY form_fields (id, created_at, updated_at, name, label, info, length, options
 137	2012-10-24 13:07:41	2017-05-08 06:24:54	number-of-guests	Number of guests		0	Fewer than 50,50-100,100-150,150-200,More than 200	QuoteCategory	5	36	59	t	t	137	\N	\N
 235	2012-12-19 13:36:21	2017-05-08 06:24:54	anything-else-the-massage-health-should-know	Anything else the massage health should know?		0		QuoteCategory	1	49	70	t	t	235	\N	\N
 226	2012-12-19 13:33:57	2017-05-08 06:24:54	specialty	Specialty		0	Hypnotherapy, Psychotherapy, General therapist, Child psychology, Musical / sound therapy, Spiritual / holistic	QuoteCategory	4	49	70	t	t	226	\N	\N
+763	2017-05-11 14:06:03	2017-05-11 14:06:03	Business name	Business name		\N		ContestType	1	23	25	f	t	0	\N	\N
 227	2012-12-19 13:34:10	2017-05-08 06:24:54	what-type-of-reading	What type of reading?		0	Aura, Distance reading, Lithomancy and crystallomancy, Numerology, Psychometry, Rune reading, I'm not sure, Other	QuoteCategory	4	49	70	t	t	227	\N	\N
 228	2012-12-19 13:34:30	2017-05-08 06:24:54	what-are-your-goals-from-the-psychic-reading	What are your goals from the psychic reading?		0	Predictions, Advice, Afterlife communication, I'm not sure, Other	QuoteCategory	4	49	70	t	t	228	\N	\N
 247	2012-12-19 13:47:11	2017-05-08 06:24:54	what-do-you-need	What do you need?		0		QuoteCategory	2	53	74	t	t	247	\N	\N
@@ -7235,6 +7234,7 @@ COPY form_fields (id, created_at, updated_at, name, label, info, length, options
 642	2017-05-11 14:06:01	2017-05-11 14:06:01	File	Upload your file		\N		ContestType	8	10	10	f	t	0	\N	\N
 643	2017-05-11 14:06:01	2017-05-11 14:06:01	URL	Enter URL		\N		ContestType	1	10	10	f	t	0	\N	\N
 645	2017-05-11 14:06:01	2017-05-11 14:06:01	Look & Feel for your design	Tell us how you want the new design to look and feel?		\N	Minimal,Complex	ContestType	12	11	11	f	t	0	\N	\N
+677	2017-05-11 14:06:01	2017-05-11 14:06:01	Suggested Theme & Style	Suggested Theme & Style	Help designers find the right spirit. A theme can be the name of a song	\N		ContestType	2	15	15	f	t	0	\N	\N
 646	2017-05-11 14:06:01	2017-05-11 14:06:01	Industry	Select your industry		\N	Accounting,Automotive,Beauty,Construction,Consulting,Education,Entertainment,Events,Financial and Insurance,Home and Garden,Legal,Manufacturing and Wholesale,Media\\\\,Medical and Dental,Natural Resources,Non-Profit,Real Estate,Religious,Restaurant,Retail,Se	ContestType	3	11	11	f	t	0	\N	\N
 647	2017-05-11 14:06:01	2017-05-11 14:06:01	Choose color	Do you have any particular colors in mind?		\N		ContestType	11	11	11	f	t	0	\N	\N
 648	2017-05-11 14:06:01	2017-05-11 14:06:01	Custom banner size	What size do you want your web banner to be?	Enter the banner size or click and select one of the most commun banners.	\N		ContestType	1	11	11	f	t	0	\N	\N
@@ -7266,7 +7266,6 @@ COPY form_fields (id, created_at, updated_at, name, label, info, length, options
 674	2017-05-11 14:06:01	2017-05-11 14:06:01	Design A Large Poster	Design A Large Poster For		\N		ContestType	1	15	15	f	t	0	\N	\N
 675	2017-05-11 14:06:01	2017-05-11 14:06:01	Submission Deadline	Submission Deadline	We recommend you accept designs for at least 2 weeks, 4+ weeks recommended	\N		ContestType	6	15	15	f	t	0	\N	\N
 676	2017-05-11 14:06:01	2017-05-11 14:06:01	Contest Description	Contest Description	Be sure to include what you need, why you need it and what it will be used for. This description is important - it will appear when people share your contest on Facebook.	\N		ContestType	2	15	15	f	t	0	\N	\N
-677	2017-05-11 14:06:01	2017-05-11 14:06:01	Suggested Theme & Style	Suggested Theme & Style	Help designers find the right spirit. A theme can be the name of a song	\N		ContestType	2	15	15	f	t	0	\N	\N
 678	2017-05-11 14:06:01	2017-05-11 14:06:01	Things To Include	Things To Include	Things designers should include in their creation	\N		ContestType	2	15	15	f	t	0	\N	\N
 679	2017-05-11 14:06:01	2017-05-11 14:06:01	Things To Avoid	Things To Avoid	Things designers should specifically avoid.  Examples: No photos of the band. No literal interpretations. Avoid using photographs.	\N		ContestType	2	15	15	f	t	0	\N	\N
 680	2017-05-11 14:06:01	2017-05-11 14:06:01	Style Guidelines	Style Guidelines	Move the sliders to the left or right to help point the designers in the right direction.	\N	Quiet, Loud	ContestType	12	15	15	f	t	0	\N	\N
@@ -7352,7 +7351,6 @@ COPY form_fields (id, created_at, updated_at, name, label, info, length, options
 760	2017-05-11 14:06:03	2017-05-11 14:06:03	Look and Feel Slider	Look and Feel Slider		\N	Elegant,Bold	ContestType	12	24	24	f	t	0	\N	\N
 761	2017-05-11 14:06:03	2017-05-11 14:06:03	Target Market	Target Market	Who is the audience for your design or buyer of your product?	\N		ContestType	2	24	24	f	t	0	\N	\N
 762	2017-05-11 14:06:03	2017-05-11 14:06:03	Files	Upload Files		\N		ContestType	8	24	24	f	t	0	\N	\N
-763	2017-05-11 14:06:03	2017-05-11 14:06:03	Business name	Business name		\N		ContestType	1	23	25	f	t	0	\N	\N
 764	2017-05-11 14:06:03	2017-05-11 14:06:03	Slogan (optional)	Slogan (optional)		\N		ContestType	1	23	25	f	t	0	\N	\N
 765	2017-05-11 14:06:03	2017-05-11 14:06:03	Briefly describe your business:	Briefly describe your business:		\N		ContestType	2	23	25	f	t	0	\N	\N
 766	2017-05-11 14:06:03	2017-05-11 14:06:03	Industry type	Industry type		\N	Accounting,Automotive,Beauty,Construction,Consulting,Education,Entertainment,Events,Financial and Insurance,Home and Garden,Legal,Manufacturing and Wholesale,Media\\\\,Medical and Dental,Natural Resources,Non-Profit,Real Estate,Religious,Restaurant,Retail,Service Industries,Sports and Recreation,Technology,Travel and Hospitality,Other	ContestType	3	23	25	f	t	0	\N	\N
@@ -9109,6 +9107,7 @@ COPY question_answer_options (id, created_at, updated_at, question_id, option, i
 281	2016-01-21 14:58:51	2016-01-21 14:58:51	66	SQL	f
 282	2016-01-21 14:58:51	2016-01-21 14:58:51	66	Query Language	t
 283	2016-01-21 14:58:51	2016-01-21 14:58:51	66	4GL	f
+571	2016-01-22 06:22:47	2016-01-22 06:22:47	138	Dir	f
 284	2016-01-21 14:59:51	2016-01-21 14:59:51	67	handwritten list	f
 285	2016-01-21 14:59:51	2016-01-21 14:59:51	67	a Rolodex card file	f
 286	2016-01-21 14:59:51	2016-01-21 14:59:51	67	a business form	f
@@ -9397,7 +9396,6 @@ COPY question_answer_options (id, created_at, updated_at, question_id, option, i
 568	2016-01-22 06:22:01	2016-01-22 06:22:01	137	Dir \\\\pathname\\\\pathname	f
 569	2016-01-22 06:22:01	2016-01-22 06:22:01	137	Dir/ch	f
 570	2016-01-22 06:22:01	2016-01-22 06:22:01	137	Dir \\\\pathname\\\\filename	t
-571	2016-01-22 06:22:47	2016-01-22 06:22:47	138	Dir	f
 572	2016-01-22 06:22:47	2016-01-22 06:22:47	138	Mkdir	f
 573	2016-01-22 06:22:47	2016-01-22 06:22:47	138	Md	f
 574	2016-01-22 06:22:47	2016-01-22 06:22:47	138	Both b and c	t
@@ -9685,6 +9683,7 @@ COPY question_answer_options (id, created_at, updated_at, question_id, option, i
 856	2016-01-22 07:49:59	2016-01-22 07:49:59	208	preset animation	f
 857	2016-01-22 07:50:57	2016-01-22 07:50:57	209	Slide comments	f
 858	2016-01-22 07:50:57	2016-01-22 07:50:57	209	Slide transitions	t
+959	2016-01-22 10:56:57	2016-01-22 10:56:57	241	2	f
 859	2016-01-22 07:50:57	2016-01-22 07:50:57	209	Speaker note font and color	f
 860	2016-01-22 07:50:57	2016-01-22 07:50:57	209	All of above	f
 861	2016-01-22 07:52:09	2016-01-22 07:52:09	210	Outline	f
@@ -9785,7 +9784,6 @@ COPY question_answer_options (id, created_at, updated_at, question_id, option, i
 956	2016-01-22 10:56:57	2016-01-22 10:56:57	241	4	f
 957	2016-01-22 10:56:57	2016-01-22 10:56:57	241	3	f
 958	2016-01-22 10:56:57	2016-01-22 10:56:57	241	5	t
-959	2016-01-22 10:56:57	2016-01-22 10:56:57	241	2	f
 960	2016-01-22 10:56:57	2016-01-22 10:56:57	242	java.jdbc and javax.jdbc	f
 961	2016-01-22 10:56:57	2016-01-22 10:56:57	242	java.jdbc and java.jdbc.sql	f
 962	2016-01-22 10:56:57	2016-01-22 10:56:57	242	java.sql and javax.sql	t
@@ -10997,7 +10995,6 @@ COPY settings (id, created_at, updated_at, setting_category_id, name, value, des
 587	2017-01-16 12:51:40	2017-01-16 12:51:40	131	DISPUTE_CONVERSATION_COUNT	1	After reaching this conversion count, dispute comes under admin decision. 	text	Number of Allowed Conversion for Dispute	1	\N	t
 582	2016-12-19 12:51:40	2016-12-19 12:51:40	130	IS_ENABLED_CREDIT_POINT_CARRY_FORWARD	1	If we enable credit point to be carry forward	checkbox	If we enable credit point to be carry forward	1	\N	t
 489	2016-11-28 11:29:32	2016-11-28 11:29:32	133	WATERMARK_TYPE	Watermark Image	By selecting the water mark type can be changed.	radio	Watermark Type	14	Watermark Image,Enable Text Watermark	f
-574	2017-01-03 06:16:22	2017-01-03 06:16:22	0	SITE_ENABLED_PLUGINS	Bidding/Bidding,Common/Subscription,Common/Wallet,Common/Withdrawal,Common/UserFollow,Common/UserFlag,Common/PaypalREST	\N	text	Site Plugin	1	\N	t
 596	2017-05-18 12:17:27	2017-05-18 12:17:27	6	WITHDRAW_REQUEST_FEE	2	withdraw request fee	text	Withdraw Request Fee	4		t
 595	2017-05-18 12:17:27	2017-05-18 12:17:27	6	WITHDRAW_REQUEST_FEE_TYPE	Percentage	Type of withdraw request	options	Fee Type	3	Percentage,Fixed Fee	t
 619	2017-05-19 11:29:32	2017-05-19 11:29:32	11	TIME_LIMIT_AFTER_OTHER_PROVIDER_GET_QUOTE_REQUEST	24	After this time limit other provider receive quote requests	text	Time Limit After Other Provider Getting Quote Request (In hours)	3		f
@@ -11036,6 +11033,8 @@ COPY settings (id, created_at, updated_at, setting_category_id, name, value, des
 499	2016-12-01 18:35:48	2016-12-01 18:35:48	10	IS_NEED_ADMIN_APPROVAL_FOR_NEW_JOBS	0	On enabling this feature, the added job will be automatically approved.	checkbox	Enable Auto Approve for Job	1	\N	t
 625	2017-07-20 12:24:36	2017-07-20 12:24:36	10	JOB_VALIDITY_DAY	60	The validity of job posting from the day of posting. After reaching this day, system makes it as expired job. (Note: before this date, employer can also Mark as Archived this job post). Leave it blank for no limitation. 	text	Job Validity Days	1	\N	t
 528	2016-12-19 13:06:01	2016-12-19 13:06:01	0	IS_ENABLED_EXPIRE_TIME_FOR_EXAM	0	If we enable \\\\"Allow User to re-continue the skill test?\\\\", we can specify an expiry time for the skill test in add and edit the form. <br /> E.g., Let's take the test duration is 30 minutes and we shall mention 15 minutes as an expiry time. If the user gets disconnected, he can \\\\"Re-continue\\\\" the test and \\\\"Answer the questions\\\\" but he will get the remaining time of partially completed test. <br /><br />\\n\\nE.g. #1: A user starts the exam at 11:00 AM and takes a 10 minute break after 11:10 AM. Again, they restarted it by 11:20  AM. After calculating the disconnected time and the partially completed test timings a find out the remaining test time (says 20 minutes and 5 minutes of expiry time is left out). The system will display the remaining time for completing the examination. <br /><br />\\n\\nE.g. #2: User starts the exam at 11:00 AM and he disconnects from 11:10 AM. Again, they restarted the test by 11:30 AM (20 minutes break). So the system displays the remaining test time 15 minutes for the completion of the test. As he has an expiry time of 15 minutes and also he took 5 minutes extra break time. In that case, he lost 5 minutes of his exam time. In total, the remaining time left for the completion of exam is just 15 minutes.<br /><br />\\n\\nNote: If we give more time, they may try any kinds of irregular activities. If it is disabled, users can re-continue the exam but no grace time will be given and will not get any compensation for his lost time. 	checkbox	Enable Expire Time Setting?	1	\N	f
+626	2017-12-19 12:25:53	2017-12-19 12:25:53	3	SITE_AVAILABLE_LANGUAGES	en,fr	The listed languages will be displayed in the drop-down menu to switch language in Front End.	text	Site Available languages	2	\N	t
+574	2017-01-03 06:16:22	2017-01-03 06:16:22	0	SITE_ENABLED_PLUGINS	Bidding/Bidding,Bidding/BiddingReview,Bidding/Dispute,Bidding/Exam,Bidding/Invoice,Bidding/Milestone,Bidding/ProjectFlag,Bidding/ProjectFollow,Common/Subscription,Common/Wallet,Common/Withdrawal,Common/UserFollow,Common/UserFlag,Common/PaypalREST	\N	text	Site Plugin	1	\N	t
 \.
 
 
@@ -16242,7 +16241,7 @@ SELECT pg_catalog.setval('zazpay_transaction_logs_id_seq', 34, true);
 
 
 --
--- Name: activities_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: activities_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY activities
@@ -16250,7 +16249,7 @@ ALTER TABLE ONLY activities
 
 
 --
--- Name: apns_devices_appname_appversion_deviceuid_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: apns_devices_appname_appversion_deviceuid_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY apns_devices
@@ -16258,7 +16257,7 @@ ALTER TABLE ONLY apns_devices
 
 
 --
--- Name: apns_devices_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: apns_devices_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY apns_devices
@@ -16266,7 +16265,7 @@ ALTER TABLE ONLY apns_devices
 
 
 --
--- Name: attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY attachments
@@ -16274,7 +16273,7 @@ ALTER TABLE ONLY attachments
 
 
 --
--- Name: bid_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: bid_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY bid_statuses
@@ -16282,7 +16281,7 @@ ALTER TABLE ONLY bid_statuses
 
 
 --
--- Name: bids_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: bids_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY bids
@@ -16290,7 +16289,7 @@ ALTER TABLE ONLY bids
 
 
 --
--- Name: certifications_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: certifications_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY certifications
@@ -16298,7 +16297,7 @@ ALTER TABLE ONLY certifications
 
 
 --
--- Name: cities_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: cities_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY cities
@@ -16306,7 +16305,7 @@ ALTER TABLE ONLY cities
 
 
 --
--- Name: contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY contacts
@@ -16314,7 +16313,7 @@ ALTER TABLE ONLY contacts
 
 
 --
--- Name: contest_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: contest_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY contest_statuses
@@ -16322,7 +16321,7 @@ ALTER TABLE ONLY contest_statuses
 
 
 --
--- Name: contest_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: contest_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY contest_types
@@ -16330,7 +16329,7 @@ ALTER TABLE ONLY contest_types
 
 
 --
--- Name: contest_types_pricing_days_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: contest_types_pricing_days_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY contest_types_pricing_days
@@ -16338,7 +16337,7 @@ ALTER TABLE ONLY contest_types_pricing_days
 
 
 --
--- Name: contest_types_pricing_packages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: contest_types_pricing_packages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY contest_types_pricing_packages
@@ -16346,7 +16345,7 @@ ALTER TABLE ONLY contest_types_pricing_packages
 
 
 --
--- Name: contest_user_downloads_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: contest_user_downloads_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY contest_user_downloads
@@ -16354,7 +16353,7 @@ ALTER TABLE ONLY contest_user_downloads
 
 
 --
--- Name: contest_user_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: contest_user_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY contest_user_statuses
@@ -16362,7 +16361,7 @@ ALTER TABLE ONLY contest_user_statuses
 
 
 --
--- Name: contest_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: contest_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY contest_users
@@ -16370,7 +16369,7 @@ ALTER TABLE ONLY contest_users
 
 
 --
--- Name: contests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: contests_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY contests
@@ -16378,7 +16377,7 @@ ALTER TABLE ONLY contests
 
 
 --
--- Name: countries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: countries_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY countries
@@ -16386,7 +16385,7 @@ ALTER TABLE ONLY countries
 
 
 --
--- Name: coupons_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: coupons_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY coupons
@@ -16394,7 +16393,7 @@ ALTER TABLE ONLY coupons
 
 
 --
--- Name: discount_types_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: discount_types_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY discount_types
@@ -16402,7 +16401,7 @@ ALTER TABLE ONLY discount_types
 
 
 --
--- Name: dispute_closed_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: dispute_closed_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY dispute_closed_types
@@ -16410,7 +16409,7 @@ ALTER TABLE ONLY dispute_closed_types
 
 
 --
--- Name: dispute_open_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: dispute_open_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY dispute_open_types
@@ -16418,7 +16417,7 @@ ALTER TABLE ONLY dispute_open_types
 
 
 --
--- Name: dispute_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: dispute_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY dispute_statuses
@@ -16426,7 +16425,7 @@ ALTER TABLE ONLY dispute_statuses
 
 
 --
--- Name: educations_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: educations_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY educations
@@ -16434,7 +16433,7 @@ ALTER TABLE ONLY educations
 
 
 --
--- Name: email_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: email_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY email_templates
@@ -16442,7 +16441,7 @@ ALTER TABLE ONLY email_templates
 
 
 --
--- Name: exam_answers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: exam_answers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY exam_answers
@@ -16450,7 +16449,7 @@ ALTER TABLE ONLY exam_answers
 
 
 --
--- Name: exam_attends_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: exam_attends_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY exam_attends
@@ -16458,7 +16457,7 @@ ALTER TABLE ONLY exam_attends
 
 
 --
--- Name: exam_categories_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: exam_categories_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY exam_categories
@@ -16466,7 +16465,7 @@ ALTER TABLE ONLY exam_categories
 
 
 --
--- Name: exam_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: exam_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY exam_levels
@@ -16474,7 +16473,7 @@ ALTER TABLE ONLY exam_levels
 
 
 --
--- Name: exam_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: exam_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY exam_statuses
@@ -16482,7 +16481,7 @@ ALTER TABLE ONLY exam_statuses
 
 
 --
--- Name: exams_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: exams_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY exams
@@ -16490,7 +16489,7 @@ ALTER TABLE ONLY exams
 
 
 --
--- Name: exams_questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: exams_questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY exams_questions
@@ -16498,7 +16497,7 @@ ALTER TABLE ONLY exams_questions
 
 
 --
--- Name: exams_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: exams_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY exams_users
@@ -16506,7 +16505,7 @@ ALTER TABLE ONLY exams_users
 
 
 --
--- Name: flag_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: flag_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY flag_categories
@@ -16514,7 +16513,7 @@ ALTER TABLE ONLY flag_categories
 
 
 --
--- Name: flags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: flags_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY flags
@@ -16522,7 +16521,7 @@ ALTER TABLE ONLY flags
 
 
 --
--- Name: followers_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: followers_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY followers
@@ -16530,7 +16529,7 @@ ALTER TABLE ONLY followers
 
 
 --
--- Name: form_field_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: form_field_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY form_field_groups
@@ -16538,7 +16537,7 @@ ALTER TABLE ONLY form_field_groups
 
 
 --
--- Name: form_field_submissions_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: form_field_submissions_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY form_field_submissions
@@ -16546,7 +16545,7 @@ ALTER TABLE ONLY form_field_submissions
 
 
 --
--- Name: form_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: form_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY form_fields
@@ -16554,7 +16553,7 @@ ALTER TABLE ONLY form_fields
 
 
 --
--- Name: hire_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: hire_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY hire_requests
@@ -16562,7 +16561,7 @@ ALTER TABLE ONLY hire_requests
 
 
 --
--- Name: input_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: input_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY input_types
@@ -16570,7 +16569,7 @@ ALTER TABLE ONLY input_types
 
 
 --
--- Name: ips_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: ips_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY ips
@@ -16578,7 +16577,7 @@ ALTER TABLE ONLY ips
 
 
 --
--- Name: job_applies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: job_applies_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY job_applies
@@ -16586,7 +16585,7 @@ ALTER TABLE ONLY job_applies
 
 
 --
--- Name: job_applies_portfolios_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: job_applies_portfolios_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY job_applies_portfolios
@@ -16594,7 +16593,7 @@ ALTER TABLE ONLY job_applies_portfolios
 
 
 --
--- Name: job_apply_clicks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: job_apply_clicks_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY job_apply_clicks
@@ -16602,7 +16601,7 @@ ALTER TABLE ONLY job_apply_clicks
 
 
 --
--- Name: job_apply_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: job_apply_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY job_apply_statuses
@@ -16610,7 +16609,7 @@ ALTER TABLE ONLY job_apply_statuses
 
 
 --
--- Name: job_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: job_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY job_categories
@@ -16618,7 +16617,7 @@ ALTER TABLE ONLY job_categories
 
 
 --
--- Name: job_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: job_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY job_statuses
@@ -16626,7 +16625,7 @@ ALTER TABLE ONLY job_statuses
 
 
 --
--- Name: job_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: job_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY job_types
@@ -16634,7 +16633,7 @@ ALTER TABLE ONLY job_types
 
 
 --
--- Name: jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY jobs
@@ -16642,7 +16641,7 @@ ALTER TABLE ONLY jobs
 
 
 --
--- Name: jobs_skills_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: jobs_skills_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY jobs_skills
@@ -16650,7 +16649,7 @@ ALTER TABLE ONLY jobs_skills
 
 
 --
--- Name: languages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: languages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY languages
@@ -16658,7 +16657,7 @@ ALTER TABLE ONLY languages
 
 
 --
--- Name: message_contents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: message_contents_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY message_contents
@@ -16666,7 +16665,7 @@ ALTER TABLE ONLY message_contents
 
 
 --
--- Name: messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY messages
@@ -16674,7 +16673,7 @@ ALTER TABLE ONLY messages
 
 
 --
--- Name: milestone_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: milestone_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY milestone_statuses
@@ -16682,7 +16681,7 @@ ALTER TABLE ONLY milestone_statuses
 
 
 --
--- Name: milestones_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: milestones_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY milestones
@@ -16690,7 +16689,7 @@ ALTER TABLE ONLY milestones
 
 
 --
--- Name: money_transfer_accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: money_transfer_accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY money_transfer_accounts
@@ -16698,7 +16697,7 @@ ALTER TABLE ONLY money_transfer_accounts
 
 
 --
--- Name: oauth_clients_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: oauth_clients_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY oauth_clients
@@ -16706,7 +16705,7 @@ ALTER TABLE ONLY oauth_clients
 
 
 --
--- Name: pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY pages
@@ -16714,7 +16713,7 @@ ALTER TABLE ONLY pages
 
 
 --
--- Name: payment_gateway_settings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: payment_gateway_settings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY payment_gateway_settings
@@ -16722,7 +16721,7 @@ ALTER TABLE ONLY payment_gateway_settings
 
 
 --
--- Name: payment_gateways_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: payment_gateways_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY payment_gateways
@@ -16730,7 +16729,7 @@ ALTER TABLE ONLY payment_gateways
 
 
 --
--- Name: portfolios_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: portfolios_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY portfolios
@@ -16738,7 +16737,7 @@ ALTER TABLE ONLY portfolios
 
 
 --
--- Name: pricing_days_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: pricing_days_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY pricing_days
@@ -16746,7 +16745,7 @@ ALTER TABLE ONLY pricing_days
 
 
 --
--- Name: pricing_packages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: pricing_packages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY pricing_packages
@@ -16754,7 +16753,7 @@ ALTER TABLE ONLY pricing_packages
 
 
 --
--- Name: project_bid_invoice_items_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: project_bid_invoice_items_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY project_bid_invoice_items
@@ -16762,7 +16761,7 @@ ALTER TABLE ONLY project_bid_invoice_items
 
 
 --
--- Name: project_bid_invoices_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: project_bid_invoices_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY project_bid_invoices
@@ -16770,7 +16769,7 @@ ALTER TABLE ONLY project_bid_invoices
 
 
 --
--- Name: project_bids_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: project_bids_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY project_bids
@@ -16778,7 +16777,7 @@ ALTER TABLE ONLY project_bids
 
 
 --
--- Name: project_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: project_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY project_categories
@@ -16786,7 +16785,7 @@ ALTER TABLE ONLY project_categories
 
 
 --
--- Name: project_disputes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: project_disputes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY project_disputes
@@ -16794,7 +16793,7 @@ ALTER TABLE ONLY project_disputes
 
 
 --
--- Name: project_ranges_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: project_ranges_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY project_ranges
@@ -16802,7 +16801,7 @@ ALTER TABLE ONLY project_ranges
 
 
 --
--- Name: project_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: project_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY project_statuses
@@ -16810,7 +16809,7 @@ ALTER TABLE ONLY project_statuses
 
 
 --
--- Name: projects_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: projects_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY projects
@@ -16818,7 +16817,7 @@ ALTER TABLE ONLY projects
 
 
 --
--- Name: projects_project_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: projects_project_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY projects_project_categories
@@ -16826,7 +16825,7 @@ ALTER TABLE ONLY projects_project_categories
 
 
 --
--- Name: provider_users_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: provider_users_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY provider_users
@@ -16834,7 +16833,7 @@ ALTER TABLE ONLY provider_users
 
 
 --
--- Name: providers_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: providers_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY providers
@@ -16842,7 +16841,7 @@ ALTER TABLE ONLY providers
 
 
 --
--- Name: publications_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: publications_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY publications
@@ -16850,7 +16849,7 @@ ALTER TABLE ONLY publications
 
 
 --
--- Name: question_answer_options_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: question_answer_options_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY question_answer_options
@@ -16858,7 +16857,7 @@ ALTER TABLE ONLY question_answer_options
 
 
 --
--- Name: question_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: question_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY question_categories
@@ -16866,7 +16865,7 @@ ALTER TABLE ONLY question_categories
 
 
 --
--- Name: question_display_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: question_display_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY question_display_types
@@ -16874,7 +16873,7 @@ ALTER TABLE ONLY question_display_types
 
 
 --
--- Name: questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY questions
@@ -16882,7 +16881,7 @@ ALTER TABLE ONLY questions
 
 
 --
--- Name: quote_bids_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: quote_bids_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY quote_bids
@@ -16890,7 +16889,7 @@ ALTER TABLE ONLY quote_bids
 
 
 --
--- Name: quote_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: quote_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY quote_categories
@@ -16898,7 +16897,7 @@ ALTER TABLE ONLY quote_categories
 
 
 --
--- Name: quote_categories_quote_services_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: quote_categories_quote_services_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY quote_categories_quote_services
@@ -16906,7 +16905,7 @@ ALTER TABLE ONLY quote_categories_quote_services
 
 
 --
--- Name: quote_credit_purchase_logs_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: quote_credit_purchase_logs_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY credit_purchase_logs
@@ -16914,7 +16913,7 @@ ALTER TABLE ONLY credit_purchase_logs
 
 
 --
--- Name: quote_credit_purchase_plans_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: quote_credit_purchase_plans_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY credit_purchase_plans
@@ -16922,7 +16921,7 @@ ALTER TABLE ONLY credit_purchase_plans
 
 
 --
--- Name: quote_faq_answers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: quote_faq_answers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY quote_faq_answers
@@ -16930,7 +16929,7 @@ ALTER TABLE ONLY quote_faq_answers
 
 
 --
--- Name: quote_faq_question_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: quote_faq_question_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY quote_faq_question_templates
@@ -16938,7 +16937,7 @@ ALTER TABLE ONLY quote_faq_question_templates
 
 
 --
--- Name: quote_form_submission_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: quote_form_submission_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY quote_request_form_fields
@@ -16946,7 +16945,7 @@ ALTER TABLE ONLY quote_request_form_fields
 
 
 --
--- Name: quote_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: quote_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY quote_requests
@@ -16954,7 +16953,7 @@ ALTER TABLE ONLY quote_requests
 
 
 --
--- Name: quote_service_audios_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: quote_service_audios_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY quote_service_audios
@@ -16962,7 +16961,7 @@ ALTER TABLE ONLY quote_service_audios
 
 
 --
--- Name: quote_service_photos_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: quote_service_photos_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY quote_service_photos
@@ -16970,7 +16969,7 @@ ALTER TABLE ONLY quote_service_photos
 
 
 --
--- Name: quote_service_videos_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: quote_service_videos_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY quote_service_videos
@@ -16978,7 +16977,7 @@ ALTER TABLE ONLY quote_service_videos
 
 
 --
--- Name: quote_services_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: quote_services_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY quote_services
@@ -16986,7 +16985,7 @@ ALTER TABLE ONLY quote_services
 
 
 --
--- Name: quote_statuses_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: quote_statuses_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY quote_statuses
@@ -16994,7 +16993,7 @@ ALTER TABLE ONLY quote_statuses
 
 
 --
--- Name: quote_user_faq_questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: quote_user_faq_questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY quote_user_faq_questions
@@ -17002,7 +17001,7 @@ ALTER TABLE ONLY quote_user_faq_questions
 
 
 --
--- Name: resources_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: resources_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY resources
@@ -17010,7 +17009,7 @@ ALTER TABLE ONLY resources
 
 
 --
--- Name: resume_downloads_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: resume_downloads_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY resume_downloads
@@ -17018,7 +17017,7 @@ ALTER TABLE ONLY resume_downloads
 
 
 --
--- Name: resume_ratings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: resume_ratings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY resume_ratings
@@ -17026,7 +17025,7 @@ ALTER TABLE ONLY resume_ratings
 
 
 --
--- Name: reviews_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: reviews_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY reviews
@@ -17034,7 +17033,7 @@ ALTER TABLE ONLY reviews
 
 
 --
--- Name: roles_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: roles_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY roles
@@ -17042,7 +17041,7 @@ ALTER TABLE ONLY roles
 
 
 --
--- Name: salary_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: salary_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY salary_types
@@ -17050,7 +17049,7 @@ ALTER TABLE ONLY salary_types
 
 
 --
--- Name: setting_categories_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: setting_categories_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY setting_categories
@@ -17058,7 +17057,7 @@ ALTER TABLE ONLY setting_categories
 
 
 --
--- Name: settings_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: settings_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY settings
@@ -17066,7 +17065,7 @@ ALTER TABLE ONLY settings
 
 
 --
--- Name: skills_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: skills_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY skills
@@ -17074,7 +17073,7 @@ ALTER TABLE ONLY skills
 
 
 --
--- Name: skills_portfolios_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: skills_portfolios_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY skills_portfolios
@@ -17082,7 +17081,7 @@ ALTER TABLE ONLY skills_portfolios
 
 
 --
--- Name: skills_projects_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: skills_projects_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY skills_projects
@@ -17090,7 +17089,7 @@ ALTER TABLE ONLY skills_projects
 
 
 --
--- Name: skills_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: skills_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY skills_users
@@ -17098,7 +17097,7 @@ ALTER TABLE ONLY skills_users
 
 
 --
--- Name: states_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: states_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY states
@@ -17106,7 +17105,7 @@ ALTER TABLE ONLY states
 
 
 --
--- Name: timezones_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: timezones_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY timezones
@@ -17114,7 +17113,7 @@ ALTER TABLE ONLY timezones
 
 
 --
--- Name: transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY transactions
@@ -17122,7 +17121,7 @@ ALTER TABLE ONLY transactions
 
 
 --
--- Name: upload_hosters_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: upload_hosters_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY upload_hosters
@@ -17130,7 +17129,7 @@ ALTER TABLE ONLY upload_hosters
 
 
 --
--- Name: upload_service_settings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: upload_service_settings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY upload_service_settings
@@ -17138,7 +17137,7 @@ ALTER TABLE ONLY upload_service_settings
 
 
 --
--- Name: upload_service_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: upload_service_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY upload_service_types
@@ -17146,7 +17145,7 @@ ALTER TABLE ONLY upload_service_types
 
 
 --
--- Name: upload_services_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: upload_services_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY upload_services
@@ -17154,7 +17153,7 @@ ALTER TABLE ONLY upload_services
 
 
 --
--- Name: upload_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: upload_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY upload_statuses
@@ -17162,7 +17161,7 @@ ALTER TABLE ONLY upload_statuses
 
 
 --
--- Name: uploads_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: uploads_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY uploads
@@ -17170,7 +17169,7 @@ ALTER TABLE ONLY uploads
 
 
 --
--- Name: user_cash_withdrawals_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: user_cash_withdrawals_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY user_cash_withdrawals
@@ -17178,7 +17177,7 @@ ALTER TABLE ONLY user_cash_withdrawals
 
 
 --
--- Name: user_logins_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: user_logins_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY user_logins
@@ -17186,7 +17185,7 @@ ALTER TABLE ONLY user_logins
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY users
@@ -17194,7 +17193,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: views_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: views_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY views
@@ -17202,7 +17201,7 @@ ALTER TABLE ONLY views
 
 
 --
--- Name: wallets_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: wallets_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY wallets
@@ -17210,7 +17209,7 @@ ALTER TABLE ONLY wallets
 
 
 --
--- Name: work_profiles_id; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: work_profiles_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY work_profiles
@@ -17218,7 +17217,7 @@ ALTER TABLE ONLY work_profiles
 
 
 --
--- Name: zazpay_ipn_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: zazpay_ipn_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY zazpay_ipn_logs
@@ -17226,7 +17225,7 @@ ALTER TABLE ONLY zazpay_ipn_logs
 
 
 --
--- Name: zazpay_payment_gateways_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: zazpay_payment_gateways_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY zazpay_payment_gateways
@@ -17234,7 +17233,7 @@ ALTER TABLE ONLY zazpay_payment_gateways
 
 
 --
--- Name: zazpay_payment_gateways_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: zazpay_payment_gateways_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY zazpay_payment_gateways_users
@@ -17242,7 +17241,7 @@ ALTER TABLE ONLY zazpay_payment_gateways_users
 
 
 --
--- Name: zazpay_payment_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: zazpay_payment_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY zazpay_payment_groups
@@ -17250,7 +17249,7 @@ ALTER TABLE ONLY zazpay_payment_groups
 
 
 --
--- Name: zazpay_transaction_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: zazpay_transaction_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY zazpay_transaction_logs
@@ -17258,2170 +17257,2170 @@ ALTER TABLE ONLY zazpay_transaction_logs
 
 
 --
--- Name: activities_foreign_id; Type: INDEX; Schema: public; Owner: -
+-- Name: activities_foreign_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX activities_foreign_id ON activities USING btree (foreign_id);
 
 
 --
--- Name: activities_model_id; Type: INDEX; Schema: public; Owner: -
+-- Name: activities_model_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX activities_model_id ON activities USING btree (model_id);
 
 
 --
--- Name: activities_other_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: activities_other_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX activities_other_user_id ON activities USING btree (other_user_id);
 
 
 --
--- Name: activities_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: activities_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX activities_user_id ON activities USING btree (user_id);
 
 
 --
--- Name: bid_statuses_name; Type: INDEX; Schema: public; Owner: -
+-- Name: bid_statuses_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX bid_statuses_name ON bid_statuses USING btree (name);
 
 
 --
--- Name: bids_bid_status_id; Type: INDEX; Schema: public; Owner: -
+-- Name: bids_bid_status_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX bids_bid_status_id ON bids USING btree (bid_status_id);
 
 
 --
--- Name: bids_credit_purchase_log_id; Type: INDEX; Schema: public; Owner: -
+-- Name: bids_credit_purchase_log_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX bids_credit_purchase_log_id ON bids USING btree (credit_purchase_log_id);
 
 
 --
--- Name: bids_project_bid_id; Type: INDEX; Schema: public; Owner: -
+-- Name: bids_project_bid_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX bids_project_bid_id ON bids USING btree (project_bid_id);
 
 
 --
--- Name: bids_project_id; Type: INDEX; Schema: public; Owner: -
+-- Name: bids_project_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX bids_project_id ON bids USING btree (project_id);
 
 
 --
--- Name: bids_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: bids_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX bids_user_id ON bids USING btree (user_id);
 
 
 --
--- Name: certifications_title; Type: INDEX; Schema: public; Owner: -
+-- Name: certifications_title; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX certifications_title ON certifications USING btree (title);
 
 
 --
--- Name: certifications_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: certifications_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX certifications_user_id ON certifications USING btree (user_id);
 
 
 --
--- Name: cities_country_id; Type: INDEX; Schema: public; Owner: -
+-- Name: cities_country_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX cities_country_id ON cities USING btree (country_id);
 
 
 --
--- Name: cities_name; Type: INDEX; Schema: public; Owner: -
+-- Name: cities_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX cities_name ON cities USING btree (name);
 
 
 --
--- Name: cities_state_id; Type: INDEX; Schema: public; Owner: -
+-- Name: cities_state_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX cities_state_id ON cities USING btree (state_id);
 
 
 --
--- Name: contacts_ip_id; Type: INDEX; Schema: public; Owner: -
+-- Name: contacts_ip_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contacts_ip_id ON contacts USING btree (ip_id);
 
 
 --
--- Name: contacts_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: contacts_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contacts_user_id ON contacts USING btree (user_id);
 
 
 --
--- Name: contest_statuses_name; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_statuses_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_statuses_name ON contest_statuses USING btree (name);
 
 
 --
--- Name: contest_statuses_slug_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_statuses_slug_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_statuses_slug_idx ON contest_statuses USING btree (slug);
 
 
 --
--- Name: contest_types_name; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_types_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_types_name ON contest_types USING btree (name);
 
 
 --
--- Name: contest_types_pricing_days_contest_type_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_types_pricing_days_contest_type_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_types_pricing_days_contest_type_id_idx ON contest_types_pricing_days USING btree (contest_type_id);
 
 
 --
--- Name: contest_types_pricing_days_pricing_day_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_types_pricing_days_pricing_day_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_types_pricing_days_pricing_day_id_idx ON contest_types_pricing_days USING btree (pricing_day_id);
 
 
 --
--- Name: contest_types_pricing_packages_contest_type_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_types_pricing_packages_contest_type_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_types_pricing_packages_contest_type_id_idx ON contest_types_pricing_packages USING btree (contest_type_id);
 
 
 --
--- Name: contest_types_pricing_packages_pricing_package_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_types_pricing_packages_pricing_package_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_types_pricing_packages_pricing_package_id_idx ON contest_types_pricing_packages USING btree (pricing_package_id);
 
 
 --
--- Name: contest_types_resource_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_types_resource_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_types_resource_id_idx ON contest_types USING btree (resource_id);
 
 
 --
--- Name: contest_user_downloads_contest_user_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_user_downloads_contest_user_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_user_downloads_contest_user_id_idx ON contest_user_downloads USING btree (contest_user_id);
 
 
 --
--- Name: contest_user_downloads_ip_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_user_downloads_ip_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_user_downloads_ip_id_idx ON contest_user_downloads USING btree (ip_id);
 
 
 --
--- Name: contest_user_downloads_user_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_user_downloads_user_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_user_downloads_user_id_idx ON contest_user_downloads USING btree (user_id);
 
 
 --
--- Name: contest_user_statuses_name; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_user_statuses_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_user_statuses_name ON contest_user_statuses USING btree (name);
 
 
 --
--- Name: contest_user_statuses_slug_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_user_statuses_slug_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_user_statuses_slug_idx ON contest_user_statuses USING btree (slug);
 
 
 --
--- Name: contest_users_contest_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_users_contest_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_users_contest_id_idx ON contest_users USING btree (contest_id);
 
 
 --
--- Name: contest_users_contest_owner_user_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_users_contest_owner_user_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_users_contest_owner_user_id_idx ON contest_users USING btree (contest_owner_user_id);
 
 
 --
--- Name: contest_users_contest_user_status_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_users_contest_user_status_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_users_contest_user_status_id_idx ON contest_users USING btree (contest_user_status_id);
 
 
 --
--- Name: contest_users_user_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_users_user_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_users_user_id_idx ON contest_users USING btree (user_id);
 
 
 --
--- Name: contest_users_zazpay_gateway_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contest_users_zazpay_gateway_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contest_users_zazpay_gateway_id_idx ON contest_users USING btree (zazpay_gateway_id);
 
 
 --
--- Name: contests_contest_status_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contests_contest_status_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contests_contest_status_id_idx ON contests USING btree (contest_status_id);
 
 
 --
--- Name: contests_contest_type_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contests_contest_type_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contests_contest_type_id_idx ON contests USING btree (contest_type_id);
 
 
 --
--- Name: contests_payment_gateway_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contests_payment_gateway_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contests_payment_gateway_id_idx ON contests USING btree (payment_gateway_id);
 
 
 --
--- Name: contests_referred_by_user_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contests_referred_by_user_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contests_referred_by_user_id_idx ON contests USING btree (referred_by_user_id);
 
 
 --
--- Name: contests_resource_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contests_resource_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contests_resource_id_idx ON contests USING btree (resource_id);
 
 
 --
--- Name: contests_slug_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contests_slug_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contests_slug_idx ON contests USING btree (slug);
 
 
 --
--- Name: contests_user_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contests_user_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contests_user_id_idx ON contests USING btree (user_id);
 
 
 --
--- Name: contests_winner_user_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contests_winner_user_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contests_winner_user_id_idx ON contests USING btree (winner_user_id);
 
 
 --
--- Name: contests_zazpay_gateway_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contests_zazpay_gateway_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contests_zazpay_gateway_id_idx ON contests USING btree (zazpay_gateway_id);
 
 
 --
--- Name: contests_zazpay_payment_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: contests_zazpay_payment_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX contests_zazpay_payment_id_idx ON contests USING btree (zazpay_payment_id);
 
 
 --
--- Name: countries_name; Type: INDEX; Schema: public; Owner: -
+-- Name: countries_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX countries_name ON countries USING btree (name);
 
 
 --
--- Name: coupons_discount_type_id; Type: INDEX; Schema: public; Owner: -
+-- Name: coupons_discount_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX coupons_discount_type_id ON coupons USING btree (discount_type_id);
 
 
 --
--- Name: credit_purchase_logs_coupon_id; Type: INDEX; Schema: public; Owner: -
+-- Name: credit_purchase_logs_coupon_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX credit_purchase_logs_coupon_id ON credit_purchase_logs USING btree (coupon_id);
 
 
 --
--- Name: credit_purchase_logs_gateway_id; Type: INDEX; Schema: public; Owner: -
+-- Name: credit_purchase_logs_gateway_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX credit_purchase_logs_gateway_id ON credit_purchase_logs USING btree (gateway_id);
 
 
 --
--- Name: credit_purchase_logs_payment_gateway_id; Type: INDEX; Schema: public; Owner: -
+-- Name: credit_purchase_logs_payment_gateway_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX credit_purchase_logs_payment_gateway_id ON credit_purchase_logs USING btree (payment_gateway_id);
 
 
 --
--- Name: discount_types_name; Type: INDEX; Schema: public; Owner: -
+-- Name: discount_types_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX discount_types_name ON discount_types USING btree (name);
 
 
 --
--- Name: dispute_closed_types_dispute_open_type_id; Type: INDEX; Schema: public; Owner: -
+-- Name: dispute_closed_types_dispute_open_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX dispute_closed_types_dispute_open_type_id ON dispute_closed_types USING btree (dispute_open_type_id);
 
 
 --
--- Name: dispute_closed_types_project_role_id; Type: INDEX; Schema: public; Owner: -
+-- Name: dispute_closed_types_project_role_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX dispute_closed_types_project_role_id ON dispute_closed_types USING btree (project_role_id);
 
 
 --
--- Name: dispute_open_types_name; Type: INDEX; Schema: public; Owner: -
+-- Name: dispute_open_types_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX dispute_open_types_name ON dispute_open_types USING btree (name);
 
 
 --
--- Name: dispute_open_types_project_role_id; Type: INDEX; Schema: public; Owner: -
+-- Name: dispute_open_types_project_role_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX dispute_open_types_project_role_id ON dispute_open_types USING btree (project_role_id);
 
 
 --
--- Name: dispute_statuses_name; Type: INDEX; Schema: public; Owner: -
+-- Name: dispute_statuses_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX dispute_statuses_name ON dispute_statuses USING btree (name);
 
 
 --
--- Name: educations_country_id; Type: INDEX; Schema: public; Owner: -
+-- Name: educations_country_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX educations_country_id ON educations USING btree (country_id);
 
 
 --
--- Name: educations_title; Type: INDEX; Schema: public; Owner: -
+-- Name: educations_title; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX educations_title ON educations USING btree (title);
 
 
 --
--- Name: educations_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: educations_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX educations_user_id ON educations USING btree (user_id);
 
 
 --
--- Name: email_templates_name; Type: INDEX; Schema: public; Owner: -
+-- Name: email_templates_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX email_templates_name ON email_templates USING btree (name);
 
 
 --
--- Name: exam_answers_exam_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exam_answers_exam_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exam_answers_exam_id ON exam_answers USING btree (exam_id);
 
 
 --
--- Name: exam_answers_exams_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exam_answers_exams_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exam_answers_exams_user_id ON exam_answers USING btree (exams_user_id);
 
 
 --
--- Name: exam_answers_question_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exam_answers_question_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exam_answers_question_id ON exam_answers USING btree (question_id);
 
 
 --
--- Name: exam_answers_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exam_answers_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exam_answers_user_id ON exam_answers USING btree (user_id);
 
 
 --
--- Name: exam_attends_exam_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exam_attends_exam_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exam_attends_exam_id ON exam_attends USING btree (exam_id);
 
 
 --
--- Name: exam_attends_exams_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exam_attends_exams_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exam_attends_exams_user_id ON exam_attends USING btree (exams_user_id);
 
 
 --
--- Name: exam_attends_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exam_attends_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exam_attends_user_id ON exam_attends USING btree (user_id);
 
 
 --
--- Name: exam_attends_user_login_ip; Type: INDEX; Schema: public; Owner: -
+-- Name: exam_attends_user_login_ip; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exam_attends_user_login_ip ON exam_attends USING btree (user_login_ip_id);
 
 
 --
--- Name: exam_categories_name; Type: INDEX; Schema: public; Owner: -
+-- Name: exam_categories_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exam_categories_name ON exam_categories USING btree (name);
 
 
 --
--- Name: exam_levels_name; Type: INDEX; Schema: public; Owner: -
+-- Name: exam_levels_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exam_levels_name ON exam_levels USING btree (name);
 
 
 --
--- Name: exam_statuses_name; Type: INDEX; Schema: public; Owner: -
+-- Name: exam_statuses_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exam_statuses_name ON exam_statuses USING btree (name);
 
 
 --
--- Name: exams_exam_category_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exams_exam_category_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exams_exam_category_id ON exams USING btree (exam_category_id);
 
 
 --
--- Name: exams_exam_level_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exams_exam_level_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exams_exam_level_id ON exams USING btree (exam_level_id);
 
 
 --
--- Name: exams_parent_exam_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exams_parent_exam_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exams_parent_exam_id ON exams USING btree (parent_exam_id);
 
 
 --
--- Name: exams_question_display_type_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exams_question_display_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exams_question_display_type_id ON exams USING btree (question_display_type_id);
 
 
 --
--- Name: exams_questions_exam_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exams_questions_exam_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exams_questions_exam_id ON exams_questions USING btree (exam_id);
 
 
 --
--- Name: exams_questions_question_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exams_questions_question_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exams_questions_question_id ON exams_questions USING btree (question_id);
 
 
 --
--- Name: exams_users_exam_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exams_users_exam_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exams_users_exam_id ON exams_users USING btree (exam_id);
 
 
 --
--- Name: exams_users_exam_level_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exams_users_exam_level_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exams_users_exam_level_id ON exams_users USING btree (exam_level_id);
 
 
 --
--- Name: exams_users_exam_status_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exams_users_exam_status_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exams_users_exam_status_id ON exams_users USING btree (exam_status_id);
 
 
 --
--- Name: exams_users_payment_gateway_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exams_users_payment_gateway_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exams_users_payment_gateway_id ON exams_users USING btree (payment_gateway_id);
 
 
 --
--- Name: exams_users_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exams_users_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exams_users_user_id ON exams_users USING btree (user_id);
 
 
 --
--- Name: exams_users_zazpay_gateway_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exams_users_zazpay_gateway_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exams_users_zazpay_gateway_id ON exams_users USING btree (zazpay_gateway_id);
 
 
 --
--- Name: exams_users_zazpay_payment_id; Type: INDEX; Schema: public; Owner: -
+-- Name: exams_users_zazpay_payment_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX exams_users_zazpay_payment_id ON exams_users USING btree (zazpay_payment_id);
 
 
 --
--- Name: flag_categories_name; Type: INDEX; Schema: public; Owner: -
+-- Name: flag_categories_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX flag_categories_name ON flag_categories USING btree (name);
 
 
 --
--- Name: flags_flag_category_id; Type: INDEX; Schema: public; Owner: -
+-- Name: flags_flag_category_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX flags_flag_category_id ON flags USING btree (flag_category_id);
 
 
 --
--- Name: flags_ip_id; Type: INDEX; Schema: public; Owner: -
+-- Name: flags_ip_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX flags_ip_id ON flags USING btree (ip_id);
 
 
 --
--- Name: flags_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: flags_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX flags_user_id ON flags USING btree (user_id);
 
 
 --
--- Name: followers_foreign_id; Type: INDEX; Schema: public; Owner: -
+-- Name: followers_foreign_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX followers_foreign_id ON followers USING btree (foreign_id);
 
 
 --
--- Name: followers_ip_id; Type: INDEX; Schema: public; Owner: -
+-- Name: followers_ip_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX followers_ip_id ON followers USING btree (ip_id);
 
 
 --
--- Name: followers_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: followers_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX followers_user_id ON followers USING btree (user_id);
 
 
 --
--- Name: form_field_groups_class_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: form_field_groups_class_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX form_field_groups_class_idx ON form_field_groups USING btree (class);
 
 
 --
--- Name: form_field_groups_contest_type_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: form_field_groups_contest_type_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX form_field_groups_contest_type_id_idx ON form_field_groups USING btree (foreign_id);
 
 
 --
--- Name: form_field_groups_name; Type: INDEX; Schema: public; Owner: -
+-- Name: form_field_groups_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX form_field_groups_name ON form_field_groups USING btree (name);
 
 
 --
--- Name: form_field_groups_slug_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: form_field_groups_slug_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX form_field_groups_slug_idx ON form_field_groups USING btree (slug);
 
 
 --
--- Name: form_field_submissions_foreign_id; Type: INDEX; Schema: public; Owner: -
+-- Name: form_field_submissions_foreign_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX form_field_submissions_foreign_id ON form_field_submissions USING btree (foreign_id);
 
 
 --
--- Name: form_field_submissions_form_field_id; Type: INDEX; Schema: public; Owner: -
+-- Name: form_field_submissions_form_field_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX form_field_submissions_form_field_id ON form_field_submissions USING btree (form_field_id);
 
 
 --
--- Name: form_fields_foreign_id; Type: INDEX; Schema: public; Owner: -
+-- Name: form_fields_foreign_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX form_fields_foreign_id ON form_fields USING btree (foreign_id);
 
 
 --
--- Name: form_fields_form_field_group_id; Type: INDEX; Schema: public; Owner: -
+-- Name: form_fields_form_field_group_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX form_fields_form_field_group_id ON form_fields USING btree (form_field_group_id);
 
 
 --
--- Name: form_fields_input_type_id; Type: INDEX; Schema: public; Owner: -
+-- Name: form_fields_input_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX form_fields_input_type_id ON form_fields USING btree (input_type_id);
 
 
 --
--- Name: hire_requests_foreign_id; Type: INDEX; Schema: public; Owner: -
+-- Name: hire_requests_foreign_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX hire_requests_foreign_id ON hire_requests USING btree (foreign_id);
 
 
 --
--- Name: hire_requests_requested_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: hire_requests_requested_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX hire_requests_requested_user_id ON hire_requests USING btree (requested_user_id);
 
 
 --
--- Name: hire_requests_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: hire_requests_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX hire_requests_user_id ON hire_requests USING btree (user_id);
 
 
 --
--- Name: input_types_name; Type: INDEX; Schema: public; Owner: -
+-- Name: input_types_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX input_types_name ON input_types USING btree (name);
 
 
 --
--- Name: ips_city_id; Type: INDEX; Schema: public; Owner: -
+-- Name: ips_city_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX ips_city_id ON ips USING btree (city_id);
 
 
 --
--- Name: ips_country_id; Type: INDEX; Schema: public; Owner: -
+-- Name: ips_country_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX ips_country_id ON ips USING btree (country_id);
 
 
 --
--- Name: ips_state_id; Type: INDEX; Schema: public; Owner: -
+-- Name: ips_state_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX ips_state_id ON ips USING btree (state_id);
 
 
 --
--- Name: ips_timezone_id; Type: INDEX; Schema: public; Owner: -
+-- Name: ips_timezone_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX ips_timezone_id ON ips USING btree (timezone_id);
 
 
 --
--- Name: job_applies_ip_id; Type: INDEX; Schema: public; Owner: -
+-- Name: job_applies_ip_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_applies_ip_id ON job_applies USING btree (ip_id);
 
 
 --
--- Name: job_applies_job_apply_status_id; Type: INDEX; Schema: public; Owner: -
+-- Name: job_applies_job_apply_status_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_applies_job_apply_status_id ON job_applies USING btree (job_apply_status_id);
 
 
 --
--- Name: job_applies_job_id; Type: INDEX; Schema: public; Owner: -
+-- Name: job_applies_job_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_applies_job_id ON job_applies USING btree (job_id);
 
 
 --
--- Name: job_applies_portfolios_job_apply_id; Type: INDEX; Schema: public; Owner: -
+-- Name: job_applies_portfolios_job_apply_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_applies_portfolios_job_apply_id ON job_applies_portfolios USING btree (job_apply_id);
 
 
 --
--- Name: job_applies_portfolios_portfolio_id; Type: INDEX; Schema: public; Owner: -
+-- Name: job_applies_portfolios_portfolio_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_applies_portfolios_portfolio_id ON job_applies_portfolios USING btree (portfolio_id);
 
 
 --
--- Name: job_applies_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: job_applies_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_applies_user_id ON job_applies USING btree (user_id);
 
 
 --
--- Name: job_apply_clicks_ip_id; Type: INDEX; Schema: public; Owner: -
+-- Name: job_apply_clicks_ip_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_apply_clicks_ip_id ON job_apply_clicks USING btree (ip_id);
 
 
 --
--- Name: job_apply_clicks_job_id; Type: INDEX; Schema: public; Owner: -
+-- Name: job_apply_clicks_job_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_apply_clicks_job_id ON job_apply_clicks USING btree (job_id);
 
 
 --
--- Name: job_apply_clicks_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: job_apply_clicks_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_apply_clicks_user_id ON job_apply_clicks USING btree (user_id);
 
 
 --
--- Name: job_apply_statuses_name; Type: INDEX; Schema: public; Owner: -
+-- Name: job_apply_statuses_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_apply_statuses_name ON job_apply_statuses USING btree (name);
 
 
 --
--- Name: job_apply_statuses_slug; Type: INDEX; Schema: public; Owner: -
+-- Name: job_apply_statuses_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_apply_statuses_slug ON job_apply_statuses USING btree (slug);
 
 
 --
--- Name: job_categories_name; Type: INDEX; Schema: public; Owner: -
+-- Name: job_categories_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_categories_name ON job_categories USING btree (name);
 
 
 --
--- Name: job_categories_slug; Type: INDEX; Schema: public; Owner: -
+-- Name: job_categories_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_categories_slug ON job_categories USING btree (slug);
 
 
 --
--- Name: job_statuses_name; Type: INDEX; Schema: public; Owner: -
+-- Name: job_statuses_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_statuses_name ON job_statuses USING btree (name);
 
 
 --
--- Name: job_statuses_slug; Type: INDEX; Schema: public; Owner: -
+-- Name: job_statuses_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_statuses_slug ON job_statuses USING btree (slug);
 
 
 --
--- Name: job_types_name; Type: INDEX; Schema: public; Owner: -
+-- Name: job_types_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_types_name ON job_types USING btree (name);
 
 
 --
--- Name: job_types_slug; Type: INDEX; Schema: public; Owner: -
+-- Name: job_types_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX job_types_slug ON job_types USING btree (slug);
 
 
 --
--- Name: jobs_city_id; Type: INDEX; Schema: public; Owner: -
+-- Name: jobs_city_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX jobs_city_id ON jobs USING btree (city_id);
 
 
 --
--- Name: jobs_country_id; Type: INDEX; Schema: public; Owner: -
+-- Name: jobs_country_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX jobs_country_id ON jobs USING btree (country_id);
 
 
 --
--- Name: jobs_ip_id; Type: INDEX; Schema: public; Owner: -
+-- Name: jobs_ip_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX jobs_ip_id ON jobs USING btree (ip_id);
 
 
 --
--- Name: jobs_job_category_id; Type: INDEX; Schema: public; Owner: -
+-- Name: jobs_job_category_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX jobs_job_category_id ON jobs USING btree (job_category_id);
 
 
 --
--- Name: jobs_job_status_id; Type: INDEX; Schema: public; Owner: -
+-- Name: jobs_job_status_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX jobs_job_status_id ON jobs USING btree (job_status_id);
 
 
 --
--- Name: jobs_job_type_id; Type: INDEX; Schema: public; Owner: -
+-- Name: jobs_job_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX jobs_job_type_id ON jobs USING btree (job_type_id);
 
 
 --
--- Name: jobs_salary_type_id; Type: INDEX; Schema: public; Owner: -
+-- Name: jobs_salary_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX jobs_salary_type_id ON jobs USING btree (salary_type_id);
 
 
 --
--- Name: jobs_skills_job_id; Type: INDEX; Schema: public; Owner: -
+-- Name: jobs_skills_job_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX jobs_skills_job_id ON jobs_skills USING btree (job_id);
 
 
 --
--- Name: jobs_skills_skill_id; Type: INDEX; Schema: public; Owner: -
+-- Name: jobs_skills_skill_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX jobs_skills_skill_id ON jobs_skills USING btree (skill_id);
 
 
 --
--- Name: jobs_slug; Type: INDEX; Schema: public; Owner: -
+-- Name: jobs_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX jobs_slug ON jobs USING btree (slug);
 
 
 --
--- Name: jobs_state_id; Type: INDEX; Schema: public; Owner: -
+-- Name: jobs_state_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX jobs_state_id ON jobs USING btree (state_id);
 
 
 --
--- Name: jobs_title; Type: INDEX; Schema: public; Owner: -
+-- Name: jobs_title; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX jobs_title ON jobs USING btree (title);
 
 
 --
--- Name: jobs_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: jobs_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX jobs_user_id ON jobs USING btree (user_id);
 
 
 --
--- Name: languages_name; Type: INDEX; Schema: public; Owner: -
+-- Name: languages_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX languages_name ON languages USING btree (name);
 
 
 --
--- Name: messages_foreign_id; Type: INDEX; Schema: public; Owner: -
+-- Name: messages_foreign_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX messages_foreign_id ON messages USING btree (foreign_id);
 
 
 --
--- Name: messages_message_content_id; Type: INDEX; Schema: public; Owner: -
+-- Name: messages_message_content_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX messages_message_content_id ON messages USING btree (message_content_id);
 
 
 --
--- Name: messages_other_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: messages_other_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX messages_other_user_id ON messages USING btree (other_user_id);
 
 
 --
--- Name: messages_parent_id; Type: INDEX; Schema: public; Owner: -
+-- Name: messages_parent_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX messages_parent_id ON messages USING btree (parent_id);
 
 
 --
--- Name: messages_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: messages_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX messages_user_id ON messages USING btree (user_id);
 
 
 --
--- Name: milestone_statuses_name; Type: INDEX; Schema: public; Owner: -
+-- Name: milestone_statuses_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX milestone_statuses_name ON milestone_statuses USING btree (name);
 
 
 --
--- Name: milestone_statuses_slug; Type: INDEX; Schema: public; Owner: -
+-- Name: milestone_statuses_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX milestone_statuses_slug ON milestone_statuses USING btree (slug);
 
 
 --
--- Name: milestones_bid_id; Type: INDEX; Schema: public; Owner: -
+-- Name: milestones_bid_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX milestones_bid_id ON milestones USING btree (bid_id);
 
 
 --
--- Name: milestones_milestone_status_id; Type: INDEX; Schema: public; Owner: -
+-- Name: milestones_milestone_status_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX milestones_milestone_status_id ON milestones USING btree (milestone_status_id);
 
 
 --
--- Name: milestones_project_id; Type: INDEX; Schema: public; Owner: -
+-- Name: milestones_project_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX milestones_project_id ON milestones USING btree (project_id);
 
 
 --
--- Name: milestones_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: milestones_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX milestones_user_id ON milestones USING btree (user_id);
 
 
 --
--- Name: money_transfer_accounts_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: money_transfer_accounts_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX money_transfer_accounts_user_id ON money_transfer_accounts USING btree (user_id);
 
 
 --
--- Name: oauth_access_tokens_client_id; Type: INDEX; Schema: public; Owner: -
+-- Name: oauth_access_tokens_client_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX oauth_access_tokens_client_id ON oauth_access_tokens USING btree (client_id);
 
 
 --
--- Name: oauth_access_tokens_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: oauth_access_tokens_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX oauth_access_tokens_user_id ON oauth_access_tokens USING btree (user_id);
 
 
 --
--- Name: oauth_authorization_codes_client_id; Type: INDEX; Schema: public; Owner: -
+-- Name: oauth_authorization_codes_client_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX oauth_authorization_codes_client_id ON oauth_authorization_codes USING btree (client_id);
 
 
 --
--- Name: oauth_authorization_codes_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: oauth_authorization_codes_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX oauth_authorization_codes_user_id ON oauth_authorization_codes USING btree (user_id);
 
 
 --
--- Name: oauth_clients_client_id; Type: INDEX; Schema: public; Owner: -
+-- Name: oauth_clients_client_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX oauth_clients_client_id ON oauth_clients USING btree (client_id);
 
 
 --
--- Name: oauth_clients_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: oauth_clients_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX oauth_clients_user_id ON oauth_clients USING btree (user_id);
 
 
 --
--- Name: oauth_jwt_client_id; Type: INDEX; Schema: public; Owner: -
+-- Name: oauth_jwt_client_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX oauth_jwt_client_id ON oauth_jwt USING btree (client_id);
 
 
 --
--- Name: oauth_refresh_tokens_client_id; Type: INDEX; Schema: public; Owner: -
+-- Name: oauth_refresh_tokens_client_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX oauth_refresh_tokens_client_id ON oauth_refresh_tokens USING btree (client_id);
 
 
 --
--- Name: oauth_refresh_tokens_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: oauth_refresh_tokens_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX oauth_refresh_tokens_user_id ON oauth_refresh_tokens USING btree (user_id);
 
 
 --
--- Name: pages_parent_id; Type: INDEX; Schema: public; Owner: -
+-- Name: pages_parent_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX pages_parent_id ON pages USING btree (parent_id);
 
 
 --
--- Name: pages_title; Type: INDEX; Schema: public; Owner: -
+-- Name: pages_title; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX pages_title ON pages USING btree (title);
 
 
 --
--- Name: payment_gateway_settings_payment_gateway_id; Type: INDEX; Schema: public; Owner: -
+-- Name: payment_gateway_settings_payment_gateway_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX payment_gateway_settings_payment_gateway_id ON payment_gateway_settings USING btree (payment_gateway_id);
 
 
 --
--- Name: payment_gateways_name; Type: INDEX; Schema: public; Owner: -
+-- Name: payment_gateways_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX payment_gateways_name ON payment_gateways USING btree (name);
 
 
 --
--- Name: payment_gateways_slug; Type: INDEX; Schema: public; Owner: -
+-- Name: payment_gateways_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX payment_gateways_slug ON payment_gateways USING btree (slug);
 
 
 --
--- Name: portfolios_title; Type: INDEX; Schema: public; Owner: -
+-- Name: portfolios_title; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX portfolios_title ON portfolios USING btree (title);
 
 
 --
--- Name: portfolios_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: portfolios_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX portfolios_user_id ON portfolios USING btree (user_id);
 
 
 --
--- Name: pricing_days_no_of_days_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: pricing_days_no_of_days_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX pricing_days_no_of_days_idx ON pricing_days USING btree (no_of_days);
 
 
 --
--- Name: pricing_packages_name_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: pricing_packages_name_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX pricing_packages_name_idx ON pricing_packages USING btree (name);
 
 
 --
--- Name: project_bid_invoice_items_project_bid_invoice_id; Type: INDEX; Schema: public; Owner: -
+-- Name: project_bid_invoice_items_project_bid_invoice_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX project_bid_invoice_items_project_bid_invoice_id ON project_bid_invoice_items USING btree (project_bid_invoice_id);
 
 
 --
--- Name: project_bid_invoices_bid_id; Type: INDEX; Schema: public; Owner: -
+-- Name: project_bid_invoices_bid_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX project_bid_invoices_bid_id ON project_bid_invoices USING btree (bid_id);
 
 
 --
--- Name: project_bid_invoices_project_id; Type: INDEX; Schema: public; Owner: -
+-- Name: project_bid_invoices_project_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX project_bid_invoices_project_id ON project_bid_invoices USING btree (project_id);
 
 
 --
--- Name: project_bid_invoices_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: project_bid_invoices_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX project_bid_invoices_user_id ON project_bid_invoices USING btree (user_id);
 
 
 --
--- Name: project_bids_project_id; Type: INDEX; Schema: public; Owner: -
+-- Name: project_bids_project_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX project_bids_project_id ON project_bids USING btree (project_id);
 
 
 --
--- Name: project_bids_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: project_bids_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX project_bids_user_id ON project_bids USING btree (user_id);
 
 
 --
--- Name: project_categories_name; Type: INDEX; Schema: public; Owner: -
+-- Name: project_categories_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX project_categories_name ON project_categories USING btree (name);
 
 
 --
--- Name: project_disputes_dispute_closed_type_id; Type: INDEX; Schema: public; Owner: -
+-- Name: project_disputes_dispute_closed_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX project_disputes_dispute_closed_type_id ON project_disputes USING btree (dispute_closed_type_id);
 
 
 --
--- Name: project_disputes_dispute_open_type_id; Type: INDEX; Schema: public; Owner: -
+-- Name: project_disputes_dispute_open_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX project_disputes_dispute_open_type_id ON project_disputes USING btree (dispute_open_type_id);
 
 
 --
--- Name: project_disputes_dispute_status_id; Type: INDEX; Schema: public; Owner: -
+-- Name: project_disputes_dispute_status_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX project_disputes_dispute_status_id ON project_disputes USING btree (dispute_status_id);
 
 
 --
--- Name: project_disputes_project_id; Type: INDEX; Schema: public; Owner: -
+-- Name: project_disputes_project_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX project_disputes_project_id ON project_disputes USING btree (project_id);
 
 
 --
--- Name: project_disputes_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: project_disputes_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX project_disputes_user_id ON project_disputes USING btree (user_id);
 
 
 --
--- Name: project_ranges_name; Type: INDEX; Schema: public; Owner: -
+-- Name: project_ranges_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX project_ranges_name ON project_ranges USING btree (name);
 
 
 --
--- Name: project_statuses_name; Type: INDEX; Schema: public; Owner: -
+-- Name: project_statuses_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX project_statuses_name ON project_statuses USING btree (name);
 
 
 --
--- Name: projects_project_categories_project_category_id; Type: INDEX; Schema: public; Owner: -
+-- Name: projects_project_categories_project_category_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX projects_project_categories_project_category_id ON projects_project_categories USING btree (project_category_id);
 
 
 --
--- Name: projects_project_categories_project_id; Type: INDEX; Schema: public; Owner: -
+-- Name: projects_project_categories_project_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX projects_project_categories_project_id ON projects_project_categories USING btree (project_id);
 
 
 --
--- Name: projects_project_range_id; Type: INDEX; Schema: public; Owner: -
+-- Name: projects_project_range_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX projects_project_range_id ON projects USING btree (project_range_id);
 
 
 --
--- Name: projects_project_status_id; Type: INDEX; Schema: public; Owner: -
+-- Name: projects_project_status_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX projects_project_status_id ON projects USING btree (project_status_id);
 
 
 --
--- Name: projects_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: projects_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX projects_user_id ON projects USING btree (user_id);
 
 
 --
--- Name: provider_users_foreign_id; Type: INDEX; Schema: public; Owner: -
+-- Name: provider_users_foreign_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX provider_users_foreign_id ON provider_users USING btree (foreign_id);
 
 
 --
--- Name: provider_users_provider_id; Type: INDEX; Schema: public; Owner: -
+-- Name: provider_users_provider_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX provider_users_provider_id ON provider_users USING btree (provider_id);
 
 
 --
--- Name: provider_users_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: provider_users_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX provider_users_user_id ON provider_users USING btree (user_id);
 
 
 --
--- Name: providers_name; Type: INDEX; Schema: public; Owner: -
+-- Name: providers_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX providers_name ON providers USING btree (name);
 
 
 --
--- Name: providers_slug; Type: INDEX; Schema: public; Owner: -
+-- Name: providers_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX providers_slug ON providers USING btree (slug);
 
 
 --
--- Name: publications_title; Type: INDEX; Schema: public; Owner: -
+-- Name: publications_title; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX publications_title ON publications USING btree (title);
 
 
 --
--- Name: publications_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: publications_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX publications_user_id ON publications USING btree (user_id);
 
 
 --
--- Name: question_answer_options_question_id; Type: INDEX; Schema: public; Owner: -
+-- Name: question_answer_options_question_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX question_answer_options_question_id ON question_answer_options USING btree (question_id);
 
 
 --
--- Name: question_categories_name; Type: INDEX; Schema: public; Owner: -
+-- Name: question_categories_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX question_categories_name ON question_categories USING btree (name);
 
 
 --
--- Name: question_display_types_name; Type: INDEX; Schema: public; Owner: -
+-- Name: question_display_types_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX question_display_types_name ON question_display_types USING btree (name);
 
 
 --
--- Name: questions_question_category_id; Type: INDEX; Schema: public; Owner: -
+-- Name: questions_question_category_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX questions_question_category_id ON questions USING btree (question_category_id);
 
 
 --
--- Name: quote_bids_coupon_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_bids_coupon_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_bids_coupon_id ON quote_bids USING btree (coupon_id);
 
 
 --
--- Name: quote_bids_credit_purchase_log_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_bids_credit_purchase_log_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_bids_credit_purchase_log_id ON quote_bids USING btree (credit_purchase_log_id);
 
 
 --
--- Name: quote_bids_quote_request_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_bids_quote_request_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_bids_quote_request_id ON quote_bids USING btree (quote_request_id);
 
 
 --
--- Name: quote_bids_quote_service_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_bids_quote_service_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_bids_quote_service_id ON quote_bids USING btree (quote_service_id);
 
 
 --
--- Name: quote_bids_quote_status_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_bids_quote_status_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_bids_quote_status_id ON quote_bids USING btree (quote_status_id);
 
 
 --
--- Name: quote_bids_service_provider_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_bids_service_provider_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_bids_service_provider_user_id ON quote_bids USING btree (service_provider_user_id);
 
 
 --
--- Name: quote_bids_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_bids_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_bids_user_id ON quote_bids USING btree (user_id);
 
 
 --
--- Name: quote_categories_name; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_categories_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_categories_name ON quote_categories USING btree (name);
 
 
 --
--- Name: quote_categories_parent_category_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_categories_parent_category_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_categories_parent_category_id ON quote_categories USING btree (parent_category_id);
 
 
 --
--- Name: quote_categories_quote_services_quote_category_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_categories_quote_services_quote_category_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_categories_quote_services_quote_category_id ON quote_categories_quote_services USING btree (quote_category_id);
 
 
 --
--- Name: quote_categories_quote_services_quote_service_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_categories_quote_services_quote_service_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_categories_quote_services_quote_service_id ON quote_categories_quote_services USING btree (quote_service_id);
 
 
 --
--- Name: quote_categories_slug; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_categories_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_categories_slug ON quote_categories USING btree (slug);
 
 
 --
--- Name: quote_credit_purchase_logs_quote_credit_purchase_plan_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_credit_purchase_logs_quote_credit_purchase_plan_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_credit_purchase_logs_quote_credit_purchase_plan_id ON credit_purchase_logs USING btree (credit_purchase_plan_id);
 
 
 --
--- Name: quote_credit_purchase_logs_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_credit_purchase_logs_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_credit_purchase_logs_user_id ON credit_purchase_logs USING btree (user_id);
 
 
 --
--- Name: quote_credit_purchase_plans_name; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_credit_purchase_plans_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_credit_purchase_plans_name ON credit_purchase_plans USING btree (name);
 
 
 --
--- Name: quote_faq_answers_quote_faq_question_template_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_faq_answers_quote_faq_question_template_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_faq_answers_quote_faq_question_template_id ON quote_faq_answers USING btree (quote_faq_question_template_id);
 
 
 --
--- Name: quote_faq_answers_quote_service_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_faq_answers_quote_service_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_faq_answers_quote_service_id ON quote_faq_answers USING btree (quote_service_id);
 
 
 --
--- Name: quote_faq_answers_quote_user_faq_question_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_faq_answers_quote_user_faq_question_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_faq_answers_quote_user_faq_question_id ON quote_faq_answers USING btree (quote_user_faq_question_id);
 
 
 --
--- Name: quote_request_form_fields_quote_request_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_request_form_fields_quote_request_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_request_form_fields_quote_request_id ON quote_request_form_fields USING btree (quote_request_id);
 
 
 --
--- Name: quote_requests_city_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_requests_city_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_requests_city_id ON quote_requests USING btree (city_id);
 
 
 --
--- Name: quote_requests_country_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_requests_country_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_requests_country_id ON quote_requests USING btree (country_id);
 
 
 --
--- Name: quote_requests_quote_category_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_requests_quote_category_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_requests_quote_category_id ON quote_requests USING btree (quote_category_id);
 
 
 --
--- Name: quote_requests_quote_service_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_requests_quote_service_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_requests_quote_service_id ON quote_requests USING btree (quote_service_id);
 
 
 --
--- Name: quote_requests_state_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_requests_state_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_requests_state_id ON quote_requests USING btree (state_id);
 
 
 --
--- Name: quote_requests_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_requests_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_requests_user_id ON quote_requests USING btree (user_id);
 
 
 --
--- Name: quote_service_audios_quote_service_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_service_audios_quote_service_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_service_audios_quote_service_id ON quote_service_audios USING btree (quote_service_id);
 
 
 --
--- Name: quote_service_photos_quote_service_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_service_photos_quote_service_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_service_photos_quote_service_id ON quote_service_photos USING btree (quote_service_id);
 
 
 --
--- Name: quote_service_videos_quote_service_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_service_videos_quote_service_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_service_videos_quote_service_id ON quote_service_videos USING btree (quote_service_id);
 
 
 --
--- Name: quote_services_city_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_services_city_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_services_city_id ON quote_services USING btree (city_id);
 
 
 --
--- Name: quote_services_country_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_services_country_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_services_country_id ON quote_services USING btree (country_id);
 
 
 --
--- Name: quote_services_latitude; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_services_latitude; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_services_latitude ON quote_services USING btree (latitude);
 
 
 --
--- Name: quote_services_longitude; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_services_longitude; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_services_longitude ON quote_services USING btree (longitude);
 
 
 --
--- Name: quote_services_slug; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_services_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_services_slug ON quote_services USING btree (slug);
 
 
 --
--- Name: quote_services_state_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_services_state_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_services_state_id ON quote_services USING btree (state_id);
 
 
 --
--- Name: quote_services_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_services_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_services_user_id ON quote_services USING btree (user_id);
 
 
 --
--- Name: quote_user_faq_questions_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: quote_user_faq_questions_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX quote_user_faq_questions_user_id ON quote_user_faq_questions USING btree (user_id);
 
 
 --
--- Name: resources_name; Type: INDEX; Schema: public; Owner: -
+-- Name: resources_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX resources_name ON resources USING btree (name);
 
 
 --
--- Name: resume_downloads_ip_id; Type: INDEX; Schema: public; Owner: -
+-- Name: resume_downloads_ip_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX resume_downloads_ip_id ON resume_downloads USING btree (ip_id);
 
 
 --
--- Name: resume_downloads_job_apply_id; Type: INDEX; Schema: public; Owner: -
+-- Name: resume_downloads_job_apply_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX resume_downloads_job_apply_id ON resume_downloads USING btree (job_apply_id);
 
 
 --
--- Name: resume_downloads_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: resume_downloads_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX resume_downloads_user_id ON resume_downloads USING btree (user_id);
 
 
 --
--- Name: resume_ratings_job_apply_id; Type: INDEX; Schema: public; Owner: -
+-- Name: resume_ratings_job_apply_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX resume_ratings_job_apply_id ON resume_ratings USING btree (job_apply_id);
 
 
 --
--- Name: resume_ratings_job_id; Type: INDEX; Schema: public; Owner: -
+-- Name: resume_ratings_job_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX resume_ratings_job_id ON resume_ratings USING btree (job_id);
 
 
 --
--- Name: resume_ratings_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: resume_ratings_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX resume_ratings_user_id ON resume_ratings USING btree (user_id);
 
 
 --
--- Name: reviews_foreign_id; Type: INDEX; Schema: public; Owner: -
+-- Name: reviews_foreign_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX reviews_foreign_id ON reviews USING btree (foreign_id);
 
 
 --
--- Name: reviews_ip_id; Type: INDEX; Schema: public; Owner: -
+-- Name: reviews_ip_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX reviews_ip_id ON reviews USING btree (ip_id);
 
 
 --
--- Name: reviews_model_id; Type: INDEX; Schema: public; Owner: -
+-- Name: reviews_model_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX reviews_model_id ON reviews USING btree (model_id);
 
 
 --
--- Name: reviews_to_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: reviews_to_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX reviews_to_user_id ON reviews USING btree (to_user_id);
 
 
 --
--- Name: reviews_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: reviews_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX reviews_user_id ON reviews USING btree (user_id);
 
 
 --
--- Name: roles_name; Type: INDEX; Schema: public; Owner: -
+-- Name: roles_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX roles_name ON roles USING btree (name);
 
 
 --
--- Name: salary_types_name; Type: INDEX; Schema: public; Owner: -
+-- Name: salary_types_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX salary_types_name ON salary_types USING btree (name);
 
 
 --
--- Name: setting_categories_name; Type: INDEX; Schema: public; Owner: -
+-- Name: setting_categories_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX setting_categories_name ON setting_categories USING btree (name);
 
 
 --
--- Name: settings_setting_category_id; Type: INDEX; Schema: public; Owner: -
+-- Name: settings_setting_category_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX settings_setting_category_id ON settings USING btree (setting_category_id);
 
 
 --
--- Name: skills_name; Type: INDEX; Schema: public; Owner: -
+-- Name: skills_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX skills_name ON skills USING btree (name);
 
 
 --
--- Name: skills_portfolios_portfolio_id; Type: INDEX; Schema: public; Owner: -
+-- Name: skills_portfolios_portfolio_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX skills_portfolios_portfolio_id ON skills_portfolios USING btree (portfolio_id);
 
 
 --
--- Name: skills_portfolios_skill_id; Type: INDEX; Schema: public; Owner: -
+-- Name: skills_portfolios_skill_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX skills_portfolios_skill_id ON skills_portfolios USING btree (skill_id);
 
 
 --
--- Name: skills_projects_project_id; Type: INDEX; Schema: public; Owner: -
+-- Name: skills_projects_project_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX skills_projects_project_id ON skills_projects USING btree (project_id);
 
 
 --
--- Name: skills_projects_skill_id; Type: INDEX; Schema: public; Owner: -
+-- Name: skills_projects_skill_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX skills_projects_skill_id ON skills_projects USING btree (skill_id);
 
 
 --
--- Name: skills_slug; Type: INDEX; Schema: public; Owner: -
+-- Name: skills_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX skills_slug ON skills USING btree (slug);
 
 
 --
--- Name: skills_users_skill_id; Type: INDEX; Schema: public; Owner: -
+-- Name: skills_users_skill_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX skills_users_skill_id ON skills_users USING btree (skill_id);
 
 
 --
--- Name: skills_users_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: skills_users_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX skills_users_user_id ON skills_users USING btree (user_id);
 
 
 --
--- Name: states_country_id; Type: INDEX; Schema: public; Owner: -
+-- Name: states_country_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX states_country_id ON states USING btree (country_id);
 
 
 --
--- Name: states_name; Type: INDEX; Schema: public; Owner: -
+-- Name: states_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX states_name ON states USING btree (name);
 
 
 --
--- Name: timezones_name; Type: INDEX; Schema: public; Owner: -
+-- Name: timezones_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX timezones_name ON timezones USING btree (name);
 
 
 --
--- Name: transactions_foreign_id; Type: INDEX; Schema: public; Owner: -
+-- Name: transactions_foreign_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX transactions_foreign_id ON transactions USING btree (foreign_id);
 
 
 --
--- Name: transactions_payment_gateway_id; Type: INDEX; Schema: public; Owner: -
+-- Name: transactions_payment_gateway_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX transactions_payment_gateway_id ON transactions USING btree (payment_gateway_id);
 
 
 --
--- Name: transactions_to_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: transactions_to_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX transactions_to_user_id ON transactions USING btree (to_user_id);
 
 
 --
--- Name: transactions_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: transactions_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX transactions_user_id ON transactions USING btree (user_id);
 
 
 --
--- Name: upload_hosters_upload_service_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: upload_hosters_upload_service_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX upload_hosters_upload_service_id_idx ON upload_hosters USING btree (upload_service_id);
 
 
 --
--- Name: upload_hosters_upload_service_type_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: upload_hosters_upload_service_type_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX upload_hosters_upload_service_type_id_idx ON upload_hosters USING btree (upload_service_type_id);
 
 
 --
--- Name: upload_service_settings_upload_service_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: upload_service_settings_upload_service_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX upload_service_settings_upload_service_id_idx ON upload_service_settings USING btree (upload_service_id);
 
 
 --
--- Name: upload_service_types_name; Type: INDEX; Schema: public; Owner: -
+-- Name: upload_service_types_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX upload_service_types_name ON upload_service_types USING btree (name);
 
 
 --
--- Name: upload_service_types_slug_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: upload_service_types_slug_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX upload_service_types_slug_idx ON upload_service_types USING btree (slug);
 
 
 --
--- Name: upload_services_name; Type: INDEX; Schema: public; Owner: -
+-- Name: upload_services_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX upload_services_name ON upload_services USING btree (name);
 
 
 --
--- Name: upload_services_slug_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: upload_services_slug_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX upload_services_slug_idx ON upload_services USING btree (slug);
 
 
 --
--- Name: upload_statuses_name; Type: INDEX; Schema: public; Owner: -
+-- Name: upload_statuses_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX upload_statuses_name ON upload_statuses USING btree (name);
 
 
 --
--- Name: uploads_contest_user_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: uploads_contest_user_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX uploads_contest_user_id_idx ON uploads USING btree (contest_user_id);
 
 
 --
--- Name: uploads_upload_service_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: uploads_upload_service_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX uploads_upload_service_id_idx ON uploads USING btree (upload_service_id);
 
 
 --
--- Name: uploads_upload_service_type_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: uploads_upload_service_type_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX uploads_upload_service_type_id_idx ON uploads USING btree (upload_service_type_id);
 
 
 --
--- Name: uploads_upload_status_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: uploads_upload_status_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX uploads_upload_status_id_idx ON uploads USING btree (upload_status_id);
 
 
 --
--- Name: uploads_user_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: uploads_user_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX uploads_user_id_idx ON uploads USING btree (user_id);
 
 
 --
--- Name: uploads_vimeo_video_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: uploads_vimeo_video_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX uploads_vimeo_video_id_idx ON uploads USING btree (vimeo_video_id);
 
 
 --
--- Name: uploads_youtube_video_id_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: uploads_youtube_video_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX uploads_youtube_video_id_idx ON uploads USING btree (youtube_video_id);
 
 
 --
--- Name: user_cash_withdrawals_money_transfer_account_id; Type: INDEX; Schema: public; Owner: -
+-- Name: user_cash_withdrawals_money_transfer_account_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX user_cash_withdrawals_money_transfer_account_id ON user_cash_withdrawals USING btree (money_transfer_account_id);
 
 
 --
--- Name: user_cash_withdrawals_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: user_cash_withdrawals_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX user_cash_withdrawals_user_id ON user_cash_withdrawals USING btree (user_id);
 
 
 --
--- Name: user_cash_withdrawals_withdrawal_status_id; Type: INDEX; Schema: public; Owner: -
+-- Name: user_cash_withdrawals_withdrawal_status_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX user_cash_withdrawals_withdrawal_status_id ON user_cash_withdrawals USING btree (withdrawal_status_id);
 
 
 --
--- Name: user_logins_ip_id; Type: INDEX; Schema: public; Owner: -
+-- Name: user_logins_ip_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX user_logins_ip_id ON user_logins USING btree (ip_id);
 
 
 --
--- Name: user_logins_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: user_logins_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX user_logins_user_id ON user_logins USING btree (user_id);
 
 
 --
--- Name: users_city_id; Type: INDEX; Schema: public; Owner: -
+-- Name: users_city_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX users_city_id ON users USING btree (city_id);
 
 
 --
--- Name: users_country_id; Type: INDEX; Schema: public; Owner: -
+-- Name: users_country_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX users_country_id ON users USING btree (country_id);
 
 
 --
--- Name: users_email; Type: INDEX; Schema: public; Owner: -
+-- Name: users_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX users_email ON users USING btree (email);
 
 
 --
--- Name: users_ip_id; Type: INDEX; Schema: public; Owner: -
+-- Name: users_ip_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX users_ip_id ON users USING btree (ip_id);
 
 
 --
--- Name: users_role_id; Type: INDEX; Schema: public; Owner: -
+-- Name: users_role_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX users_role_id ON users USING btree (role_id);
 
 
 --
--- Name: users_state_id; Type: INDEX; Schema: public; Owner: -
+-- Name: users_state_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX users_state_id ON users USING btree (state_id);
 
 
 --
--- Name: users_username; Type: INDEX; Schema: public; Owner: -
+-- Name: users_username; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX users_username ON users USING btree (username);
 
 
 --
--- Name: vaults_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: vaults_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX vaults_user_id ON vaults USING btree (user_id);
 
 
 --
--- Name: vaults_vault_id; Type: INDEX; Schema: public; Owner: -
+-- Name: vaults_vault_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX vaults_vault_id ON vaults USING btree (vault_id);
 
 
 --
--- Name: views_ip_id; Type: INDEX; Schema: public; Owner: -
+-- Name: views_ip_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX views_ip_id ON views USING btree (ip_id);
 
 
 --
--- Name: views_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: views_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX views_user_id ON views USING btree (user_id);
 
 
 --
--- Name: wallets_gateway_id; Type: INDEX; Schema: public; Owner: -
+-- Name: wallets_gateway_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX wallets_gateway_id ON wallets USING btree (gateway_id);
 
 
 --
--- Name: wallets_payment_gateway_id; Type: INDEX; Schema: public; Owner: -
+-- Name: wallets_payment_gateway_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX wallets_payment_gateway_id ON wallets USING btree (payment_gateway_id);
 
 
 --
--- Name: wallets_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: wallets_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX wallets_user_id ON wallets USING btree (user_id);
 
 
 --
--- Name: work_profiles_title; Type: INDEX; Schema: public; Owner: -
+-- Name: work_profiles_title; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX work_profiles_title ON work_profiles USING btree (title);
 
 
 --
--- Name: work_profiles_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: work_profiles_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX work_profiles_user_id ON work_profiles USING btree (user_id);
 
 
 --
--- Name: zazpay_payment_gateways_users_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: zazpay_payment_gateways_users_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX zazpay_payment_gateways_users_user_id ON zazpay_payment_gateways_users USING btree (user_id);
 
 
 --
--- Name: zazpay_payment_gateways_users_zazpay_payment_gateway_id; Type: INDEX; Schema: public; Owner: -
+-- Name: zazpay_payment_gateways_users_zazpay_payment_gateway_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX zazpay_payment_gateways_users_zazpay_payment_gateway_id ON zazpay_payment_gateways_users USING btree (zazpay_payment_gateway_id);
 
 
 --
--- Name: zazpay_payment_gateways_zazpay_gateway_id; Type: INDEX; Schema: public; Owner: -
+-- Name: zazpay_payment_gateways_zazpay_gateway_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX zazpay_payment_gateways_zazpay_gateway_id ON zazpay_payment_gateways USING btree (zazpay_gateway_id);
 
 
 --
--- Name: zazpay_payment_gateways_zazpay_payment_group_id; Type: INDEX; Schema: public; Owner: -
+-- Name: zazpay_payment_gateways_zazpay_payment_group_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX zazpay_payment_gateways_zazpay_payment_group_id ON zazpay_payment_gateways USING btree (zazpay_payment_group_id);
 
 
 --
--- Name: zazpay_payment_groups_zazpay_group_id; Type: INDEX; Schema: public; Owner: -
+-- Name: zazpay_payment_groups_zazpay_group_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX zazpay_payment_groups_zazpay_group_id ON zazpay_payment_groups USING btree (zazpay_group_id);
 
 
 --
--- Name: zazpay_transaction_logs_gateway_id; Type: INDEX; Schema: public; Owner: -
+-- Name: zazpay_transaction_logs_gateway_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX zazpay_transaction_logs_gateway_id ON zazpay_transaction_logs USING btree (gateway_id);
 
 
 --
--- Name: zazpay_transaction_logs_payment_id; Type: INDEX; Schema: public; Owner: -
+-- Name: zazpay_transaction_logs_payment_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX zazpay_transaction_logs_payment_id ON zazpay_transaction_logs USING btree (payment_id);
 
 
 --
--- Name: zazpay_transaction_logs_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: zazpay_transaction_logs_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX zazpay_transaction_logs_user_id ON zazpay_transaction_logs USING btree (user_id);
