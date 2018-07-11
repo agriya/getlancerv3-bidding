@@ -2,8 +2,8 @@
 
 ### Server Requirements
 
-   ** PHP Version - PHP >= 5.6
-        * Extensions
+   # PHP Version - PHP >= 5.6
+   * Extensions
             GD Version - 2.x+
             PCRE Version - 7.x+
             cURL version - 7.x+
@@ -11,7 +11,7 @@
 			OpenSSL
             PDO PHP Extension
             mbstring
-        * php.ini settings
+    * php.ini settings
             max_execution_time - 180 (not mandatory)
             max_input_time - 6000 (not mandatory)
             memory_limit - 128M (at least 32M)
@@ -19,8 +19,8 @@
             open_basedir - No Value
             display_error = On
             magic_quotes_gpc = Off
-    ** postgres sql : 9.4
-    ** ngnix server
+   # postgres sql : 9.4
+   # ngnix server
  		Nodejs
 		Composer
 		Bower
