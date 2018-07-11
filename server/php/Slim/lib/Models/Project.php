@@ -234,6 +234,8 @@ class Project extends AppModel
             if (!empty($payment_response['paykey'])) {
                 $wallet->paypal_pay_key = $payment_response['paykey'];
             }
+             $dispatcher = Project::getEventDispatcher();
+             Project::unsetEventDispatcher();
             $project->is_paid = true;
             $project->zazpay_pay_key = $payment_response['paykey'];
             $project->update();
@@ -564,13 +566,17 @@ class Project extends AppModel
                     $otherUserId = $project->user_id;
                 }
                 if ($authUser->role_id == \Constants\ConstUserTypes::Admin) {
-                    insertActivities($project->freelancer_user_id, $project->user_id, 'Project', $project->id, $oldProjectStatus, \Constants\ProjectStatus::EmployerCanceled, \Constants\ActivityType::ProjectRejectedToWork, $project->id);
-                    insertActivities($project->user_id, $project->freelancer_user_id, 'Project', $project->id, $oldProjectStatus, \Constants\ProjectStatus::EmployerCanceled, \Constants\ActivityType::ProjectRejectedToWork, $project->id);
+                    if (!empty($project->freelancer_user_id)) {
+                        insertActivities($project->freelancer_user_id, $project->user_id, 'Project', $project->id, $oldProjectStatus, \Constants\ProjectStatus::EmployerCanceled, \Constants\ActivityType::ProjectRejectedToWork, $project->id);
+                        insertActivities($project->user_id, $project->freelancer_user_id, 'Project', $project->id, $oldProjectStatus, \Constants\ProjectStatus::EmployerCanceled, \Constants\ActivityType::ProjectRejectedToWork, $project->id);
+                    }
                 } else {
-                    insertActivities($userId, $otherUserId, 'Project', $project->id, $oldProjectStatus, \Constants\ProjectStatus::EmployerCanceled, \Constants\ActivityType::ProjectRejectedToWork, $project->id);
+                    if (!empty($otherUserId)) {
+                         insertActivities($userId, $otherUserId, 'Project', $project->id, $oldProjectStatus, \Constants\ProjectStatus::EmployerCanceled, \Constants\ActivityType::ProjectRejectedToWork, $project->id);
+                    }   
                 }
                 // sending Mail to employer
-                if ($project->project_status_id == \Constants\ProjectStatus::EmployerCanceled) {
+                if ($project->project_status_id == \Constants\ProjectStatus::EmployerCanceled && !empty($project->freelancer_user_id)) {
                     $employerDetails = getUserHiddenFields($project->user_id);
                     $userDetails = getUserHiddenFields($project->freelancer_user_id);
                     $emailFindReplace = array(
