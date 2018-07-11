@@ -1,17 +1,17 @@
-### Getlancer Product
+Installation Steps
+------------------
+# Server Requirements
 
-### Server Requirements
-
-   # PHP Version - PHP >= 5.6
-   * Extensions
+    ** PHP Version - PHP >= 5.6
+        * Extensions
             GD Version - 2.x+
             PCRE Version - 7.x+
             cURL version - 7.x+
             json version - 1.x+
-			OpenSSL
+            OpenSSL
             PDO PHP Extension
             mbstring
-    * php.ini settings
+        * php.ini settings
             max_execution_time - 180 (not mandatory)
             max_input_time - 6000 (not mandatory)
             memory_limit - 128M (at least 32M)
@@ -19,17 +19,17 @@
             open_basedir - No Value
             display_error = On
             magic_quotes_gpc = Off
-   # postgres sql : 9.4
-   # ngnix server
- 		Nodejs
-		Composer
-		Bower
-		Grunt	
+    ** postgres sql : 9.4
+    ** ngnix server
+        Nodejs
+        Composer
+        Bower
+        Grunt
     Recommended Linux distributions: Centos / Ubuntu / RedHat
 
-### Server Side
+# Server Side
 
-# Composer Updation
+### Composer Updation
 
 To Update the Composer, please run the below command in your Project Path.  
 
@@ -51,13 +51,13 @@ To Update the Composer, please run the below command in your Project Path.
 
 ### Create database for your project
 
-# Import db from the script
+* Import db from the script
 
  	sql/getlancer_with_sample_data.sql
 
-### Front Side: 
+# Front Side: 
 
-# You need to install nodejs, bower, grunt.
+### You need to install nodejs, bower, grunt.
 
 Go to the path in command prompt. "/client/
 
@@ -82,12 +82,8 @@ Go to the path in command prompt. "/client/
         ## Common
         	*/2 * * * * /##DOC_ROOT_PATH/##PROJECT_NAME/server/php/Slim/shell/main.sh 1» /##DOC_ROOT_PATH/##PROJECT_NAME/tmp/logs/shell.log 2» /##DOC_ROOT_PATH/##PROJECT_NAME/tmp/logs/shell.log
 
-        ## Bidding Plugin
-    		*/2 * * * * /##DOC_ROOT_PATH/##PROJECT_NAME/server/php/Slim/shell/subscription.sh 1» /##DOC_ROOT_PATH/##PROJECT_NAME/tmp/logs/shell.log 2» /##DOC_ROOT_PATH/##PROJECT_NAME//tmp/logs/shell.log
-
-    		*/2 * * * * /##DOC_ROOT_PATH/##PROJECT_NAME/server/php/Slim/shell/exam.sh 1» /##DOC_ROOT_PATH/##PROJECT_NAME/tmp/logs/shell.log 2» /##DOC_ROOT_PATH/##PROJECT_NAME//tmp/logs/exam.log
-
-    		*/2 * * * * /##DOC_ROOT_PATH/##PROJECT_NAME/server/php/Slim/shell/follower.sh 1» /##DOC_ROOT_PATH/##PROJECT_NAME/tmp/logs/shell.log 2» /##DOC_ROOT_PATH/##PROJECT_NAME//tmp/logs/follower.log
-
-    		*/2 * * * * /##DOC_ROOT_PATH/##PROJECT_NAME/server/php/Slim/shell/project.sh 1» /##DOC_ROOT_PATH/##PROJECT_NAME/tmp/logs/shell.log 2» /##DOC_ROOT_PATH/##PROJECT_NAME/tmp/logs/project.log
+        ## Jobs Plugin
+		    */2 * * * * /##DOC_ROOT_PATH/##PROJECT_NAME/server/php/Slim/shell/subscription.sh 1» /##DOC_ROOT_PATH/##PROJECT_NAME/tmp/logs/shell.log 2» /##DOC_ROOT_PATH/##PROJECT_NAME/tmp/logs/shell.log
+		
+		    */2 * * * * /##DOC_ROOT_PATH/##PROJECT_NAME/server/php/Slim/shell/job.sh 1» /var/www/html/tmp/logs/shell.log 2» /var/www/html/tmp/logs/job.log
      
