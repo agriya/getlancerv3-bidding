@@ -1,0 +1,13 @@
+<div class="row list-header">
+    <div class="">
+        <div class="content-top clearfix">
+            <h1 class="al-title" compile="::llCtrl.view.title()"> {{ ::llCtrl.view.entity.label() | humanize | pluralize | translate }} {{ 'LIST' | translate }} </h1>
+            <ul class="breadcrumb al-breadcrumb">
+                <li><a href="#/dashboard">Home</a></li>
+                <li class="ng-binding" compile="::llCtrl.view.title()">{{ ::llCtrl.view.entity.label() | humanize | pluralize | translate }} {{ 'LIST' | translate }}</li>
+            </ul>
+            <p class="lead" ng-if="::llCtrl.view.description()" compile="::llCtrl.view.description()">{{ ::llCtrl.view.description() }}</p>
+        </div>
+    </div>
+</div>
+<div ui-view="grid"></div>

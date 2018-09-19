@@ -334,6 +334,7 @@ angular.module('getlancerApp.Bidding')
                         if (parseInt(response.error.code) === 0) {
                             $scope.biddings = response.data; 
                             angular.forEach($scope.biddings, function (value) {
+                                if(value.exams_users !== undefined){
                                 if (value.exams_users.length != 0) {
                                     $scope.exam_users = value.exams_users;
                                     angular.forEach($scope.exam_users, function (exams) {
@@ -359,6 +360,7 @@ angular.module('getlancerApp.Bidding')
                                 $scope.total_count = $scope.project_failed_count + $scope.project_completed_count;
                                 $scope.mul = $scope.project_completed_count / $scope.total_count;
                                 value.completetion_rate = $scope.mul * 100;
+                                }
                             });
                             if ($rootScope.scrollBids === true) {
                                 $timeout(function () {
@@ -576,7 +578,7 @@ angular.module('getlancerApp.Bidding')
                 projectstatus: '@',
                 reopenbid: '@'
             },
-            controller: function ($rootScope, $scope, $state, $filter, $location, flash, SweetAlert, $timeout, $cookies, BidRetake, UpdateBidStatus, BidStatusConstant, ProjectStatusConstant, $uibModal) {
+            controller: function ($rootScope, $scope, $state, $filter, $location, flash, $timeout, $cookies, BidRetake, UpdateBidStatus, BidStatusConstant, ProjectStatusConstant, $uibModal) {
                 $scope.project_closed = ProjectStatusConstant.Closed;
                 $scope.auth = JSON.parse($cookies.get('auth'));
                 if ($state.params.placebid) {
@@ -614,7 +616,7 @@ angular.module('getlancerApp.Bidding')
                 $scope.data = {};
                 /* For Retake Bid */
                 $scope.retakeBid = function () {
-                    SweetAlert.swal({
+                    swal({ //jshint ignore:line
                         title: $filter("translate")("Are you sure you want to withdraw this bid?"),
                         text: "",
                         type: "warning",
@@ -624,7 +626,7 @@ angular.module('getlancerApp.Bidding')
                         cancelButtonText: "Cancel",
                         closeOnConfirm: true,
                         animation: false,
-                    }, function (isConfirm) {
+                    }).then(function (isConfirm) {
                         if (isConfirm) {
                             var flashMessage = "";
                             var params = {};
@@ -646,7 +648,7 @@ angular.module('getlancerApp.Bidding')
                 }
                 /* For Select Winner */
                 $scope.selectWinner = function () {
-                    SweetAlert.swal({
+                    swal({ //jshint ignore:line
                         title: $filter("translate")("Are you sure you want to select this freelancer as a winner?"),
                         text: "",
                         type: "warning",
@@ -656,7 +658,7 @@ angular.module('getlancerApp.Bidding')
                         cancelButtonText: "Cancel",
                         closeOnConfirm: true,
                         animation: false,
-                    }, function (isConfirm) {
+                    }).then(function (isConfirm) {
                         if (isConfirm) {
                             var flashMessage = "";
                             if ($scope.reopenbid !== undefined) {
@@ -708,7 +710,7 @@ angular.module('getlancerApp.Bidding')
                 projectstatus: '@',
                 windate: '@',
             },
-            controller: function ($scope, $rootScope, $state, $timeout, $cookies, $filter, flash, UpdateProjectStatus, ProjectStatusConstant, UpdateBidStatus, SweetAlert, ProjectEditView) {
+            controller: function ($scope, $rootScope, $state, $timeout, $cookies, $filter, flash, UpdateProjectStatus, ProjectStatusConstant, UpdateBidStatus, ProjectEditView) {
                 $scope.auth = JSON.parse($cookies.get('auth'));
                 $scope.choosenewfreelancer = false;
                 if (parseInt($scope.projectstatus) === ProjectStatusConstant.WinnerSelected) {
@@ -733,7 +735,7 @@ angular.module('getlancerApp.Bidding')
                     } else if (parseInt(ftype) === 2) {
                         alertTitle = $filter("translate")("Are you sure you want to reject this project?");
                     }
-                    SweetAlert.swal({
+                    swal({ //jshint ignore:line
                         title: alertTitle,
                         text: "",
                         type: "warning",
@@ -743,7 +745,7 @@ angular.module('getlancerApp.Bidding')
                         cancelButtonText: "Cancel",
                         closeOnConfirm: true,
                         animation: false,
-                    }, function (isConfirm) {
+                    }).then(function (isConfirm) {
                         if (isConfirm) {
                             var flashMessage = "";
                             var msgstr = "";
@@ -789,7 +791,7 @@ angular.module('getlancerApp.Bidding')
                     $scope.bidEndDate = $scope.biddinglist.bid_winner.is_reached_response_end_date_for_freelancer;
                 });
                 $scope.reopen = function (rtype) {
-                    SweetAlert.swal({
+                    swal({ //jshint ignore:line
                         title: (parseInt(rtype) === 1) ? $filter("translate")('Are you sure you want to choose a new freelancer?') : $filter("translate")('Are you sure you want to reopen this project?'),
                         text: "",
                         type: "warning",
@@ -799,7 +801,7 @@ angular.module('getlancerApp.Bidding')
                         cancelButtonText: "Cancel",
                         closeOnConfirm: true,
                         animation: false,
-                    }, function (isConfirm) {
+                    }).then(function (isConfirm) {
                         if (isConfirm) {
                             if (parseInt(rtype) === 1) {
                                     $state.go('Bid_ProjectView', {
@@ -842,7 +844,7 @@ angular.module('getlancerApp.Bidding')
                 projectuser: '@',
                 projectstatus: '@',
             },
-            controller: function ($scope, $rootScope, $timeout, $state, $cookies, $filter, flash, md5, ProjectStatusConstant, SweetAlert, Messages, Upload, Invoice, BiddingMsgClass, FileFormat, BiddingfileClass, Files, MilestoneStatusConstant, biddingProjectTransactions, TransactionUserMessage) {
+            controller: function ($scope, $rootScope, $timeout, $state, $cookies, $filter, flash, md5, ProjectStatusConstant, Messages, Upload, Invoice, BiddingMsgClass, FileFormat, BiddingfileClass, Files, MilestoneStatusConstant, biddingProjectTransactions, TransactionUserMessage) {
                 $scope.TransactionUserMessage = TransactionUserMessage;
                 $scope.project_is_dispute = $rootScope.project_is_dispute;
                 $scope.ProjectStatusConstant = ProjectStatusConstant;
@@ -1283,7 +1285,7 @@ angular.module('getlancerApp.Bidding')
                 isprojectcancel: '@',
                 isdispute: '@'
             },
-            controller: function ($scope, $rootScope, $cookies, $state, $filter, flash, ProjectStatusConstant, UpdateProjectStatus, ProjectEditView, SweetAlert, $location, $anchorScroll, $timeout, $uibModal, $uibModalStack) {
+            controller: function ($scope, $rootScope, $cookies, $state, $filter, flash, ProjectStatusConstant, UpdateProjectStatus, ProjectEditView, $location, $anchorScroll, $timeout, $uibModal, $uibModalStack) {
                 $scope.auth = JSON.parse($cookies.get('auth'));
                 $scope.ProjectStatusConstant = ProjectStatusConstant;
                 $scope.is_show_actions = {
@@ -1360,7 +1362,7 @@ angular.module('getlancerApp.Bidding')
                             /*cancel the complete Request*/
                             alerttitle = "Are you sure you want to cancel this request?";
                         }
-                        SweetAlert.swal({
+                        swal({ //jshint ignore:line
                             title: $filter("translate")(alerttitle),
                             text: "",
                             type: "warning",
@@ -1370,7 +1372,7 @@ angular.module('getlancerApp.Bidding')
                             cancelButtonText: "Cancel",
                             closeOnConfirm: true,
                             animation: false,
-                        }, function (isConfirm) {
+                        }).then(function (isConfirm) {
                             if (isConfirm) {
                                 if ($scope.is_freelancer && statusType === 1) {
                                     var acceptparams = {
@@ -1467,7 +1469,7 @@ angular.module('getlancerApp.Bidding')
                     UpdateProjectStatus.put(acceptparams, function (response) {
                         var msgStr = "";
                         if (parseInt(response.error.code) === 0) {
-                            msgStr = (acceptparams.project_status_id === ProjectStatusConstant.Completed) ? 'Project marked as completed successfully.' : (acceptparams.project_status_id === ProjectStatusConstant.MutuallyCanceled) ? 'Your cancel request has been accepted successfully.' : (acceptparams.project_status_id === ProjectStatusConstant.UnderDevelopment) ? 'Project moved to under developement successfully' : 'Project is successfully completed';
+                            msgStr = (acceptparams.project_status_id === ProjectStatusConstant.Completed) ? 'Project marked as completed successfully.' : (acceptparams.project_status_id === ProjectStatusConstant.MutuallyCanceled) ? 'Your reject cancel request has been sended successfully.' : (acceptparams.project_status_id === ProjectStatusConstant.UnderDevelopment) ? 'Project moved to under developement successfully' : 'Project is successfully completed';
                             flashMessage = $filter("translate")(msgStr);
                             flash.set(flashMessage, 'success', false);
                             $state.reload();

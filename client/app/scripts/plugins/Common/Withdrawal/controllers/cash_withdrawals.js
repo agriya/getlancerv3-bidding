@@ -69,7 +69,9 @@ angular.module('getlancerApp.Common.Withdrawal')
                 });
             }
         };
+        $scope.submit_btn = false;
         $scope.userCashWithdrawSubmit = function($valid) {
+            $scope.submit_btn = true;
             if ($scope.account_id === undefined) {
                 $scope.account_error = true;
             } else {
@@ -86,6 +88,7 @@ angular.module('getlancerApp.Common.Withdrawal')
                             $scope.my_user.available_wallet_amount = $scope.my_user.available_wallet_amount - parseInt($scope.amount);
                             //    document.getElementById("user_available_wallet_amount").innerHTML = $filter("customCurrency")($scope.my_user.available_wallet_amount);
                             flash.set($filter("translate")("Your request submitted successfully."), 'success', true);
+                            $scope.submit_btn = false;
                             $state.reload();
                         }
                     }, function() {

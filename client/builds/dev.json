@@ -1,0 +1,9 @@
+{
+	"db_user": "",
+	"db_password": "",
+	"db_name": "",
+	"sftp_upload_path": "",
+	"sftp_host": "",
+	"sftp_username": "",
+    "sftp_password": ""
+}

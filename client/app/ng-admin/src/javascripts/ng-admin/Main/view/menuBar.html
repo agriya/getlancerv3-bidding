@@ -1,0 +1,25 @@
+<div class="al-sidebar custom-scroll scrollbar" role="navigation" compile="menu.template()" ng-mouseleave="hoverElemTop=selectElemTop" ng-swipe-right="setMenuCollapsed(false)" ng-swipe-left="setMenuCollapsed(true)">
+    <ul class="al-sidebar-list" id="side-menu" slimscroll="{height:'{{menuHeight}}px'}" slimscroll-watch="menuHeight">
+        <li class="al-sidebar-list-item" ng-repeat="(key, menu) in ::menu.children()" ui-sref-active="selected" ba-sidebar-toggling-item="menu" ng-class="::{'with-sub-menu': menu.hasChild()}" data-menu-id="{{ ::menu.uuid }}" compile="menu.template()">
+            <a ng-if="::menu.hasChild()" ng-mouseenter="hoverItem($event, menu)" class="al-sidebar-list-link" ng-click="toggleMenu(menu)" ba-ui-sref-toggler ng-class="::{'active': menu.isActive(path)}"> 
+                <i compile="::menu.icon()">
+                    <span class="glyphicon glyphicon-list"></span>
+                </i> {{ menu.title() | translate }} 
+                <b class="arrow fa fa-angle-down" ng-class="::{'fa-angle-up': isOpen(menu), 'fa-angle-down': !isOpen(menu) }"></b> 
+            </a>
+            <a ng-if="::!menu.hasChild()" ng-mouseenter="hoverItem($event, menu)" ba-ui-sref-toggler class="al-sidebar-list-link" href="#{{ menu.link() }}" ng-click="activateLink(menu)" ng-class="::{'active': menu.isActive(path)}"> 
+                <i compile="::menu.icon()">
+                    <span class="glyphicon glyphicon-list"></span>
+                </i> {{ menu.title() | translate }} 
+            </a>
+            <ul ng-if="::menu.hasChild()" ba-ui-sref-toggling-submenu class="al-sidebar-sublist" ng-class="{'slide-right': menu.slideRight}">
+                <li ng-repeat="menu in ::menu.children()" class="ba-sidebar-sublist-item" ng-class="::{'with-sub-menu': menu.hasChild()}" ui-sref-active="selected" ba-sidebar-toggling-item="menu" data-menu-id="{{ ::menu.uuid }}" compile="menu.template()">
+                    <a ng-mouseenter="hoverItem($event, menu)" ba-ui-sref-toggler href="#{{menu.link()}}" class="al-sidebar-list-link subitem-submenu-link" ng-click="activateLink(menu)" ng-class="::{'active': menu.isActive(path)}">
+                        {{ menu.title() | translate }}
+                    </a> 
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <!--<div class="sidebar-hover-elem" ng-style="{top: hoverElemTop + 'px', height: hoverElemHeight + 'px'}" ng-class="{'show-hover-elem': showHoverElem }"></div>-->
+</div>

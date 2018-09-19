@@ -265,7 +265,7 @@ angular.module('getlancerApp.Common.Wallet')
                     $scope.paynow_is_disabled = false;
                 });
 			} else {
-				flashMessage = $filter("translate")("please enter amount.");
+				flashMessage = $filter("translate")("please enter the valid amount.");
                 flash.set(flashMessage, 'error', false);
 			}
 			

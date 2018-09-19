@@ -1,5 +1,5 @@
 angular.module('getlancerApp.Bidding')
-    .controller('MyBidsCtrl', function($scope, $rootScope, $state, $filter, flash, MyBids, BidMilestone, BidRetake, MeMilestone, MilestoneStatusConstant, MeInvoice, SweetAlert) {
+    .controller('MyBidsCtrl', function($scope, $rootScope, $state, $filter, flash, MyBids, BidMilestone, BidRetake, MeMilestone, MilestoneStatusConstant, MeInvoice) {
         $scope.index = function(params) {
             if (params.type === 'milestone') {
                 delete params.type;
@@ -129,7 +129,7 @@ angular.module('getlancerApp.Bidding')
                     title = $filter("translate")("Are you sure you want to withdraw this bid?");
                     cbuton = "Withdraw";
                 }
-                SweetAlert.swal({
+                swal({ //jshint ignore:line
                     title: title,
                     text: "",
                     type: "warning",
@@ -139,7 +139,7 @@ angular.module('getlancerApp.Bidding')
                     cancelButtonText: "Cancel",
                     closeOnConfirm: true,
                     animation:false,
-                }, function(isConfirm) {
+                }).then(function (isConfirm) {
                     if (isConfirm) {
                         var flashMessage = "";
                         if (parseInt(atype) == 1) {

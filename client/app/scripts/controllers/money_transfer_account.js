@@ -7,7 +7,7 @@
  * Controller of the getlancerApp
  */
 angular.module('getlancerApp')
-    .controller('MoneyTransferAccountController', ['$rootScope', '$scope', 'moneyTransferAccount', 'flash', '$filter', '$state', '$window','$location','SweetAlert', function($rootScope, $scope, moneyTransferAccount, flash, $filter, $state, $window, $location,SweetAlert) {
+    .controller('MoneyTransferAccountController', ['$rootScope', '$scope', 'moneyTransferAccount', 'flash', '$filter', '$state', '$window','$location', function($rootScope, $scope, moneyTransferAccount, flash, $filter, $state, $window, $location) {
         $rootScope.header = $rootScope.settings.SITE_NAME + ' | ' + $filter("translate")("Money Transfer Accounts");
         $scope.index = function() {
             $rootScope.url_split = $location.path().split("/")[2];
@@ -40,7 +40,7 @@ angular.module('getlancerApp')
             }
         };
         $scope.MoneyTransferAccDelete = function (id) {
-                    SweetAlert.swal({
+                    swal({ //jshint ignore:line
                         title: $filter("translate")("Are you sure you want to delete?"),
                         text: "",
                         type: "warning",
@@ -50,7 +50,7 @@ angular.module('getlancerApp')
                         cancelButtonText: "Cancel",
                         closeOnConfirm: true,
                         animation:false,
-                    }, function (isConfirm) {
+                    }).then(function (isConfirm) {
                         if (isConfirm) {
                             var param = {};
                             param.user_id = $rootScope.user.id;

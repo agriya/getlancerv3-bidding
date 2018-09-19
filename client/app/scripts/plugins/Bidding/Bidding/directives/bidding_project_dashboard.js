@@ -21,7 +21,7 @@ angular.module('getlancerApp.Bidding')
       controller: 'biddingProjectDashboardCtrl'
     }
   })
-  .controller('biddingProjectDashboardCtrl', function ($rootScope, $scope, $state, $filter, flash, $window, $cookies, MyProjects, SweetAlert, DelProject, ProjectStatsCount, ProjectStatusConstant, ProjectStatusUpdate, MyBids, UpdateProjectStatus, UpdateBidStatus, projectMilestone, projectInvoice, MilestoneStatusChange, MyMilestone, MyInvoices, MilestoneStatusConstant, BidStatusConstant, BidRetake, EmployerStatsCount, FreelancerStatusCount, $uibModal, $stateParams) {
+  .controller('biddingProjectDashboardCtrl', function ($rootScope, $scope, $state, $filter, flash, $window, $cookies, MyProjects, DelProject, ProjectStatsCount, ProjectStatusConstant, ProjectStatusUpdate, MyBids, UpdateProjectStatus, UpdateBidStatus, projectMilestone, projectInvoice, MilestoneStatusChange, MyMilestone, MyInvoices, MilestoneStatusConstant, BidStatusConstant, BidRetake, EmployerStatsCount, FreelancerStatusCount, $uibModal, $stateParams) {
     $rootScope.header = $rootScope.settings.SITE_NAME + ' | ' + $filter("translate")("My Projects");
     $scope.projectConstant = ProjectStatusConstant;
     $scope.portal = $window.localStorage.getItem('portal');
@@ -62,7 +62,7 @@ angular.module('getlancerApp.Bidding')
     $scope.milestoneStatueChange = function (milestoneId, statusId, status) {
       $scope.milestoneid = milestoneId;
       if (statusId !== 'pay') {
-        SweetAlert.swal({
+        swal({ //jshint ignore:line
           title: $filter("translate")('Are you sure you want to do this action?'),
           text: "",
           type: "warning",
@@ -72,7 +72,7 @@ angular.module('getlancerApp.Bidding')
           cancelButtonText: "Cancel",
           closeOnConfirm: true,
           animation: false,
-        }, function (isConfirm) {
+       }).then(function (isConfirm) {
           if (isConfirm) {
             if (status === 'workcompleted') {
               MilestoneStatusChange.put({ id: milestoneId, milestone_status_id: $scope.MilestoneStatusConstant.Completed}, function (response) {
@@ -126,7 +126,7 @@ angular.module('getlancerApp.Bidding')
     };
 
     $scope.CancelProject = function (project_id) {
-      SweetAlert.swal({
+      swal({ //jshint ignore:line
         title: $filter("translate")("Are you sure you want to cancel this project?"),
         type: "warning",
         showCancelButton: true,
@@ -135,7 +135,7 @@ angular.module('getlancerApp.Bidding')
         cancelButtonText: "Cancel",
         closeOnConfirm: true,
         animation: false,
-      }, function (isConfirm) {
+     }).then(function (isConfirm) {
         if (isConfirm) {
           ProjectStatusUpdate.put({ id: project_id, project_status_id: $scope.projectConstant.EmployerCanceled }, function (response) {
             if (response.error.code === 0) {
@@ -153,7 +153,7 @@ angular.module('getlancerApp.Bidding')
     };
   /*  project reopen function*/
       $scope.reopen = function (projid) {
-              SweetAlert.swal({
+              swal({ //jshint ignore:line
             title: $filter("translate")('Are you sure you want to reopen this project?'),
                         text: "",
                         type: "warning",
@@ -163,7 +163,7 @@ angular.module('getlancerApp.Bidding')
                         cancelButtonText: "Cancel",
                         closeOnConfirm: true,
                         animation: false,
-                    }, function (isConfirm) {
+                   }).then(function (isConfirm) {
                         if (isConfirm) {
                                 UpdateProjectStatus.put({
                                     id: projid,
@@ -187,7 +187,7 @@ angular.module('getlancerApp.Bidding')
       } else {
         alertTitle = "Are you sure you want to cancel this request?"
       }
-      SweetAlert.swal({
+      swal({ //jshint ignore:line
         title: $filter("translate")(alertTitle),
         type: "warning",
         showCancelButton: true,
@@ -196,7 +196,7 @@ angular.module('getlancerApp.Bidding')
         cancelButtonText: "Cancel",
         closeOnConfirm: true,
         animation: false,
-      }, function (isConfirm) {
+     }).then(function (isConfirm) {
         if (isConfirm) {
           var params = {};
           if (type === 'accept') {
@@ -721,7 +721,7 @@ angular.module('getlancerApp.Bidding')
     }
     var flashMessage;
     $scope.deleteProject = function (project_id) {
-      SweetAlert.swal({
+      swal({ //jshint ignore:line
         title: $filter("translate")("Are you sure you want to delete?"),
         text: "",
         type: "warning",
@@ -731,7 +731,7 @@ angular.module('getlancerApp.Bidding')
         cancelButtonText: "Cancel",
         closeOnConfirm: true,
         animation: false,
-      }, function (isConfirm) {
+     }).then(function (isConfirm) {
         if (isConfirm) {
           DelProject.delete({
             id: project_id
@@ -750,7 +750,7 @@ angular.module('getlancerApp.Bidding')
       });
     };
     $scope.withdrawfreelancer = function (rtype, projectid) {
-      SweetAlert.swal({
+      swal({ //jshint ignore:line
         title: (parseInt(rtype) === 1) ? $filter("translate")('Are you sure you want to choose a new freelancer?') : $filter("translate")('Are you sure you want to reopen this project?'),
         text: "",
         type: "warning",
@@ -760,7 +760,7 @@ angular.module('getlancerApp.Bidding')
         cancelButtonText: "Cancel",
         closeOnConfirm: true,
         animation: false,
-      }, function (isConfirm) {
+     }).then(function (isConfirm) {
         if (isConfirm) {
           if (parseInt(rtype) === 1) {
             UpdateProjectStatus.put({
@@ -780,7 +780,7 @@ angular.module('getlancerApp.Bidding')
       });
     };
     $scope.cancelProject = function (project_id) {
-      SweetAlert.swal({
+      swal({ //jshint ignore:line
         title: $filter("translate")("Are you sure you want to cancel this project?"),
         type: "warning",
         showCancelButton: true,
@@ -789,7 +789,7 @@ angular.module('getlancerApp.Bidding')
         cancelButtonText: "Cancel",
         closeOnConfirm: true,
         animation: false,
-      }, function (isConfirm) {
+     }).then(function (isConfirm) {
         ProjectStatusUpdate.put({
           id: project_id,
           project_status_id: $scope.projectConstant.EmployerCanceled
@@ -903,7 +903,7 @@ angular.module('getlancerApp.Bidding')
       } else if (parseInt(ftype) === 2) {
         alertTitle = $filter("translate")("Are you sure you want to reject this project?");
       }
-      SweetAlert.swal({
+      swal({ //jshint ignore:line
         title: alertTitle,
         text: "",
         type: "warning",
@@ -913,7 +913,7 @@ angular.module('getlancerApp.Bidding')
         cancelButtonText: "Cancel",
         closeOnConfirm: true,
         animation: false,
-      }, function (isConfirm) {
+     }).then(function (isConfirm) {
         if (isConfirm) {
           var flashMessage = "";
           var msgstr = "";
@@ -967,7 +967,7 @@ angular.module('getlancerApp.Bidding')
         } else if (parseInt(atype) === 5) {
           title = $filter("translate")("Are you sure you want to withdraw this bid?");
         }
-        SweetAlert.swal({
+        swal({ //jshint ignore:line
           title: title,
           text: "",
           type: "warning",
@@ -977,7 +977,7 @@ angular.module('getlancerApp.Bidding')
           cancelButtonText: "Cancel",
           closeOnConfirm: true,
           animation: false,
-        }, function (isConfirm) {
+       }).then(function (isConfirm) {
           if (isConfirm) {
             var flashMessage = "";
             if (parseInt(atype) === 1) {
@@ -1053,7 +1053,7 @@ angular.module('getlancerApp.Bidding')
 
 
 
-  .directive('biddingActiveBids', function ($rootScope, $state, $filter, flash, MyBids, BidMilestone, BidRetake, MeMilestone, MilestoneStatusConstant, MeInvoice, SweetAlert) {
+  .directive('biddingActiveBids', function ($rootScope, $state, $filter, flash, MyBids, BidMilestone, BidRetake, MeMilestone, MilestoneStatusConstant, MeInvoice) {
     return {
       restrict: 'E',
       templateUrl: ''

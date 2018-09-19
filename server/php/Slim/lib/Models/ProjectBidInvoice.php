@@ -64,15 +64,7 @@ class ProjectBidInvoice extends AppModel
     {
         global $authUser;
         parent::boot();
-        self::updating(function ($projectBidInvoice) use ($authUser) {
-            $bids = Bid::where('id', $projectBidInvoice->bid_id)->select('user_id')->first();
-            if (($authUser['role_id'] == \Constants\ConstUserTypes::Admin) || ($authUser['id'] == $bids->user_id)) {
-                ProjectBidInvoice::ProjectBidInvoiceCountUpdation($projectBidInvoice->project_id);
-                return true;
-            }
-            return false;
-        });
-        self::saving(function ($projectBidInvoice) use ($authUser) {
+        self::saved(function ($projectBidInvoice) use ($authUser) {
             $bids = Bid::where('id', $projectBidInvoice->bid_id)->select('user_id')->first();
             if (($authUser['role_id'] == \Constants\ConstUserTypes::Admin) || ($authUser['id'] == $bids->user_id)) {
                 ProjectBidInvoice::ProjectBidInvoiceCountUpdation($projectBidInvoice->project_id);
@@ -111,10 +103,9 @@ class ProjectBidInvoice extends AppModel
     }
     public function processCaptured($payment_response, $id)
     {
+        global $_server_domain_url;
         $projectBidInvoice = ProjectBidInvoice::with('bid', 'project', 'projectbidinvoiceitems')->where('id', $id)->where('is_paid', false)->first();
         if (!empty($projectBidInvoice)) {
-            $dispatcher = ProjectBidInvoice::getEventDispatcher();
-            ProjectBidInvoice::unsetEventDispatcher();
             $projectBidInvoice->is_paid = true;
             if (!empty($payment_response['paykey'])) {
                 $projectBidInvoice->paypal_pay_key = $payment_response['paykey'];
@@ -123,7 +114,6 @@ class ProjectBidInvoice extends AppModel
             $projectBidInvoice->zazpay_pay_key = $payment_response['paykey'];
             $projectBidInvoice->update();
             insertActivities($projectBidInvoice->project->user_id, $projectBidInvoice->user_id, 'ProjectBidInvoice', $projectBidInvoice->id, 0, 0, \Constants\ActivityType::ProjectBidInvoicePaid, $projectBidInvoice->project_id);
-            ProjectBidInvoice::setEventDispatcher($dispatcher);
 
             updateSiteCommissionFromEmployer($projectBidInvoice->site_commission_from_employer, $projectBidInvoice->bid_id, $projectBidInvoice->project_id, $projectBidInvoice->project->user_id);
             
@@ -169,6 +159,7 @@ class ProjectBidInvoice extends AppModel
             Bid::where('id', $projectBidInvoice->bid_id)->update(array(
                 'total_invoice_got_paid' => $total_invoice_got_paid
             ));
+            UpdatePaidAmountForProject($projectBidInvoice->bid_id, $projectBidInvoice->project_id);
         }
         $response = array(
             'data' => $payment_response,

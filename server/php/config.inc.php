@@ -20,6 +20,7 @@ define('APP_PATH', dirname(dirname(dirname(__FILE__))));
 define('MEDIA_PATH', APP_PATH . DS . 'media');
 define('TMP_PATH', APP_PATH . DS . 'tmp');
 define('CACHE_PATH', TMP_PATH . DS . 'cache');
+define('IPS', serialize(array('116.212.176.66', '127.0.0.1')));
 if (file_exists(APP_PATH . DS . 'client' . DS . 'scripts')) {
     define('SCRIPT_PATH', APP_PATH . DS . 'client' . DS . 'scripts');
     define('IMAGES_PATH', APP_PATH . DS . 'client' . DS . 'images');
@@ -34,9 +35,9 @@ if (ini_get('date.timezone')) {
 date_default_timezone_set($default_timezone);
 define('R_DB_DRIVER', 'pgsql');
 define('R_DB_HOST', 'localhost');
-define('R_DB_NAME', 'getlancerv3');
-define('R_DB_USER', 'postgres');
-define('R_DB_PASSWORD', '');
+define('R_DB_NAME', 'ENTER_YOUR_DB_NAME');
+define('R_DB_USER', 'ENTER_YOUR_DB_USERNAME');
+define('R_DB_PASSWORD', 'ENTER_YOUR_DB_PASSWORD');
 define('R_DB_PORT', 5432);
 define('SECURITY_SALT', 'e9a556134534545ab47c6c81c14f06c0b8sdfsdf');
 define('OAUTH_CLIENT_ID', '2212711849319225');

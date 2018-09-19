@@ -62,6 +62,14 @@ class ExamsUser extends AppModel
     {
         return $this->belongsTo('Models\ZazpayPayment', 'zazpay_payment_id', 'id');
     }
+    public function transaction()
+    {
+        return $this->belongsTo('Models\ExamsUser', 'id', 'id')->select('id', 'user_id');
+    }
+    public function foreign_transactions()
+    {
+        return $this->morphMany('Models\Transaction', 'foreign_transaction');
+    }
     public function scopeFilter($query, $params = array())
     {
         parent::scopeFilter($query, $params);

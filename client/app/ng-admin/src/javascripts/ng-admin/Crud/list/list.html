@@ -1,0 +1,27 @@
+<div class="row list-view" ng-class="::'ng-admin-entity-' + listController.entity.name()">
+    <div class="panel panel-blur with-scroll animated zoomIn">
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title" compile="::llCtrl.view.title()">{{ ::llCtrl.view.entity.label() | humanize | pluralize | translate }} {{ 'LIST' | translate }}</h3>
+        </div>
+        <div class="panel-body">
+            <div>
+                <div class="add-row-editable-table clearfix">
+                    <ma-view-actions override="::llCtrl.actions" selection="selection" batch-buttons="::llCtrl.batchActions" entity="::llCtrl.entity" datastore="::llCtrl.dataStore" search="::llCtrl.search" filters="::llCtrl.filters" enabled-filters="llCtrl.enabledFilters"
+                        enable-filter="llCtrl.enableFilter">
+                        <ma-filter-button filters="filters()" enabled-filters="enabledFilters" enable-filter="enableFilter()"></ma-filter-button>
+                        <ma-view-batch-actions buttons="::batchButtons()" selection="selection" entity="::entity"></ma-view-batch-actions>
+                        <ma-export-to-csv-button entity="::entity" datastore="::datastore"></ma-export-to-csv-button>
+                        <ma-create-button ng-if="::entity.creationView().enabled" entity="::entity"></ma-create-button>
+                    </ma-view-actions>
+                </div>
+                <ma-filter-form ng-if="llCtrl.hasFilters" filters="llCtrl.enabledFilters" values="llCtrl.search" datastore="::llCtrl.dataStore" remove-filter="::llCtrl.removeFilter"></ma-filter-form>
+            </div>
+            <ma-datagrid name="{{ ::listController.view.name() }}" entries="listController.dataStore.getEntries(listController.entity.uniqueId)" selection="selection" fields="::listController.fields" list-actions="::listController.listActions" entity="::listController.entity"
+                entry-css-classes="::listController.entryCssClasses" datastore="listController.dataStore"> </ma-datagrid> <br>
+            <div ng-if="::!listController.infinitePagination">
+                <ma-datagrid-pagination page="{{ listController.page }}" per-page="{{ ::listController.view.perPage() }}" total-items="{{ listController.totalItems }}" set-page="::listController.setPageCallback" ng-class="pull-left"> </ma-datagrid-pagination>
+            </div>
+            <ma-datagrid-infinite-pagination ng-if="::listController.infinitePagination" per-page="{{ ::listController.view.perPage() }}" total-items="{{ ::listController.totalItems }}" next-page="::listController.nextPageCallback" ng-class="pull-right"
+                ng-style="margin-top:-16px"> </ma-datagrid-infinite-pagination> <br> <br> </div>
+    </div>
+</div>

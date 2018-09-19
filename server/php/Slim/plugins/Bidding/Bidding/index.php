@@ -194,6 +194,7 @@ $app->POST('/api/v1/projects', function ($request, $response, $args) {
                 if (!empty($args['skills']) && $project->id) {
                     $skills = explode(',', $args['skills']);
                     foreach ($skills as $skill) {
+                        $skill = trim($skill);
                         $newSkills = Models\Skill::where('name', $skill)->first();
                         if(empty($newSkills)) {
                             $newSkills = new Models\Skill;
@@ -255,6 +256,7 @@ $app->POST('/api/v1/projects', function ($request, $response, $args) {
                 $project->update();
             }
             if (empty($amount) || empty($args['payment_gateway_id'])) {
+                $project = Models\Project::with('attachment', 'user')->where('id', $project->id)->first();
                 $result = $project->toArray();
             }
             return renderWithJson($result);
@@ -322,7 +324,7 @@ $app->GET('/api/v1/projects/{projectId}', function ($request, $response, $args) 
     (isPluginEnabled('Bidding/ProjectFollow')) ? $enabledIncludes[] = 'follower' : '';
     (isPluginEnabled('Bidding/BiddingReview')) ? $enabledIncludes[] = 'bid_reviews' : '';
     (isPluginEnabled('Bidding/BiddingReview')) ? $enabledIncludes[] = 'other_user_reviews' : '';
-    $project = Models\Project::with($enabledIncludes)->with(['owner_bid', function ($q) {
+    $project = Models\Project::with($enabledIncludes)->with(['owner_bid' => function ($q) {
         $q->whereHas('project_bid', function ($q1) {
             $q1->where('is_active', 1);
         });
@@ -446,6 +448,7 @@ $app->PUT('/api/v1/projects/{projectId}', function ($request, $response, $args) 
                     if (!empty($args['skills'])) {
                         $skills = explode(',', $args['skills']);
                         foreach ($skills as $skill) {
+                            $skill = trim($skill);
                             $newSkills = Models\Skill::where('name', $skill)->first();
                             if(empty($newSkills)) {
                                 $newSkills = new Models\Skill;
@@ -473,7 +476,7 @@ $app->PUT('/api/v1/projects/{projectId}', function ($request, $response, $args) 
                     }
                 }
                 if ((!empty($project->project_bid->id) && !empty($args['bid_duration'])) && $args['bid_duration'] != $oldBidDuration) {
-                    $projectBid = Models\ProjectBid::where('id', $project->project_bid->id)->where('project_id', $request->getAttribute('projectId'))->get();
+                    $projectBid = Models\ProjectBid::where('id', $project->project_bid->id)->where('project_id', $request->getAttribute('projectId'))->first();
                     if (!empty($projectBid)) {
                         $projectBid->bidding_start_date = date('Y-m-d', strtotime($projectBid->bidding_start_date));
                         if (!empty($args['bid_duration'])) {
@@ -523,22 +526,25 @@ $app->PUT('/api/v1/projects/{projectId}', function ($request, $response, $args) 
                     $adminId = Models\User::select('id')->where('role_id', \Constants\ConstUserTypes::Admin)->first();
                     insertActivities($adminId['id'], $project->user_id, 'Project', $project->id, $oldProjectStatus, $args['project_status_id'], \Constants\ActivityType::ProjectStatusChanged, $project->id, 0);
                 }
-            }
-            if (!empty($project->project_bid->bid) && $project->project_status_id == \Constants\ProjectStatus::OpenForBidding) {
-                $employerDetails = getUserHiddenFields($project->user_id);
-                foreach ($project->project_bid->bid as $bid){
-                    $userDetails = getUserHiddenFields($bid->user_id);
-                    $emailFindReplace = array(
-                        '##USERNAME##' => ucfirst($employerDetails->username) ,
-                        '##BUYER_USERNAME##' => ucfirst($userDetails->username) ,
-                        '##PROJECT_NAME##' => ucfirst($project->name),
-                        '##PROJECT_LINK##' => $_server_domain_url . '/projects/view/' . $project->id . '/' . $project->slug 
-                    );
-                    sendMail('Update Project Notification', $emailFindReplace, $userDetails->email);                    
+                if (!empty($project->project_bid->bid) && $project->project_status_id == \Constants\ProjectStatus::OpenForBidding) {
+                    $employerDetails = getUserHiddenFields($project->user_id);
+                    foreach ($project->project_bid->bid as $bid){
+                        $userDetails = getUserHiddenFields($bid->user_id);
+                        $emailFindReplace = array(
+                            '##USERNAME##' => ucfirst($employerDetails->username) ,
+                            '##BUYER_USERNAME##' => ucfirst($userDetails->username) ,
+                            '##PROJECT_NAME##' => ucfirst($project->name),
+                            '##PROJECT_LINK##' => $_server_domain_url . '/projects/view/' . $project->id . '/' . $project->slug 
+                        );
+                        sendMail('Update Project Notification', $emailFindReplace, $userDetails->email);                    
+                    }
                 }
-            }            
-            $result = $project->toArray();
-            return renderWithJson($result);
+                $project = Models\Project::with('attachment', 'user')->where('id', $project->id)->first();
+                $result = $project->toArray();
+                return renderWithJson($result);
+            } else {
+                return renderWithJson($result, 'Project could not be updated.', '', 422);
+            }
         } else {
             return renderWithJson($result, 'Project could not be updated. Please, try again.', $validationErrorFields, 1);
         }
@@ -576,8 +582,10 @@ $app->PUT('/api/v1/projects/{projectId}/update_status', function ($request, $res
         }
         if (!empty($project) && empty($project['code'])) {
             $result['data'] = $project;
-            updateProjectCompletedCount($project['freelancer_user_id']);
-            updateProjectFailedCount($project['freelancer_user_id']);
+            if (!empty($project['freelancer_user_id'])) {
+                updateProjectCompletedCount($project['freelancer_user_id']);
+                updateProjectFailedCount($project['freelancer_user_id']);
+            }
         } elseif (!empty($project)) {
             return renderWithJson($result, $project['message'], '', $project['code']);
         }
@@ -1160,15 +1168,15 @@ $app->PUT('/api/v1/bids/{bidId}', function ($request, $response, $args) {
                 $newDescription = $bid->description;
                 $newDuration = $bid->duration;
                 if($old_amount != $newAmount || $old_description != $newDescription || $old_duration != $newDuration){
-                    $freelancerDetails = getUserHiddenFields($bid->project->user_id);
-                    $userDetails = getUserHiddenFields($bid->user_id);
+                    $userDetails = getUserHiddenFields($bid->project->user_id);
+                    $freelancerDetails = getUserHiddenFields($bid->user_id);
                             $emailFindReplace = array(
                                 '##USERNAME##' =>ucfirst($userDetails->username) ,
                                 '##PROJECT_NAME##' =>ucfirst($bid->project->slug),
                                 '##FREELANCER_USERNAME##' =>ucfirst($freelancerDetails->username) ,
                                 '##AMOUNT##' =>$bid->amount,
                                 '##DURATION##' => $bid->duration,
-                                '##BUYER_USERNAME##' => ucfirst($userDetails->username) ,
+                                '##BUYER_USERNAME##' => ucfirst($freelancerDetails->username) ,
                                 '##PROJECT_LINK##' => $_server_domain_url . '/projects/view/' . $bid->project->id . '/' . $bid->project->slug 
                             );
                             sendMail('Update Bid Notification', $emailFindReplace, $userDetails->email);

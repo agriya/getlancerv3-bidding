@@ -1,0 +1,1009 @@
+
+Skipped:
+=======
+13.
+[payapi] critical logical error (30 min)
+- http://git.ahsan.in/root/payapi/commit/6312018fdec206f2fc00d182e79f387a92bfce00#4_233_94
+- - should never check for referrer as it is not good practice
+[payapi] critical: Litecoin issues
+- 1. https://sudopay.com/gateways
+- - No countries & currencies set for Litecoin through Kojn
+FirstData - refund and void need to handle
+[payapi] paysafecard payment gateway goes blank
+0174596	 [QA] - No option reject the manual payment in sudopay (40 min)
+[payapi] fpplatform, etc paypal issue "The receiver your-email@example.com does not accept payments in this Currency"
+- http://dev1products.dev.agriya.com/doku.php?id=common-faq
+
+==============================================================================================================================
+==============================================================================================================================
+==============================================================================================================================
+
+Items struggling to fix
+=======================
+- Amazon
+- - Refund through amazon site - no ipn calls to our site
+- - Also need to check manual trigger "Capture" from anazon site
+** Code added for refund/capture from site.. 
+** We add code based on that.. also working on local.. can status not chaged in sandbox site..
+
+http://sudopaydemo.dev.agriya.com/
+- "Marketplace Payment" - can't check with Amazon (Code: 2147483648; Message: Invalid receiver ID)
+** Marketplace Auth - goes to payment, but status not changed in site.. also we can't find record in amazon site
+** But almost seems to enable "Marketplace" payment related setting in amazon profile..
+
+Paymil
+- - Refund process; there is no ipn for refund**
+** We added hook URL in paymill site.. 
+** Also we put log in that ipn URL for GET and POST.. but call came.. not logger anything
+
+0172589: so many messages logged in catalina.out (can check in local tomcat)
+** checked with application.log, application.log.system.out and so on.. but can't able to logging
+
+PayPal auth-capture and marketplace-auth-capture - status no changed (2 hours)
+** It working in local.. but not working in sandbox site...
+
+
+==============================================================================================================================
+==============================================================================================================================
+==============================================================================================================================
+
+Not Done (Old works)
+====================
+3. Table seems to support drag & drop ordering.. but, it's very confusing and not helpful (can't copy info for example). Need to fix the UI to enable the drag drop ordering only on enabling something.. as in ATS? (3 hours)
+
+*** Gateway page new design
+- [payapi] "Multiple" grouping (discuss)
+- send original amount
+- and revised amount
+Forgot password + auto register user
+http://sandbox.sudopay.com/api_requests
+- highlight error
+- Not sure if we have to show all details (in listing & view)? discuss
+- [payapi] need "Refund" action and processing for manual/offline payments
+- 3. Show gateway name above instruction text. Refer, "Important: Payout or receiver accounts connection UI for SudoPay marketplace"
+- [payapi] most of the codes have no beautified codes
+- [payapi] Fwd: Expiry mail notification process add in updateplanlog job
+[payapi] Fwd: 360 Contest (dashboard loader issue)
+- 1. Ability to use "same" application for both sandbox and main site.
+Probably try to detect the domain and have to act based on that. This
+is to avoid maintaining duplicate code base for main and sandbox.
+- 3. In Sandbox site:
+- - Remove or try to link footer links to main site
+- pagesecuro - sandbox server setup
+- [payapi] pagseguro-api-2.0.4.jar related changes in source not seem to be committed in git
+- Important: Payout or receiver accounts connection UI for SudoPay
+- - Balanced fields missing in JSON
+[payapi] admin user edit is hiding important details
+User view page with extra options
+- PagSeguro - Not working and not integrated properly
+- - Gateway Error: br.com.uol.pagseguro.domain.Error@eec27
+- - http://pagsegurosandbox.dev.agriya.com/
+- Json data in docs from code in docs
+- - logical or programming issue (Major) -
+http://git.ahsan.in/root/payapi/tree/master/payapi/payapi/app/japidviews/Payments_Controller/add.json
+- - - reason: handcoded json. Not generated using programming
+- [payapi] API docs goof up
+https://sudopay.com/admin/gateways
+- Subscription API ([payapi] Payment gateways to integrate and subscription API)
+Balanced needs some tweaks
+- - Showing only Marketplace-Capture. But, it supports many other actions too
+- - Auth, Auth-Capture, Marketplace-Auth...
+- - https://docs.balancedpayments.com/current/api.html?language=bash#create-a-new-hold
+(They call "Hold" for Auth)
+- - https://www.balancedpayments.com/#processing
+- - https://docs.balancedpayments.com/current/#processing
+- - Also, bank handling needs to be separated from Balanced table...
+that should be somewhat common for all similar approaches.
+
+Critical, but we'll move these to other teams as they took so many iterations, but still not done correct:
+----------------------------------------------------------------------------------------------------------
+2. Bogus gateway info that makes less sense and also wrong claim:
+* Mt.Gox accepts  bitcoin on your website with payment buttons,
+shopping cart integration
+* Accepts  bitcoin on your website with payment buttons, shopping cart
+integration, and daily payouts
+etc
+
+3. Wrong URLs & wrong instructions like:
+Enter the Redirect URL as "http://sandbox.sudopay.com/receiver_accounts/process1" and submit the app
+
+4. https://sudopay.com/public/1386862268376/images/thumbs/formfield-normal/FormField/6054.e71875d52fad1686d1d2ac2d7a6cb20a.png
+like images
+
+[payapi] Important: text for transactions, emails, gateway settings
+[payapi] Fwd: [Sudopay] - Review
+- - In Pagosonline, there is no details about where to get Usuario ID & Llave
+Pesapal
+paymill (only need to check in sandbox server)
+- - marketplace not done
+
+[payapi] API to check when building other marketplace payments
+- - https://github.com/Crowdtilt/crowdtilt-api-spec/ (Check this when
+building Balanced, Stripe and Skrill marketplace)
+- - Also, check
+http://www.quora.com/Crowdfunding/What-payment-gateways-support-temporary-holds-for-funds-useful-for-crowdfunding-sites
+- Receiving lang code and sending lang code to payment gateway sites
+- http://sandbox.sudopay.com/plans
+- - page title differ in browser window Subc plan, in page plan
+- better to wiki link need for offsite/direct gateways
+- Receiver Accounts Listing
+- - need to confirm why not display account detail, name and email
+- Doc Create Receiver Account
+- - Bank fields missing
+- - - Optional Based on gateway you can check in gateway listing
+- Receiver Accounts Listing
+- - need to confirm why not display account detail, name and email
+- On api request all XML wrong or leads to error page
+- http://sandbox.sudopay.com/docs/integration/api#get-website-payments
+- - Action Upper case but we use all lower case
+
+[payapi] paymill - Unite vs Connect for marketplace
+[payapi] live deployment - need doc on how it works and how to use
+- - Looks like there's some confusion on how to use it.. so, need doc on how to use and how it works.. just quick doc.. before we do any further deployment.
+
+Re: [Tomcat7][SudoPay] - Deployment Document
+- - This is the doc for creating WAR file. We need doc on "deployment".
+- - @Manonmani: Discuss and then allot the work
+
+Re: [payapi] Moneybooker/Skrill - old sample codes + current doc
+- Attached documents location:
+- 1. https://www.skrill.com/fileadmin/templates/main/res/material/documents/pdf/getting-started/skrill-integration-manual-en.pdf
+- 2. https://www.skrill.com/fileadmin/templates/main/res/material/documents/pdf/getting-started/skrill-automated-payment-interface-manual-en.pdf
+- 3. https://www.moneybookers.com/ads/skrill-brand-centre/us/resources/ (logos)
+- 4. Some ruby code:
+https://github.com/moneybookers/active_merchant/commit/4ae346e207bab704cd56cec6505611d372153f76
+- If we don't have "direct" API for marketplace, skip marketplace
+handling now. Later, we may try to integrate "indirect" API using
+their send money option
+https://www.skrill.com/fileadmin/templates/main/res/material/documents/pdf/getting-started/skrill-automated-payment-interface-manual-en.pdf
+
+- https://github.com/Crowdtilt/crowdtilt-api-spec/
+- - Check this when building Balanced, Stripe and Skrill marketplace
+- - Also, check
+http://www.quora.com/Crowdfunding/What-payment-gateways-support-temporary-holds-for-funds-useful-for-crowdfunding-sites
+- 4. Fwd: Returned mail: see transcript for details
+*** Possible logical issue in handling Facebook users. Looks like
+emails are not confirmed properly. Discuss before working; but give
+priority.
+- https://devtools-paypal.com/guide/pay_paypal/python?interactive=ON&env=sandbox
+**** No need to check now. Just for future reference.
+- https://www.paymill.com/en-gb/documentation-3/reference/unite/
+- - Check how Unite is different from Connect for marketplace.. and
+discuss which is correct, etc
+
+- Have to add Payoneer...
+- - But, have to check if we have to add it as a gateway or payout
+processor. And have to plan for that...
+- - https://partners.payoneer.com/WebApps/Admin/Files/APIGuide.pdf
+- - http://thatfreething.com/v2/classes/payment/class.payoneer.php-old
+- - http://ivan.hrynkevich.com/payoneer-api/
+- - https://github.com/Mehonoshin/ruby_payoneer_api/blob/master/lib/payoneer.rb
+- - Demo?: http://www.cohencamps.org/Dor_LDor/documents/PayoneerDLDinformation.pdf
+- [payapi] Moneris - payment gateway - docs & links
+- - Possible things to check:
+- - - 1. Check if you can access the link in webbrowser and see if
+that is not blocked by Cyberoam
+- - - 2. Quickly test with any sample paymill php codes to see if
+you're able to get results
+- [payapi] Balanced payments - notes
+- [payapi] BillMeLater or Pay later/Finance as a gateway - docs & links
+- [payapi]- LG U+ payment gateway
+
+
+====================================================================================================================================================
+====================================================================================================================================================
+====================================================================================================================================================
+
+Completed Work
+==============
+- "Payment processing for Litecoin and other cryptocurrencies" -> "More than one gateway can be enabled in this group"
+- Coin payments *100 (should be convert to cents (for US based cr cards))
+- LG - Check IN IE and non install and install
+- [payapi] LG U+ payment gateway docs and links
+- [payapi] pagosonline links
+- [payapi] Litecoin payment gateway support - docs & links
+6. API settings, additional info cannot be easily added. Refer Manonmani for that.
+Need to handled IPN for Stripe gateway
+buyer_country accept invalid country code
+In Admin users listing page some links have empty link
+PayU, PesaPal, "CoinPayments" and "Kojn", Paymill  uploaded to live and sandbox server
+For Litecoin: "Payment processing for Litecoin and other cryptocurrencies"->"More than one gateway can be enabled in this group"
+- Gateway listing (display name problem in strip)
+- Some gateways missing in Live. For example, Pin, Pesapal, PayU
+3. Images hash difference issue
+- This happens as sandbox has 2 records more than sudopay main. So, id changes and so hashes differ.
+4. When clients setup custom manual images, to retain, have to download media folder and have to war them.
+5. ** To avoid memory issue, have to move ROOT.war from /webapps to /html
+- Demo and live URL switching for all gateways (coin payments)
+Re: [payapi] gateways listing page feedback - local server
+- - 1. Paymill address is wrong(local)
+- - https://sudopay.com/gateways/currency/bgn shows that EBS works in many countries
+- - 4. Probably, show currencies list in currency code format? like USD, CAD, etc?? Discuss before changing [filter]
+[payapi] PayU address should not use India
+
+payAPI - v1.0a83 (2013-12-24)
+-----------------------------
+CreateThumb job need to implement  - media folder maintain outside the deployment folder
+Supported currencies should be correct for "Pin", "Paymill", "Alipay", "Strip", "Authorize" and "VoguePay"
+'Pin" payment need to update in sudopay live site
+- 0172544 In API requests not all errors are logged
+- All payments gateways (need to check supported currencies)
+- VoguePay
+    - Supported Currencies wrong (Support only Nigerian Currency)
+- Live and local db records for gateways infos
+- 0172544 In API requests not all errors are logged
+- VoguePay
+- - Working correctly but dupilcate history insert(http://sandbox.sudopay.com/payments -> Payment #10592)
+
+
+payAPI - v1.0a84 (2013-12-26)
+-----------------------------
+- Receiver account delete related works (waiting for confimation)
+- Received account admin listing *** (waiting for confimation)
+- receive IPN and payment IPN - merge
+- IPN Histories and Receiver Account IPN Histories need to merge
+- Paymil
+    - IPN handling code missing
+    - Auth-Cature return gateway Error: Unknown. check in Paymil auth transaction not display
+    - On trying to void already auth payment moved to Initiated without error. In Paymil auth payment not voided.
+    - Paymill - "Void" action not working - should be fix
+    - Paymill - Auth-Capture goes error page - should be fix
+    - Paymill - IPN handing need to add for Auth, Capture, Auth-Capture
+
+
+payAPI - v1.0a85 (2014-01-06)
+-----------------------------
+Receivers listing merchant side - only marketplace support gateways need to display
+In admin end, API requests listing page - view option needed
+Forget password page - captcha need to implement
+Reset password email template's subject and content need to correct
+- 0172541 Manual gateway thumbnail images are broken
+- 0172747: Manual payment thumb image not showing in client site - cache + time-stamp issue in thumb URL - should be fix
+This is still broken
+http://sandbox.sudopay.com/public/1387877230497/images/thumbs/gateway_user_medium/GatewayUser/9605.5c2b324b47caf6dc04944ed0b95bd504.png
+at http://sudopaydemo.dev.agriya.com/
+When send invalid receiver ID in Receiver account DELETE, should be send error message and error code
+Reveiver account listing changed in both user and admin end
+[sudopay][livesite][urgent] - Javascript button payment redirect to error page
+
+
+payAPI - v1.0a86 (2014-01-23)
+-----------------------------
+PayPal-Marketplace-Capture not working in Live mode; always return as "User is not allowed to perform this action"
+IPN Logs (from third party payment gateways) need to keep and should be display in admin side.
+- [payapi] need the ability to check users' API settings from admin panel
+Gateways:
+- - Stripe - IPN checking (common moving to admin account - problem)
+- Amazon
+- - Capture
+- - - Status is always "-4" status in sudopay site
+Fwd: Returned mail: see transcript for details
+1. Payza
+2. OnePay
+3. PayFort
+4. PayFes
+5. 3Pay
+- Common account for all payment gateways
+http://sandbox.sudopay.com/admin/contacts
+- Goes null point exeception
+2. payfort has Auth-Capture?? check in live and discuss
+4. info@sudopay.com account
+    - no free plan
+    - also someone login frequently??
+6. Twitter link is wrong
+7. In "From" header of emails from SudoPay Sandbox, email should not be "sudopaydemo@gmail.com"  (should be info@sudopay.com)
+8. <a href="https://plus.google.com/111523331749833743847" rel="publisher">Google+</a>  for Google+ link
+http://sandbox.sudopay.com/admin ***
+- Alipay, Amazon, Balanced, Coinpayment, EBS, LG, mtgox, pagseguro, paymill, payU, pesapal, Pin, Skrill, stripe and vogue logs need to display
+primaryReceiver setting should be corrected for PayPal
+buyer_fees_payer_confirmation_token + signature issue problem
+[payapi] Urgent: Fwd: Warning: could not send message for past 4 hours
+[payapi] critical text encoding issue - very high priority
+[payapi] wrong website count in admin/users (https://sudopay.com/admin/gateways)
+- 2. We need some ability to find the users who have integrated the particular gateway. Currently it shows only the count. Not very helpful.
+- 4. "All" filter count is wrong.. shows "5"
+- 5. In the action link, "Delete" is dangerously placed.
+- also, refer http://bugs.agriya.com/view.php?id=172546
+[payapi] wrong website count in admin/users (https://sudopay.com/admin/gateways)
+- 1. Counts seem wrong. For example, no users seem to have integrated Authorize.net yet, but it is showing Payment count as 99 (but user count is 0?)
+[payapi] admin gateways listing page issues *** not done yet?
+6. "Royal" plan
+   http://www.cssilize.com/demo/payapi-inner-pages-0ee4fbe2/price-plan2.html
+http://sandbox.sudopay.com/plans
+- user avatar problem
+[payapi] 3pay - Mikro Ödeme integration doc & links
+3. wrong admin stats - showing only captured and first record?
+Fwd: Plan Expire Notification (1 hour)
+Check - plan activation and plan expiry alert notification email (in cron, subscription plan related listing issue, plan expire issues)
+8.
+[payapi] critical: Litecoin issues (30 min)
+- 2. http://sudopaydemo.dev.agriya.com/#capture-feespayer-merchant
+- - CoinPayments not displayed
+
+payAPI - v1.0a87 (2014-01-24)
+-----------------------------
+FirstData patyment gateway
+[payapi] possible expiry check logical issue (1:30 hour)
+- http://git.ahsan.in/root/payapi/commit/3747a4e9ae950e7c848deb34a597fdb4e138b89e
+- - 1. Expires at 12.00 AM (even when started date time is different)
+**** End time should be update 12:00 AM
+1.a admin/subscription_logs
+- - Confus on end_date 
+- - Do not store start and end date - for only payment count based plans
+http://sandbox.sudopay.com/admin/payment_fees_plan_logs
+- Remove Start and end Date - and display under progress bar
+4. buyer_fees_payer_confirmation_token (code need to add in burrow site) (1:30 hour)
+- I think, the integration code was done by Hariharan in all products. Please also have him handle buyer_fees_payer_confirmation_token too.
+3.
+[payapi] handling of free user has to be changed (1 hour)
+- - When the plan is about to expire, if the user is free user, another plan should automatically be queued (if there is no plan in queue already).
+- - Currently, it sends "Plan Expire Notification" email. This is confusing to Sandbox users and they start sending mails asking for reasons, etc.
+[payapi] need to check progressbar for subscription plan expiration indication (40 min)
+- - 1. plan progressbar issue (refer screenshot)
+- - In admin/user listing - total amount counterCache should be correct
+Admin user index - when filtering - goes error page
+API request and payments - card number and code should be masking
+
+
+payAPI - v1.0a88 (2014-01-24)
+-----------------------------
+Updating subscription plan status and correct start and end date
+AlertPay, OnePay, PayFort - details logs need to display in admin Log Menu 
+CoinPayments need to show in sudopaydemo.dev.agriya.com
+http://sandbox.sudopay.com/admin/users
+- Transaction -> Website Transaction
+http://sandbox.sudopay.com/admin/gateways_users/index?sortBy=-id&page=1&key=7300&filter=users
+- disabled style need to apply for Inactive records
+** DB changes for already existing wrong expire date update (in live db) (2 hour)
+FirstData - details logs need to display in admin Log Menu
+http://sandbox.sudopay.com/api_requests
+- - Not sure if we have to show all details (in listing & view)? discuss
+- - Authentication Error Code - looking new and odd. Discuss about who introduced it and why...
+** remove "Authentication Error Code" display in listing and view
+** Remove "Error Message" and need to add error message on "error code" tooltip
+12.
+http://sandbox.sudopay.com/admin/users/view/7300/T
+- Email: 
+- Websites: 10 (with filter links)
+- Website Fees Paid: $69
+- Transactions: 10 (with filter links)
+- Transaction Amount: $1110
+- Enabled Gateways: 2 (with filter links)
+- Logins: 50 (with filter links)
+- Last Login Time:
+- Last Login IP:
+- Allowed Free Plan? Yes/No
+- Locked? Yes/No
+and Plans
+http://sandbox.sudopay.com/admin
+- Marketplace Captured Amount needed in chart
+
+payAPI - v1.0a89 (2014-01-30)
+-----------------------------
+1. Payment_Fees_Plan_Logs's table current transaction count and current transaction amount should be update in current active plan;  (30 min)
+- - Now it update in existing plan
+http://sandbox.sudopay.com/admin/users (1 hour)
+- Manage Plans - goes without filtering
+https://sudopay.com/admin/websites/1/-id/paid/7177 (40 min)
+- same user added same domain twice. So, have to add validation for user end
+http://sandbox.sudopay.com/admin/plans (40 min)
+- Payment Plan Log Count -> Payment Plan Logs
+- - also it goes error page - should be display with filter
+http://sandbox.sudopay.com/admin/gateways (15 min)
+- - Link on "Gateways" - goes http://sandbox.sudopay.com/admin/gateway_users/1/-id/gateways/3140
+- - But listed more than count records - Should be "Disabled" style for "No" Status
+3.
+Coupon code - need to store website/plan_id (1 hour)
+- Also in website and plan table need to store coupon_id for references
+Forgot password issue for third party users
+
+payAPI - v1.0a90 (2014-02-01)
+-----------------------------
+1.
+http://sandbox.sudopay.com/admin/users
+- Webisite Transaction Amount and Count - need to work - seems to some logical issue
+** Need to sample update function for updating existing records
+2.
+http://sandbox.sudopay.com/admin/transactions
+- Message are not showing fully
+- "Amount" should be display properly
+3.
+http://sandbox.sudopay.com/admin (filtering not working)
+- Users, User Logins, "Webistes", "Receiver Accounts", "Subscriptions" - need to display in ""Overview"
+
+API new design
+In transactions table, for "Webiste fee" and "plan fee" - receiver_user_id storing wrongly...
+http://git.ahsan.in/root/payapi/commit/9c054470082d89d7ae61149207438d12ff53ecaf
+
+payAPI - v1.0a90 (2014-02-01)
+-----------------------------
+Changelog page design
+API new design
+In transactions table, for "Webiste fee" and "plan fee" - receiver_user_id storing wrongly...
+http://git.ahsan.in/root/payapi/commit/9c054470082d89d7ae61149207438d12ff53ecaf
+- When Hard Disabled, also callGateway method - don't send this gateway... *** Discuss
+http://sandbox.sudopay.com/plans
+- check if it charges correctly (Subscription plan - target amount and count calculation need to check)
+- I strongly feel that it doesn't work correctly for the "amount" based plans.. Does it handle currency properly?
+<-- *** document in discussion file
+http://sandbox.sudopay.com/admin (1 hour)
+- Transaction chart need to display with "Website Transactions", "Plan Payments" and "Website Fees"
+- Balanced - Receiver UI, Marketplace -auth, refund, void
+- *** Code done for Auth, Capture and Auth-Capture - not tested, not merged to master
+- *** Void/Refund - goes error in lib file
+-------------------
+IPN need to automatically send, if privious notify is failed (1:30 hours)
+Fwd: [Website# 7125] #10191/5.00 USD/Captured/Mikerules ** (30 min)
+http://sandbox.sudopay.com/admin/users (1 hour)
+- Subscribe count need to update in users table and display in (Plan)
+- - Expired / Queued
+http://sandbox.sudopay.com/admin/websites (40 min)
+- Need filter on "Transaction Count"
+- Need filter on "Payment Count"
+- "Payment Count" -> "Payments"
+- "Is Paid ?" -> "Paid?"
+- Need to display email in "User" and need link to user view page
+http://sandbox.sudopay.com/admin/receiver_accounts/listing (30 min)
+- Merchant ID -> Merchant
+- In Merchant - Need to display ID, Merchant name, email like other pages also view page link needed
+- Receiver ID -> Receiver_id or receiver_account_id
+http://sandbox.sudopay.com/admin/gateways (10 min)
+- Is Hard Disabled -> Hard Disabled?
+- Is Soft Disabled -> Soft Disabled?
+http://sandbox.sudopay.com/admin/plans (10 min)
+- Is Days Limt -> Days Limit?
+- Transaction Limit(amount/count) -> Transaction Limit (Amount / Count)
+http://sandbox.sudopay.com/admin/payment_fees_plan_logs (20 min)
+- Merchant email also need to display with view page link
+- 2. In main site: (20 min)
+- - Add Sandbox link under Developer (near footer)
+
+PayPal should be handle FeesPayer is "SENDER" for marketplace-auth, marketplace-auth-capture, marketplace-capture (seems to missing) ** IPN
+
+1. Correct case, spelling for trademark names (15 min)
+2. "released" looks not user friendly. Probably, something like: Added PayPal gateway or so. (15 min)
+3. Weird pagination URL https://sudopay.com/changelog/2/id (id need to remove from URL) (20 min)
+4. Add "Changelog" in "Developers" heading in footer. (10 min)
+5. For new gateway, supported countries, actions, etc have to be added. (1 hours)
+6. http://sandbox.sudopay.com/admin/api_requests?q=test - goes error page (20 min)
+7. http://sandbox.sudopay.com/admin/payments (15 min)
+- - progressbar is breaking
+8. Description need to simplify newly added payment gateways like existing content (20 min)
+
+0174600	 [QA][Mail] - Captured mail sent twice time to the merchant account (40 min)
+0174599	 [QA] - In manual payment, added private note is not getting showing anywhere (15 min)
+0174598	 [QA] - Gateway name is wrongly showing in sudopay transaction log (15 min)
+0174597	 [QA] - In manual payment paid form, check box and label should aligned in same line (15 min)
+0174594	 [QA] - In manual payment detail page, upload field should aligned with the username (20 min)
+
+[payapi] Fix subscription plan & inform users (6-8 hours)
+[payapi] urgent: log looks broken (6-8 hours)
+- - IPN log double time sending from SudoPay
+- - if error, does't send second time
+- - Paid account, received acccouts are need to maintain
+
+>> [payapi] possible urgent issues to fix
+> 1. Lock issue
+>     - Disable temporarily
+>     - Fixing count check logic - low priority for now
+Lock temporarily disabled.
+Count logic is already working correctly.
+
+>> [payapi] urgent: switch paypal account
+Done. Issue fixed;
+
+>> [payapi] PayU India Vs PayU Money (previously PayU Paisa)
+Done. PayU India and PayU Money are separate. But same gateway.
+
+> 5. sites using sudopay feature using websites and favicon (favicon using something like http://www.google.com/s2/favicons?domain=www.agriya.com) - at /websites/using or so --- discuss
+
+Done but links hidden
+
+1. https://sudopay.com/user/7132/Mathew is public. Should be admin-only.
+[payapi] need doc for handling manual/offline payments
+https://sudopay.com/gateways
+- wrong address for MiGS, should use Australian address
+[payapi] issue in finding transactions done by particular user
+2. Gateway instruction for sandbox and live. Currently wrong images and instructions.
+[payapi] IPN handling - alternative approach for IPN not received cases
+2. http://git.ahsan.in/root/payapi/commit/a6a0e6008d2fbf8242b0519bcfd616b3136004cc
+Also, it is not Cancel "IPN". Not all cancel actions are logged
+5. sites using sudopay feature using websites and favicon (favicon using something like http://www.google.com/s2/favicons?domain=www.agriya.com) - at /websites/using or so --- discuss
+Done but links hidden.
+Sandbox side and live site URL in gateway listing page
+
+GenerateMonthlyBillReport - should call only one to openexchangerates.org
+- If error return from openexchangerates.org - should be handing
+Removing plans from admin user listing 
+- Updating sudopay_transaction_fee_paid, sudopay_transaction_fee_pending and display in user listing
+http://localhost:9000/plans
+- design - Enterprise style
+Website and monthly fee payments also need to handle with sudopay transaction fee
+plan page - progress bar - tooltip - date need to display
+button payment - sudopay transaction fee handing
+Remainder mail code and bill generated code
+Email sending to client code
+is diffent fee? in user listing
+Merchant Fee Payment - admin listing - Total Amount need to display, filters are need to fix.
+http://192.168.1.176:9000/admin/payment_fees_plan_logs
+- Transactions (SudoPay Transaction Fees, Amount (need to fix) - count
+- 4 display instead of 2 and amount also doubled
+http://192.168.1.176:9000/transactions
+- amount display - need to rework ****
+- Payment #21006 from Captured USD 1000.00 Fred Barley in 192.168.1.176 -> Currency code wrong
+Convert rate page in admin edit - original amount need to display like CSSilize
+
+0. Fee structure changing - need to send mail to clients
+1. Bill Generated mail content
+2. Bill not generated mail content (not receied $10)
+3. Remainder mail content - when payment date reaching
+4. Minimum sudopay amount - handing
+http://localhost:9000/plans
+- Payment Option Free (Charge my customer) - design
+Info need to add for payment pending in plan page
+Plan page - fee with verous currency - discuss and work
+Payment option - terminalogy using
+plan page:
+- Sudopay branding fee??
+- EURO and USD fixed commission amount need to correct in plan page
+- Any Branding, SudoPay Branding tool tip
+Syncronize from site - sudopay branding not working
+Remaider mails + cron
+Sudopay account - sudopay transaction fee - payer - site
+http://192.168.1.138:9000/gateways
+- for paypal - Fixed Fee $ and Variable Fee '%' - always showing values
+In email: Note that SudoPay fee is currently transaction based. You'll pay only if you make money. For exact fee, please check SudoPay control panel.
+http://192.168.1.138:9000/plans
+- tooltip need to remove on bar
+
+GeoIP handling fix
+https://sudopay.com/admin/users
+- User view page link
+https://sudopay.com/bill/2014-2 -> https://sudopay.com/bill/2014-02
+https://sudopay.com/pricing
+- 2 decimal and non decimal format display
+Blockchain:
+- https://blockchain.info/api/blockchain_wallet_api
+[payapi] email notification to admin on payment errors
+- Send only positive error number case (>0)
+- Subject: *** Error: <error>
+- Body: Other details like variables, etc or just the payment ID
+> 2. http://git.ahsan.in/root/payapi/commit/a6a0e6008d2fbf8242b0519bcfd616b3136004cc
+>
+>    Also, it is not Cancel "IPN". Not all cancel actions are logged
+
+>> [payapi] possible quick items in recently done items
+> https://sudopay.com/gateways
+> - wrong address for MiGS, should use Australian address
+
+>> [payapi] issue in finding transactions done by particular user
+
+2. [payapi] Important test case (to be checked after current list) (1 hour)
+   * Original amount vs revised amount display Receiver 1 vs Receiver 2 amount display
+     * Payments listing
+     * Transactions listing
+     * IPN listing & POST
+3. testing on original vs revised amount variables usage (40 min)
+5. [payapi] fee payer handling works 
+   * 1. Fix buyer_fees_formula in single variable (30 min)
+   * Check if we can change amount for all gateways??
+     * if that is possible, leave sudopay code as it is, but fix getlancer code
+7. [payapi] very very urgent critical issues
+   * 2. Pricing.. many pricing are wrong
+9. https://sudopay.com/bills/2015-1  (40 min)
+   * Text changes
+   * 33 JPY (Need to display with USD)
+10. http://sandbox.sudopay.com/transactions?q=1 goes error page. (40 min)
+1. blockcain - hash works and need to test and close
+3. Analyze IP addresses, country, etc. Currently geoip is not working and so can't decide it correctly (only provided IP is displayed---not the auto detected)
+4. Very very urgent. IPN from site is in loop. Sending infinite status. Check payment # 23670 for example. It has 6 IPN history now.
+5. Fwd: [payapi] payment gateway to integrate - blockchain - docs & links
+1. Fix receiver account connection. Should allow only verified account. *** discuss approach
+0. Stripe - marketplace payment - receiver amount not correct
+2. https://sudopay.com/admin/payments - website filter dropdown - is_active condition need to add
+3. [payapi] Fwd: [SudoPay] New user joined in SudoPay account http://www.telize.com/geoip/103.240.34.171
+https://sudopay.com/admin/payments/1/-id/error (few failure case, like amount invalid, etc)
+- Provided IP not display
+https://sudopay.com/admin/payments?q=25719
+- Need to Store Bitcoin recieved amount and need to display
+https://sudopay.com/admin/blockchain_capture_details/index
+- Transaction Hash - not storing
+https://sudopay.com/admin/receiver_accounts/listing?q=7445
+- In receiver account - search is not working
+https://sudopay.com/admin/transactions?q=7563
+- Goes error page
+- Oops, an error occured This exception has been logged with id 6lb449n0b.
+4. Fwd: [payapi] payment gateway to integrate - blockchain - docs & links
+- - From client: Refer: #24790
+- - Currently, it fails only with "Invalid amount" Should be like: "Invalid amount. BTC exchange rate updated. BTC required is 0.111155, but received 0.00555"
+- - **Also receiving ipn - amount seems https://sudopay.com/admin/blockchain_capture_details/index
+7. Sending First Name, Last Name  - to Authorize.Net payment
+Geo IP missing in Facebook register
+- Name: Keyideas Admn
+- Email: keyideas.admn@gmail.com
+- Signup IP: 103.240.34.171
+Gateway response need to send in ipn
+
+https://sudopay.com/admin chart completely looks wrong and not useful
+- Need some admin page to get better stats. Gateway wise breakup, connected accounts by site, actions per site, etc
+[payapi] Important: Need gateway based payment and transaction count
+Cleanup works:
+=============
+#1
+3. Payments listing - UI cleanup works:
+
+1. In user side, payments listing, remove "Transaction Fee" column. (Only from user side)
+2. Next to "Total Paid" column header, add "?" with tooltip: "If gateway fees are set to be collected from buyer, paid amount will differ. This is the amount paid by buyer".
+3. In payment view:
+   * Posted All Vars - Put values in textarea (currently difficult to copy)
+   * Add new "Amount" group in right hand side as first section:
+	* Original Amount
+	* Gateway Fee      "?" tooltip: Gateway fee is calculated based on your setting in gateways page. If not correctly set, this may not be accurate.
+	* Transaction/SudoPay Fee
+	* Fee Payer
+	* Total Paid
+https://sudopay.com/admin/users?q=8712
+ * Can't drill down further from here. For example,
+
+https://sudopay.com/
+- Pricing text changes
+- Compelling Reasons for Developers - new blocks
+https://sudopay.com/changelog fixes
+Changelog link apearing in all Docs related layouts
+Admin stats page works https://sudopay.com/admin/stats
+https://sudopay.com/admin/payments
+- Gateway listing added
+https://sudopay.com/admin/payment/30988/012a7542865230cf4422a6448420c418
+- Amount
+- - Original Amount $12.0
+- - Gateway Fee $0.16 
+- - Transaction/SudoPay Fee $0.16 
+- - Fee Payer BUYER
+** listing corrections
+- Posted All Vars - Changes as textarea
+- From and To displayed in Bitcoin Details
+- Errors and Success payment listing in one listing when searching (Both front and backend)
+- In Search, returns only one record mean directly showed view page https://sudopay.com/admin/payments/1/-id?q=30997&formSearch=yes
+https://sudopay.com/admin/blockchain_capture_details/index 
+- Search not working issue fixed;
+https://sudopay.com/admin/api_requests
+- Search not working issue fixed;
+is_marked_as_paid not updated properly in https://sudopay.com/admin/merchant_fee_payments
+https://sudopay.com/admin/payments
+- Searching with website or payment type - after paging, search is missing - fixed;
+
+** buyer_state removing required - working completed, but not yet merged
+
+1. https://sudopay.com/changelog
+   Some contents are empty. Search for "Fixed"
+4. https://sudopay.com/changelog
+    Have to add "Soft disabled" gateways and their dates too.   (https://payments.amazon.com/help/201626250)
+    http://trak.in/tags/business/2014/09/01/flipkart-shutdown-payzippy-ngpay-investment/
+5. *** possible misunderstanding of "Soft disabled". This one seems correct:
+CoinPayments.net is shutting down on March 31st, 2014. So we moved it/to soft disabled status. In payment page, CoinPayments option will appear, but user cannot pay through this gateway, if merchant configured this gateway.
+
+2. Changelog is not linked in all pages footer. Displays in homepage, but not in https://sudopay.com/docs, etc
+
+7. https://sudopay.com/
+
+Pricing
+
+Our pricing is simple and cost effective. One time listing fee is
+required to install SudoPay on your websites. Usage credits available
+through. Pricing Plans are shared among all websites!
+
+->
+
+Free<sup>*</sup> for usage, when you use default <a>pricing</a>
+configuration. One time listing/setup fee is required to install
+SudoPay in your websites. <sup>*</sup> Usage fee will be collected
+from your customers and hence will be free for you.
+
+8. Compelling Reasons for Developers
+
++
+
+Subscription
+
+Credit card on file helps us to automatically capture payment whenever
+required. <a href="/docs/integration/subscription#multiple-time-payment">Recurring
+payments</a> are essential for a successful <abbr title="Software as a
+Service">SaaS</abbr> business or any service business.  With SudoPay’s
+credit card vault API, credit card numbers can securely be stored and
+captured whenever required.
+
+1-Click Payment (or) Credit Card Vault
+
+To improve user experiences and conversions, Amazon and Apple use <a
+href="/docs/one-click">1-click payment</a> process in which the Credit
+card is been stored in file and whenever new purchases are made, it
+prompts users to enter only CVV. SudoPay makes it easy with easy <a
+href="/docs/integration/api#vault-add">vault</a> service.
+
+12. is_marked_as_paid not updated properly in https://sudopay.com/admin/merchant_fee_payments
+13. Receiver account - Log Missing
+10. States not required fields - need to change all places
+11. https://sudopay.com/admin/transactions/1/-id/website_payments/8712/users
+    *Should not come sudopay transaction fee logs
+8. Important: *Rejected* [Website# 7293] #20103/10.00 USD/Captured/Jdawson - email need to change/work
+
+==============================================================================================================================
+==============================================================================================================================
+==============================================================================================================================
+
+Current Taken List:
+==================
+Design Works
+
+After bitcoin from, to enabled, search not working properly
+The current plan is inactive. Your payment could not be completed. - message still comming after "Marked as Paid" and after payment due date reached. 
+https://sudopay.com/admin/payments/1/-id/error
+- All Gateways empty - Case: Plan inactive status
+https://sudopay.com/admin/merchant_fee_payments/1/-id/paid
+- Paid On - for few unreached minimum amount paid records - not correctly displayed
+- Marked As Paid - date need to update and display
+4. https://sudopay.com/admin/merchant_fee_payments/1/-id/paid
+- - For few, paid date (or marked as paid date) is missing
+*** Need to update old records
+http://sudopaydemo.dev.agriya.com/
+- State - should not mandatory
+IPN Details
+- - IPN History Count 1
+- - Latest Delivery Attempt Date Mar 31, 2015 11:20:16 AM
+- - Latest Delivery Attempt Status   *** empty??
+4. buyer_ip not seems to be handled in sudopay.com.
+- - Refer Payment #30492
+
+Fee Payer RECEIVER  *** Why caps? 
+16. https://sudopay.com/docs
+    * 1.3 How to Add Subscription  
+1. http://localhost:9000/users/register (checking and changing)
+   * error message - User could not be added. Please try again.
+   Sorry, that didn't work. Please check the errors below and try again.  ???
+Google analytics UTM variables - In registration
+
+Todo:
+==============
+[payapi] New gateway - Meta Bitcoin
+[payapi] PayPal personal payment option - ???
+[payapi] error text - changes required
+[payapi] New gateway - Coin.mx
+[payapi] For demo codes and inspiration for REST based client code
+[payapi] stripe new api
+[payapi] chargeback - possible approaches
+[payapi] Authorize.net needs IPN for some pending/review status payments
+15. [payapi] need doc improvement for buyer fee payer handling
+   * Should explain how "buyer" fee payer works for API vs button and how to handle them, etc:
+     * buyer_fees_formula
+     * buyer_fees_payer_confirmation_token
+17. [payapi] add faq or doc for pricing
+5. [payapi] fee payer handling works 
+   * For all products, handle buyer_fees_formula.. so that buyer knows final/revised amount before making payment
+https://sudopay.com/admin/users/view/7563/Jamal
+* How to get possible pending fee? - discuss before making changes
+2. We have to take those list of payments with such payment source issue and have to try to capture again. *** discuss before doing that
+0. Payment source not avaiable - should be recall in cron from sudopay site
+6. [payapi] Again Unknown gateway error in leagueoftrading
+- https://sudopay.com/admin/payments/1/-id/error?q=23587
+7. Fwd: *** Error: The+preapproval+key+has+been+canceled
+- https://sudopay.com/admin/payments/1/-id/error?q=23513
+Changelog page need to update
+All process() action hash implementation
+https://sudopay.com/admin/users/histories - goes error page
+https://sudopay.com/admin/websites - Fee paid - also from add from coupons - So total paid (for user) seems update - check
+https://sudopay.com/admin/merchant_fee_payments/1/-id/ongoing
+- Approximate - expected transaction fee need to add;
+- - like "Click to Calculate" - logic from montly bill generate job
+Post Variables - should be formated
+https://sudopay.com/admin/websites - Receiver account count and link (redirect to filtered https://sudopay.com/admin/receiver_accounts/listing)
+[payapi] Some (marketplace) payment gateways to integrate
+- - Square, Stripe, Dwolla, FaceCash, ZooZ, Affirm, MangoPay, and Balanced.
+"Posted invalid action" - seems status changed to "Intiate"
+[payapi] new payment gateway to integrate - instabill
+[payapi] New gateway to integrate for Marketplace - BancBox
+[payapi] paypal log view from payment view
+Not all information are getting displayed, especially POST variables: https://sudopay.com/admin/payments/logs/26615
+http://www.cssilize.com/demo/payapi-inner-pages-0ee4fbe2/invoice.html
++ Transaction filter
+5. User view page - "SudoPay commission" - simple stats
+6. First Name, Last Name from payment form - related works
+load gateway fees by default for all users?
+- Like paypal - 3.4% + ..
+[payapi] Fwd: [Website# 7293] #21656/10.82 USD/Captured/F Latinier - after successful capture - again call goes - post invalid action and goes error status
+* 1. Looks like all payment source issues are going to "Posted invalid action" in final status. So, it may be a coding issue
+1. For more details: https://sudopay.com/admin/payments/1/-id/error?q=24987 - filter not working
+[payapi] phone number validation in Java, Play! framework & PHP
+
+Amount display reworks:
+=======================
+http://sandbox.sudopay.com/payments (sudopaydemo@gmail.com / sudopay123)
+* Payment #19954 (Marketplace payment)
+  * Amount $2.11 -> showing (Should be show - $2 (original amount))
+  * Marketplace Info
+    * Receiver Amount $1.0
+    * Fixed Merchant Amount $1.11
+
+* Payment #19947 (Simple payment)
+  * Amount $1.11
+* http://sandbox.sudopay.com/payments - in listing seems to correctly displayed
+
+* http://sandbox.sudopay.com/users/dashboard
+  - Total Payments and chart need to update??
+
+* http://sandbox.sudopay.com/transactions - Seems to okay
+* http://sandbox.sudopay.com/transactions/1/-id/plan_charges - for old record displayed in "Credit"
+
+* http://sandbox.sudopay.com/ipns
+  * Payment #19954 (Marketplace payment)
+  * * id=19954&action=Marketplace-Capture&merchant_id=7032&website_id=7070&amount=2.11&marketplace_receiver_id=19049&marketplace_receiver_amount=1.0&marketplace_fees_payer=Receiver&marketplace_fixed_merchant_amount=1.11&marketplace_variable_merchant_amount=&currency_code=USD&status=Captured&error_code=0&error_message=&x-product_id=123456&z-category=Demo&paykey=6811cc92-ad15-4cc6-9a62-11b6ae08d743&payment_date=2015-01-08T08:54:07+01:00&buyer_email=boopathi.p+001@agriya.in&buyer_address=Vadapalani&buyer_city=Chennai&buyer_state=tamilnadu&buyer_country=IN&buyer_phone=123&buyer_zip_code=123&gateway_id=1&gateway_name=PayPal&gateway_responses=&signature=8c12db0c8126f9eaba8d90371fa06996
+  * * Amount 2.11, marketplace_receiver_amount=1.0 and marketplace_fixed_merchant_amount=1.11
+  
+  * Payment #19947 (Simple payment)
+  * * id=19947&action=Auth&merchant_id=7032&website_id=7070&amount=1.11&currency_code=USD&status=Authorized&error_code=0&error_message=&x-product_id=123456&z-category=Demo&paykey=5dd0b954-ecf1-4e09-a6f1-fff14dc17afb&payment_date=2015-01-07T16:08:33+01:00&buyer_email=boopathi.p+001@agriya.in&buyer_address=Vadapalani&buyer_city=Chennai&buyer_state=tamilnadu&buyer_country=IN&buyer_phone=123&buyer_zip_code=123&gateway_id=1&gateway_name=PayPal&gateway_responses=max_total_amount_of_all_payments=0&status=success&transaction_type=&ack=Success&verify_sign=&date_of_month=0&charset=&sender_email=k.manika%252Bper%2540agriya.in&ending_date=2015-01-07%2000%3A00%3A00.0&build=13414382&correlation_id=097761fec5192&reciever_email=&starting_date=0&day_of_week=NO_DAY_SPECIFIED&approved=true&current_number_of_payments=0&preapprovalkey=PA-21B509908Y335663N&pin=NOT_REQUIRED&current_period_attempts=0&notify_version=&currency_code=USD&payment_period=NO_PERIOD_SPECIFIED&max_number_of_payments=0&signature=5aab7a6b0cbce174fbe778b4759958ed
+  * * amount=1.11
+
+Mail for Simple Pay:
+
+[Website# 7432] #19899/100.60 USD/Captured/Vinoth Rm Test
+
+100.60 USD Captured from Vinoth Rm Test for Website# 7432 (khidmah.website)
+
+Payment#  : 19899
+Amount    : 100.60 USD
+Action    : Capture
+Status    : Captured
+Buyer     : Vinoth Rm Test
+Item      : Add to Wallet
+Date      : Jan 8, 2015  09:12:31 AM
+Website   : khidmah.website (#7432)
+Merchant  : Service (#8257)
+
+Thanks,
+SudoPay Sandbox
+http://sandbox.sudopay.com/
+
+** Original Amount - 100 USD
+
+
+Mail for Marketplace:
+
+[Website# 7070] #19954/2.11 USD/Captured/Boopathi P
+
+Hi,
+
+2.11 USD Captured from Boopathi P for Website# 7070 (sudopaydemo.dev.agriya.com)
+
+Payment#  : 19954
+Amount    : 2.11 USD
+Action    : Marketplace-Capture
+Status    : Captured
+Buyer     : Boopathi P
+Item      : SudoPay demo
+Date      : Jan 8, 2015  08:56:35 AM
+Website   : sudopaydemo.dev.agriya.com (#7070)
+Merchant  : SudoPay (#7032)
+
+Thanks,
+SudoPay Sandbox
+http://sandbox.sudopay.com/
+
+** Original Amount - 2 USD
+
+======
+Admin end:
+
+* http://sandbox.sudopay.com/admin/payments - Listing display seems okay
+* * ajax view - same changes like user end
+
+* http://sandbox.sudopay.com/admin/transactions
+  * Total - Amount display 
+
+
+
+
+Gateway related work
+============================================================================
+[payapi] Fwd: Sudopay / Apple pay integration
+[payapi] need doc for handling manual/offline payments
+[payapi] Skrill payment gateway for Credit Card processing
+[payapi] paysafecard payment gateway goes blank
+[payapi] IPN handling - alternative approach for IPN not received cases
+
+
+
+
+Design Works
+============================================================================
+Need new design integration (just color change to make it bright):
+http://www.cssilize.com/demo/payapi-2-7e77b911/api-integration5-1.html
+http://www.cssilize.com/demo/payapi-2-7e77b911/api-integration5-2.html
+http://www.cssilize.com/demo/payapi-2-7e77b911/api-integration5-3.html
+http://www.cssilize.com/demo/payapi-2-7e77b911/api-integration5-4.html
+http://www.cssilize.com/demo/payapi-2-7e77b911/api-integration5-5.html
+
+http://www.cssilize.com/demo/payapi-2-7e77b911/index1.html
+http://www.cssilize.com/demo/payapi-2-7e77b911/index.html
+
+(have to choose the best design)
+http://www.cssilize.com/demo/payapi-2-7e77b911/index1.html
+
+
+
+Formula sending logic to callGateway (Currency Based + Gateway fee payer based + payment type based)
+========================================================================================================
+array('fees_formula' => array('common' => '(((amount * 95.1) + 2.9) / 100.0)',
+	array('fees_formula_varying' => array('All_action_types' => array('USD' => array('(((amount * 95.1) + 2.9) / 100.0)', 'JPY' => '(((amount * 96.1) + 2.9) / 100.0)')), array('Auth') => array('USD' => array('(((amount * 95.1) + 2.9) / 100.0)', 'JPY' => (((amount * 96.1) + 0.0) / 100.0))))));
+
+E.x.,
+For PayPal
+
+(((amount * 100) + 35) / 96.6)
+
+{  
+    "fees_formula":"(((amount * 100) + 35) / 96.6)",
+    "fees_formula_varying":{  
+        "All_Action_Types":{  
+            "USD":"(((amount * 100) + 35) / 96.6)", // For common - gateway fee (2.9% + 0.3) + sudopay fee (0.1% + 0.05)
+            "JPY":"(((amount * 100) + 35) / 96.6)"
+        },
+        "Auth":{  
+            "USD":"(((amount * 100) + 5) / 99.1)", // only sudopay fee (0.1% + 0.05) - gateway fee handled by PayPal site
+            "JPY":"(((amount * 100) + 5) / 99.1)"
+        },
+        "Capture":{  
+            "USD":"(((amount * 100) + 5) / 99.1)", // only sudopay fee (0.1% + 0.05) - gateway fee handled by PayPal site
+            "JPY":"(((amount * 100) + 5) / 99.1)"
+        },
+    }
+}
+
+For Authorize.net
+
+#1
+{  
+    "fees_formula":"(((amount * 100) + 35) / 96.6)",
+    "fees_formula_varying":{					// No variation in sudopay and gateway fee - so common for all payment type and currencies
+    }
+}
+
+#2
+{  
+    "fees_formula":"(((amount * 100) + 35) / 96.6)",
+    "fees_formula_varying":{
+	"All_Action_Types":{  
+            "USD":"(((amount * 100) + 30) / 97.6)", // gateway fee (2.9% + 0.3) + sudopay fee (0.1% + 0.05); He have diffent sudopay fee for USD currency 
+        },
+    }
+}
+
+========================================================================================================
+
+Need to confirm:
+================
+9. Widget https://sudopay.com/ for button http://git.ahsan.in/root/payapi/commits/amal_196at13_v1_0a100_09
+
+========================================================================================================
+
+Subscription plan Starter fee Johnoko (#9314) Johnoko (johnoko@gmail.com)
+Subscription plan Starter fee Mehmet Eren (#9288) Mehmet Eren (mehmet.eren@aprokom.com)
+
+
+
+https://sudopay.com/admin/blockchain_capture_details/index
+- Search not working
+Payment Search - with blockchain_capture_details.address, blockchain_capture_details.destination (frontend and admin end)
+
+Compaign error and success listing when search with [search box] (frontend and admin end)
+Error occur when entering cc with 11 / 17 type
+http://192.168.1.138:9000/admin/gateways_users/index?sortBy=-id&page=1&key=9418&filter=users
+- design issue
+
+
+API calls - version change check
+If Only one result is there mean, render view.html file
+
+
+
+
+
+

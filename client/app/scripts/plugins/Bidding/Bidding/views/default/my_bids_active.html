@@ -29,13 +29,13 @@
                                     <h5 class="visible-xs">{{'PROJECT NAME'|translate}}</h5>
                                     <h5 class="text-14 no-mar"><a ui-sref="Bid_ProjectView({id:bid.project.id,slug:bid.project.slug})">{{bid.project.name}}</a></h5>
                                 </td>
-                                <td><span class="content">{{bid.bid_status.bid_count}}</span> </td>
+                                <td><span class="content">{{bid.project_bid.bid_count}}</span> </td>
                                 <td><span class="content text-right">{{bid.amount}}
                                </span> 
                                 </td>
                                 <td>
                                       <span class="content text-right">
-                                          {{bid.project_bid.amount}}
+                                        {{bid.project_bid.total_bid_amount / bid.project_bid.bid_count | number:2}}
                                           </span>
                                       </span>
                                 </td>

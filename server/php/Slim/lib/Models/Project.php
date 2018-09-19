@@ -234,8 +234,6 @@ class Project extends AppModel
             if (!empty($payment_response['paykey'])) {
                 $wallet->paypal_pay_key = $payment_response['paykey'];
             }
-             $dispatcher = Project::getEventDispatcher();
-             Project::unsetEventDispatcher();
             $project->is_paid = true;
             $project->zazpay_pay_key = $payment_response['paykey'];
             $project->update();

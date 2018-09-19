@@ -140,7 +140,7 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="text-center">
-                            <div class="price">
+                            <div class="price" ng-if="$root.my_user.role.id !== 3">
                                 <div ng-show="!editMoney || !showedit">
                                     <span class="visible-xs">{{'Price'|translate}}
                                         <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{settings.CURRENCY_SYMBOL}})</span>
@@ -284,7 +284,7 @@
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container" ng-if="!Employer">
             <div class="about-contents">
                 <h4 class="h3 text-left text-uppercase">
                     <strong>{{'Why should people hire me'|translate}}?</strong>
@@ -295,8 +295,7 @@
                     <div class="">
                         <textarea ng-show="editAbout" ng-model="userdetail.about_me" rows="6" cols="50"> </textarea>
                         <div class="">
-                            <button type="submit" ng-show="abt_btn" class="btn btn-primary" disabled>{{'Submit'|translate}}</button>
-                            <button type="submit" class="btn btn-primary" ng-show="!abt_btn" ng-click="editAbout=false"> {{'Submit'|translate}}</button>
+                            <button type="submit" class="btn btn-primary" ng-click="editAbout=false" ng-disabled="(abt_btn)? true:false"> {{'Submit'|translate}}</button>
                             <a href="" class="btn btn-danger" ng-click="editAbout=false">{{'Cancel'|translate}}</a>
                         </div>
                     </div>
@@ -468,8 +467,8 @@
                                         <h4 class="text-uppercase no-mar">{{'Past experience'| translate}}</h4>
                                     </div>
                                     <div class="pull-right">
-                                        <p class="pull-right no-mar exp-add-btn" ng-click="showExp=true" ng-show="!showExp && showedit">
-                                            <a><i class="fa fa-plus" aria-hidden="true"></i> Add</a>
+                                        <p class="pull-right no-mar exp-add-btn" ng-click="Add('experience')" ng-show="!showExp && showedit">
+                                            <a><i class="fa fa-plus" aria-hidden="true"></i>{{'Add'| translate}}</a>
                                         </p>
                                     </div>
                                 </div>
@@ -502,26 +501,32 @@
                                         </div>
                                         <div>
                                             <div class="form-group">
-                                                <input type="checkbox" ng-model="check" name="currentyear" id="currentyear" ng-change="checked()">                                                {{checked}}
+                                                <input type="checkbox" ng-model="check" name="currentyear" id="currentyear" ng-change="checked(check)"> 
                                                 <label for="currentyear" class="control-label"> {{'Currently working here'|translate}}
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row">                                            
                                             <div class="col-lg-6 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="frm-select">
-                                                        <month-show ng-model="experience.from_month_year" name="Start_month" id="Start_month"></month-show>
+                                                        <month-show ng-model="experience.from_month_year" name="Start_month" id="Start_month" required></month-show>
+                                                        <span class="error" ng-show="(experienceForm.$submitted || experienceForm.Start_month.$touched) &&   (experienceForm.Start_month.$pristine || experienceForm.Start_month.$invalid) && (experienceForm.Start_month.$error.required)">
+                                                         {{'Required'| translate }}                                    
+                                                       </span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="frm-select">
-                                                        <select id="year" name="year" ng-model="experience.Start_year" class="form-control">
+                                                        <select id="year" name="Startyear" ng-model="experience.Start_year" class="form-control" required>
                                                             <option value="">{{'Select Start Year'|translate}}</option>
                                                             <option ng-repeat="year in years">{{year}}</option>
                                                         </select>
+                                                        <span class="error" ng-show="(experienceForm.$submitted || experienceForm.Startyear.$touched) &&   (experienceForm.Startyear.$pristine || experienceForm.Startyear.$invalid) && (experienceForm.Startyear.$error.required)">
+                                                         {{'Required'| translate }}                                    
+                                                       </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -530,17 +535,23 @@
                                             <div class="col-lg-6 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="frm-select">
-                                                        <month-show ng-disabled="check" ng-model="experience.to_month_year" name="end_month"> </month-show>
+                                                        <month-show ng-disabled="check" ng-model="experience.to_month_year" name="end_month" ng-required="(check)? false:true"> </month-show>
+                                                        <span class="error" ng-show="(experienceForm.$submitted || experienceForm.end_month.$touched) &&   (experienceForm.end_month.$pristine || experienceForm.end_month.$invalid) && (experienceForm.end_month.$error.required)">
+                                                         {{'Required'| translate }}                                    
+                                                       </span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="frm-select">
-                                                        <select id="eyear" name="eyear" ng-disabled="check" ng-model="experience.end_year" class="form-control">
+                                                        <select id="eyear" name="eyear" ng-disabled="check" ng-model="experience.end_year" class="form-control" ng-required="(check)? false:true">
                                                             <option value="">{{'Select End Year'|translate}}</option>
                                                             <option ng-repeat="year in years">{{year}}</option>
                                                         </select>
+                                                        <span class="error" ng-show="(experienceForm.$submitted || experienceForm.eyear.$touched) && (experienceForm.eyear.$pristine || experienceForm.eyear.$invalid) && (experienceForm.eyear.$error.required)">
+                                                         {{'Required'| translate }}                                    
+                                                       </span>
                                                     </div>
                                                     <p class="error" ng-show="experience.Start_year > experience.end_year">End year must be later than start year</p>
                                                 </div>
@@ -548,9 +559,8 @@
                                         </div>
                                         <div>
                                             <p class="req-btn no-mar">
-                                                <button type="submit" ng-show="save_btn" class="btn btn-primary" disabled>{{'Submit'|translate}}</button>
-                                                <button type="submit" class="btn btn-primary" ng-show="!save_btn">{{'Submit'|translate}}</button>
-                                                <a href="" class="btn btn-danger" ng-click="[FormExperience(experienceForm),showExp=false]" ng-show="showExp">{{'Cancel'|translate}}</a>
+                                                <button type="submit" class="btn btn-primary" ng-disabled="(save_btn)? true:false">{{'Submit'|translate}}</button>
+                                                <a href="" class="btn btn-danger" ng-click="FormExperience(experienceForm)" ng-show="showExp">{{'Cancel'|translate}}</a>
                                             </p>
                                         </div>
                                     </form>
@@ -566,8 +576,9 @@
                                                     </div>
                                                     <div class="col-md-7">
                                                         <span class="work-details">{{workdetail.title}}</span> -
-                                                        <span>( {{workdetail.from_month}} {{workdetail.from_month_year.split('-')[1]}}
-                                                        {{'to'|translate}} {{workdetail.to_month}} {{ workdetail.to_month_year.split('-')[1]}})</span>
+                                                        <span>({{workdetail.from_month}} {{workdetail.from_month_year.split('-')[1]}}
+                                                        {{'to'|translate}} <span ng-if="workdetail.currently_working != true">{{workdetail.to_month}} {{ workdetail.to_month_year.split('-')[1]}}</span>
+                                                        <span ng-if="workdetail.currently_working == true">{{'Till Now'}}</span>)</span>
                                                         <p class="desc">{{workdetail.description}}</p>
                                                     </div>
                                                     <div class="col-md-2">
@@ -626,7 +637,7 @@
                                     </div>
                                     <div class="pull-right">
                                         <!--<p class="pull-right no-mar exp-add-btn"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i> Add</a></p>-->
-                                        <p class="pull-right no-mar exp-add-btn" ng-click="showEdu=true" ng-show="!showEdu && showedit">
+                                        <p class="pull-right no-mar exp-add-btn" ng-click="Add('education')" ng-show="!showEdu && showedit">
                                             <a><i class="fa fa-plus" aria-hidden="true"></i> Add</a>
                                         </p>
                                         <!--<p class="pull-right btn btn-danger" ng-click="showEdu=false" ng-show="showEdu">cancel</p>-->
@@ -640,10 +651,12 @@
                                         <div class="form-group">
                                             <div class="input">
                                                 <div class="frm-select">
-                                                    <select name="country" id="inputCategory" ng-model="education.country_id" class="form-control" ng-required="true">
+                                                    <select name="country" id="country" ng-model="education.country_id" class="form-control" ng-required="true" ng-options="countrie.id as countrie.name for countrie in countries"><option value="">{{'Select Country'|translate}}</option></select>
+                                                   <!-- <select name="country" id="inputCategory" ng-model="education.country_id" class="form-control" ng-required="true">
                                                         <option value="{{countrie.id}}">{{'Select Country'|translate}}</option>
                                                         <option value="{{countrie.id}}" ng-repeat="countrie in countries  | orderBy:'name'" >{{countrie.name}}</option>
-                                                </select>
+                                                </select>-->
+
                                                 </div>
                                                 <span class="error" ng-show="(educationForm.$submitted || educationForm.country.$touched) &&   (educationForm.country.$pristine || educationForm.country.$invalid) && (educationForm.country.$error.required)">{{'Required'| translate }}
                                                </span>
@@ -685,9 +698,8 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <p class="req-btn no-mar">
-                                                    <button type="submit" ng-show="edu_btn" class="btn btn-primary" disabled>{{'Submit'|translate}}</button>
-                                                    <button type="submit" class="btn btn-primary" ng-show="!edu_btn">{{'Submit'|translate}}</button>
-                                                    <a href="" class="btn btn-danger" ng-click="[FormEducation(educationForm),showEdu=false]" ng-show="showEdu">{{'Cancel'|translate}}</a>
+                                                    <button type="submit" class="btn btn-primary" ng-disabled="(edu_btn)? true:false">{{'Submit'|translate}}</button>
+                                                    <a href="" class="btn btn-danger" ng-click="FormEducation(educationForm)" ng-show="showEdu">{{'Cancel'|translate}}</a>
                                                 </p>
                                             </div>
                                         </div>
@@ -763,7 +775,7 @@
                                     </div>
                                     <div class="pull-right">
                                         <!--<p class="pull-right no-mar exp-add-btn"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i> Add</a></p>-->
-                                        <p class="pull-right no-mar exp-add-btn" ng-click="showCer=true" ng-show="!showCer && showedit">
+                                        <p class="pull-right no-mar exp-add-btn" ng-click="Add('Certification')" ng-show="!showCer && showedit">
                                             <a><i class="fa fa-plus" aria-hidden="true"></i> {{'Add'|translate}}</a>
                                         </p>
                                         <!--<p class="pull-right btn btn-danger" ng-click="showCer=false" ng-show="showCer">cancel</p>-->
@@ -772,7 +784,7 @@
                             </div>
                             <div class="informations">
                                 <div class="add-exp-form" ng-show="showCer">
-                                    <form class="form-horizontal" role="form" name="certificationForm" ng-submit="userCertification(certificationForm.$valid)"
+                                    <form class="form-horizontal" role="form" name="certificationForm" ng-submit="userCertification(certificationForm.$valid,certificationForm)"
                                         novalidate>
                                         <div class="form-group">
                                             <div class="input">
@@ -807,9 +819,8 @@
                                         </div>
                                         <div>
                                             <p class="req-btn no-mar">
-                                                <button type="submit" ng-show="cer_btn" class="btn btn-primary" disabled>{{'Submit'|translate}}</button>
-                                                <button type="submit" class="btn btn-primary" ng-show="!cer_btn">{{'Submit'|translate}}</button>
-                                                <a href="" class="btn btn-danger" ng-click="[Formcertificate(certificationForm),showCer=false]" ng-show="showCer">{{'Cancel'|translate}}</a>
+                                                <button type="submit" class="btn btn-primary" ng-disabled="(cer_btn)? true:false">{{'Submit'|translate}}</button>
+                                                <a href="" class="btn btn-danger" ng-click="Formcertificate(certificationForm)" ng-show="showCer">{{'Cancel'|translate}}</a>
                                             </p>
                                         </div>
                                     </form>
@@ -863,7 +874,7 @@
                                     </div>
                                     <div class="pull-right">
                                         <!--<p class="pull-right no-mar exp-add-btn"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i> Add</a></p>-->
-                                        <p class="pull-right no-mar exp-add-btn" ng-click="showPub=true" ng-show="!showPub && showedit">
+                                        <p class="pull-right no-mar exp-add-btn" ng-click="Add('publication')" ng-show="!showPub && showedit">
                                             <a><i class="fa fa-plus" aria-hidden="true"></i> Add</a>
                                         </p>
                                         <!--<p class="pull-right btn btn-danger" ng-click="showPub=false" ng-show="showPub">cancel</p>-->
@@ -872,7 +883,7 @@
                             </div>
                             <div class="informations">
                                 <div class="add-exp-form" ng-show="showPub">
-                                    <form class="form-horizontal" role="form" name="publicationForm" ng-submit="userPublication(publicationForm.$valid)" novalidate>
+                                    <form class="form-horizontal" role="form" name="publicationForm" ng-submit="userPublication(publicationForm.$valid, publicationForm)" novalidate>
                                         <div class="form-group">
                                             <div class="input">
                                                 <input type="text" placeholder="Publication title" ng-model="publication.title" class="form-control" id="inputTitle" name="inputTitle"
@@ -897,9 +908,8 @@
                                             </div>
                                         </div>
                                         <p class="req-btn no-mar">
-                                            <button type="submit" ng-show="pub_btn" class="btn btn-primary" disabled>{{'Submit'|translate}}</button>
-                                            <button type="submit" class="btn btn-primary" ng-show="!pub_btn"> {{'Submit'|translate}}</button>
-                                            <a href="" class="btn btn-danger" ng-click="[FormPublication(publicationForm),showPub=false]" ng-show="showPub">{{'Cancel'|translate}}</a>
+                                            <button type="submit" class="btn btn-primary" ng-disabled="(pub_btn)? true:false"> {{'Submit'|translate}}</button>
+                                            <a href="" class="btn btn-danger" ng-click="FormPublication(publicationForm)" ng-show="showPub">{{'Cancel'|translate}}</a>
                                         </p>
                                     </form>
                                 </div>

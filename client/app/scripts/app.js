@@ -10,9 +10,6 @@
  */
 angular.module('getlancerApp', [
     'getlancerApp.Constant',
-    'getlancerApp.Common.UserFollow',
-    'getlancerApp.Common.UserFlag',
-    'getlancerApp.Common.Subscription',
     'ngResource',
     'ngSanitize',
     'satellizer',
@@ -40,8 +37,7 @@ angular.module('getlancerApp', [
     'builder.components',
     'validator.rules',
     'angularMoment',
-    'ngFileUpload',
-    'oitozero.ngSweetAlert',
+    'ngFileUpload',    
     '720kb.socialshare',
     'slugifier',
     'textAngular'
@@ -550,6 +546,64 @@ angular.module('getlancerApp', [
    * @description
    * For using the star rating.  
    */
+  .directive('monthShow', function() {
+    return {
+        restrict: 'EA',
+        replace: true,
+        template: '<select class="form-control" ng-options="month.value as month.text for month in months"><option value="">Select Month</option></select>',
+        link: function(scope, e, a) {
+            scope.months = [];
+            scope.months.push({
+                value: 1,
+                text: 'January'
+            });
+            scope.months.push({
+                value: 2,
+                text: 'February'
+            });
+            scope.months.push({
+                value: 3,
+                text: 'March'
+            });
+            scope.months.push({
+                value: 4,
+                text: 'April'
+            });
+            scope.months.push({
+                value: 5,
+                text: 'May'
+            });
+            scope.months.push({
+                value: 6,
+                text: 'June'
+            });
+            scope.months.push({
+                value: 7,
+                text: 'July'
+            });
+            scope.months.push({
+                value: 8,
+                text: 'August'
+            });
+            scope.months.push({
+                value: 9,
+                text: 'September'
+            });
+            scope.months.push({
+                value: 10,
+                text: 'October'
+            });
+            scope.months.push({
+                value: 11,
+                text: 'November'
+            });
+            scope.months.push({
+                value: 12,
+                text: 'December'
+            });
+        }
+    }
+})
   .directive('inputStars', [function () {
     var directive = {
       restrict: 'EA',

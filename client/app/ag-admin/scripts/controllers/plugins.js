@@ -30,7 +30,8 @@ angular.module('base')
                     $cookies.put('enabled_plugins', JSON.stringify($scope.enabled_plugin), {
                         path: '/'
                     });
-                }, function(error) {});
+                }, function(error) {
+                });
         }
         $scope.checkStatus = function(plugin, enabled_plugins) {
             if ($.inArray(plugin, enabled_plugins) > -1) {
@@ -67,8 +68,13 @@ angular.module('base')
                                 addnCls: 'humane-flatty-success'
                             });
                             getPluginDetails();
+                        }else if(response.error.code === 3){
+                            notification.log("We can't change default settings in demo mode.", {
+                                addnCls: 'humane-flatty-error'
+                            });
                         }
-                    }, function(error) {});
+                    }, function(error) {
+                    });
             }
         };
         $scope.fullRefresh = function() {

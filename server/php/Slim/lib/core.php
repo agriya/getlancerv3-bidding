@@ -803,7 +803,7 @@ function saveImageData($class_name, $file, $foreign_id, $is_multi = false)
 {
     if (!empty($file)) {
         $data = explode(',', $file);
-        $file = $data[1];
+        $file = (!empty($data[1])) ? $data[1] : $data[0];        
         $image = base64_decode($file);
         $f = finfo_open();
         $mime_type = finfo_buffer($f, $image, FILEINFO_MIME_TYPE);
@@ -1473,21 +1473,15 @@ function sendEntryStatusChangeAlert($contestUser, $new_status, $old_status)
 }
 function updateSiteCommissionFromEmployer($commision_amount, $bid_id, $project_id, $user_id)
 {
-    $milestoneTotalAmount = Models\Milestone::where('project_id', $project_id)->where('bid_id', $bid_id)->whereIn('milestone_status_id', [\Constants\MilestoneStatus::EscrowFunded, \Constants\MilestoneStatus::Completed, \Constants\MilestoneStatus::RequestedForRelease, \Constants\MilestoneStatus::EscrowReleased])->selectRaw('sum(site_commission_from_employer) as site_commission_from_employer')->first()->toArray();
-    $invoiceTotalAmount = Models\ProjectBidInvoice::where('project_id', $project_id)->where('is_paid', 1)->where('bid_id', $bid_id)->selectRaw('sum(site_commission_from_employer) as site_commission_from_employer')->first()->toArray();
-    $dispatcher = Models\Bid::getEventDispatcher();
-    Models\Bid::unsetEventDispatcher();
+    $milestoneTotalAmount = Models\Milestone::where('project_id', $project_id)->where('bid_id', $bid_id)->whereIn('milestone_status_id', [\Constants\MilestoneStatus::EscrowFunded, \Constants\MilestoneStatus::Completed, \Constants\MilestoneStatus::RequestedForRelease, \Constants\MilestoneStatus::EscrowReleased])->selectRaw('sum(site_commission_from_employer) as site_commission_from_employer')->first();
+    $invoiceTotalAmount = Models\ProjectBidInvoice::where('project_id', $project_id)->where('is_paid', 1)->where('bid_id', $bid_id)->selectRaw('sum(site_commission_from_employer) as site_commission_from_employer')->first();
     Models\Bid::where('id', $bid_id)->update(array(
         'site_commission_from_employer' => ($milestoneTotalAmount['site_commission_from_employer'] + $invoiceTotalAmount['site_commission_from_employer'])
     ));
-    Models\Bid::setEventDispatcher($dispatcher);
-    $dispatcher = Models\Project::getEventDispatcher();
-    Models\Project::unsetEventDispatcher();
     Models\Project::where('id', $project_id)->update(array(
         'site_commission_from_employer' => ($milestoneTotalAmount['site_commission_from_employer'] + $invoiceTotalAmount['site_commission_from_employer'])
     ));
-    Models\Project::setEventDispatcher($dispatcher);
-    $employerCommission = Models\Project::where('user_id', $user_id)->selectRaw('sum(site_commission_from_employer) as site_commission_from_employer')->first()->toArray();
+    $employerCommission = Models\Project::where('user_id', $user_id)->selectRaw('sum(site_commission_from_employer) as site_commission_from_employer')->first();
     if (!empty($employerCommission['site_commission_from_employer'])) {
          Models\User::where('id', $user_id)->update(array(
             'total_site_revenue_as_employer' => $employerCommission['site_commission_from_employer']
@@ -1496,21 +1490,15 @@ function updateSiteCommissionFromEmployer($commision_amount, $bid_id, $project_i
 }
 function updateSiteCommissionFromFreelancer($commision_amount, $bid_id, $project_id, $user_id)
 {
-    $milestoneTotalAmount = Models\Milestone::where('project_id', $project_id)->where('bid_id', $bid_id)->where('milestone_status_id', \Constants\MilestoneStatus::EscrowReleased)->selectRaw('sum(site_commission_from_freelancer) as site_commission_from_freelancer')->first()->toArray();
+    $milestoneTotalAmount = Models\Milestone::where('project_id', $project_id)->where('bid_id', $bid_id)->where('milestone_status_id', \Constants\MilestoneStatus::EscrowReleased)->selectRaw('sum(site_commission_from_freelancer) as site_commission_from_freelancer')->first();
     $invoiceTotalAmount = Models\ProjectBidInvoice::where('project_id', $project_id)->where('is_paid', 1)->where('bid_id', $bid_id)->selectRaw('sum(site_commission_from_freelancer) as site_commission_from_freelancer')->first()->toArray();
-    $dispatcher = Models\Bid::getEventDispatcher();
-    Models\Bid::unsetEventDispatcher();
     Models\Bid::where('id', $bid_id)->update(array(
         'site_commission_from_freelancer' => ($milestoneTotalAmount['site_commission_from_freelancer'] + $invoiceTotalAmount['site_commission_from_freelancer'])
     ));
-    Models\Bid::setEventDispatcher($dispatcher);
-    $dispatcher = Models\Project::getEventDispatcher();
-    Models\Project::unsetEventDispatcher();
     Models\Project::where('id', $project_id)->update(array(
         'site_commission_from_freelancer' => ($milestoneTotalAmount['site_commission_from_freelancer'] + $invoiceTotalAmount['site_commission_from_freelancer'])
     ));
-    Models\Project::setEventDispatcher($dispatcher);
-    $freelancerCommission = Models\Project::where('freelancer_user_id', $user_id)->selectRaw('sum(site_commission_from_freelancer) as site_commission_from_freelancer')->first()->toArray();
+    $freelancerCommission = Models\Project::where('freelancer_user_id', $user_id)->selectRaw('sum(site_commission_from_freelancer) as site_commission_from_freelancer')->first();
     if (!empty($freelancerCommission['site_commission_from_freelancer'])) {
          Models\User::where('id', $user_id)->update(array(
             'total_site_revenue_as_freelancer' => $freelancerCommission['site_commission_from_freelancer']
@@ -1519,10 +1507,10 @@ function updateSiteCommissionFromFreelancer($commision_amount, $bid_id, $project
 }
 function UpdatePaidAmountForProject($bid_id, $project_id)
 {
-    $projectTotalAmount = Models\Bid::where('project_id', $project_id)->selectRaw('sum(paid_escrow_amount) as escrow_amount, sum(total_invoice_got_paid) as invoice_amount')->first()->toArray();
+    $projectTotalAmount = Models\Bid::where('project_id', $project_id)->selectRaw('sum(paid_escrow_amount) as escrow_amount, sum(total_invoice_got_paid) as invoice_amount')->first();
     if (!empty($projectTotalAmount)) {
         $amount = $projectTotalAmount['escrow_amount'] + $projectTotalAmount['invoice_amount'];
-        Models\Project::where('id', $project_id)->increment('total_paid_amount', $amount);
+        Models\Project::where('id', $project_id)->update(['total_paid_amount' => $amount]);
     }
 }
 function getFormFields($form_field_submission)

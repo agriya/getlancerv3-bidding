@@ -55,6 +55,8 @@
              $scope.params.skills = $state.params.skills;
              $scope.params.hourly_rate_min = $scope.search_value.hourly_rate_min;
              $scope.params.hourly_rate_max = $scope.search_value.hourly_rate_max;
+             $scope.params.is_email_confirmed = true;
+             $scope.params.filter = 'active';
              UserProfile.getbyId($scope.params, function(response) {
                   if (angular.isDefined(response._metadata)) {
                     $scope.currentPage = response._metadata.current_page;

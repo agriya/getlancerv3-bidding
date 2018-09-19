@@ -297,6 +297,7 @@ class Job extends AppModel
     }
     public function processCaptured($payment_response, $id)
     {
+        global $_server_domain_url;
         $job = Job::whereIn('job_status_id', [\Constants\JobStatus::PaymentPending, \Constants\JobStatus::Draft])->find($id);
         if (!empty($job)) {
             $job->makeVisible(array(

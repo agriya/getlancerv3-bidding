@@ -97,13 +97,16 @@ $app->POST('/api/v1/users/{userId}/user_cash_withdrawals', function ($request, $
         foreach ($args as $key => $arg) {
             $userCashWithdrawal->{$key} = $arg;
         }
+        $userDetails = Models\User::find($request->getAttribute('userId'));
+        $userDetails->makeVisible(array(
+            'available_wallet_amount'
+        ));
+        if ($userDetails->available_wallet_amount < $args['amount'] || $args['amount'] < USER_MINIMUM_WITHDRAW_AMOUNT || $args['amount'] > USER_MAXIMUM_WITHDRAW_AMOUNT) {
+            return renderWithJson($result, 'User cash withdrawals could not be added.', '', 1);
+        }
         $userCashWithdrawal->user_id = $request->getAttribute('userId');
         try {
             $userCashWithdrawal->save();
-            $userDetails = Models\User::find($userCashWithdrawal->user_id);
-            $userDetails->makeVisible(array(
-                'available_wallet_amount'
-            ));
             $userDetails->available_wallet_amount = $userDetails->available_wallet_amount - $userCashWithdrawal->amount;
             $userDetails->blocked_amount = $userDetails->blocked_amount + $userCashWithdrawal->amount;
             $userDetails->update();

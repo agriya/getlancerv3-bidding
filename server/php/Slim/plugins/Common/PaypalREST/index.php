@@ -18,6 +18,14 @@ use PayPal\Api\CreditCard;
 use PayPal\Rest\ApiContext;
 
 /**
+ *
+ * @package         Getlancer
+ * @copyright   Copyright (c) 2012 {@link http://www.agriya.com/ Agriya Infoway}
+ * @license         http://www.agriya.com/ Agriya Infoway Licence
+ * @since       2017-05-16
+ *
+ */
+/**
  * GET vaultsPost
  * Summary: Fetch post vaults
  * Notes: Returns post vaults from the system

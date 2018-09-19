@@ -110,6 +110,7 @@ angular.module('base')
                         var project = {};
                         var job = {};
                         var subscription = {};
+                        var payment_gateway ={};
                         $scope.transaction_messages = $scope.TransactionAdminMessage[parseInt(trans)];
                         if (angular.isDefined(value.exam)) {
                             exam = value.exam.title;
@@ -122,6 +123,9 @@ angular.module('base')
                         }
                         if (angular.isDefined(value.creditPurchasePlan)) {
                             subscription = value.creditPurchasePlan.name;
+                        }
+                        if (angular.isDefined(value.payment_gateway) && value.payment_gateway !== null) {
+                            payment_gateway = value.payment_gateway.display_name;
                         }
                         var name = {
                             '##CONTEST##': value.foreign_transaction.name,

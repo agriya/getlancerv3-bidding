@@ -25,7 +25,6 @@ angular.module('getlancerApp.Common.UserFlag', [
     'afkl.lazyImage',
     'angular-loading-bar',
     'ngAnimate',
-    'oitozero.ngSweetAlert',
     'ngMessages',
     'slugifier'
   ]);

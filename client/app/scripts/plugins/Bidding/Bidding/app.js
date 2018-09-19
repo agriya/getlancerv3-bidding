@@ -49,7 +49,6 @@ angular.module('getlancerApp.Bidding', [
     'afkl.lazyImage',
     'angular-loading-bar',
     'ngAnimate',
-    'oitozero.ngSweetAlert',
     'slugifier',
     'checklist-model',
     'angularjs-dropdown-multiselect',

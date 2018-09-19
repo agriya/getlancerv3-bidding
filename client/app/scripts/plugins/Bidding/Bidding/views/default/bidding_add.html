@@ -37,10 +37,10 @@
                 </div>
             </div>
         </div>
-        <div class="bidding-btn">
+        <div class="bidding-btn">           
             <div class="clearfix bids-btn">
-                <span ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Common/Subscription') > -1  && ($root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT !== '' || $root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT !== '0') && available_credit_count < $root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT">
-                    <button type="submit" class="btn btn-primary" disabled>{{buttonText}}</button>
+                <span ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Common/Subscription') > -1  && ($root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT !== '' || $root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT !== '0') && available_credit_count >= $root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT">
+                    <button type="submit" class="btn btn-primary">{{buttonText}}</button>
                 </span> 
                 <span ng-if="($root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT == '' || $root.settings.CREDIT_POINT_FOR_BIDDING_A_PROJECT == '0' || !($root.settings.SITE_ENABLED_PLUGINS.indexOf('Common/Subscription') > -1))">     
                     <button type="submit" class="btn btn-primary" ng-show="save_btn" disabled> {{buttonText}} </button>

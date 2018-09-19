@@ -233,14 +233,15 @@ $app->POST('/api/v1/reviews', function ($request, $response, $args) {
             if ($reviews->class == 'QuoteBid') {
                 global $_server_domain_url;
                 $quoteStatusName = Models\QuoteStatus::getQuoteStatusSlugNameById($quoteBidDetails->quote_status_id);
-                $userDetails = getUserHiddenFields($reviews->to_user_id);
+                $toUserDetails = getUserHiddenFields($reviews->to_user_id);
+                $userDetails = getUserHiddenFields($reviews->user_id);
                 $emailFindReplace = array(
                     '##FREELANCER##' => $userDetails->username,
-                    '##EMPLOYER##' => $quoteBidDetails->user->username,
+                    '##EMPLOYER##' => $toUserDetails->username,
                     '##REQUEST_NAME##' => $quoteBidDetails->quote_request->title,
-                    '##RESPONSE_URL##' => $_server_domain_url . '/my_works/' . $quoteBidDetails->quote_status_id . '/' . $quoteStatusName . '/' . $quoteBidDetails->id
+                    '##RESPONSE_URL##' => $_server_domain_url . '/my_works/all/' . $quoteBidDetails->quote_status_id . '/' . $quoteStatusName . '/' . $quoteBidDetails->id
                 );
-                sendMail('Quote - Feedback Received Notification', $emailFindReplace, $userDetails->email);
+                sendMail('Quote - Feedback Received Notification', $emailFindReplace, $toUserDetails->email);
             } else if ($reviews->class == 'Portfolio') {
                 global $_server_domain_url;
                 $portfolio = Models\Portfolio::find($reviews->foreign_id);
@@ -323,7 +324,7 @@ $app->PUT('/api/v1/reviews/{reviewId}', function ($request, $response, $args) {
                     '##FREELANCER##' => $userDetails->username,
                     '##EMPLOYER##' => $quoteBidDetails->user->username,
                     '##REQUEST_NAME##' => $quoteBidDetails->quote_request->title,
-                    '##RESPONSE_URL##' => $_server_domain_url . '/my_works/' . $quoteBidDetails->quote_status_id . '/' . $quoteStatusName . '/' . $quoteBidDetails->id
+                    '##RESPONSE_URL##' => $_server_domain_url . '/my_works/all/' . $quoteBidDetails->quote_status_id . '/' . $quoteStatusName . '/' . $quoteBidDetails->id
                 );
                 sendMail('Quote - Feedback Updated Notification', $emailFindReplace, $userDetails->email);
             }
@@ -331,12 +332,12 @@ $app->PUT('/api/v1/reviews/{reviewId}', function ($request, $response, $args) {
                 $bidDetails = Models\Bid::find($reviews->foreign_id);
                 $getReviewer = getUserHiddenFields($reviews->user_id);
                 $emailFindReplace = array(
-                    '##USERNAME##' => $bidDetails->user->username,
+                    '##USERNAME##' => $bidDetails->project->user->username,
                     '##PROJECT_NAME##' => $bidDetails->project->name,
                     '##REVIEWER##' => $getReviewer->username,
                     '##PROJECT_URL##' => $_server_domain_url . '/projects/view/' . $bidDetails->project->id . '/' . $bidDetails->project->slug
                 );
-                sendMail('Project Feedback Updated Notification', $emailFindReplace, $bidDetails->user->email);
+                sendMail('Project Feedback Updated Notification', $emailFindReplace, $bidDetails->project->user->email);
             }
             $result['data'] = $reviews->toArray();
             return renderWithJson($result);

@@ -6,7 +6,7 @@
  * # Newsfeeds
  */
 angular.module('getlancerApp')
-	.controller('newsFeedsCtrl', function($rootScope, NewsFeedsFactory, md5, $window, ActivityType, $scope, $state, ConstUserRole, QuoteStatus, MilestoneStatus, MeNewsFeedsFactory, ProjectStatusConstant, ConstQuoteStatuses, UserProfile, $location, ExamsUsers, ConstExamStatus, ProjectStatuses, MilestoneStatusConstant, MilestoneStatues, SweetAlert, $filter, flash, $timeout, UpdateProjectStatues, UpdateBidsStatus, ConstJobStatus, ConstWithdrawStatus) {
+	.controller('newsFeedsCtrl', function($rootScope, NewsFeedsFactory, md5, $window, ActivityType, $scope, $state, ConstUserRole, QuoteStatus, MilestoneStatus, MeNewsFeedsFactory, ProjectStatusConstant, ConstQuoteStatuses, UserProfile, $location, ExamsUsers, ConstExamStatus, ProjectStatuses, MilestoneStatusConstant, MilestoneStatues, $filter, flash, $timeout, UpdateProjectStatues, UpdateBidsStatus, ConstJobStatus, ConstWithdrawStatus) {
 		$scope.enabled = true;
 		$scope.ConstExamStatus = ConstExamStatus;
 		$scope.lastpage = 1;
@@ -248,7 +248,7 @@ angular.module('getlancerApp')
 		$scope.UserProfile();
 		/*	milestone satatus change function */
 			 $scope.milestoneStatueChange = function(milestoneId) {
-                        SweetAlert.swal({
+                        swal({ //jshint ignore:line
                             title: $filter("translate")('Are you sure you want to do this action?'),
                             text: "",
                             type: "warning",
@@ -258,7 +258,7 @@ angular.module('getlancerApp')
                             cancelButtonText: "Cancel",
                             closeOnConfirm: true,
                             animation:false,
-                        }, function(isConfirm) {
+                        }).then(function (isConfirm) {
                             if (isConfirm && $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Milestone') > -1) {
                                 MilestoneStatues.put({id: milestoneId,milestone_status_id: $scope.MilestoneStatusConstant.EscrowReleased}, function(response) {
 									var flashMessage = "";
@@ -290,7 +290,7 @@ angular.module('getlancerApp')
                     } else if (parseInt(ftype) === 2) {
                         alertTitle = $filter("translate")("Are you sure you want to reject this project?");
                     }
-                    SweetAlert.swal({
+                    swal({ //jshint ignore:line
                         title: alertTitle,
                         text: "",
                         type: "warning",

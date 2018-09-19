@@ -150,7 +150,10 @@ function executePayment($payID, $payerID, $token, $id, $model)
                     'status' => 'Captured',
                     'paykey' => $payment->getId()
                 );
+                $dispatcher = $model_name::getEventDispatcher();
+                $model_name::unsetEventDispatcher();
                 $model_name::processCaptured($payment_response, $id);
+                $model_name::setEventDispatcher($dispatcher);
                 $results['data']['returnUrl'] = $returnUrls['success_url'];
             }
         } catch (PayPal\Exception\PayPalConnectionException $ex) {

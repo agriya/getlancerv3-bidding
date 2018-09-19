@@ -7,7 +7,7 @@
  * Controller of the getlancerApp
  */
 angular.module('getlancerApp')
-    .controller('UserProfileController', ['$rootScope', '$scope', '$state', 'WorkProfile', 'Education', 'Certifications', 'Publications', 'UserProfile', 'Countries', 'flash', '$filter', 'SweetAlert', 'Constyear', 'Upload', 'md5', '$uibModal', 'ExamUsers', 'ConstUserRole', 'FreelancerStats', 'EmployerStats', 'FreelancerReview', 'EmployerReview', 'ConstExamStatus', '$stateParams', '$uibModalStack', '$location', '$anchorScroll', '$timeout', '$cookies', function($rootScope, $scope, $state, WorkProfile, Education, Certifications, Publications, UserProfile, Countries, flash, $filter, SweetAlert, Constyear, Upload, md5, $uibModal, ExamUsers, ConstUserRole, FreelancerStats, EmployerStats, FreelancerReview, EmployerReview, ConstExamStatus, $stateParams, $uibModalStack, $location, $anchorScroll, $timeout, $cookies) {
+    .controller('UserProfileController', ['$rootScope', '$scope', '$state', 'WorkProfile', 'Education', 'Certifications', 'Publications', 'UserProfile', 'Countries', 'flash', '$filter', 'Constyear', 'Upload', 'md5', '$uibModal', 'ExamUsers', 'ConstUserRole', 'FreelancerStats', 'EmployerStats', 'FreelancerReview', 'EmployerReview', 'ConstExamStatus', '$stateParams', '$uibModalStack', '$location', '$anchorScroll', '$timeout', '$cookies', function($rootScope, $scope, $state, WorkProfile, Education, Certifications, Publications, UserProfile, Countries, flash, $filter, Constyear, Upload, md5, $uibModal, ExamUsers, ConstUserRole, FreelancerStats, EmployerStats, FreelancerReview, EmployerReview, ConstExamStatus, $stateParams, $uibModalStack, $location, $anchorScroll, $timeout, $cookies) {
          if ($cookies.get("auth") !== null && $cookies.get("auth") !== undefined) {
                  $scope.auth_user_detail = $cookies.getObject("auth");
          }
@@ -24,8 +24,8 @@ angular.module('getlancerApp')
         $scope.init = function() {
             $scope.portfolio_focus = $location.path()
                 .split("/")[4];
-            $scope.checked = function() {
-                $scope.check = $scope.check;
+            $scope.checked = function(value) {
+                $scope.check = value;
             };
                  
             //  $scope.userprofileDetails();
@@ -389,27 +389,31 @@ angular.module('getlancerApp')
             $scope.years.push(year - i);
         }
         $scope.Formcertificate = function(certificationForm) {
-            $scope.certification = '';
+            $scope.certification = {};
             certificationForm.$setPristine();
             certificationForm.$setUntouched();
+            $scope.showCer = false;
         };
         $scope.FormPublication = function(publicationForm) {
-            $scope.publication = '';
+            $scope.publication = {};
             publicationForm.$setPristine();
             publicationForm.$setUntouched();
             $scope.pub_btn = false;
+            $scope.showPub = false;
         };
         $scope.FormEducation = function(educationForm) {
-            $scope.education = '';            
+            $scope.education = {};            
             educationForm.$setPristine();
             educationForm.$setUntouched();
             $scope.edu_btn = false;
+            $scope.showEdu = false; 
         };
         $scope.FormExperience = function(experienceForm) {
-            $scope.experience = '';
+            $scope.experience = {};
             experienceForm.$setPristine();
             experienceForm.$setUntouched();
             $scope.save_btn = false;
+            $scope.showExp = false;
         };
         /* Get Experience */
         $scope.workdetails = {};
@@ -433,7 +437,7 @@ angular.module('getlancerApp')
         $scope.deleteExperience = function(work_id) {
             /* [ Checks the user_id and login in auth user id ] */
             if ($rootScope.user !== null && $rootScope.user !== undefined) {
-                SweetAlert.swal({
+                swal({ //jshint ignore:line  
                     title: $filter("translate")("Are you sure you want to delete?"),
                     type: "warning",
                     showCancelButton: true,
@@ -442,7 +446,7 @@ angular.module('getlancerApp')
                     cancelButtonText: "Cancel",
                     closeOnConfirm: true,
                     animation: false,
-                }, function(isConfirm) {
+                }).then(function (isConfirm) {
                     if (isConfirm) {
                         var params = {};
                         params.id = work_id;
@@ -474,13 +478,19 @@ angular.module('getlancerApp')
                 }, function(response) {
                     if (angular.isDefined(response.data)) {
                         $scope.save_btn = false;
-                        $scope.experience = response.data;
+                        $scope.experience = response.data;                 
                         var from_month_split = response.data.from_month_year.split('-');
-                        var to_month_split = response.data.to_month_year.split('-');
+                        if(response.data.currently_working == true){
+                            response.data.currently_working == "t";
+                        } 
+                        if(response.data.to_month_year){
+                           var to_month_split = response.data.to_month_year.split('-');
+                           $scope.experience.to_month_year = parseInt(to_month_split[0]);
+                           $scope.experience.end_year = to_month_split[1];    
+                        }
                         $scope.experience.from_month_year = parseInt(from_month_split[0]);
                         $scope.experience.Start_year = from_month_split[1];
-                        $scope.experience.to_month_year = parseInt(to_month_split[0]);
-                        $scope.experience.end_year = to_month_split[1];
+                        
                     }
                 });
             }
@@ -488,23 +498,26 @@ angular.module('getlancerApp')
         /* [ Form Save and update ] */
         $scope.save_btn = false;
         $scope.userExperience = function(is_valid, experienceForm) {
-            $scope.save_btn = true;
             var flashMessage;
             var params = {};
             params.title = $scope.experience.title;
             params.company = $scope.experience.company;
             params.description = $scope.experience.description;
             params.from_month_year = $scope.experience.from_month_year + '-' + $scope.experience.Start_year;
-            if ($scope.check === false) {
-                params.to_month_year = $scope.experience.to_month_year + '-' + $scope.experience.end_year;
-            } else {
+            if ($scope.check === true) {
                 var date = new Date();
                 var Currentyear = date.getFullYear();
                 var CurrentMonth = date.getMonth() + 1;
-                params.to_month_year = CurrentMonth + '-' + Currentyear;
+                params.to_month_year = null;
+                params.currently_working = true;
+            } else {
+                params.currently_working = false;
+                params.to_month_year = $scope.experience.to_month_year + '-' + $scope.experience.end_year;
+                
             }
             if (angular.isDefined($scope.experienceId) && $scope.experienceId !== null && $scope.experienceId !== '') {
                 if (is_valid) {
+                    $scope.save_btn = true;
                     WorkProfile.update({
                         id: $scope.experienceId
                     }, params, function(response) {
@@ -514,11 +527,11 @@ angular.module('getlancerApp')
                             $scope.save_btn = false;
                             flashMessage = $filter("translate")("Experience updated successfully.");
                             flash.set(flashMessage, 'success', false);
-                            $scope.experience = '';
+                            $scope.experience = {};
                             $scope.showExp = false;
-                            $scope.ExperienceDetail();
                             experienceForm.$setPristine();
                             experienceForm.$setUntouched();
+                            $scope.ExperienceDetail();
                         } else {
                             flashMessage = $filter("translate")($scope.response.error.message);
                             flash.set(flashMessage, 'error', false);
@@ -534,7 +547,7 @@ angular.module('getlancerApp')
                         if ($scope.response.error.code === 0) {
                             flashMessage = $filter("translate")("Experience added successfully.");
                             flash.set(flashMessage, 'success', false);
-                            $scope.experience = '';
+                            $scope.experience = {};
                             $scope.showExp = false;
                             $scope.save_btn = false;
                             $scope.ExperienceDetail();
@@ -548,6 +561,23 @@ angular.module('getlancerApp')
                     });
                 }
             }
+        };
+        $scope.Add = function(type)
+        {  if(type === 'experience')
+            {
+                $scope.showExp = true;
+            }
+            else if(type === 'education')
+            {
+               $scope.showEdu = true;
+            }else if(type === 'Certification')
+            {
+                $scope.showCer = true;
+            }else if(type === 'publication')
+            {
+                $scope.showPub = true
+            }
+            
         };
         /*[ Education Details Function Begin] */
         /* Country Details */
@@ -580,6 +610,7 @@ angular.module('getlancerApp')
                 }, function(response) {
                     if (angular.isDefined(response.data)) {
                         $scope.education = response.data;
+                        $scope.education.country_id = parseInt($scope.education.country_id);
                     }
                 });
             }
@@ -597,9 +628,9 @@ angular.module('getlancerApp')
                         $scope.educationid = null;
                         $scope.response = response;
                         if ($scope.response.error.code === 0) {
-                            flashMessage = $filter("translate")("Education updated successfully.");
+                            flashMessage = $filter("translate")("Education qualification updated successfully.");
                             flash.set(flashMessage, 'success', false);
-                            $scope.education = '';
+                            $scope.education = {};
                             $scope.showEdu = false;
                             $scope.edu_btn = false;
                             $scope.educationDetail();
@@ -618,14 +649,14 @@ angular.module('getlancerApp')
                     Education.create($scope.education, function(response) {
                         $scope.response = response;
                         if ($scope.response.error.code === 0) {
-                            flashMessage = $filter("translate")("Education added successfully.");
+                            flashMessage = $filter("translate")("Education qualification added successfully.");
                             flash.set(flashMessage, 'success', false);
-                            $scope.education = '';
+                            $scope.education = {};
                             $scope.showEdu = false;
                             $scope.edu_btn = false;
+                            form_name.$setPristine();
+                            form_name.$setUntouched();
                             $scope.educationDetail();
-                            $scope.educationForm.$setPristine();
-                            $scope.educationForm.$setUntouched();
                         } else {
                             flashMessage = $filter("translate")($scope.response.error.message);
                             flash.set(flashMessage, 'error', false);
@@ -639,7 +670,7 @@ angular.module('getlancerApp')
         $scope.deleteEducation = function(education_id) {
             /* [ Checks the user_id and login in auth user id ] */
             if ($rootScope.user !== null && $rootScope.user !== undefined) {
-                SweetAlert.swal({
+                swal({ //jshint ignore:line
                     title: $filter("translate")("Are you sure you want to delete?"),
                     type: "warning",
                     showCancelButton: true,
@@ -648,7 +679,7 @@ angular.module('getlancerApp')
                     cancelButtonText: "Cancel",
                     closeOnConfirm: true,
                     animation: false,
-                }, function(isConfirm) {
+                }).then(function (isConfirm) {
                     if (isConfirm) {
                         var params = {};
                         params.id = education_id;
@@ -694,7 +725,7 @@ angular.module('getlancerApp')
         };
         /* EDUCATION Create and Edit Function */
         $scope.cer_btn = false;
-        $scope.userCertification = function(is_valid) {
+        $scope.userCertification = function(is_valid, form_name) {
             var flashMessage;
             if (angular.isDefined($scope.certificateid) && $scope.certificateid !== null && $scope.certificateid !== '') {
                 if (is_valid) {
@@ -707,12 +738,12 @@ angular.module('getlancerApp')
                         if ($scope.response.error.code === 0) {
                             flashMessage = $filter("translate")("Certificate updated successfully.");
                             flash.set(flashMessage, 'success', false);
-                            $scope.certification = '';
+                            $scope.certification = {};
                             $scope.showCer = false;
                             $scope.cer_btn = false;
                             $scope.CertificationsDetail();
-                            $scope.certificationForm.$setPristine();
-                            $scope.certificationForm.$setUntouched();
+                            form_name.$setPristine();
+                            form_name.$setUntouched();
                         } else {
                             flashMessage = $filter("translate")($scope.response.error.message);
                             flash.set(flashMessage, 'error', false);
@@ -729,11 +760,11 @@ angular.module('getlancerApp')
                             $scope.cer_btn = false;
                             flashMessage = $filter("translate")("Certificate added successfully.");
                             flash.set(flashMessage, 'success', false);
-                            $scope.certification = '';
+                            $scope.certification = {};
                             $scope.showCer = false;
                             $scope.CertificationsDetail();
-                            $scope.certificationForm.$setPristine();
-                            $scope.certificationForm.$setUntouched();
+                            form_name.$setPristine();
+                            form_name.$setUntouched();
                         } else {
                             flashMessage = $filter("translate")($scope.response.error.message);
                             flash.set(flashMessage, 'error', false);
@@ -747,7 +778,7 @@ angular.module('getlancerApp')
         $scope.deleteCertificate = function(ceritificate_id) {
             /* [ Checks the user_id and login in auth user id ] */
             if ($rootScope.user !== null && $rootScope.user !== undefined) {
-                SweetAlert.swal({
+                swal({ //jshint ignore:line
                     title: $filter("translate")("Are you sure you want to delete?"),
                     type: "warning",
                     showCancelButton: true,
@@ -756,7 +787,7 @@ angular.module('getlancerApp')
                     cancelButtonText: "Cancel",
                     closeOnConfirm: true,
                     animation: false,
-                }, function(isConfirm) {
+                }).then(function (isConfirm) {
                     if (isConfirm) {
                         var params = {};
                         params.id = ceritificate_id;
@@ -804,7 +835,8 @@ angular.module('getlancerApp')
         };
         /* EDUCATION Create and Edit Function */
         $scope.pub_btn = false;
-        $scope.userPublication = function(is_valid) {
+        $scope.publication = {};
+        $scope.userPublication = function(is_valid, form_name) {
             var flashMessage;
             if (angular.isDefined($scope.publicationid) && $scope.publicationid !== null && $scope.publicationid !== '') {
                 if (is_valid) {
@@ -818,12 +850,12 @@ angular.module('getlancerApp')
                             flashMessage = $filter("translate")("Publication updated successfully.");
                             flash.set(flashMessage, 'success', false);
                             $scope.publicationid = null;
-                            $scope.publication = '';
+                            $scope.publication = {};
                             $scope.pub_btn = false;
                             $scope.showPub = false;
                             $scope.publicationsDetail();
-                            $scope.publicationForm.$setPristine();
-                            $scope.publicationForm.$setUntouched();
+                            form_name.$setPristine();
+                            form_name.$setUntouched();
                         } else {
                             flashMessage = $filter("translate")($scope.response.error.message);
                             flash.set(flashMessage, 'error', false);
@@ -839,12 +871,12 @@ angular.module('getlancerApp')
                         if ($scope.response.error.code === 0) {
                             flashMessage = $filter("translate")("Publication added successfully.");
                             flash.set(flashMessage, 'success', false);
-                            $scope.publication = '';
+                            $scope.publication = {};
                             $scope.showPub = false;
                             $scope.pub_btn = false;
                             $scope.publicationsDetail();
-                            $scope.publicationForm.$setPristine();
-                            $scope.publicationForm.$setUntouched();
+                            form_name.$setPristine();
+                            form_name.$setUntouched();
                         } else {
                             flashMessage = $filter("translate")($scope.response.error.message);
                             flash.set(flashMessage, 'error', false);
@@ -858,7 +890,7 @@ angular.module('getlancerApp')
         $scope.deletePublications = function(ceritificate_id) {
             /* [ Checks the user_id and login in auth user id ] */
             if ($rootScope.user !== null && $rootScope.user !== undefined) {
-                SweetAlert.swal({
+                 swal({ //jshint ignore:line
                     title: $filter("translate")("Are you sure you want to delete?"),
                     type: "warning",
                     showCancelButton: true,
@@ -867,7 +899,7 @@ angular.module('getlancerApp')
                     cancelButtonText: "Cancel",
                     closeOnConfirm: true,
                     animation: false,
-                }, function(isConfirm) {
+                 }).then(function (isConfirm) {
                     if (isConfirm) {
                         var params = {};
                         params.id = ceritificate_id;

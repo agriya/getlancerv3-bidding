@@ -1067,6 +1067,8 @@ angular.module('getlancerApp.Bidding')
                     skills.push(value.id);
                 });
                 data.skills = skills.toString();
+            }else{
+                data.skills = "";
             }
             if (angular.isDefined(data.category_select) && Object.keys(data.category_select)
                 .length > 0) {
@@ -1101,7 +1103,7 @@ angular.module('getlancerApp.Bidding')
         };
         $scope.index();
     })
-    .controller('ProjectViewCtrl', function ($scope, $rootScope, $state, $filter, $cookies, flash, ProjectEditView, ProjectStatusConstant, BidStatusConstant, SweetAlert, md5, $window, FollowUser, FollowUserDelete, $timeout, $uibModal, $uibModalStack) {
+    .controller('ProjectViewCtrl', function ($scope, $rootScope, $state, $filter, $cookies, flash, ProjectEditView, ProjectStatusConstant, BidStatusConstant, md5, $window, FollowUser, FollowUserDelete, $timeout, $uibModal, $uibModalStack) {
 
         $scope.ProjectStatusConstant = ProjectStatusConstant;
     /*    $scope.auth = JSON.parse($cookies.get('auth'));*/
@@ -1266,7 +1268,7 @@ angular.module('getlancerApp.Bidding')
             }
         });
     })
-    .controller('MyProjectsCtrl', function ($scope, $rootScope, $state, $filter, flash, MyProjects, SweetAlert, DelProject, ProjectStatus, ProjectStatusConstant, ProjectStatusUpdate) {
+    .controller('MyProjectsCtrl', function ($scope, $rootScope, $state, $filter, flash, MyProjects, DelProject, ProjectStatus, ProjectStatusConstant, ProjectStatusUpdate) {
         $scope.projectConstant = ProjectStatusConstant;
         /* Project Status Get Function*/
         $scope.index = function () {
@@ -1441,7 +1443,7 @@ angular.module('getlancerApp.Bidding')
             $scope.getProjects(2);
         }
         $scope.deleteProject = function (project_id) {
-            SweetAlert.swal({
+            swal({ //jshint ignore:line
                 title: $filter("translate")("Are you sure you want to delete?"),
                 text: "",
                 type: "warning",
@@ -1451,7 +1453,7 @@ angular.module('getlancerApp.Bidding')
                 cancelButtonText: "Cancel!",
                 closeOnConfirm: true,
                 animation: false,
-            }, function (isConfirm) {
+            }).then(function (isConfirm) {
                 DelProject.delete({
                     id: project_id
                 }, function (response) {
@@ -1468,7 +1470,7 @@ angular.module('getlancerApp.Bidding')
             });
         };
         $scope.cancelProject = function (project_id) {
-            SweetAlert.swal({
+            swal({ //jshint ignore:line
                 title: $filter("translate")("Are you sure you want to cancel this project?"),
                 type: "warning",
                 showCancelButton: true,
@@ -1477,7 +1479,7 @@ angular.module('getlancerApp.Bidding')
                 cancelButtonText: "Cancel",
                 closeOnConfirm: true,
                 animation: false,
-            }, function (isConfirm) {
+            }).then(function (isConfirm) {
                 ProjectStatusUpdate.put({
                     id: project_id,
                     project_status_id: $scope.projectConstant.EmployerCanceled

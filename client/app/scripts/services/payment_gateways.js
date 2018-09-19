@@ -13,4 +13,15 @@ angular.module('getlancerApp')
                 method: 'GET'
             }
         });
+}])
+.factory('CouponGetStatusFactory', ['$resource', function($resource) {
+    return $resource('/api/v1/coupons/get_status/:coupon_code', {}, {
+        get: {
+            method: 'GET',
+            params: {
+                coupon_code: '@coupon_code',
+                amount: '@amount'
+            }
+        }
+    });
 }]);

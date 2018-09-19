@@ -14,7 +14,7 @@ angular.module('getlancerApp.Bidding')
                 isprojectcancel: '@',
                 projectstatus: '@'
             },
-            controller: function($scope, $rootScope, $cookies, $state, $filter, flash, ProjectStatusConstant, UpdateProjectStatus, SweetAlert, md5) {
+            controller: function($scope, $rootScope, $cookies, $state, $filter, flash, ProjectStatusConstant, UpdateProjectStatus, md5) {
                 $scope.show_request = $rootScope.show_request;
                 $scope.ProjectStatusConstant = ProjectStatusConstant;
               if (angular.isDefined($rootScope.broadCastDataempolyer)) {
@@ -73,7 +73,7 @@ angular.module('getlancerApp.Bidding')
                             project_status_id: ProjectStatusConstant.MutuallyCanceled,
                             mutual_cancel_note: data.mutual_cancel_note,
                         }
-                        SweetAlert.swal({
+                        swal({ //jshint ignore:line
                         title: $filter("translate")('Are you sure you want to request to cancel this project?'),
                             text: "",
                             type: "warning",
@@ -83,13 +83,13 @@ angular.module('getlancerApp.Bidding')
                             cancelButtonText: "Cancel",
                             closeOnConfirm: true,
                             animation:false,
-                        }, function(isConfirm) {
+                        }).then(function (isConfirm) {
                             if (isConfirm) {
                                 var flashMessage = "";
                                 UpdateProjectStatus.put(params, function(response) {
                                    $scope.mutual_canceled_note = response.data.mutual_cancel_note;
                                     if (parseInt(response.error.code) === 0) {
-                                        flashMessage = $filter("translate")("Your cancel request has been send successfully.");
+                                        flashMessage = $filter("translate")("Your cancel request has been rejected successfully.");
                                         flash.set(flashMessage, 'success', false);
                                         $state.reload();
                                     } else {
@@ -123,7 +123,7 @@ angular.module('getlancerApp.Bidding')
                             /*Reject Cancel Request*/
                             alerttitle = "Are you sure you reject the cancel request of this project?";
                         }
-                          SweetAlert.swal({
+                          swal({ //jshint ignore:line
                             title: $filter("translate")(alerttitle),
                             text: "",
                             type: "warning",
@@ -133,7 +133,7 @@ angular.module('getlancerApp.Bidding')
                             cancelButtonText: "Cancel",
                             closeOnConfirm: true,
                             animation: false,
-                        }, function (isConfirm) {
+                       }).then(function (isConfirm) {
                             if (isConfirm) {
                                 if (statusType === 4) {
                                     var acceptparams = {

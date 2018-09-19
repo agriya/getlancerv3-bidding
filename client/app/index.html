@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="../bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" />
     <link rel="stylesheet" href="../bower_components/ng-tags-input/ng-tags-input.min.css">
     <link rel="stylesheet" href="../bower_components/angularjs-slider/dist/rzslider.css" />
-    <link rel="stylesheet" href="../bower_components/sweetalert/lib/sweet-alert.css" />
+    <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert2/dist/sweetalert2.min.css">
     <link rel='stylesheet' href='../bower_components/textAngular/dist/textAngular.css' />
     <link rel="stylesheet" href="../bower_components/flag-icon-css/css/flag-icon.min.css" />
     <!--<link rel="stylesheet" href="../bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" />-->
@@ -173,8 +173,6 @@
     <script src="../bower_components/angular-scroll/angular-scroll.js"></script>
     <script src="../bower_components/ng-parallax/angular-parallax.min.js"></script>
     <script src="../bower_components/afkl-lazy-image/release/lazy-image.js"></script>
-    <script src="../bower_components/sweetalert/lib/sweet-alert.min.js"></script>
-    <script src="../bower_components/angular-sweetalert/SweetAlert.js"></script>
     <script src="../bower_components/angular-slugify/angular-slugify.js"></script>
     <script src="../bower_components/checklist-model/checklist-model.js"></script>
     <script src="../bower_components/lodash/dist/lodash.compat.js"></script>
@@ -185,6 +183,7 @@
     <script src='../bower_components/textAngular/dist/textAngular-rangy.min.js'></script>
     <script src='../bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
     <script src='../bower_components/textAngular/dist/textAngular.min.js'></script>
+    <script src="../bower_components/sweetalert2/dist/sweetalert2.min.js"></script>
     <!--<script src='../bower_components/bootstrap-select/dist/js/bootstrap-select.min.js'></script>-->
     <!-- endbower -->
     <!-- endbuild -->
@@ -259,175 +258,6 @@
     <script src="scripts/directives/notifications.js"></script>
     <!-- endbuild -->
     <!-- build:js scripts/plugins.js -->
-    <!-- Quote -->
-    <script src="scripts/plugins/Quote/Quote/app.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/quote_services.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/quote_my_service.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/quote_service_view.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/quote_service_add.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/quote_service_edit.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/quote_service_categories.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/quote_service_category.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/quote_service_faqs_manage.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/quote_request.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/modalquote_request.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/quote_request_view.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/quote_service_category_view.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/quote_my_works.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/constants.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/order_payments.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/user_quote_services.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/quote_users_register.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/quote_users_login.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/quote_service_photos.js"></script>
-    <script src="scripts/plugins/Quote/Quote/controllers/quote_service_videos.js"></script>
-    <script src="scripts/plugins/Quote/Quote/services/quote_services_factory.js"></script>
-    <script src="scripts/plugins/Quote/Quote/services/quote_faq_question_templates_factory.js"></script>
-    <script src="scripts/plugins/Quote/Quote/services/quote_faqs_factory.js"></script>
-    <script src="scripts/plugins/Quote/Quote/services/quote_categories_factory.js"></script>
-    <script src="scripts/plugins/Quote/Quote/services/quote_requests_factory.js"></script>
-    <script src="scripts/plugins/Quote/Quote/services/quote_bids_factory.js"></script>
-    <script src="scripts/plugins/Quote/Quote/services/quote_service_photos_factory.js"></script>
-    <script src="scripts/plugins/Quote/Quote/services/quote_service_videos_factory.js"></script>
-    <script src="scripts/plugins/Quote/Quote/services/form_fields_factory.js"></script>
-    <script src="scripts/plugins/Quote/Quote/services/message_factory.js"></script>
-    <script src="scripts/plugins/Quote/Quote/services/payments.js"></script>
-    <script src="scripts/plugins/Quote/Quote/services/coupon_factory.js"></script>
-	<script src="scripts/plugins/Quote/Quote/services/quote_activities.js"></script>
-    <script src="scripts/plugins/Quote/Quote/directives/quote_services_featured_lists.js"></script>
-    <script src="scripts/plugins/Quote/Quote/directives/quote_service_faqs.js"></script>
-    <script src="scripts/plugins/Quote/Quote/directives/quote_service_category_lists.js"></script>
-    <script src="scripts/plugins/Quote/Quote/directives/quote_services_dashboard.js"></script>
-    <script src="scripts/plugins/Quote/Quote/directives/quote_service_photos.js"></script>
-    <script src="scripts/plugins/Quote/Quote/directives/quote_service_videos.js"></script>
-	<script src="scripts/plugins/Quote/Quote/directives/quote_activities.js"></script>
-    <!--QuoteReview -->
-    <script src="scripts/plugins/Quote/QuoteReview/app.js"></script>
-    <script src="scripts/plugins/Quote/QuoteReview/controllers/quote_my_work_review.js"></script>
-    <script src="scripts/plugins/Quote/QuoteReview/controllers/quote_my_request_review.js"></script>
-    <script src="scripts/plugins/Quote/QuoteReview/services/review_factory.js"></script>
-    <script src="scripts/plugins/Quote/QuoteReview/directives/quote_reviews.js"></script>
-    <!--QuoteSeviceFlag -->
-    <script src="scripts/plugins/Quote/QuoteSeviceFlag/app.js"></script>
-    <script src="scripts/plugins/Quote/QuoteSeviceFlag/controllers/quote_services_flag.js"></script>
-    <script src="scripts/plugins/Quote/QuoteSeviceFlag/controllers/quote_user_flag.js"></script>
-    <script src="scripts/plugins/Quote/QuoteSeviceFlag/directives/quote_service_flag.js"></script>
-    <script src="scripts/plugins/Quote/QuoteSeviceFlag/directives/quote_user_flag.js"></script>
-    <script src="scripts/plugins/Quote/QuoteSeviceFlag/services/quote_flag_factory.js"></script>
-    <!--QuoteShare -->
-    <script src="scripts/plugins/Quote/Quote/directives/quote_view_share.js"></script>
-    <!-- Job -->
-    <script src="scripts/plugins/Job/Job/app.js"></script>
-    <script src="scripts/plugins/Job/Job/controllers/jobs.js"></script>
-    <script src="scripts/plugins/Job/Job/controllers/jobs_add.js"></script>
-    <script src="scripts/plugins/Job/Job/controllers/jobs_edit.js"></script>
-    <script src="scripts/plugins/Job/Job/controllers/job_view.js"></script>
-    <script src="scripts/plugins/Job/Job/controllers/my_jobs.js"></script>
-    <script src="scripts/plugins/Job/Job/controllers/job_applied.js"></script>
-    <script src="scripts/plugins/Job/Job/controllers/job_applies_list.js"></script>
-    <script src="scripts/plugins/Job/Job/controllers/job_applies_status_view.js"></script>
-    <script src="scripts/plugins/Job/Job/controllers/job_payment.js"></script>
-    <script src="scripts/plugins/Job/Job/services/jobs.js"></script>
-    <script src="scripts/plugins/Job/Job/directives/job_applied.js"></script>
-    <script src="scripts/plugins/Job/Job/controllers/job_applied_dashboard.js"></script>
-    <script src="scripts/plugins/Job/Job/controllers/my_jobs_dashboard.js"></script>
-    <!-- Job Rating -->
-    <script src="scripts/plugins/Job/ResumeRating/app.js"></script>
-    <script src="scripts/plugins/Job/ResumeRating/controllers/resume_rating.js"></script>
-    <script src="scripts/plugins/Job/ResumeRating/services/job_rating_factory.js"></script>
-    <script src="scripts/plugins/Job/ResumeRating/directives/job_rating.js"></script>
-    <!-- JobFlag -->
-    <script src="scripts/plugins/Job/JobFlag/app.js"></script>
-    <script src="scripts/plugins/Job/JobFlag/controllers/job_flag_controller.js"></script>
-    <script src="scripts/plugins/Job/JobFlag/services/job_flag_factory.js"></script>
-    <script src="scripts/plugins/Job/JobFlag/directives/job_flag.js"></script>
-      <!-- JobShare -->
-    <script src="scripts/plugins/Job/Job/directives/job_view_share.js"></script>
-    <!-- Portfolio -->
-    <script src="scripts/plugins/Portfolio/Portfolio/app.js"></script>
-    <script src="scripts/plugins/Portfolio/Portfolio/controllers/portfolios.js"></script>
-    <script src="scripts/plugins/Portfolio/Portfolio/controllers/portfoliosview.js"></script>
-    <script src="scripts/plugins/Portfolio/Portfolio/controllers/portfolio_dashboard.js"></script>
-    <script src="scripts/plugins/Portfolio/Portfolio/directives/portfolio_directive.js"></script>
-    <script src="scripts/plugins/Portfolio/Portfolio/controllers/portfolio_home.js"></script>
-    <script src="scripts/plugins/Portfolio/Portfolio/services/portfoliofactory.js"></script>
-    
-    <!-- PortfolioFlag -->
-    <script src="scripts/plugins/Portfolio/PortfolioFlag/app.js"></script>
-    <script src="scripts/plugins/Portfolio/PortfolioFlag/controllers/portfolio_flag.js"></script>
-    <script src="scripts/plugins/Portfolio/PortfolioFlag/directives/portfolio_flag.js"></script>
-    <script src="scripts/plugins/Portfolio/PortfolioFlag/services/portfolio_flag_factory.js"></script>
-    <!-- PortfolioFollow -->
-    <script src="scripts/plugins/Portfolio/PortfolioFollow/app.js"></script>
-    <script src="scripts/plugins/Portfolio/PortfolioFollow/controllers/portfolio_follow.js"></script>
-    <script src="scripts/plugins/Portfolio/PortfolioFollow/directives/portfolio_follow.js"></script>
-    <script src="scripts/plugins/Portfolio/PortfolioFollow/services/portfolio_follow_factory.js"></script>
-    <!-- PortfolioComment -->
-    <script src="scripts/plugins/Portfolio/PortfolioComment/app.js"></script>
-    <script src="scripts/plugins/Portfolio/PortfolioComment/controllers/portfolio_comments.js"></script>
-    <script src="scripts/plugins/Portfolio/PortfolioComment/directives/portfolio_comments.js"></script>
-    <script src="scripts/plugins/Portfolio/PortfolioComment/services/portfolio_comments_factory.js"></script>
-    <!-- PortfolioShare -->
-    <script src="scripts/plugins/Portfolio/Portfolio/directives/portfolio_view_share.js"></script>    
-    <!-- Contest -->
-    <script src="scripts/plugins/Contest/Contest/app.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/constants.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/contests.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/my_contests.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/contest_views.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/my_contest_user.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/contest_users.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/my_contests_cancellation.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/my_contest_dashboard.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/my_contest_user_dashboard.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/contest_types.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/contest_add.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/contest_payments.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/contest_download_modal.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/contest_user_add.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/contest_edit.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/contest_home.js"></script>
-    <script src="scripts/plugins/Contest/Contest/services/contest.js"></script>
-    <script src="scripts/plugins/Contest/Contest/services/contest_type.js"></script>
-    <script src="scripts/plugins/Contest/Contest/services/contest_status.js"></script>
-    <script src="scripts/plugins/Contest/Contest/services/contest_user.js"></script>
-    <script src="scripts/plugins/Contest/Contest/services/form_field.js"></script>
-    <script src="scripts/plugins/Contest/Contest/services/pricing_package.js"></script>
-    <script src="scripts/plugins/Contest/Contest/services/pricing_day.js"></script>
-    <script src="scripts/plugins/Contest/Contest/services/role.js"></script>
-    <script src="scripts/plugins/Contest/Contest/directives/my_contests_dashboard.js"></script>
-    <script src="scripts/plugins/Contest/Contest/directives/contests_home.js"></script>
-    <script src="scripts/plugins/Contest/Contest/directives/contest_view_share.js"></script>
-    <script src="scripts/plugins/Contest/Contest/directives/contest_user_share.js"></script>
-    <script src="scripts/plugins/Contest/Contest/directives/contest_user_view.js"></script>
-    <script src="scripts/plugins/Contest/Contest/controllers/contest_user_view.js"></script>
-    <!-- ContestFlag -->
-    <script src="scripts/plugins/Contest/ContestFlag/app.js"></script>
-    <script src="scripts/plugins/Contest/ContestFlag/services/flag_category.js"></script>
-    <script src="scripts/plugins/Contest/ContestFlag/services/flag.js"></script>
-    <script src="scripts/plugins/Contest/ContestFlag/controllers/contest_views_flags.js"></script>
-    <script src="scripts/plugins/Contest/ContestFlag/controllers/contest_user_flags.js"></script>
-    <script src="scripts/plugins/Contest/ContestFlag/directives/contest_view_flags.js"></script>
-    <script src="scripts/plugins/Contest/ContestFlag/directives/contest_user_flags.js"></script>
-    <script src="scripts/plugins/Contest/ContestFlag/directives/contest_add_flag.js"></script>
-    <script src="scripts/plugins/Contest/ContestFlag/controllers/contest_add_flag.js"></script>
-    <!--ContestReview-->
-    <script src="scripts/plugins/Contest/ContestReview/app.js"></script>
-    <script src="scripts/plugins/Contest/ContestReview/services/contest_review.js"></script>
-    <script src="scripts/plugins/Contest/ContestReview/controllers/contest_review.js"></script>
-    <script src="scripts/plugins/Contest/ContestReview/directives/contest_review.js"></script>
-    <script src="scripts/plugins/Contest/ContestReview/directives/contest_view_rating.js"></script>
-    <script src="scripts/plugins/Contest/ContestReview/directives/contest_user_rating.js"></script>
-    <script src="scripts/plugins/Contest/ContestReview/directives/contest_group_rating.js"></script>
-    <script src="scripts/plugins/Contest/ContestReview/directives/contest_winning_rating.js"></script>
-    <!--ContestFollow-->
-    <script src="scripts/plugins/Contest/ContestFollow/app.js"></script>
-    <script src="scripts/plugins/Contest/ContestFollow/directives/contest_follow.js"></script>
-    <script src="scripts/plugins/Contest/ContestFollow/controllers/contest_follow.js"></script>
-    <script src="scripts/plugins/Contest/ContestFollow/services/follower.js"></script>
-    <!--ImageResources-->
-    <script src="scripts/plugins/Contest/ImageResource/app.js"></script>
-    <script src="scripts/plugins/Contest/ImageResource/directives/contest_image.js"></script>
     <!-- Bidding -->
     <script src="scripts/plugins/Bidding/Bidding/app.js"></script>
     <script src="scripts/plugins/Bidding/Bidding/controllers/constants.js"></script>
@@ -439,44 +269,6 @@
     <script src="scripts/plugins/Bidding/Bidding/directives/bidding_starrating.js"></script>
     <script src="scripts/plugins/Bidding/Bidding/directives/bidding_project_dashboard.js"></script>
     <script src="scripts/plugins/Bidding/Bidding/services/bidding_factory.js"></script>
-    <!-- BiddingMilestone -->
-    <script src="scripts/plugins/Bidding/Milestone/app.js"></script>
-    <script src="scripts/plugins/Bidding/Milestone/controllers/bidding_milestone.js"></script>
-    <script src="scripts/plugins/Bidding/Milestone/controllers/bidding_milestone_payment.js"></script>
-    <script src="scripts/plugins/Bidding/Milestone/directives/bidding_milestone.js"></script>
-    <script src="scripts/plugins/Bidding/Milestone/services/bidding_milestone_factory.js"></script>
-    <!-- BiddingInvoice -->
-    <script src="scripts/plugins/Bidding/Invoice/app.js"></script>
-    <script src="scripts/plugins/Bidding/Invoice/controllers/bidding_invoice.js"></script>
-    <script src="scripts/plugins/Bidding/Invoice/controllers/bidding_invoice_payment.js"></script>
-    <script src="scripts/plugins/Bidding/Invoice/services/bidding_invoice_factory.js"></script>
-    <!-- BiddingDispute -->
-    <script src="scripts/plugins/Bidding/Dispute/app.js"></script>
-    <script src="scripts/plugins/Bidding/Dispute/directives/bidding_dispute.js"></script>
-    <script src="scripts/plugins/Bidding/Dispute/directives/bidding_review.js"></script>
-    <script src="scripts/plugins/Bidding/Dispute/directives/bidding_dispute_message.js"></script>
-    <script src="scripts/plugins/Bidding/Dispute/services/bidding_dispute_factory.js"></script>
-    <!-- BiddingReview -->
-    <script src="scripts/plugins/Bidding/BiddingReview/app.js"></script>
-    <script src="scripts/plugins/Bidding/BiddingReview/directives/bidding_review.js"></script>
-    <script src="scripts/plugins/Bidding/BiddingReview/services/bidding_review_factory.js"></script>
-    <!-- BiddingExam -->
-    <script src="scripts/plugins/Bidding/Exam/app.js"></script>
-    <script src="scripts/plugins/Bidding/Exam/controllers/bidding_exam.js"></script>
-    <script src="scripts/plugins/Bidding/Exam/controllers/bidding_exam_payment.js"></script>
-    <script src="scripts/plugins/Bidding/Exam/services/bidding_exam_factory.js"></script>
-    <!-- ProjectFlag -->
-    <script src="scripts/plugins/Bidding/ProjectFlag/app.js"></script>
-    <script src="scripts/plugins/Bidding/ProjectFlag/services/flag_category.js"></script>
-    <script src="scripts/plugins/Bidding/ProjectFlag/services/flag.js"></script>
-    <script src="scripts/plugins/Bidding/ProjectFlag/directives/project_add_flag.js"></script>
-    <!-- ProjectFollow -->
-    <script src="scripts/plugins/Bidding/ProjectFollow/app.js"></script>
-    <script src="scripts/plugins/Bidding/ProjectFollow/services/follow.js"></script>
-    <script src="scripts/plugins/Bidding/ProjectFollow/controllers/project_follow.js"></script>
-    <script src="scripts/plugins/Bidding/ProjectFollow/directives/project_follow.js"></script>
-     <!-- ProjectShare -->
-    <script src="scripts/plugins/Bidding/Bidding/directives/project_view_share.js"></script>
     <!-- Wallet -->
     <script src="scripts/plugins/Common/Wallet/app.js"></script>
     <script src="scripts/plugins/Common/Wallet/controllers/wallet.js"></script>
@@ -485,13 +277,6 @@
     <script src="scripts/plugins/Common/Withdrawal/app.js"></script>
     <script src="scripts/plugins/Common/Withdrawal/services/cash_withdrawals.js"></script>
     <script src="scripts/plugins/Common/Withdrawal/controllers/cash_withdrawals.js"></script>
-    <!-- Subscription -->
-    <script src="scripts/plugins/Common/Subscription/app.js"></script>
-    <!--<script src="scripts/plugins/Common/Subscription/controllers/constants.js"></script>-->
-    <script src="scripts/plugins/Common/Subscription/controllers/quote_credit_purchase_plan.js"></script>
-    <script src="scripts/plugins/Common/Subscription/controllers/quote_credit_purchase_logs.js"></script>
-    <script src="scripts/plugins/Common/Subscription/services/credit_purchase_plan_factory.js"></script>
-    <script src="scripts/plugins/Common/Subscription/services/credit_purchase_logs_factory.js"></script>
     <!-- UserFollow -->
     <script src="scripts/plugins/Common/UserFollow/app.js"></script>
     <script src="scripts/plugins/Common/UserFollow/controllers/user_follow.js"></script>

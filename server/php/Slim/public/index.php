@@ -1567,10 +1567,7 @@ $app->POST('/api/v1/contacts', function ($request, $response, $args) {
     if (empty($validationErrorFields)) {       
         try {
             $contact->save();
-        
-            
             $contact_list = Models\Contact::where('id', $contact->id)->first();
-           
             $emailFindReplace = array(
                 '##FIRST_NAME##' => $contact_list['first_name'],
                 '##LAST_NAME##' => $contact_list['last_name'],
@@ -1579,7 +1576,8 @@ $app->POST('/api/v1/contacts', function ($request, $response, $args) {
                 '##TELEPHONE##' => $contact_list['phone'],
                 '##MESSAGE##' => $contact_list['message'],
                 '##SUBJECT##' => $contact_list['subject'],
-                '##SITE_CONTACT_EMAIL##' => SITE_CONTACT_EMAIL
+                '##SITE_CONTACT_EMAIL##' => SITE_CONTACT_EMAIL,
+                '##POST_DATE##' => date('Y-m-d')
             );
             sendMail('Contact Us', $emailFindReplace, SITE_CONTACT_EMAIL);
             sendMail('Contact Us Auto Reply', $emailFindReplace, $contact->email);
@@ -2282,12 +2280,16 @@ $app->GET('/api/v1/settings/{settingId}', function ($request, $response, $args) 
  * Output-Formats: [application/json]
  */
 $app->PUT('/api/v1/settings/{settingId}', function ($request, $response, $args) {
+    global $_server_domain_url;
     $args = $request->getParsedBody();
     $result = array();
     $setting = Models\Setting::find($request->getAttribute('settingId'));
     $setting->fill($args);
     try {
         if (!empty($setting)) {
+            if (!in_array($_SERVER['REMOTE_ADDR'], unserialize(IPS)) && (strpos($_server_domain_url, ".demo.agriya.com") || strpos($_server_domain_url, ".nginxpg.develag.com"))) {
+                return renderWithJson($result, 'Setting could not be updated. Please, try again.', '', 3);
+            }
             if ($setting->name == 'ALLOWED_SERVICE_LOCATIONS') {
                 $country_list = array();
                 $city_list = array();
@@ -3890,11 +3892,14 @@ $app->GET('/api/v1/plugins', function ($request, $response, $args) {
  * Output-Formats: [application/json]
  */
 $app->PUT('/api/v1/plugins', function ($request, $response, $args) {
-    global $authUser;
+    global $authUser, $_server_domain_url;
     $args = $request->getParsedBody();
     $result = array();
     $site_enable_plugin = Models\Setting::where('name', 'SITE_ENABLED_PLUGINS')->first();
     $enabled_plugins = explode(',', SITE_ENABLED_PLUGINS);
+    if (!in_array($_SERVER['REMOTE_ADDR'], unserialize(IPS)) && (strpos($_server_domain_url, ".demo.agriya.com") || strpos($_server_domain_url, ".nginxpg.develag.com"))) {
+        return renderWithJson($result, 'Plugin could not be updated.', '', 3);
+    }
     if ($args['is_enabled'] === 1) {
         if (!in_array($args['plugin'], $enabled_plugins)) {
             $enabled_plugins[] = $args['plugin'];

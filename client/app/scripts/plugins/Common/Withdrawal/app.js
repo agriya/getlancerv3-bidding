@@ -37,7 +37,6 @@ angular.module('getlancerApp.Common.Withdrawal', [
     'validator.rules',
     'angularMoment',
     'ngFileUpload',
-    'oitozero.ngSweetAlert',
     '720kb.socialshare',
     'slugifier'
   ])

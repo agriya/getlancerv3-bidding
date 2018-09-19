@@ -38,7 +38,7 @@ if (!empty($quoteBids)) {
             '##WORK_LOCATION##' => $quoteBid->quote_request->full_address,
             '##MY_WORK_PAGE_LINK##' => $_server_domain_url . '/my_works'
         );
-        sendMail('New Quote Request Received Reminder Notification', $emailFindReplace, $userDetails->email);
+        //sendMail('New Quote Request Received Reminder Notification', $emailFindReplace, $userDetails->email);
         Models\QuoteBid::where('id', $quoteBid->id)->update(array(
             'last_new_quote_remainder_notify_date_to_freelancer' => date('Y-m-d H:i:s')
         ));
