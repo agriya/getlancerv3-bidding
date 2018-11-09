@@ -1,6 +1,6 @@
 # Getlancer Bidding
 
-Getlancer Bidding, part of Getlancer Suite (Bidding, Quote, Jobs, Portfolio) is an open source service marketplace script that is capable to run sites similar to Freelancer clone. It is written in AngularJS with REST API for high performance in mind.
+Getlancer Bidding, part of Getlancer Suite (Bidding, Quote, Jobs, Portfolio) is an open source service marketplace script that is capable to run sites similar to Freelancer. It is written in AngularJS with REST API for high performance in mind.
 
 > This is project is part of Agriya Open Source efforts. Getlancer was originally a paid script and was selling around 60000 Euros. It is now released under dual license (OSL 3.0 & Commercial) for open source community benefits.
 
