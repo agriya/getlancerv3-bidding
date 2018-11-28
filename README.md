@@ -2,9 +2,9 @@
 
 Getlancer Bidding, part of Getlancer Suite (Bidding, Quote, Jobs, Portfolio) is an open source service marketplace script that is capable to run sites similar to Freelancer. It is written in AngularJS with REST API for high performance in mind.
 
-> This is project is part of Agriya Open Source efforts. Getlancer was originally a paid script and was selling around 60000 Euros. It is now released under dual license (OSL 3.0 & Commercial) for open source community benefits.
+> This project is part of Agriya Open Source efforts. Getlancer was originally a paid script and was selling around 60000 Euros. It is now released under dual license ([OSL 3.0](https://www.agriya.com/resources) & [Commercial](https://www.agriya.com/products/freelancer-clone)) for open source community benefits.
 
-![bidding_banner](https://user-images.githubusercontent.com/4700341/47850851-b734fb80-ddfc-11e8-9891-326cbf79601a.png)
+[![bidding_banner](https://user-images.githubusercontent.com/4700341/47850851-b734fb80-ddfc-11e8-9891-326cbf79601a.png)](https://www.agriya.com/products/freelancer-clone)
 
 
 ## Support
@@ -17,10 +17,10 @@ Theming partner [CSSilize for design and HTML conversions](http://cssilize.com/)
 
 Agriya Getlancer Suite is a complete freelancer marketplace platform that caters to bidding, quote, jobs and portfolio business models. Any website can be built in combination of these modules, say with bidding and quote, or with all, etc.
 
-* Getlancer Bidding - bidding marketplaces like or clone of Freelancer, Guru, elance, Scriptlance, oDesk, Redbeacon, PeoplePerHour, McroWorkers, etc
-* Getlancer Quote - quote marketplaces like or clone of Thumbtack, Zaarly, Localmind, Redbeacon, TaskRabbit, Urgntly, HouseJoy
-* Getlancer Jobs - jobs marketplaces like or clone of Startuply, Coroflot, AuthenticJobs, Guru, WorkInStartups, dribbble, behance
-* Getlancer Portfolio - portfolio based marketplaces like or clone of dribbble, behance, Coroflot
+* [Getlancer Bidding](https://github.com/agriya/getlancerv3-bidding) - bidding marketplaces like or clone of Freelancer, Guru, elance, Scriptlance, oDesk, Redbeacon, PeoplePerHour, McroWorkers, etc.
+* [Getlancer Quote](https://github.com/agriya/getlancerv3-quote) - quote marketplaces like or clone of Thumbtack, Zaarly, Localmind, Redbeacon, TaskRabbit, Urgntly, HouseJoy.
+* [Getlancer Jobs](https://github.com/agriya/getlancerv3-job) - jobs marketplaces like or clone of Startuply, Coroflot, AuthenticJobs, Guru, WorkInStartups, dribbble, behance.
+* [Getlancer Portfolio](https://github.com/agriya/getlancerv3-portfolio) - portfolio based marketplaces like or clone of dribbble, behance, Coroflot.
 
 
 
@@ -31,7 +31,7 @@ Agriya Getlancer Suite is a complete freelancer marketplace platform that caters
 As well as employer can Hire freelancer. Which is used to search suitable freelancer for your projects effortlessly.
  
 
-![bidding_work_done](https://user-images.githubusercontent.com/4700341/47850850-b69c6500-ddfc-11e8-991a-86cf18c26ba3.png)
+[![bidding_work_done](https://user-images.githubusercontent.com/4700341/47850850-b69c6500-ddfc-11e8-991a-86cf18c26ba3.png)](https://www.agriya.com/products/freelancer-clone)
 
 ## Features
 
@@ -78,7 +78,7 @@ Most of the functionalities are automated as it feels the current stats and take
 * JavaScript dependencies are handled through `bower` (Refer `/client/`)
 * Needs writable permission for `/tmp/` and `/media/` folders found within project path
 * Build tasks are handled through `grunt`
-* Database schema `/sql/getlancer_with_sample_data.sql`
+* Database schema `/sql/getlancer_with_empty_data.sql`
 * Cron with below:
 ```bash
 # Common
@@ -99,4 +99,4 @@ All Submissions you make to Getlancer through GitHub are subject to the followin
 
 Copyright (c) 2014-2018 [Agriya](https://www.agriya.com/).
 
-Dual License (OSL 3.0 & [Commercial License](https://www.agriya.com/contact)) 
+Dual License ([OSL 3.0](https://www.agriya.com/resources) & [Commercial License](https://www.agriya.com/contact)) 
