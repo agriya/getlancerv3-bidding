@@ -1,0 +1,14 @@
+Getlancer Job - Change Log
+==========================
+
+1. [Enhancement] - In Jobs add and edit page, auto complete indicating loader need to implement 
+   for address field when typing the address.
+2. [Bug PHP] -  While adding new jobs, in address field auto loader is missing - Resolved.
+3. [Enhancement] - Job listing page and employer dashboard My Jobs listing page - need to optimize 
+   and remove unwanted data fetching from database.
+4. [Bug CSS] - In employer login, view jobs, here job image and job lable is merged - Resolved.
+5. [Bug PHP] - After posted new job, now click edit its showing DEFAULT values like skill 
+   job type part time - Resolved.
+6. [Bug PHP] - In change password field, enter valid current and new password, 
+   incorrect flash message is shown. But password is changed - Resolved.
+7. [Enhancement] - Need validation message in submit your resume.    
