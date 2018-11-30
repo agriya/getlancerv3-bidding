@@ -1,4 +1,4 @@
-Getlancer Job - Change Log
+Getlancer Bidding - Change Log
 ==========================
 
 1. [Enhancement] - In Jobs add and edit page, auto complete indicating loader need to implement 
@@ -6,9 +6,19 @@ Getlancer Job - Change Log
 2. [Bug PHP] -  While adding new jobs, in address field auto loader is missing - Resolved.
 3. [Enhancement] - Job listing page and employer dashboard My Jobs listing page - need to optimize 
    and remove unwanted data fetching from database.
-4. [Bug CSS] - In employer login, view jobs, here job image and job lable is merged - Resolved.
-5. [Bug PHP] - After posted new job, now click edit its showing DEFAULT values like skill 
-   job type part time - Resolved.
-6. [Bug PHP] - In change password field, enter valid current and new password, 
-   incorrect flash message is shown. But password is changed - Resolved.
-7. [Enhancement] - Need validation message in submit your resume.    
+4. [Bug CSS] -  In employer login, go to skill test, here some pages alignment not proper - Resolved.
+5. [Bug PHP] - Project fees, invoice, milestones, add to a wallet, overall site - 
+   PayPal payment not working - Resolved. 
+6. [Bug PHP] - In my projects and select waiting for review.In this page total paid amount is empty - Resolved 
+7. [Enhancement] - In my projects, project details" field name is displayed.But employer, this field name displayed as "Project Name".
+   So please change in freelancer.    
+8. [Bug PHP] - In sealed projects, average bid value are displayed as N/A in open for bidding tab - Resolved.
+9. [Bug Logic] - Freelancer is requested for invoice, after that go to invoice tab and check invoice, 
+   here description is empty - Resolved
+10. [Bug Logic] - In milestone view page, After canceled the milestone, the milestone get hidden 
+   from the list - Resolved.
+11. [Bug PHP] - In admin login, try to change any tanslation and save - it's not saving - Resolved.
+12. [Bug PHP] - In employer dashboard, click freelancer profile, 404 error page is displayed - Resolved.
+13. [Bug PHP] - Employer can edit another employers project, successfully changed message is displayed.
+    Don't allow to change - Resolved.
+14. After complete the bidding project unable to add the review - Resolved.
