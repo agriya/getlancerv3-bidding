@@ -1,0 +1,10 @@
+{
+	"name": "ProjectFollow", 
+	"class": "fa fa-2x fa-user-plus",
+	"description": "ProjectFollow",
+	"dependencies": "Bidding",
+	"module_id": "827",
+	"module_hash": "d23359ff07e820ef172bae6b85b4f41d",
+	"display_order": "9",
+    "plugin_name":"Bidding/ProjectFollow"
+}

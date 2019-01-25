@@ -1,0 +1,205 @@
+<div class="tab-pane active" id="milestone" ng-controller="BiddingMilestoneCtrl">
+    <div class="milestone-block clearfix">
+        <div class="clearfix" ng-show="!project_is_dispute">
+            <p class="pull-right cursor btn btn-default" ng-class="((buttonName == 'Request Milestone') || (buttonName == 'Create Milestone'))?'request-btn':'text-danger'"
+                ng-click="form()" ng-if="projectstatus == ProjectStatusConstant.UnderDevelopment">{{buttonName}}</p>
+        </div>
+        <div class="row" ng-if="form_value">
+            <div class="col-xs-12 clearfix">
+                <h3 class="pull-left no-mar text-uppercase" ng-if="is_freelancer">{{'New Milestone Request'|translate}}</h3>
+                <h3 class="pull-left no-mar text-uppercase" ng-if="!is_freelancer">{{'Create Milestone'|translate}}</h3>
+            </div>
+            <div class="col-xs-12">
+                <form class="proj-form clearfix row" role="form" autocomplete="off" name="milestoneAdd" novalidate>
+                    <div class="col-sm-3 ver-mar-20">
+                        <input type="number" ng-model="data.amount" name="amount" id="amount" placeholder="Amount" class="milestone-heading form-control"
+                            ng-required="true" min=1 number-only>
+                        <span class="error" ng-show="(milestoneAdd.$submitted || milestoneAdd.amount.$touched) && (milestoneAdd.amount.$pristine || milestoneAdd.amount.$invalid) && (milestoneAdd.amount.$error.required)">{{'Required'| translate }} </span>
+                        <span class="error" ng-show="milestoneAdd.$submitted && milestoneAdd.amount.$invalid && !milestoneAdd.amount.$error.required">{{'Not a valid amount'| translate }} </span>
+                    </div>
+                    <div class="col-sm-6 ver-mar-20">
+                        <input type="text" ng-model="data.description" name="description" placeholder="Description" class="milestone-heading form-control"
+                            ng-required="true">
+                        <span class="error" ng-show="(milestoneAdd.$submitted || milestoneAdd.description.$touched) && (milestoneAdd.description.$pristine || milestoneAdd.description.$invalid) && (milestoneAdd.description.$error.required)">{{'Required'| translate}} </span>
+                    </div>
+                    <div class="col-sm-3 ver-mar-20">
+                        <input type="text" name="last_date" class="form-control milestone-heading" placeholder="Deadline date " uib-datepicker-popup="{{format}}"
+                            ng-model="data.deadline_date" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close"
+                            alt-input-formats="altInputFormats" ng-focus="open1()" ng-required="true" />
+                        <span class="error" ng-show="(milestoneAdd.$submitted || milestoneAdd.last_date.$touched) && (milestoneAdd.last_date.$pristine || milestoneAdd.last_date.$invalid) && (milestoneAdd.last_date.$error.required) && (!data.deadline_date)">{{'Required'| translate}} </span>
+                    </div>
+                    <ul class="col-sm-6 list-inline ver-mar-20 clearfix">
+                        <li class="no-pad">
+                            <button type="submit" ng-show="milestone_set && (milestone_set_status_id != 1 && is_freelancer)" class="btn btn-primary text-uppercase" disabled>{{'Submit'|translate}}</button>
+
+                            <button type="submit" ng-click="submit(data.id, milestoneAdd.$valid)" title="{{'Submit' | translate}}" class="btn btn-primary text-uppercase"
+                                ng-show="!milestone_set && (milestone_set_status_id != 1 && is_freelancer)">{{'Submit'|translate}}</button> 
+
+                            <button type="submit" ng-click="submit(data.id, milestoneAdd.$valid)" title="{{'Submit' | translate}}" class="btn btn-primary text-uppercase"
+                                ng-show="milestone_set && (milestone_set_status_id == 1 && is_freelancer)" disabled>{{'Submit'|translate}}</button> 
+
+                            <button type="submit" ng-click="submit(data.id, milestoneAdd.$valid)" title="{{'Submit' | translate}}" class="btn btn-primary text-uppercase"
+                                ng-show="!milestone_set && (milestone_set_status_id == 1 && is_freelancer)">{{'Submit'|translate}}</button> 
+
+                                 <button type="submit" ng-click="submit(data.id, milestoneAdd.$valid)" title="{{'Submit' | translate}}" class="btn btn-primary text-uppercase"
+                                ng-show="milestone_set && (create_mile == true && !is_freelancer && milestone_set_status_id == false)" disabled>  {{'Submit'|translate}}</button>
+
+                                 <button type="submit" ng-click="submit(data.id, milestoneAdd.$valid)" title="{{'Submit' | translate}}" class="btn btn-primary text-uppercase"
+                                ng-show="!milestone_set && (create_mile == true && !is_freelancer && milestone_set_status_id == false)">  {{'Submit'|translate}}</button>
+
+                            <button type="submit" ng-click="submit(data.id, milestoneAdd.$valid)" title="{{'Approve this Milestone' | translate}}" class="btn btn-primary text-uppercase"
+                                    ng-show="milestone_set && (milestone_set_status_id == 1 && !is_freelancer)" disabled>{{'Approve this Milestone'|translate}}</button>
+
+                                <button type="submit" ng-click="submit(data.id, milestoneAdd.$valid)" title="{{'Approve this Milestone' | translate}}" class="btn btn-primary text-uppercase"
+                                ng-show="!milestone_set && (milestone_set_status_id == 1 && !is_freelancer)">{{'Approve this Milestone'|translate}}</button>
+                        </li>
+                        <!--<li>
+                            <p class="cursor" ng-class="((buttonName == 'Request Milestone') || (buttonName == 'Create Milestone'))?'request-btn':'btn btn-danger btn-cancel'" ng-click="form()" ng-if="projectstatus == ProjectStatusConstant.UnderDevelopment">{{buttonName}}</p>
+                        </li>-->
+                    </ul>
+                </form>
+            </div>
+        </div>
+        <div class="panel-heading row" ng-if='milestones.length > 0 && !project_is_dispute'>
+            <div class="clearfix">
+                <h3 class="pull-left text-uppercase col-sm-12 row">{{'Milestone Requests'|translate}}</h3>
+            </div>
+            <div class="add-wallet-table">
+                <div class="table-responsive pg-table">
+                    <table class="table table-striped no-mar">
+                        <thead>
+                            <tr>
+                                <th>{{'Date' |translate}}</th>
+                                <th>{{'Amount' |translate}}</th>
+                                <th>{{'Description'|translate}}</th>
+                                <th>{{'Deadline Date'|translate}}</th>
+                                <th width="100" ng-show="!project_is_dispute">{{'Actions'|translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="milestonesValue in milestones">
+                                <td>
+                                    <p class="no-mar">{{milestonesValue.created_at | date_format: 'yyyy-dd-MM h:mm a'}}</p>
+                                </td>
+                                <td>
+                                    <amount-display amount='{{milestonesValue.amount}}' ng-if="milestonesValue.amount"></amount-display>
+                                </td>
+                                <td>
+                                    <p class="no-mar" ng-bind-html="milestonesValue.description">_</p>
+                                </td>
+                                <td>
+                                    <p class="no-mar">{{milestonesValue.deadline_date}}</p>
+                                </td>
+                                <td ng-show="!project_is_dispute">
+                                    <div class="dropdown">
+                                        <button class="btn request-btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="true"> {{'Action'|translate}} <i class="fa fa-angle-down" aria-hidden="true"></i> </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                            <li class="cursor"> <a ng-click="MilestoneEdit(milestonesValue.id)"><i class="fa fa-edit fa-fw"></i> {{'Edit'|translate}}</a> </li>
+                                            <milestone-actions projectuser="{{projectuser}}" milestoneid={{milestonesValue.id}} milestonestatus="{{milestonesValue.milestone_status_id}}"
+                                                actiontype="2" ng-if="!is_freelancer"></milestone-actions>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-if="milestones.length === 0">
+                                <td colspan="8">
+                                    <p class="text-center text-danger" ng-if="milestones.length === 0"> {{'No records available' | translate}}</p>
+                                </td>    
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                 <div class="pull-right hired-view-total-page" id ="paging" ng-if="milestones.length > 0">
+                        <nav aria-label="Page navigation">
+                            <uib-pagination total-items="totalItemsMilestone" max-size="maxSize" items-per-page="itemsPerPageMilestone" ng-model="currentPageMilestone" class="pagination-sm"
+                                boundary-links="true" num-pages="numPages" num-pages="noOfPagesMilestone" ng-click="paginate(1 , currentPageMilestone)"></uib-pagination>
+                        </nav>
+                    </div>
+            </div>
+        </div>
+        <div ng-if="project_is_dispute && is_freelancer">
+            <p class="text-center text-danger space no-mar"> {{"Project under dispute. So you can't send milestone." | translate}} </p>
+        </div>
+    </div>
+    <div class="milestone-block clearfix" ng-if="milestonesGet.length > 0 && !project_is_dispute">
+        <div class="clearfix">
+            <h3 class="pull-left no-mar bot-space-10 text-uppercase">{{'Milestones'|translate}}</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped no-mar">
+                <thead>
+                    <tr>
+                        <th>{{'Date' |translate}}</th>
+                        <th>{{'Amount' |translate}}</th>
+                        <th>{{'Description'|translate}}</th>
+                        <th>{{'Status' |translate}}</th>
+                        <th>{{'Deadline Date'|translate}}</th>
+                        <th width="100" ng-show="!project_is_dispute">{{'Actions'|translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="milestonesValue in milestonesGet">
+                        <td>
+                            <p class="no-mar">{{milestonesValue.created_at| date_format: 'yyyy-dd-MM h:mm a'}}</p>
+                        </td>
+                        <td>
+                            <amount-display amount='{{milestonesValue.amount}}' ng-if="milestonesValue.amount"></amount-display>
+                        </td>
+                        <td>
+                            <p class="no-mar" ng-bind-html="milestonesValue.description"></p>
+                        </td>
+                        <td>
+                            <p class="no-mar">{{milestonesValue.milestone_status.name}}</p>
+                        </td>
+                        <td>
+                            <p class="no-mar">{{milestonesValue.deadline_date}}</p>
+                        </td>
+                        <td>
+                            <div class="center-responsive" ng-if="!project_is_dispute && (!is_freelancer && milestonesValue.milestone_status_id != MilestoneStatusConstant.EscrowFunded) || (is_freelancer && milestonesValue.milestone_status_id != MilestoneStatusConstant.RequestedForRelease) && (is_freelancer && milestonesValue.milestone_status_id != MilestoneStatusConstant.Completed)">
+                                <div class="dropdown" ng-if="milestonesValue.milestone_status_id < MilestoneStatusConstant.EscrowReleased">
+                                    <milestone-actions projectuser="{{projectuser}}" milestoneid={{milestonesValue.id}} milestonestatus="{{milestonesValue.milestone_status_id}}"
+                                        actiontype="1"></milestone-actions>
+                                </div>
+                            </div>
+                            <div class="center-responsive" ng-if="!project_is_dispute && (!is_freelancer && milestonesValue.milestone_status_id == MilestoneStatusConstant.EscrowFunded) || (is_freelancer && milestonesValue.milestone_status_id == MilestoneStatusConstant.RequestedForRelease) || (is_freelancer && milestonesValue.milestone_status_id == MilestoneStatusConstant.Completed || milestonesValue.milestone_status_id == MilestoneStatusConstant.EscrowReleased || milestonesValue.milestone_status_id == MilestoneStatusConstant.Canceled)">
+                                <span class="text-center">-</span>  
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="text-center">
+                        <div ng-if="milestonesGet.length === 0">
+                            <td colspan="8" >
+                            <p class="text-center text-danger" ng-if="milestonesGet.length == 0"> {{'No records available' | translate}} </p>
+                            </td>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="hired-view-total-page" ng-if="milestonesGet.length > 0">
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <p>Total:
+                            <amount-display amount='{{all}}' ng-if="all"></amount-display>
+                        </p>
+                    </div>
+                    <div class="pull-right">
+                        <nav aria-label="Page navigation">
+                            <uib-pagination total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm"
+                                boundary-links="true" num-pages="noOfPages" ng-click="paginate(2 , currentPage)"></uib-pagination>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="milestonesGet.length == 0 && milestones.length == 0" class="milestone-block clearfix">
+            <div class="clearfix">
+                    <h3 class="pull-left no-mar bot-space-10 text-uppercase">{{'Milestones'|translate}}</h3>
+                </div>
+            <p class="text-center text-danger space no-mar"> {{"No records available" | translate}} </p>
+        </div>
+    <div ng-if="project_is_dispute && !is_freelancer">
+        <p class="text-center text-danger space no-mar"> {{"Project under dispute. So you can't send milestone." | translate}} </p>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="section photo-view skill-tests" ng-controller="ExamListCtrl">
+    <div class="container">
+        <h3 class="panel-title text-22 pull-left bot-space">{{'Search Skill Tests' | translate}}</h3>
+        <div class="clearfix">
+            <div class="pull-right">
+                <div class="form-group label-frm">
+					<form class="form-inline" role="form" name="ExamsearchForm">
+						<div class="input-group"> 
+							<input type="text" class="form-control" ng-model="params.q" placeholder="{{'Search Exams'|translate}}"> 
+							<span class="input-group-btn">
+								<button type="submit" ng-click="refinesearch(params.q)" class="btn btn-primary"><i class="fa fa-search"></i></button>
+							</span> 
+						</div>
+					</form>
+                </div>
+            </div>
+        </div>        
+        <ul class="row list-inline">
+            <li class="col-sm-4" ng-repeat="examsValue in exams" ng-class="{'featured':examsValue.is_featured == 1}">
+                <div class="media"> 
+                    <div class="pull-left exams-img"> 
+                            <a class="cursor" ui-sref="ExamView({id:examsValue.id , slug:examsValue.slug})"><img ng-src="{{examsValue.logo_url}}" alt="{{examsValue.title}}" /> </a>
+                    </div>
+                    <div class="media-body">
+                        <a class="cursor" ui-sref="ExamView({id:examsValue.id , slug:examsValue.slug})">{{examsValue.title}}</a> ({{examsValue.exam_level.name}})
+                        <p class="top-mspace-5 text-12">{{examsValue.exams_question_count}} {{'Questions'|translate}}<span class="left-space">{{examsValue.duration}} mins</span></p>
+                    </div>
+                </div>
+            </li>            
+        </ul>  
+        <div class="text-center bot-space" ng-if="exams.length <= 0">
+            <span class="text-danger">{{'No records Found' | translate}}</span>
+        </div>      
+        <div class="row binding-pagination bot-mspace" ng-show="exams.length != 0 && noOfPages != 1">
+            <div class="pagnation-content">
+                <div class="container">
+                    <div class="clearfix pagnation-inner">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <uib-pagination total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="numPages" num-pages="noOfPages" ng-click="paginate()"></uib-pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

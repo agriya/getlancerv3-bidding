@@ -1,0 +1,125 @@
+<!--START: BIDDING INVOICE -->
+<div class="tab-content" ng-controller="BiddingInvoiceCtrl">
+    <div class="milestone-block clearfix">
+        <div class="tab-pane active">
+            <div class="clearfix">
+                <h3 class="pull-left no-mar text-uppercase">{{'INVOICES'|translate}}</h3>
+                <p ng-show="!project_is_dispute" class="pull-right cursor btn btn-default" ng-class="(buttonInvoice == 'Add Invoice')?'request-btn':'text-danger'" ng-click="form()"
+                ng-if="projectstatus == ProjectStatusConstant.UnderDevelopment && is_freelancer">{{buttonInvoice}}</p>
+            </div>
+            <div class="row" ng-show="invoice_value">
+                <form class="proj-form clearfix top-small-mspace" role="form" name="invoiceform" ng-submit="ProjectInvoice(invoiceform,invoiceform.$valid)" novalidate>
+                    <div class="col-sm-6"> 
+                        <input type="number" ng-model="bids.amount" name="InvoiceAmount" id="amount" placeholder="Amount" class="milestone-heading form-control"
+                        min=0 number-only ng-required="true"> 
+                        <span class="error" ng-show="(invoiceform.$submitted || invoiceform.InvoiceAmount.$touched) && (invoiceform.InvoiceAmount.$pristine || invoiceform.InvoiceAmount.$invalid) && (invoiceform.InvoiceAmount.$error.required)">{{'Required'| translate }} </span>                   
+                    </div>
+                    <div class="col-sm-6"> 
+                        <input type="text" ng-model="bids.description" name="InvoiceDescription" placeholder="Description" class="milestone-heading form-control"
+                        ng-required="true"> 
+                        <span class="error" ng-show="(invoiceform.$submitted || invoiceform.InvoiceDescription.$touched) && (invoiceform.InvoiceDescription.$pristine || invoiceform.InvoiceDescription.$invalid) && (invoiceform.InvoiceDescription.$error.required)">{{'Required'| translate}} </span>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="ver-mar-20"> 
+                            <button type="submit" ng-show="invoice_set" title="{{'Submit'|translate}}" class="btn btn-primary text-uppercase" disabled>{{'Submit'|translate}}</button> 
+                            <button type="submit" ng-show="!invoice_set" title="{{'Submit'|translate}}" class="btn btn-primary text-uppercase">{{'Submit'|translate}}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--START: TABLE -->
+            <div class="panel-heading row" ng-show="!loader">
+                <div class="add-wallet-table">
+                    <div class="table-responsive pg-table">
+                        <table class="table table-striped no-mar table-bordered">
+                            <thead>
+                                <tr ng-if="invoices.length > 0">
+                                    <th>{{'Date' |translate}}</th>
+                                    <th>{{'Amount' |translate}}</th>
+                                    <th>{{'Description'|translate}}</th>
+                                    <th>{{'Status'|translate}}</th>
+                                    <th width="100" ng-show="!project_is_dispute">{{'Actions'|translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="invoices in invoices">
+                                    <td>
+                                        <table>
+                                            <tr ng-repeat="invoice in invoices.projectbidinvoiceitems">
+                                                <td>{{invoice.created_at  | date_format: 'yyyy-dd-MM  h:mm a'}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr ng-repeat="invoice in invoices.projectbidinvoiceitems">
+                                                <td>
+                                                     <amount-display  amount='{{invoice.amount}}' ng-if="invoice.amount"></amount-display>
+                                                   
+                                                    </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr ng-repeat="invoice in invoices.projectbidinvoiceitems">
+                                                <td>{{invoice.description}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr ng-repeat="invoice in invoices.projectbidinvoiceitems">
+                                                <td>
+                                                    <p class="no-mar" ng-if="invoices.is_paid == 0"> Not yet Paid</p>
+                                                    <p class="no-mar" ng-if="invoices.is_paid > 0">Paid</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr ng-repeat="invoice in invoices.projectbidinvoiceitems" ng-show="!project_is_dispute">
+                                                <td>
+                                                    <div class="center-responsive">
+                                                        <div class="dropdown" ng-if="is_freelancer && invoices.is_paid == 0"> 
+                                                            <button class="request-btn btn btn-primary dropdown-toggle" type="button"
+                                                                id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="true">Action<i class="fa fa-angle-down" aria-hidden="true"></i> </button>
+                                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
+                                                                <li ng-if="is_freelancer && invoices.is_paid == 0"> <a ng-click="EditInvoice(invoice.project_bid_invoice_id)"><i class="fa fa-edit fa-fw"></i> {{'Edit'| translate}}</a></li>
+                                                                <li ng-if="is_freelancer && invoices.is_paid == 0"> <a ng-click="deleteInvoice(invoice.project_bid_invoice_id)"><i class="fa fa-trash-o fa-fw"></i> {{'Delete'| translate}}</a></li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="employer-invoice-action" ng-if="!is_freelancer && invoices.is_paid == 0"> 
+                                                            <a class="btn btn-primary" ui-sref="Bidding_InvoicePayment({'slug':'invoice' , 'id':invoices.id})">{{'Pay'| translate}}</a>                                                            
+                                                        </div>
+                                                        <div class="no-action" ng-if="invoices.is_paid != 0"> - </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                 </tr>
+                                <tr class="text-center">
+                                    <p colspan="8" class="text-center text-danger" ng-if="invoices.length == 0"> {{'No records available' | translate}} </p>
+                                    <!--<p ng-if="project_is_dispute" colspan="8" class="text-center text-danger">
+                                    {{"Project under dispute. So you can't send message." | translate}} </p>-->
+                                </div>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center" ng-hide="(credit_purchase_logs.length > itemsPerPage) && currentPage==1">
+                            <uib-pagination ng-hide="!credit_purchase_logs.length" total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage"
+                            ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="noOfPages" ng-click="paginate_credit_log()"></uib-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--END: TABLE -->
+        </div>
+    </div>
+</div>
+<!--END: BIDDING INVOICE -->

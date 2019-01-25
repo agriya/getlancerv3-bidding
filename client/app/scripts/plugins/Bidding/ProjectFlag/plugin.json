@@ -1,0 +1,10 @@
+{
+	"name": "ProjectFlag", 
+	"class": "fa fa-2x fa-flag",
+	"description": "ProjectFlag",
+	"dependencies": "Bidding",
+	"module_id": "826",
+	"module_hash": "91bebe7acd4e1df61c5081fe22442983",
+	"display_order": "7",
+	"plugin_name":"Bidding/ProjectFlag"
+}

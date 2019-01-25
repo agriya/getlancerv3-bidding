@@ -1,0 +1,37 @@
+<div class="section photo-view">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-8">
+                    <h2>Skill Test Attempts</h2>
+                </div>
+                <div class="col-md-4 pull-right"> <a class="text-center btn btn-primary" ng-click="filter(3)">{{'View All Certificate' | translate}}</a> <a class="text-center btn btn-primary" ng-click="filter(4)">{{'View All Attempts' | translate}}</a> </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table ng-if="myExams.length > 0" class="table table-striped sep table-inner ver-mspace table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="col-md-4"> <label> Exam </label> </th>
+                            <th class="col-md-4"> <label> Date </label> </th>
+                            <th class="col-md-4"> <label> Taken Mark </label> </th>
+                            <th class="col-md-4"> <label> Result </label> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="myExam in myExams">
+                            <td>{{myExam.exam.title}}</td>
+                            <td>{{myExam.exam_status.created_at}}</td>
+                            <td>{{myExam.total_mark}}</td>
+                            <td>{{myExam.exam_status.name}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div ng-if="myExams.length == 0">
+                    <p class="hor-space alert alert-info text-left">{{'No exams are found' | translate}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

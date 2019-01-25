@@ -1,0 +1,13 @@
+<button class="request-btn btn btn-default dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-if="actiontype == 1"> {{'Action'| translate}} <i class="fa fa-angle-down" aria-hidden="true"></i> </button>
+<ul class="dropdown-menu dropdown-arrow-right" aria-labelledby="dropdownMenu3" ng-if="actiontype == 1">
+    <li class="cursor" ng-if="!is_freelancer && milestonestatus == MilestoneStatusConstant.MilestoneSuggested"> <a ng-click="milestoneStatueChange(milestoneid, MilestoneStatusConstant.MilestoneSet)"><i class='fa fa-check fa-fw'></i> {{'Milestone Set'| translate}} </a> </li>
+    <li class="cursor" ng-if="is_freelancer && milestonestatus == MilestoneStatusConstant.MilestoneSet"> <a ng-click="milestoneStatueChange(milestoneid, MilestoneStatusConstant.RequestedforEscrow)"><i class='fa fa-hand-stop-o fa-fw'></i> {{'Requested for Escrow'| translate}} </a> </li>
+    <li class="cursor" ng-if="!is_freelancer && (milestonestatus == MilestoneStatusConstant.RequestedforEscrow)">
+    <a ng-click="milestoneStatueChange(milestoneid, 'pay')"><i class='fa fa-money fa-fw'></i> {{'Pay amount'| translate}} </a> </li>
+    <li class="cursor" ng-if="is_freelancer && milestonestatus == MilestoneStatusConstant.EscrowFunded"> <a ng-click="milestoneStatueChange(milestoneid, MilestoneStatusConstant.RequestedForRelease, 'workcompleted')"><i class='fa fa-check fa-fw'></i> {{'Work Completed / Request to Release Escrow'| translate}} </a> </li>
+    <li class="cursor" ng-if="!is_freelancer && (milestonestatus == MilestoneStatusConstant.RequestedForRelease || milestonestatus == MilestoneStatusConstant.Completed)">
+    <a ng-click="milestoneStatueChange(milestoneid, MilestoneStatusConstant.EscrowReleased)"><i class='fa fa-check fa-fw'></i> {{'Released Escrow Now'| translate}} </a> </li>
+    <li class="cursor" ng-if="milestonestatus < MilestoneStatusConstant.EscrowFunded"> <a ng-click="milestoneStatueChange(milestoneid, MilestoneStatusConstant.Canceled)"><i class='fa fa-close fa-fw'></i> {{'Canceled'| translate}} </a> </li>
+</ul>
+<!-- For Employeer Approve Process -->
+<li class="cursor" ng-if="!is_freelancer && actiontype == 2"> <a class="milestone-action-anchor" ng-click="milestoneStatueChange(milestoneid, MilestoneStatusConstant.MilestoneSet)"><i class='fa fa-check fa-fw'></i> {{'Approve'| translate}}</a> </li>

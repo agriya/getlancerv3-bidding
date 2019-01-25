@@ -1,0 +1,72 @@
+<section class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="project-contest">
+                    <div class="clearfix">
+                        <ul class="list-group custom-binding">
+                            <li class="list-group-item project-heading hidden-xs">
+                                <div class="row text-center">
+                                    <div class="col-sm-4">
+                                        <h5>PROJECT NAME</h5>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <h5>AMOUNT</h5>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <h5>DESCRIPTION </h5>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <h5>STATUS</h5>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <h5>ACTIONS</h5>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item project-content" ng-repeat="invoicesBid in invoices" ng-if="invoices.length > 0">
+                                <div class="row" ng-repeat="invoice in invoicesBid.projectbidinvoiceitems">
+                                    <div class="col-sm-4">
+                                        <h5 class="visible-xs">PROJECT NAME</h5>
+                                        <h5 class="text-18"><a ui-sref="Bid_ProjectView({'id':invoicesBid.bid.project.id, 'slug':invoicesBid.bid.project.slug})"> {{invoicesBid.bid.project.name}} </a></h5>
+                                    </div>
+                                    <div class="col-sm-2"> <span class="visible-xs">AMOUNT</span> <span class="content">
+                                        <amount-display amount='{{invoice.amount}}' ng-if="invoice.amount"></amount-display>
+                                        </span> </div>
+
+ 
+                                    <div class="col-sm-2"> <span class="visible-xs">DESCRIPTION</span> <span class="content" ng-bind-html="invoice.description"></span> </div>
+                                    <div class="col-sm-2"> <span class="visible-xs">STATUS</span> <span class="no-mar" ng-if="invoicesBid.is_paid == 0"> Not yet Paid</span> <span class="no-mar" ng-if="invoicesBid.is_paid > 0">Paid</span> </div>
+                                    <div class="col-sm-2">
+                                        <div class="center-responsive">
+                                            <div class="dropdown" ng-if="is_freelancer && invoicesBid.is_paid == 0"> <button class="request-btn btn btn-default dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Action<i class="fa fa-angle-down" aria-hidden="true"></i> </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
+                                                    <li ng-if="is_freelancer && invoicesBid.is_paid == 0"> <a ui-sref="Bid_ProjectView({'id':invoicesBid.bid.project.id, 'slug':invoicesBid.bid.project.slug})">{{'Edit'| translate}}</a> </li>
+                                                </ul>
+                                            </div>
+                                            <div class="employer-invoice-action" ng-if="!is_freelancer && invoicesBid.is_paid == 0"> <a class="btn btn-default" ui-sref="Bid_ProjectFinalPayment({'name':'invoice' , 'id':invoice.id})">{{'Pay'| translate}}</a> </div>
+                                            <div class="no-action" ng-if="invoicesBid.is_paid != 0"> - </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li ng-if="invoices.length == 0" class="list-group-item project-content">
+                                <p class="no-mar text-center">{{'No records available' | translate}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- pagtion-Blk: START -->
+        <div class="row binding-pagination" ng-if="invoices.length == 0">
+            <div class="pagnation-content">
+                <div class="container">
+                    <div class="clearfix pagnation-inner">
+                        <uib-pagination total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="numPages" num-pages="noOfPages" ng-click="paginate()"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

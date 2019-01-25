@@ -1,0 +1,74 @@
+<div class="clearfix" id="dispute-block">
+    <h3 class="clearfix montserrat-bold text-18 ">{{'Dispute'|translate}}</h3>
+    <div ng-if="isdispute == 'false'" class="top-space">
+        <form class="form-horizontal row" name="disputeFrm" ng-submit="disputeSubmit(disputeFrm.$valid, data)" novalidate>
+            <div class="bot-20-space col-sm-12 col-md-9"> 
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label for="review" class="">{{'Type'|translate}}:</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="frm-select">
+                            <!--<input class="form-control text-uppercase" aria-label="Text input with dropdown button" placeholder=" ">-->
+                            <select ng-model="data.dispute_open_type_id" name="dispute_open_type_id" class="form-control" ng-options="disputeType.id as disputeType.name for disputeType in disputeTypes" ng-required="true">
+                                <option value=""> {{'Select Dispute Type' | translate}}</option>
+                            </select> 
+                            <pan class="error" ng-show="(disputeFrm.$submitted || disputeFrm.dispute_open_type_id.$touched) && (disputeFrm.dispute_open_type_id.$pristine || disputeFrm.dispute_open_type_id.$invalid) && (disputeFrm.dispute_open_type_id.$error.required)"> {{'Required'| translate}} </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="bot-20-space col-sm-12 col-md-9" ng-if = "projectstatus != '11'"> 
+                <div class="row">
+                    <div class="col-sm-3">  
+                       <label for="review" >{{'Expected Rating'|translate}}:</label>
+                    </div>
+                    <div class="col-lg-7">
+                        <input-stars ng-model="data.expected_rating" max="5" on-star-click="starCount(data.expected_rating)" name="rateing" class="cursor" required></input-stars>
+                        <span class="error" ng-show="(disputeFrm.$submitted || disputeFrm.rateing.$touched) && (disputeFrm.rateing.$pristine || disputeFrm.rateing.$invalid) && (disputeFrm.rateing.$error.required)"> {{'Required'| translate }}
+                        </span> 
+                    </div>
+                </div>
+            </div>
+            <div class="bot-20-space col-sm-12 col-md-9"> 
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label for="review" class="">{{'Dispute Note'|translate}}:</label>
+                    </div>
+                    <div class="col-sm-7"> 
+                        <textarea name="reason" ng-model="data.reason" class="form-control" rows="3" placeholder="{{'Enter your dispute note'|translate}}" ng-required="true"></textarea> 
+                        <span class="error" ng-show="(disputeFrm.$submitted || disputeFrm.reason.$touched) && (disputeFrm.reason.$pristine || disputeFrm.reason.$invalid) && (disputeFrm.reason.$error.required)"> {{'Required'| translate }} </span>                             
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-9">
+                <div class="row">
+                    <div class="col-sm-offset-3 col-sm-8"> 
+                        <button type="submit" ng-show="dispute_submit" class="text-uppercase btn btn-primary" disabled>{{'Submit'|translate}}</button> 
+                        <button type="submit" class="text-uppercase btn btn-primary" ng-show="!dispute_submit">{{'Submit'|translate}}</button>
+                        <span class="review-cancel" ng-if="isdispute == 'false'"> 
+                            <!--<button class="text-uppercase btn btn-danger" ng-click="closefrm()">{{'Cancel'|translate}}</button>-->
+                            <a href="javascript:void(0)" ng-click="closefrm()" class="btn btn-danger text-14">{{'Cancel'|translate}}</a>
+                        </span>                 
+                    </div>
+                </div>
+            </diV>
+        </form>
+    </div>
+    <div ng-if="isdispute != 'false'" class="comments-block">
+            <div class="comments-msg">                
+                <div class="media">
+                    <div class="pull-left">
+                        <a class="blog-user-img center-block" href="users/{{dispute.user.id}}/{{dispute.user.username}}"><img ng-src="{{user_avatar_url}}" title="{{dispute.user.username}}" alt="[Image: {{dispute.user.username}}]" class="center-block img-circle"></a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="text-16"><a href="users/{{dispute.user.id}}/{{dispute.user.username}}">{{dispute.user.username}}</a> , <span class="text-12 text-normal text-lowercase grayc"> {{ dispute.created_at | timeago}}</span></h4>
+                        <p> {{dispute.reason}} </p>
+                    </div>
+                </div>                
+            </div>
+            <!--<h4 class="title text-b"> {{'Reason'| translate}} </h4>-->
+        <bidding-dispute-message bidid="{{bidid}}" project="{{project}}" biduser="{{biduser}}" projectuser="{{projectuser}" projectstatus="{{projectstatus}}" isdispute="{{isdispute}}" disputeid="{{dispute.id}}" disputestatus="{{dispute.dispute_status_id}}"></bidding-dispute-message>
+    </div>
+    <!-- Here for the dispute message Conversation directive-->
+</div>

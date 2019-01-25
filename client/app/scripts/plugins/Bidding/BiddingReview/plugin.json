@@ -1,0 +1,11 @@
+{
+  "name": "BiddingReview",
+  "class": "fa fa-2x fa-comments",
+  "description": "BiddingReview",
+  "dependencies": "Bidding",
+  "module_id": "828",
+  "module_hash": "0ac76a5f440d3f676c55d53ddb3edc6e",
+  "display_order": "6",
+  "plugin_name":"Bidding/BiddingReview"
+ 
+}

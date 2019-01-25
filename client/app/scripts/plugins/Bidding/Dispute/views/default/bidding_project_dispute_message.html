@@ -1,0 +1,33 @@
+<div class="clearfix">
+    <div class="col-xs-12 comments-block">
+    <div class="clearfix comment-msg coment-setion">
+        <div class="media" ng-repeat="message in messages | orderBy:'$index':true">
+            <div class="pull-left">
+                <a class="blog-user-img center-block" href="users/{{message.user.id}}/{{message.user.username}}"><img ng-src="{{message.user.user_avatar_url}}" title="{{message.user.username}}" alt="[Image: {{message.user.username}}]" class="center-block img-circle"></a>
+            </div>
+            <div class="media-body">
+                <h4 class="text-16"><a href="users/{{message.user.id}}/{{message.user.username}}">{{message.user.username}}</a> , <span class="text-12 text-normal text-lowercase"> {{ message.created_at | timeago}} </span></h4>
+                <p ng-bind-html="message.message_content.message"> </p>
+            </div>
+        </div>
+        <div class="media" ng-if="disputestatus <= DisputeStatusConstant.UnderDiscussion">
+            <div class="pull-left media-top"> <img ng-src="{{$root.user.userimage}}" alt="[Image: USer]" class="img-circle center-block user-small"> </div>
+            <div class="media-body">
+                <form role="form" name="messageFrm" ng-submit="PostMessages(messageFrm,messageFrm.$valid)" novalidate>
+                    <div class="form-group"> <label for="comments1" class="sr-only">comment</label> <textarea id="comments1" class="form-control" ng-model="data.message" name="message" placeholder="write your messages..." rows="3" ng-required="true"></textarea> <span class="error"
+                            ng-show="(messageFrm.$submitted || messageFrm.message.$touched) && (messageFrm.message.$pristine || messageFrm.message.$invalid) && (messageFrm.message.$error.required)"> {{'Required'| translate}} </span> </div>
+                    <div class="clearfix pull-right">
+                    <button type="submit" ng-show="post_messages" class="gradi-rnd-btn btn btn-primary " disabled>{{'Send'|translate}}</button> <button type="submit" class="gradi-rnd-btn btn btn-primary" title="send" ng-show="!post_messages">Send</button>                        </div>
+                </form>
+            </div>
+        </div>
+        <div ng-if="disputestatus > DisputeStatusConstant.UnderDiscussion" class="navbar-btn">
+            <div class="alert alert-info"> <span ng-if="disputestatus == DisputeStatusConstant.WaitingforAdministratorDecision">
+    {{'Waiting for Administrator Decision'| translate}}
+</span> <span ng-if="disputestatus == DisputeStatusConstant.Closed">
+    {{'Dispute closed'| translate}}
+</span> </div>
+        </div>
+    </div>
+    </div>
+</div>

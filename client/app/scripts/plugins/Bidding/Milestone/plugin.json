@@ -1,0 +1,10 @@
+{
+	"name": "Milestone", 
+	"class": "fa fa-2x fa-clock-o",
+	"description": "Milestone",
+	"dependencies": "Bidding",
+	"module_id": "823",
+	"module_hash": "299e52492de939d20142024f639f1291",
+	"display_order": "2",
+	"plugin_name":"Bidding/Milestone"
+}

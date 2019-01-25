@@ -1,0 +1,10 @@
+<div ng-show='!is_book'>
+<div title='{{"Bookmark this project"|translate}}' class="project-bookmark cursor" ng-click="projectBookmark()" ng-class="{'active': is_book}"> 
+	<span class="bookmark-circle"></span>
+</div>
+</div>
+<div ng-show='is_book'> 
+<div  title='{{"Unbookmark"|translate}}' class="project-bookmark cursor" ng-click="projectUnBookmark(book_id)" ng-class="{'active': is_book}">
+	<span class="bookmark-circle"></span>
+</div>
+</div>

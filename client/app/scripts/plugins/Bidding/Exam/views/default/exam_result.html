@@ -1,0 +1,30 @@
+<div class="section photo-view">
+    <div class="container" ng-if="exam_data.user_id == user.id">
+        <div class="row" ng-if="exam_data.exam_status_id == 4">
+            <h2 class="text-center">{{'Oops'|translate}}!! {{"We’re Sorry"|translate}}!!</h2>
+            <h2 class="text-center">{{'You have failed this level of skill test'|translate}}.</h2>
+            <h2 class="text-center"> {{'We appreciate you for participating in the skill test'|translate}}.</h2>
+        </div>
+        <div class="row" ng-if="exam_data.exam_status_id == 3">
+            <h2 class="text-center">{{'Congratulation'|translate}}!!!!</h2>
+            <h2 class="text-center">{{'You have passed this level of skill test'|translate}}.</h2>
+            <h2 class="text-center"> {{'We appreciate you for participating in the skill test'|translate}}.</h2>
+        </div>
+        <hr/>
+        <div class="row text-center">
+            <h3>{{exam_data.exam.title}} ({{exam_data.exam.exam_level.name}})</h3>
+            <p>{{'Your score card'|translate}}: {{exam_data.total_mark * 10}}% Marks</p>
+        </div>
+        <div class="row text-center"> 
+            <a class="text-center btn btn-primary" href="/">{{'Home' | translate}}</a> 
+            <a class="text-center btn btn-primary" href="users/dashboard">{{'Dashboard' | translate}}</a> 
+            <a class="text-center btn btn-primary" ui-sref="Exam()">{{'Skill Labs' | translate}}</a>            
+            <a class="text-center btn btn-warning" href="users/logout">{{'Logout' | translate}}</a> 
+        </div>
+    </div>
+    <div class="container" ng-if="exam_data.user_id != user.id && accessTimeOut">
+        <div class="row">
+            <p class="hor-space alert alert-info text-left">{{'Access Denied' | translate}}</p>
+        </div>
+    </div>
+</div>

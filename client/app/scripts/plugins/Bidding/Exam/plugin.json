@@ -1,0 +1,10 @@
+{
+	"name": "Exam", 
+	"class": "fa fa-2x fa-pencil-square-o",
+	"description": "Exam",
+	"dependencies": "Bidding",
+	"module_id": "825",
+	"module_hash": "925a9ba6ee7d10d0288b9d1780f6d9ec",
+	"display_order": "4",
+	"plugin_name":"Bidding/Exam"
+}

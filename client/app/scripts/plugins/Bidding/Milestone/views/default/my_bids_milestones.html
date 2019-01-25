@@ -1,0 +1,67 @@
+<section class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="project-contest">
+                    <div class="clearfix">
+                        <ul class="list-group custom-binding">
+                            <li class="list-group-item project-heading hidden-xs">
+                                <div class="row text-center">
+                                    <div class="col-sm-4">
+                                        <h5>{{'PROJECT NAME'|translate}}</h5>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <h5>{{'AMOUNT'|translate}}</h5>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <h5>{{'DESCRIPTION'|translate}} </h5>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <h5>{{'STATUS'|translate}}</h5>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <h5>{{'ACTIONS'|translate}}</h5>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item project-content" ng-repeat="milestone in milestones" ng-if="milestones.length > 0">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <h5 class="visible-xs">{{'PROJECT NAME'|translate}}</h5>
+                                        <h5 class="text-18"><a ui-sref="Bid_ProjectView({id:milestone.project.id,slug:milestone.project.slug})"> {{milestone.project.name}} </a></h5>
+                                    </div>
+                                    <div class="col-sm-2"> <span class="visible-xs">{{'AMOUNT'|translate}}</span>
+                                     <span class="content">
+                                        <amount-display  amount='{{milestone.amount}}' ng-if="milestone.amount"></amount-display> 
+                                        </span> </div>
+                                    <div class="col-sm-2"> <span class="visible-xs">{{'DESCRIPTION'|translate}}</span> <span class="content" ng-bind-html="milestone.description"></span> </div>
+                                    <div class="col-sm-2"> <span class="visible-xs">{{'STATUS'|translate}}</span> <span class="content">{{milestone.milestone_status.name}}</span> </div>
+                                    <div class="col-sm-2">
+                                        <div class="center-responsive">
+                                            <div class="dropdown" ng-if="milestone.milestone_status_id < MilestoneStatusConstant.EscrowReleased">
+                                                <milestone-actions projectuser="{{milestone.project.user_id}}" milestoneid={{milestone.id}} milestonestatus="{{milestone.milestone_status_id}}" actiontype="1" isupdated="isupdated"></milestone-actions>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li ng-if="milestones.length == 0" class="list-group-item project-content">
+                                <p class="no-mar alert alert-danger text-center">{{'No milestone' | translate}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- pagtion-Blk: START -->
+        <div class="row binding-pagination" ng-if="milestones.length == 0">
+            <div class="pagnation-content">
+                <div class="container">
+                    <div class="clearfix pagnation-inner">
+                        <uib-pagination total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="numPages" num-pages="noOfPages" ng-click="paginate()"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

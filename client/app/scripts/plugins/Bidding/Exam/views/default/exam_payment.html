@@ -1,0 +1,80 @@
+<div class="section photo-view">
+    <div class="container">
+        <div>
+            <div class="clearfix">
+                <h2 class="panel-title text-22 bot-15-mspace head-bot">{{'Exam fee for' | translate}} {{examValue.title}}</h2>
+                <div class="job-body row">
+                    <div class="col-md-2 bot-space"> <img ng-src="{{examValue.logo_url}}" class="img-responsive center-block"> </div>
+                    <div class="col-md-6">
+                        <div class="col-xs-12">
+                           <div class="job-info navbar-btn">
+                            <ul class="list-unstyled">
+                                 <li>
+                                    <p class="row"> 
+                                        <span class="col-sm-3 col-xs-4">{{'Exam'|translate}}</span> 
+                                        <span class="col-sm-9 col-xs-6"> {{examValue.title}} </span> 
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="row"> 
+                                        <span class="col-sm-3 col-xs-4">{{'Exams Level'|translate}}</span> 
+                                        <span class="col-sm-9 col-xs-6"> {{examValue.exam_level.name}} </span> 
+                                    </p>
+                                </li>
+                                <li>
+                                   <p class="row"> 
+                                        <span class="col-sm-3 col-xs-4">{{'Questions'|translate}}</span> 
+                                        <span class="col-sm-9 col-xs-6"> {{examValue.exams_question_count}}</span> 
+                                    </p>
+                                </li>
+                                <li>
+                                   <p class="row"> 
+                                        <span class="col-sm-3 col-xs-4">{{'Duration'|translate}}</span> 
+                                        <span class="col-sm-9 col-xs-6"> {{examValue.duration}}</span> 
+                                    </p>
+                                </li>
+                                <li>
+                                   <p class="row"> 
+                                        <span class="col-sm-3 col-xs-4">{{'To pass'|translate}}</span> 
+                                        <span class="col-sm-9 col-xs-6"> {{examValue.pass_mark_percentage}}%</span> 
+                                    </p>                                    
+                                </li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <br>
+        <!--<p class="hor-space alert alert-info text-left">{{'Amount got revised from'| translate}} {{plan_info.price_final | currency : selectedCurrency.currency_symbol : GeneralConfig.fraction}} {{'as buyer is set to bear gateway fee'| translate}}</p>-->
+        <div class="row">
+            <div class="modal-header">
+                <h3>{{'Select Payment Type' | translate}}</h3>
+            </div>
+            <div class="modal-body">
+                <div class="">
+                    <div class="">
+                        <div class="clearfix">
+                            <form name="PaymentForm" role="form" ng-submit="PaymentFormSubmit(PaymentForm.$valid)">
+                                <div class="panel navbar-btn clearfix">
+                                    <div class="panel-body col-xs-12">
+                                        <!--<div class="form-group col-sm-5 col-sm-offset-3 col-xs-9"> <input ng-change="ClearCoupon()" ng-model="plan.coupon" title="{{'Please enter your coupon'|translate}}" placeholder="{{'Coupon Code'|translate}}" class="form-control" id="inputCoupon3" autocomplete="off"> </div>-->
+                                        <!--<button type="button" class="btn btn-primary pull-left" ng-click="applyCoupon()">{{'Apply'|translate}}</button>-->
+                                        <div class="col-xs-12 text-center navbar-btn">
+                                            <p class="text-22 textb" ng-show="quote_request_views_detail.quote_amount && show_discount"> {{"Price" | translate }} 
+<amount-display  amount='{{quote_request_views_detail.quote_amount}}' ng-if="quote_request_views_detail.quote_amount"></amount-display> 
+                                             </p>
+                                            <p class="text-22 textb" ng-show="show_discount"> {{"Coupon discount" | translate}} {{show_discount}}</p>                                              <p class="text-22 textb" ng-if="examValue.fee"> {{"You have to pay" | translate }} 
+                                                <span>{{examValue.fee |customCurrency}}</span>
+                                                </p>
+                                        </div>
+                                    </div>
+                                    <div ng-include="'views/gateway.html'" class="col-xs-12"></div>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

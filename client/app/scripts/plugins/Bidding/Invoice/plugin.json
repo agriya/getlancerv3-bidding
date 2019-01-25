@@ -1,0 +1,10 @@
+{
+	"name": "Invoice", 
+	"class": "fa fa-2x fa-file-o",
+	"description": "Invoice",
+	"dependencies": "Bidding",
+	"module_id": "822",
+	"module_hash": "bc0e18235d692de6fec25c11f6e8ec83",
+	"display_order": "3",
+    "plugin_name":"Bidding/Invoice"
+}

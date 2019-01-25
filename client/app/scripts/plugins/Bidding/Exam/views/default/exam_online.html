@@ -1,0 +1,66 @@
+<div class="section photo-view online-exam" prevent-right-click>
+    <div class="container" ng-if="exam_data.user_id == user.id">
+        <h2 class="head-bot">{{exam_data.exam.title}} - {{exam_data.exam.exam_level.name}} </h2>
+        <div ng-show="exam_data.exam_status_id == 1">
+            <div class="clearfix panel panel-default online-head">
+                <div class="col-sm-2"> 
+                    <span class="js-time-display btn btn-primary"></span> 
+                </div>
+                <ul class=" list-inline col-sm-3">
+                    <li ng-repeat="questionName in questionArray"> 
+                        <a ng-class="(!questionName.exam_answer.user_answer)? 'btn btn-warning' : 'btn btn-primary'">{{$index +1 }}</a> 
+                    </li>
+                </ul>
+                <div class="col-sm-2 navbar-right">
+                    <div>
+                        <a class="btn btn-primary"></a> {{'Attempted' | translate}}
+                    </div>
+                    <div>
+                        <a class="btn btn-warning"></a> {{'Not attempted' | translate}}
+                    </div> 
+                </div>
+            </div>
+            <div id="question">
+                <div ng-show="exam_data.exam.question_display_type_id == 2">
+                    <h2>{{'Question #'|translate}}{{currentPage + 1}}</h2>
+                    <div class="panel panel-default">
+                        <div class="panel-heading"> {{questionArray[currentPage].question}} </div>
+                        <div class="panel-body">
+                            <div class="anser-options" ng-repeat="question in questionArray[currentPage].question_answer_options"> 
+                                <label class="rad">
+                                    <input type="radio" name="answer" value="{{question.option}}" ng-model="questionArray[currentPage].exam_answer.user_answer" ng-click="choosedAnswer(questionArray[currentPage].id, question.option)"> {{question.option}}
+                                </label> 
+                            </div>
+                        </div>
+                    </div> 
+                    <a class="text-center btn btn-primary bot-mspace" ng-click="prevQuestion()" ng-if="is_show_previous">{{'Prev' | translate}}</a> 
+                    <a class="btn btn-primary text-right bot-mspace" ng-click="nextQuestion()" ng-if="is_show_next">{{'Next' | translate}}</a> 
+                </div>
+            </div>
+            <div ng-show="exam_data.exam.question_display_type_id == 1">
+                <div class="panel panel-default" ng-repeat="questionName in questionArray">
+                    <div class="panel-heading"> {{questionName.question}} </div>
+                    <div class="panel-body">
+                        <div class="anser-options" ng-repeat="question in questionName.question_answer_options"> 
+                            <label class="rad">
+                                <input type="radio" name="value{{questionName.id}}" value="{{question.option}}" ng-model="questionName.exam_answer.user_answer" ng-click="choosedAnswer(questionName.id, question.option)" id="checkbox{{$index}}"> {{question.option}} 
+                            </label> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="hor-space alert alert-info text-left text-center">{{'By clicking answer, system will auto save your answers' | translate}}.</p>
+            <div class="panel-heading text-right"> 
+                <button class="btn btn-primary bot-mspace" ng-click="submit()" name="continue">{{'Complete this skill test' | translate}}</button> 
+            </div>
+        </div>
+        <div ng-show="exam_data.exam_status_id == 4">
+            <p class="hor-space alert alert-info text-left">{{'Exam Already attend'|translate}}</p>
+        </div>
+    </div>
+    <div class="container" ng-if="exam_data.user_id != user.id && accessTimeOut">
+        <div class="row">
+            <p class="hor-space alert alert-info text-left">{{'Access Denied' | translate}}</p>
+        </div>
+    </div>
+</div>

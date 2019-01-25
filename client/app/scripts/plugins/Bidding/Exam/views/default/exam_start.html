@@ -1,0 +1,17 @@
+<div class="section photo-view">
+    <div class="container">
+        <h2 class="head-bot">{{'Test Your Skill -'|translate}} {{exam_start.exam.title}}</h2>
+        <div>
+            <h4>{{exam_start.exam.exam_level.name}}</h4>
+            <p class="hor-space alert alert-info text-left text-center">{{'Please read the below instructions before start your skill test' | translate}}.</p>
+        </div>
+        <div>
+            <div class="panel-heading">
+                <p ng-bind-html='str'></p>
+            </div>
+        </div>
+        <div class="panel-heading text-right"> 
+            <button class="btn btn-primary bot-mspace" name="continue" ng-click="examStart(exam_start.id)">{{'Continue' | translate}}</button> 
+        </div>
+    </div>
+</div>

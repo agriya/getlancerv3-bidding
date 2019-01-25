@@ -1,0 +1,157 @@
+<div class="section photo-view binding-freelancer exams" ng-if='show_response_page'>
+    <div class="container">
+        <div class="row"> <br>
+            <div class="clearfix">
+                <div class="clearfix bot-20-mar col-md-12">
+                    <!--
+                    <div ng-if="examValue.ExamsUser[0].no_of_times > 2">
+                        <p class="alert alert-danger no-mar">{{'Your limit of skill test attending per day is over. Please try again by tomorrow'| translate}}..</p>
+                    </div> -->
+                    <h2 class="panel-title text-22 head-bot">{{examValue.title}}</h2>
+                </div>
+                <div class="job-body">
+                    <div class="row" ng-if="examValue.ExamsUser[0].exam_status_id == 4 && examValue.ExamsUser[0].exam_status_id == 3">
+                        <p class="hor-space alert alert-info text-left">{{'Already you attend this exam' | translate}}</p>
+                    </div>
+                   
+                    <div class="col-sm-2 bot-mspace"> 
+                        <img ng-src="{{examValue.logo_url}}" class="img-responsive center-block" src="{{examValue.logo_url}}" /> 
+                    </div>
+                    <div class="col-sm-6 clearfix">                     
+                        <div class="job-info">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <p class="row"> 
+                                        <span class="col-sm-3 col-xs-4">{{'Exams Level'|translate}}</span> 
+                                        <span class="col-sm-9 col-xs-4"> {{examValue.exam_level.name}} </span> 
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="row"> 
+                                        <span class="col-sm-3 col-xs-4">{{'Questions'|translate}}</span> 
+                                        <span class="col-sm-9 col-xs-4"> {{examValue.exams_question_count}}</span> 
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="row"> 
+                                        <span class="col-sm-3 col-xs-4">{{'Duration'|translate}}</span> 
+                                        <span class="col-sm-9 col-xs-4"> {{examValue.duration}}</span> 
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="row"> 
+                                        <span class="col-sm-3 col-xs-4">{{'To pass'|translate}}</span> 
+                                        <span class="col-sm-9 col-xs-4"> {{examValue.pass_mark_percentage}}% </span> 
+                                    </p>                                        
+                                </li>
+                            </ul>
+                        </div>                        
+                    </div>
+                    <div class="col-sm-4 center">
+                        <div class="panel-body no-pad" ng-if="isAuth">
+							<div ng-show="examValue.fee > 0">
+                            <span class="text-center text-22">${{examValue.fee}}</span>
+                            <span>{{'is required to take this skills test' | translate}}.</span>
+							</div>
+							<div ng-show="examValue.fee == 0">
+                            <span>{{'This Skill Test Is Free' | translate}}.</span>
+							</div>
+							<div class="top-mar">
+								 <div ng-if="passedCount >= 1">
+                                    <p class="alert alert-success text-center no-mar">{{'You Already Taken and Got Passed this Exam'| translate}}.</p>
+                                </div>
+								 <div ng-if="Inprogress >= 1" class="top-mspace-10">
+                                    <p class="hor-space alert alert-success text-center text-success">{{'This skill start is already started/inprocess status right now' | translate}}</p>
+								<div ng-if="settings['IS_ALLOW_TO_RECONTINUE_SKILL_TEST'] && (settings['MAX_NUMBER_OF_TIME_USER_CAN_RECONTINUE'] == '' || settings['MAX_NUMBER_OF_TIME_USER_CAN_RECONTINUE'] >= examAttempts)">
+									<span> <a class="text-center btn btn-primary" ng-if="Inprogress >= 1 || Incomplete >= 1" ui-sref="ExamStart({id:examValue.ExamsUser[0].id})">{{'Resume Now' | translate }}</a></span>
+									</div>
+							    </div>
+								 <div ng-if="FeePaidOrNotStarted >= 1">
+                             		 <div ng-show="examValue.fee > 0">
+										 <p class="hor-space alert alert-success text-center text-success">{{'You have already paid this skill test and yet to start'| translate}}.</p>
+										 <span>
+										  <a class="text-center btn btn-primary" ui-sref="ExamStart({id:examValue.ExamsUser[0].id})" title="{{'Start Your Skill Test Now'|translate}}">{{'Start Your Skill Test Now'|translate}}</a>
+										 </span>
+								</div>
+                                </div>
+								
+								<div ng-if="(Failed + Incomplete + SuspendedDueToTakingOvertime) >= 1" class="top-mspace-10">
+									<p class="hor-space alert alert-success text-center text-success">{{'You already tried this exam'| translate}} {{(Failed + Incomplete + SuspendedDueToTakingOvertime)}} {{'times' | translate}}.</p>
+									<div ng-if="(Failed + Incomplete + SuspendedDueToTakingOvertime) > settings['MAX_NUMBER_OF_TIME_PER_USER_PER_EXAM']">
+										<div ng-if="settings['IS_FEE_NEEDED_FOR_RERATTEMPTS'] && examValue.fee > 0">
+											<span class="text-center text-22">${{examValue.fee}}</span>
+                            				<span>{{'is required to take this skills test' | translate}}.</span>
+											<span>
+										  		<a class="text-center btn btn-primary" ng-click="exam_users(examValue.id)" title="{{'Retry Skill Test Now' | translate}}">{{'Retry Skill Test Now' | translate}}</a>
+											</span>
+											
+										</div>
+										<div ng-if="settings['IS_FEE_NEEDED_FOR_RERATTEMPTS'] && examValue.fee = 0">
+											<span>
+										  		<a class="text-center btn btn-primary" ui-sref="ExamStart({id:examValue.ExamsUser[0].id})" title="{{'Retry Skill Test Now' | translate}}">{{'Retry Skill Test Now' | translate}}</a>
+											</span>
+											
+										</div>
+									</div>
+                                </div>
+								<div ng-if="settings['IS_ENABLED_HIERARCHY_LEVEL_ATTENDING_EXAM'] > 0">
+									<div ng-if="parentpassCount >= 1">
+										<div ng-if="settings['IS_FEE_NEEDED_FOR_RERATTEMPTS'] && examValue.fee > 0">
+											<span class="text-center text-22">${{examValue.fee}}</span>
+                            				<span>{{'is required to take this skills test' | translate}}.</span>
+											<span>
+										  		<a class="text-center btn btn-primary" ng-click="exam_users(examValue.id)" title="{{'Test Your Skills' | translate}}">{{'Test Your Skills' | translate}}</a>
+											</span>
+											
+										</div>
+										<div ng-if="settings['IS_FEE_NEEDED_FOR_RERATTEMPTS'] && examValue.fee == 0">
+											<span>
+										  		<a class="text-center btn btn-primary" ui-sref="ExamStart({id:examValue.ExamsUser[0].id})" title="{{'Test Your Skills' | translate}}">{{'Test Your Skills' | translate}}</a>
+											</span>
+											
+										</div>
+									</div>
+									<div ng-if="parentpassCount == 0">
+										 <p class="hor-space alert alert-success text-center text-success">{{'You must complete the exam in order of difficulty. So please complete'| translate}} {{examValue.parent[0].title}} {{'Level' | translate}} {{examValue.parent[0].exam_level_id}} {{'before trying' | translate }} {{examValue.title}} {{'Level' | translate}} {{examValue.exam_level_id}} {{'test' | translate}}</p>
+									</div>
+								</div>
+								  <a class="text-center btn btn-primary top-mspace-10" ng-click="exam_users(examValue.id)" 
+                                    title="{{'Test Your Skills' | translate}}">{{'Test Your Skills' | translate}}</a>
+                            </div>
+                            <!--<div ng-if="examValue.ExamsUser[0].exam_status_id == 1 || examValue.ExamsUser[0].exam_status_id == 2">
+                                <p class="hor-space alert alert-warning text-center text-warning">{{'This skill test is already started/inprocess status right now.'| translate}}</p>
+                            </div> 
+                            <span> <a class="text-center btn btn-primary" ng-if="Inprogress >= 1 || Incomplete >= 1" ui-sref="ExamStart({id:examValue.ExamsUser[0].id})">Resume Now</a></span> -->
+                        </div>
+                        <div class="panel-body" ng-if="!isAuth">
+                            <span class="text-center">${{examValue.fee}}</span><br/>
+                            <span>{{'is required to take this skills test' | translate}}.</span>
+                            <span>
+                                <a class="text-center btn btn-primary" ng-click="openLoginModal('login')"  title="{{'Test Your Skills' | translate}}">{{'Test Your Skills'|translate}}</a>
+                            </span>
+                        </div>
+                        <div class='top-mar'>
+                            <a class="text-center btn btn-default" ui-sref="Exam()" title="{{'Back To Skills Lab'|translate}}">{{'Back To Skills Lab'|translate}}</a>  
+							<span class="featured" ng-show="examValue.is_featured == 1">{{'Featured'|translate}}</span>
+                        </div>
+                    </div>
+                    <!--<div class="col-sm-3 top-mar">
+                        <a class="text-center btn btn-default" ui-sref="Exam()" title="Back To Skills Lab">{{'Back To Skills Lab'|translate}}</a>
+                    </div>-->
+                </div>
+            </div> <br>
+            <div class="col-md-12">
+                <h3 class="panel-title text-18 bottom-mar-5">{{'Topics Covered' | translate}}</h3>
+                <div>
+                    <p ng-bind-html="topics_covered"></p>
+                </div> <br> 
+            </div>
+            <div class="col-md-12">
+                <h3 class="panel-title text-18 bottom-mar-5">{{'Instructions' | translate}}</h3>
+                <div>
+                    <p ng-bind-html="str"></p>
+                </div> <br> 
+            </div>
+        </div>
+    </div>
+</div>

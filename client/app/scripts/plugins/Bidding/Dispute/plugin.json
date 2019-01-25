@@ -1,0 +1,11 @@
+{
+	"name": "Dispute", 
+	"class": "fa fa-2x fa-users",
+	"description": "Dispute",
+	"dependencies": "Bidding",
+	"module_id": "824",
+	"module_hash": "f17a2da0c51d520c337648ee4f2e4898",
+	"display_order": "5",
+	"plugin_name":"Bidding/Dispute"
+
+}
