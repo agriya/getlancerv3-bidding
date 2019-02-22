@@ -24,7 +24,7 @@
                         <div class="col-sm-7">
                             <div class="row">
                                 <div class="form-group material col-sm-12"> 
-                                    <input type="email" ng-model="user.email" pattern="[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}" title="{{'Please enter valid email address'|translate}}" name="Email" class="form-control" id="inputEmail3" placeholder="{{'Email'|translate}}"
+                                    <input type="email" ng-model="user.email" pattern="[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}" title="{{'Please enter valid email address'|translate}}" name="Email" class="form-control" id="register_email" placeholder="{{'Email'|translate}}"
                                     autocomplete="off" required> 
                                     <span class="error" ng-show="(userSignup.$submitted || userSignup.Email.$touched) && (userSignup.Email.$pristine || userSignup.Email.$invalid) && (userSignup.Email.$error.required)">
                                     {{'Required'| translate }}                                    
@@ -34,7 +34,7 @@
                             </div>
                             <div class="row">
                                 <div class="form-group material col-sm-12"> 
-                                    <input type="text" ng-model="user.username" name="username" pattern="[a-zA-Z0-9_-]+" title="{{'Must be alphanumeric and underscore characters only'|translate}}" name="username" class="form-control" id="inputUsername3" ng-minlength="3" ng-maxlength="15" placeholder="{{'Username'|translate}}"
+                                    <input type="text" ng-model="user.username" name="username" pattern="[a-zA-Z0-9_-]+" title="{{'Must be alphanumeric and underscore characters only'|translate}}" name="username" class="form-control" id="register_username" ng-minlength="3" ng-maxlength="15" placeholder="{{'Username'|translate}}"
                                     autocomplete="off" required> 
                                     <span class="error" ng-show="(userSignup.$submitted || userSignup.username.$touched) && (userSignup.username.$pristine || userSignup.username.$invalid) && (userSignup.username.$error.required)">
                                     {{'Required'| translate }} </span>
@@ -46,7 +46,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group material">
-                                        <input type="password" ng-model="user.password" name="Password" class="form-control" id="password" ng-minlength="6" placeholder="{{'Password'|translate}}" ng-required='true'> 
+                                        <input type="password" ng-model="user.password" name="Password" class="form-control" id="register_password" ng-minlength="6" placeholder="{{'Password'|translate}}" ng-required='true'> 
                                         <span class="error" ng-show="(userSignup.$submitted || userSignup.Password.$touched) && (userSignup.Password.$pristine || userSignup.Password.$invalid) && (userSignup.Password.$error.required)">
                                             {{'Required'| translate }}                                    
                                         </span> 
@@ -69,21 +69,21 @@
                             <div class="form-group">
                                     <ul class="list-inline">
                                         <li class="radio no-mar"> 
-                                            <label for="inputIsFreelancer">
-                                                <input type="radio"  id="inputIsFreelancer" ng-model="userChoose" value="freelancer" required>
+                                            <label for="register_usertype_freelancer">
+                                                <input type="radio"  id="register_usertype_freelancer" ng-model="userChoose" value="freelancer" required>
                                                 <span> {{'I want to Work'|translate}}</span>
                                             </label> 
                                         </li>
                                         <li class="radio no-mar"> 
-                                            <label for="inputIsEmployer">
-                                                <input type="radio"   id="inputIsEmployer" ng-model="userChoose"  value="empolyer" required>
+                                            <label for="register_usertype_employer">
+                                                <input type="radio" id="register_usertype_employer" ng-model="userChoose" value="empolyer" required>
                                                 <span> {{'I want to Hire'|translate}}</span>
                                             </label> 
                                         </li> 
                                         <span ng-show="$root.settings.IS_ENABLED_DUAL_REGISTER != 0 && $root.settings.IS_ENABLED_DUAL_REGISTER !=''">
                                             <li class="radio no-mar top-mar">
-                                                <label for="inputIsBoth">
-                                                    <input type="radio" id="inputIsBoth"   ng-model="userChoose"  value="both" required> 
+                                                <label for="register_usertype_both">
+                                                    <input type="radio" id="register_usertype_both" ng-model="userChoose" value="both" required> 
                                                     <span>{{'I want to perform both'|translate}}</span> 
                                                 </label>
                                             </li>
