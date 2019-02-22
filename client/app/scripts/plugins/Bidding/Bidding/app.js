@@ -52,9 +52,7 @@ angular.module('getlancerApp.Bidding', [
     'slugifier',
     'checklist-model',
     'angularjs-dropdown-multiselect',
-    'rzModule',
-	'getlancerApp.Bidding.ProjectFlag',
-	'getlancerApp.Bidding.ProjectFollow'
+    'rzModule'
   ])
     /**
      * @ngdoc function
