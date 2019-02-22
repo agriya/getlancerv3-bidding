@@ -158,6 +158,7 @@
                 animation: false,
                 controller: function($scope, $rootScope, $window, $stateParams, $filter, md5, $state, Upload, $timeout, $uibModal, $uibModalStack, ActiveProjects, UserProfile, HireMe, flash) {
                     var params = {};
+                    $scope.data = {};
                     params.id = $rootScope.user.id;
                     ActiveProjects.getall(params, function(response) {
                         $scope.projects = response.data;
@@ -185,7 +186,7 @@
                         });
                         var params = {};
                         params.projects = $scope.tmp_skills;
-                        params.message = $scope.message;
+                        params.message = $scope.data.message;
                         params.class = 'Project';
                         params.user_id = $other_user_id;
                         HireMe.create(params, function(response) {

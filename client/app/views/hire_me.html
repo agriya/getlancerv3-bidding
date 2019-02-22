@@ -16,7 +16,7 @@
                                 <label for="inputMessage" class="control-label">{{'Private Note'|translate}}
                                     <span class="error">*</span>
                                 </label>       
-                                <textarea type="text" rows="5" name="inputMessage" ng-model="$root.message" class="form-control" id="inputMessage" ng-required="true"></textarea> 
+                                <textarea type="text" rows="5" name="inputMessage" ng-model="data.message" class="form-control" id="inputMessage" ng-required="true"></textarea> 
                                 <span class="error" ng-show="(Hire.$submitted || Hire.inputMessage.$touched) && (Hire.inputMessage.$pristine || Hire.inputMessage.$invalid) && (Hire.inputMessage.$error.required)">
                                     {{'Required'| translate }} 
                                 </span>                                

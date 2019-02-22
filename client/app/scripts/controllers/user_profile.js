@@ -114,13 +114,13 @@ angular.module('getlancerApp')
                         $scope.review_count = $scope.userprofile.review_count_as_freelancer;
                         $timeout(function(){
                               $scope.reviewLists = $scope.freelancer_review;
-                                        angular.forEach($scope.reviewLists, function(review) {
-                                            if (review.user.attachment !== null) {
-                                                review.review_url = 'images/big_thumb/UserAvatar/' + review.user.id + '.' + md5.createHash('UserAvatar' + review.user.id + 'png' + 'big_thumb') + '.png';
-                                            } else {
-                                                review.review_url = 'images/default.png';
-                                            }
-                                        });
+                                angular.forEach($scope.reviewLists, function(review) {
+                                    if (review.user.attachment !== null) {
+                                        review.review_url = 'images/big_thumb/UserAvatar/' + review.user.id + '.' + md5.createHash('UserAvatar' + review.user.id + 'png' + 'big_thumb') + '.png';
+                                    } else {
+                                        review.review_url = 'images/default.png';
+                                    }
+                                });
                          },500);
                     }else if($scope.userprofile.role.id === $scope.ConstUserRole.Employer)
                     {
@@ -245,13 +245,13 @@ angular.module('getlancerApp')
                 $scope.rating_count = Number(Math.round($scope.userprofile.total_rating_as_freelancer / $scope.userprofile.review_count_as_freelancer) || 0);
                 $scope.free_emp_stats = true;
                 $scope.reviewLists = $scope.freelancer_review;
-                  angular.forEach($scope.reviewLists, function(review) {
-                            if (review.user.attachment !== null) {
-                                review.review_url = 'images/big_thumb/UserAvatar/' + review.user.id + '.' + md5.createHash('UserAvatar' + review.user.id + 'png' + 'big_thumb') + '.png';
-                            } else {
-                                review.review_url = 'images/default.png';
-                            }
-                        });
+                angular.forEach($scope.reviewLists, function(review) {
+                    if (review.user.attachment !== null) {
+                        review.review_url = 'images/big_thumb/UserAvatar/' + review.user.id + '.' + md5.createHash('UserAvatar' + review.user.id + 'png' + 'big_thumb') + '.png';
+                    } else {
+                        review.review_url = 'images/default.png';
+                    }
+                });
             } else if (role_id === $scope.ConstUserRole.Employer) {
                 $scope.profile_name = 'View Freelancer Profile';
                 $scope.role_id = $scope.ConstUserRole.Freelancer;
@@ -259,13 +259,13 @@ angular.module('getlancerApp')
                 $scope.review_count = $scope.userprofile.review_count_as_employer;
                 $scope.free_emp_stats = false;
                 $scope.reviewLists = $scope.employer_review;
-                        angular.forEach($scope.reviewLists, function(review) {
-                            if (review.user.attachment !== null) {
-                                review.review_url = 'images/big_thumb/UserAvatar/' + review.user.id + '.' + md5.createHash('UserAvatar' + review.user.id + 'png' + 'big_thumb') + '.png';
-                            } else {
-                                review.review_url = 'images/default.png';
-                            }
-                        });
+                angular.forEach($scope.reviewLists, function(review) {
+                    if (review.user.attachment !== null) {
+                        review.review_url = 'images/big_thumb/UserAvatar/' + review.user.id + '.' + md5.createHash('UserAvatar' + review.user.id + 'png' + 'big_thumb') + '.png';
+                    } else {
+                        review.review_url = 'images/default.png';
+                    }
+                });
             }
         };
         $scope.ProfileStats = function() {
@@ -359,8 +359,7 @@ angular.module('getlancerApp')
                         });
                         var params = {};
                         params.skills = $scope.tmp_skills;
-                        if(skills.length > 0)
-                        {
+                        if(skills.length > 0) {
                             UserProfile.update({
                                 id: $state.params.id
                             }, params, function(response) {
@@ -1024,8 +1023,9 @@ angular.module('getlancerApp')
                 animation: false,
                 controller: function($scope, $rootScope, $window, $stateParams, $filter, md5, $state, Upload, $timeout, $uibModal, $uibModalStack, ActiveProjects, UserProfile, HireMe) {
                     var params = {};
+                    $scope.data = {};
                     params.id = $rootScope.user.id;
-                     $scope.loader = true;
+                    $scope.loader = true;
                     ActiveProjects.getall(params, function(response) {
                         $scope.projects = response.data;
                         $scope.loader = false;
@@ -1057,7 +1057,7 @@ angular.module('getlancerApp')
                         });
                         var params = {};
                         params.projects = $scope.tmp_skills;
-                        params.message = $scope.message;
+                        params.message = $scope.data.message;
                         params.class = 'Project';
                         params.user_id = $state.params.id;
                         HireMe.create(params, function(response) {
