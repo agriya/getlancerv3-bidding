@@ -97,6 +97,6 @@ All Submissions you make to Getlancer through GitHub are subject to the followin
 
 ### License
 
-Copyright (c) 2014-2018 [Agriya](https://www.agriya.com/).
+Copyright (c) 2014-2019 [Agriya](https://www.agriya.com/).
 
 Dual License ([OSL 3.0](https://www.agriya.com/resources) & [Commercial License](https://www.agriya.com/contact)) 
