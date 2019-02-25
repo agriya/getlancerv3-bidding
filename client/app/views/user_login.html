@@ -15,7 +15,7 @@
             </div>
             <div class="col-sm-7">
                 <div class="form-group material"> 
-                    <input type="{{settings.USER_USING_TO_LOGIN === 'email' ? 'email' : 'text'}}" ng-model="user_name" class="form-control" id="inputUsername3" placeholder="{{settings.USER_USING_TO_LOGIN === 'email' ? 'Email' : 'Username'}}" autocomplete="off" ng-keydown="save($event)"
+                    <input type="{{settings.USER_USING_TO_LOGIN === 'email' ? 'email' : 'text'}}" ng-model="user_name" class="form-control" id="popup_login_username" placeholder="{{settings.USER_USING_TO_LOGIN === 'email' ? 'Email' : 'Username'}}" autocomplete="off" ng-keydown="save($event)"
                     name="username" required>
                     <span class="error" ng-show="(userLogin.$submitted || userLogin.username.$touched) && (userLogin.username.$pristine || userLogin.username.$invalid) && 
                     (userLogin.username.$error.required)">{{'Required'| translate }} </span> 
@@ -23,7 +23,7 @@
                      ng-show="settings.USER_USING_TO_LOGIN === 'email' && (userLogin.username.$error.email && !userLogin.username.$error.required)">{{'Enter a valid Email'| translate }} </span> 
                 </div>
                 <div class="form-group material" ng-class="{active:contest_status_id == null}" data-class="tabType"> 
-                    <input type="password" ng-model="user.password" class="form-control" id="inputPassword3" placeholder="{{'Password'|translate}}" autocomplete="off" name="inputPassword3" ng-keydown="save($event)" ng-minlength="6" required> 
+                    <input type="password" ng-model="user.password" class="form-control" id="popup_login_password" placeholder="{{'Password'|translate}}" autocomplete="off" name="inputPassword3" ng-keydown="save($event)" ng-minlength="6" required> 
                     <span class="error" ng-show="(userLogin.$submitted || userLogin.inputPassword3.$touched) && (userLogin.inputPassword3.$pristine || userLogin.inputPassword3.$invalid) && 
                     (userLogin.inputPassword3.$error.required)">{{'Required'| translate }}</span> 
 

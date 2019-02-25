@@ -33,13 +33,15 @@ angular.module('getlancerApp')
         //     });
         $(document)
             .ready(function() {
-                if (document.getElementById("is_agree_terms_conditions")
-                    .checked === false) {
-                    document.getElementById("is_agree_terms_conditions")
-                        .setCustomValidity("You must agree to the terms and conditions");
-                } else {
-                    document.getElementById("is_agree_terms_conditions")
-                        .setCustomValidity("");
+                if(document.getElementById("is_agree_terms_conditions")) {
+                    if (document.getElementById("is_agree_terms_conditions")
+                        .checked === false) {
+                        document.getElementById("is_agree_terms_conditions")
+                            .setCustomValidity("You must agree to the terms and conditions");
+                    } else {
+                        document.getElementById("is_agree_terms_conditions")
+                            .setCustomValidity("");
+                    }
                 }
             });
         var params = {};
