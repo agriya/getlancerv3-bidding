@@ -140,6 +140,7 @@ angular.module('getlancerApp')
             }
         };
         $scope.authenticate = function(provider) {
+            $cookies.put('provider_name', provider);
             $auth.authenticate(provider)
                 .then(function(response) {
                     $scope.response = response.data;
