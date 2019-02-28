@@ -66,11 +66,11 @@ angular.module('getlancerApp', [
             var providers = response;
             angular.forEach(providers.data, function(res, i) {
                 //jshint unused:false
-                url = window.location.protocol + '//' + window.location.host + '/api/v1/users/social_login?type=' + res.slug;
+                url = window.location.protocol + '//' + window.location.host + '/';
                 credentials = {
                     clientId: res.api_key,
-                    redirectUri: url,
-                    url: url
+                    redirectUri: url + 'redirect.html',
+                    url: url + 'api/v1/users/social_login?type=' + res.slug,
                 };
                 if (res.slug === 'facebook') {
                     $authProvider.facebook(credentials);
