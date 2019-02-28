@@ -24,31 +24,20 @@ angular.module('getlancerApp')
         $scope.init();
 
        /* $cookies.get('auth') set*/
-
         if ($cookies.get('auth') !== null && $cookies.get('auth') !== undefined) {
             $rootScope.$emit('updateParent', {
-
                 isAuth: true
             });
-            $rootScope.header = $rootScope.settings.SITE_NAME + ' | Home';
-            if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === true && ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === false)) {
-                $state.go('user_dashboard', {
-                            'type': 'news_feed',
-                            'status': 'news_feed',
-                        });
-            } else {
-                $state.go('user_dashboard', {
-                        'type': 'news_feed',
-                        'status': 'news_feed',
-                    });
-            }
+            $state.go('user_dashboard', {
+                'type': 'news_feed',
+                'status': 'news_feed',
+            });
         }
           
         $scope.user = {};
         $scope.save_btn = false;
-            $scope.forgot_password = function(){
+            $scope.forgot_password = function() {
                 $location.path('users/forgot_password');
-                
             };
         /* normal login submit function */
         $scope.save = function($event) {
@@ -70,110 +59,14 @@ angular.module('getlancerApp')
                             $scope.response = response;
                             delete $scope.response.scope;
                             if ($scope.response.error.code === 0) {
-
                               /* login user details get factory*/
                                 myUserFactory.get(function(response) {
                                     $rootScope.my_user = response.data;
-                                        $rootScope.my_user.available_wallet_amount = Number
-                                        ($rootScope.my_user.available_wallet_amount||0);
+                                    $rootScope.my_user.available_wallet_amount = Number($rootScope.my_user.available_wallet_amount||0);
                                 });
                                 $timeout(function() {
-                                      $scope.UserDetails  = $scope.my_user;
-                                    }, 500);
-                              /*  For empolyer login*/
-                            $timeout(function() {
-                            //   if ($scope.UserDetails.user_login_count === '1')
-                            //     {
-                            //         $window.location.href = 'users/' + $scope.UserDetails.id + '/' + $scope.UserDetails.username;
-                            //     } 
-                                 if ($scope.response.role_id === $scope.ConstUserRole.Employer) {
-                                        $rootScope.Employer = true;
-                                        $rootScope.Freelancer = false;
-                                        if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === true && ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === false)) {
-                                            if ($rootScope.Freelancer) {
-                                                /* only portfolio plukin enabled */
-                                            $state.go('user_dashboard', {
-                                                                    'type': 'news_feed',
-                                                                    'status': 'news_feed',
-                                                                });
-                                            } else {
-                                                 $state.go('user_dashboard', {
-                                                                    'type': 'news_feed',
-                                                                    'status': 'news_feed',
-                                                                });
-                                            }
-                                        } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === true && ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === false)) {
-                                      
-                                            /* only quote plukin enabled */
-                                                if ($rootScope.Employer && $scope.UserDetails.quote_request_count === '0') {
-                                                    $location.path('/quote_services');
-                                                }else{
-                                                    $location.path('/quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion');
-                                                }
-                                    
-                                        } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === true ||     $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === true ||
-                                        $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === true) {
-                                           $state.go('user_dashboard', {
-                                                                        'type': 'news_feed',
-                                                                        'status': 'news_feed',
-                                                                    });
-                                        }
-                                         else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === true && ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === false, 
-                                        $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === false)) {
-                                                                     $state.go('user_dashboard', {
-                                                                        'type': 'my_jobs',
-                                                                        'status': 'all',
-                                                                    });
-                                        }
-                                        else {
-                                            $state.go('user_dashboard');
-                                        }
-                                    } else {
-                                    /* freelancer login */
-                                        $rootScope.Freelancer = true;
-                                        $rootScope.Employer = false;
-                                        $window.localStorage.setItem("portal", JSON.stringify('Freelancer'));
-                                        if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === true && ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === false)) {
-                                            if ($rootScope.Freelancer) {
-                                            /* only portfolio plukin enabled */
-                                                $state.go('user_dashboard', {
-                                                'type': 'news_feed',
-                                                'status': 'news_feed',
-                                            });
-                                            } else {
-                                            $state.go('user_dashboard', {
-                                                'type': 'news_feed',
-                                                'status': 'news_feed',
-                                            });
-                                            }
-                                        } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === true && ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === false, 
-                                        $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === false)) {
-                                            
-                                            /* only quote plukin enabled */
-                                            if ($rootScope.Freelancer && $scope.UserDetails.quote_service_count === '0' ) {
-                                                $state.go('quote_service_add');
-                                                }else{
-                                                    $location.path('/my_works/all/' + $scope.ConstQuoteStatuses.New + '/new');
-                                                }
-                                        }  
-                                        else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === true ||     $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === true ||
-                                        $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === true) {
-                                            $state.go('user_dashboard', {
-                                                                    'type': 'news_feed',
-                                                                    'status': 'news_feed',
-                                                                });
-                                        }  else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === true && ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === false, 
-                                        $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === false)) {
-                                              $state.go('user_dashboard', {
-                                                                        'type': 'jobs_applies',
-                                                                        'status': 'all',
-                                                                    });
-                                        }  
-                                        else {
-                                            $state.go('user_dashboard');
-                                        }
-                                    }
-                            }, 500);
+                                    $scope.UserDetails  = $scope.my_user;
+                                }, 500);
                                 $scope.Authuser = {
                                     id: $scope.response.id,
                                     username: $scope.response.username,
@@ -193,12 +86,28 @@ angular.module('getlancerApp')
                                 });
                                 if ($cookies.get("redirect_url") !== null && $cookies.get("redirect_url") !== undefined && $cookies.get("redirect_url") !== '/') {                 
                                     $uibModalStack.dismissAll();
-                                    $location.path($cookies.get("redirect_url"));
                                     $cookies.remove("redirect_url", {
                                         path: "/"
                                     });
+                                    $location.path($cookies.get("redirect_url"));
                                 } else {
                                     $uibModalStack.dismissAll();
+                                    if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
+                                        if ($scope.response.role_id === ConstUserRole.Freelancer) {
+                                            $window.location.href = 'my_works';
+                                        } else if ($scope.response.role_id === ConstUserRole.Employer) {
+                                            $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
+                                        } else {
+                                            $window.location.href = 'users/dashboard';
+                                        }
+                                    } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.my_auth_user.user_login_count === '1') {
+                                        $window.location.href = 'users/' + $scope.my_auth_user.id + '/' + $scope.my_auth_user.username;
+                                    } else {
+                                        $state.go('user_dashboard', {
+                                            'type': 'news_feed',
+                                            'status': 'news_feed',
+                                        });
+                                    }
                                 }
                             } else {
                                 flash.set($filter("translate")("Sorry, login failed. Either your username or password are incorrect or admin deactivated your account."), 'error', false);
@@ -225,10 +134,9 @@ angular.module('getlancerApp')
                   
                         if ($scope.response.already_register === '1') {
                              myUserFactory.get(function(response) {
-                                    $rootScope.my_auth_user = response.data;
-                                });
-                                  $timeout(function() {
-                            if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === false && ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === true, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === false)) {
+                                $rootScope.my_auth_user = response.data;
+                            });
+                            if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
                                 if ($scope.response.role_id === ConstUserRole.Freelancer) {
                                     $window.location.href = 'my_works';
                                 } else if ($scope.response.role_id === ConstUserRole.Employer) {
@@ -236,21 +144,14 @@ angular.module('getlancerApp')
                                 } else {
                                     $window.location.href = 'users/dashboard';
                                 }
+                            } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.my_auth_user.user_login_count === '1') {
+                                $window.location.href = 'users/' + $scope.my_auth_user.id + '/' + $scope.my_auth_user.username;
+                            } else {
+                                $state.go('user_dashboard', {
+                                    'type': 'news_feed',
+                                    'status': 'news_feed',
+                                });
                             }
-                            if (($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === false && $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === true) && $rootScope.my_auth_user.user_login_count === '1') {
-                              $window.location.href = 'users/' + $rootScope.my_auth_user.id + '/' + $rootScope.my_auth_user.username;
-                            }
-                               else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === true ||     $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === true ||
-                                        $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === true && $rootScope.my_auth_user.user_login_count !== '1') {
-                                    $state.go('user_dashboard', {
-                                            'type': 'news_feed',
-                                             'status': 'news_feed',
-                                        });
-                            } 
-                             else {
-                                $window.location.href = 'users/dashboard';
-                            }
-                     }, 500);
                         }
                     if ($scope.response.error.code === 0 && $scope.response.thrid_party_profile && $scope.response.already_register !== '1') {
                         $window.localStorage.setItem("twitter_auth", JSON.stringify($scope.response));
@@ -301,9 +202,9 @@ angular.module('getlancerApp')
         $scope.ConstQuoteStatuses = ConstQuoteStatuses;
         $scope.provider_login = $cookies.get('provider_name', $scope.social_login_provider);
         $scope.save_btn = false;
-         myUserFactory.get(function(response) {
-                    $rootScope.my_auth_user = response.data;
-                      });
+        myUserFactory.get(function(response) {
+            $rootScope.my_auth_user = response.data;
+        });
         
         $scope.loginNow = function(form) {
             if (form) {
@@ -358,32 +259,23 @@ angular.module('getlancerApp')
                             if ($cookies.get("redirect_url") !== null && $cookies.get("redirect_url") !== undefined) {
                                 $location.path($cookies.get("redirect_url"));
                                 $cookies.remove('redirect_url');
-                            } else {
-                                $location.path('/');
                             }
-                            $state.reload();
-                            $timeout(function() {
-                                if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === false && ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === true, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === false)) {
-                                    if ($scope.response.role_id === ConstUserRole.Freelancer) {
-                                        $window.location.href = 'my_works';
-                                    } else if ($scope.response.role_id === ConstUserRole.Employer) {
-                                        $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
-                                    } else {
-                                        $window.location.href = 'users/dashboard';
-                                    }
-                                }
-                                if (($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === false && $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === true) &&  $scope.my_auth_user.user_login_count ==='1') {
-                                 $window.location.href = 'users/' + $scope.my_auth_user.id + '/' + $scope.my_auth_user.username;
-                                } else if (($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === false && $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === true) &&  $scope.my_auth_user.user_login_count !=='1') {
-                                    $state.go('user_dashboard', {
-                                            'type': 'news_feed',
-                                            'status': 'news_feed',
-                                        });
-                                } 
-                                else {
+                            if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
+                                if ($scope.response.role_id === ConstUserRole.Freelancer) {
+                                    $window.location.href = 'my_works';
+                                } else if ($scope.response.role_id === ConstUserRole.Employer) {
+                                    $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
+                                } else {
                                     $window.location.href = 'users/dashboard';
                                 }
-                            }, 200);
+                            } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.my_auth_user.user_login_count === '1') {
+                                $window.location.href = 'users/' + $scope.my_auth_user.id + '/' + $scope.my_auth_user.username;
+                            } else {
+                                $state.go('user_dashboard', {
+                                    'type': 'news_feed',
+                                    'status': 'news_feed',
+                                });
+                            }
                         }
                         if ($scope.provider_login === 'twitter') {
                             if (parseInt($rootScope.settings.USER_IS_AUTO_LOGIN_AFTER_REGISTER)) {
@@ -407,32 +299,23 @@ angular.module('getlancerApp')
                                 if ($cookies.get("redirect_url") !== null && $cookies.get("redirect_url") !== undefined) {
                                     $location.path($cookies.get("redirect_url"));
                                     $cookies.remove('redirect_url');
-                                } else {
-                                    $location.path('/');
                                 }
-                                $state.reload();
-                                $timeout(function() {
-                                    if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === false && ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === true, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === false)) {
-                                        if ($scope.response.role_id === ConstUserRole.Freelancer) {
-                                            $window.location.href = 'my_works';
-                                        } else if ($scope.response.role_id === ConstUserRole.Employer) {
-                                            $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
-                                        } else {
-                                            $window.location.href = 'users/dashboard';
-                                        }
-                                    }
-                                    if (($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === false && $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === true) && $scope.my_auth_user.user_login_count !=='1') {
-                                           $state.go('user_dashboard', {
-                                                'type': 'news_feed',
-                                                'status': 'news_feed',
-                                            });
-                                    } else if (($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === false && $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === true) && $scope.my_auth_user.user_login_count ==='1') {
-                                           $window.location.href = 'users/' + $scope.my_auth_user.id + '/' + $scope.my_auth_user.username;
-                                    }  
-                                    else {
+                                if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
+                                    if ($scope.response.role_id === ConstUserRole.Freelancer) {
+                                        $window.location.href = 'my_works';
+                                    } else if ($scope.response.role_id === ConstUserRole.Employer) {
+                                        $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
+                                    } else {
                                         $window.location.href = 'users/dashboard';
                                     }
-                                }, 200);
+                                } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.my_auth_user.user_login_count === '1') {
+                                    $window.location.href = 'users/' + $scope.my_auth_user.id + '/' + $scope.my_auth_user.username;
+                                } else {
+                                    $state.go('user_dashboard', {
+                                        'type': 'news_feed',
+                                        'status': 'news_feed',
+                                    });
+                                }
                             } else if (parseInt($rootScope.settings.USER_IS_EMAIL_VERIFICATION_FOR_REGISTER)) {
                                 flash.set($filter("translate")("You have successfully registered with our site and your activation mail has been sent to your mail inbox."), 'success', false);
                                 $state.go('home');
@@ -463,32 +346,23 @@ angular.module('getlancerApp')
                                 if ($cookies.get("redirect_url") !== null && $cookies.get("redirect_url") !== undefined) {
                                     $location.path($cookies.get("redirect_url"));
                                     $cookies.remove('redirect_url');
-                                } else {
-                                    $location.path('/');
                                 }
-                                $state.reload();
-                                $timeout(function() {
-                                    if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === false && ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === true, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === false)) {
-                                        if ($scope.response.role_id === ConstUserRole.Freelancer) {
-                                            $window.location.href = 'my_works';
-                                        } else if ($scope.response.role_id === ConstUserRole.Employer) {
-                                            $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
-                                        } else {
-                                            $window.location.href = 'users/dashboard';
-                                        }
-                                    }
-                                    if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Portfolio/Portfolio') > -1 === false && ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1 === false, $rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 === true)) {
-                                        if ($scope.response.role_id === ConstUserRole.Freelancer) {
-                                            $window.location.href = 'users/dashboard?type=projects&status=my_bids';
-                                        } else if ($scope.response.role_id === ConstUserRole.Employer) {
-                                            $window.location.href = 'users/dashboard?type=my_projects&status=open_bidding';
-                                        } else {
-                                            $window.location.href = 'users/dashboard';
-                                        }
+                                if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
+                                    if ($scope.response.role_id === ConstUserRole.Freelancer) {
+                                        $window.location.href = 'my_works';
+                                    } else if ($scope.response.role_id === ConstUserRole.Employer) {
+                                        $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
                                     } else {
                                         $window.location.href = 'users/dashboard';
                                     }
-                                }, 200);
+                                } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.my_auth_user.user_login_count === '1') {
+                                    $window.location.href = 'users/' + $scope.my_auth_user.id + '/' + $scope.my_auth_user.username;
+                                } else {
+                                    $state.go('user_dashboard', {
+                                        'type': 'news_feed',
+                                        'status': 'news_feed',
+                                    });
+                                }
                             }
                         }
                     }
