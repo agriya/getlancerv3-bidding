@@ -59,7 +59,8 @@ angular.module('getlancerApp')
                         $scope.response = response;
                         delete $scope.response.scope;
                         if ($scope.response.error.code === 0) {
-                            $rootScope.my_user = response.data;
+                            $rootScope.my_user = response;
+                            $rootScope.my_user.available_wallet_amount = Number($rootScope.my_user.available_wallet_amount||0);
                             $scope.UserDetails  = $scope.my_user;
                             $scope.Authuser = {
                                 id: $scope.response.id,
