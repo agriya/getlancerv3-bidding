@@ -94,8 +94,8 @@ angular.module('getlancerApp')
                                         } else {
                                             $window.location.href = 'users/dashboard';
                                         }
-                                    } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.my_auth_user.user_login_count === '1') {
-                                        $window.location.href = 'users/' + $scope.my_auth_user.id + '/' + $scope.my_auth_user.username;
+                                    } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.response.user_login_count === '1') {
+                                        $window.location.href = 'users/' + $scope.response.id + '/' + $scope.response.username;
                                     } else {
                                         $state.go('user_dashboard', {
                                             'type': 'news_feed',
@@ -124,29 +124,24 @@ angular.module('getlancerApp')
             $auth.authenticate(provider)
                 .then(function(response) {
                     $scope.response = response.data;
-                              /* login user details get factory*/
-                  
                         if ($scope.response.already_register === '1') {
-                             myUserFactory.get(function(response) {
-                                $rootScope.my_auth_user = response.data;
-                                if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
-                                    if ($scope.response.role_id === ConstUserRole.Freelancer) {
-                                        $window.location.href = 'my_works';
-                                    } else if ($scope.response.role_id === ConstUserRole.Employer) {
-                                        $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
-                                    } else {
-                                        $window.location.href = 'users/dashboard';
-                                    }
-                                } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.my_auth_user.user_login_count === '1') {
-                                    $window.location.href = 'users/' + $scope.my_auth_user.id + '/' + $scope.my_auth_user.username;
+                            $rootScope.my_auth_user = response.data;
+                            if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
+                                if ($scope.response.role_id === ConstUserRole.Freelancer) {
+                                    $window.location.href = 'my_works';
+                                } else if ($scope.response.role_id === ConstUserRole.Employer) {
+                                    $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
                                 } else {
-                                    $state.go('user_dashboard', {
-                                        'type': 'news_feed',
-                                        'status': 'news_feed',
-                                    });
+                                    $window.location.href = 'users/dashboard';
                                 }
-                            });
-                            
+                            } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.response.user.user_login_count === '1') {
+                                $window.location.href = 'users/' + $scope.response.user.id + '/' + $scope.response.user.username;
+                            } else {
+                                $state.go('user_dashboard', {
+                                    'type': 'news_feed',
+                                    'status': 'news_feed',
+                                });
+                            }
                         }
                     if ($scope.response.error.code === 0 && $scope.response.thrid_party_profile && $scope.response.already_register !== '1') {
                         $window.localStorage.setItem("twitter_auth", JSON.stringify($scope.response));
