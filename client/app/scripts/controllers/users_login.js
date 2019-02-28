@@ -124,28 +124,43 @@ angular.module('getlancerApp')
             $auth.authenticate(provider)
                 .then(function(response) {
                     $scope.response = response.data;
-                        if ($scope.response.already_register === '1') {
-                            $rootScope.my_auth_user = response.data;
-                            if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
-                                if ($scope.response.role_id === ConstUserRole.Freelancer) {
-                                    $window.location.href = 'my_works';
-                                } else if ($scope.response.role_id === ConstUserRole.Employer) {
-                                    $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
-                                } else {
-                                    $state.go('user_dashboard', {
-                                        'type': 'news_feed',
-                                        'status': 'news_feed',
-                                    });
-                                }
-                            } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.response.user_login_count === '1') {
-                                $window.location.href = 'users/' + $scope.response.id + '/' + $scope.response.username;
+                    if ($scope.response.already_register === '1') {
+                        $scope.Authuser = {
+                            id: $scope.response.id,
+                            username: $scope.response.username,
+                            role_id: $scope.response.role_id,
+                            refresh_token: $scope.response.refresh_token,
+                        };
+                        $cookies.put('auth', JSON.stringify($scope.Authuser), {
+                            path: '/'
+                        });
+                        $cookies.put('token', $scope.response.access_token, {
+                            path: '/'
+                        });
+                        $rootScope.user = $scope.response;
+                        $rootScope.$emit('updateParent', {
+                            isAuth: true
+                        });
+                        if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
+                            if ($scope.response.role_id === ConstUserRole.Freelancer) {
+                                $window.location.href = 'my_works';
+                            } else if ($scope.response.role_id === ConstUserRole.Employer) {
+                                $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
                             } else {
                                 $state.go('user_dashboard', {
                                     'type': 'news_feed',
                                     'status': 'news_feed',
                                 });
                             }
+                        } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.response.user_login_count === '1') {
+                            $window.location.href = 'users/' + $scope.response.id + '/' + $scope.response.username;
+                        } else {
+                            $state.go('user_dashboard', {
+                                'type': 'news_feed',
+                                'status': 'news_feed',
+                            });
                         }
+                    }
                     if ($scope.response.error.code === 0 && $scope.response.thrid_party_profile && $scope.response.already_register !== '1') {
                         $window.localStorage.setItem("twitter_auth", JSON.stringify($scope.response));
                         $state.go('get_email');
