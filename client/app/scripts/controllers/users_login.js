@@ -258,10 +258,7 @@ angular.module('getlancerApp')
                                 isAuth: true
                             });
                             flash.set($filter("translate")("You have successfully registered with our site."), 'success', false);
-                            if ($cookies.get("redirect_url") !== null && $cookies.get("redirect_url") !== undefined) {
-                                $location.path($cookies.get("redirect_url"));
-                                $cookies.remove('redirect_url');
-                            } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
+                            if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
                                 if ($scope.response.role_id === ConstUserRole.Freelancer) {
                                     $window.location.href = 'my_works';
                                 } else if ($scope.response.role_id === ConstUserRole.Employer) {
@@ -272,7 +269,7 @@ angular.module('getlancerApp')
                                         'status': 'news_feed',
                                     });
                                 }
-                            } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.response.user_login_count === '1') {
+                            } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 && $scope.response.user_login_count === '1') {
                                 $window.location.href = 'users/' + $scope.response.id + '/' + $scope.response.username;
                             } else {
                                 $state.go('user_dashboard', {
