@@ -105,14 +105,25 @@ angular.module('getlancerApp')
                             } else {
                                 flash.set($filter("translate")("You have successfully registered with our site."), 'success', false);
                             }
-                            if ($cookies.get("redirect_url") !== null && $cookies.get("redirect_url") !== undefined && $scope.redirect) {
-                                $location.path($cookies.get("redirect_url"));
-                                $cookies.remove('redirect_url');
+                            $uibModalStack.dismissAll();
+                            if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
+                                if ($scope.response.role_id === ConstUserRole.Freelancer) {
+                                    $window.location.href = 'my_works';
+                                } else if ($scope.response.role_id === ConstUserRole.Employer) {
+                                    $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
+                                } else {
+                                    $state.go('user_dashboard', {
+                                        'type': 'news_feed',
+                                        'status': 'news_feed',
+                                    });
+                                }
+                            } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.response.user_login_count === '1') {
+                                $window.location.href = 'users/' + $scope.response.id + '/' + $scope.response.username;
                             } else {
-                                $uibModalStack.dismissAll();
-                                $timeout(function() {
-                                    $location.path('/');
-                                }, 1000);
+                                $state.go('user_dashboard', {
+                                    'type': 'news_feed',
+                                    'status': 'news_feed',
+                                });
                             }
                         } else {
                             if (angular.isDefined($scope.response.error.fields) && angular.isDefined($scope.response.error.fields.unique) && $scope.response.error.fields.unique.length !== 0) {
@@ -142,14 +153,18 @@ angular.module('getlancerApp')
             }
         };
         $scope.authenticate = function(provider) {
+            $cookies.put('provider_name', provider);
             $auth.authenticate(provider)
                 .then(function(response) {
                     $scope.response = response.data;
-                    if ($scope.response.error.code === 0 && $scope.response.thrid_party_profile) {
-                        $window.localStorage.setItem("twitter_auth", JSON.stringify($scope.response));
-                        $state.go('get_email');
-                    } else if ($scope.response.access_token) {
-                        $cookies.put('auth', JSON.stringify($scope.response), {
+                    if ($scope.response.already_register === '1') {
+                        $scope.Authuser = {
+                            id: $scope.response.id,
+                            username: $scope.response.username,
+                            role_id: $scope.response.role_id,
+                            refresh_token: $scope.response.refresh_token,
+                        };
+                        $cookies.put('auth', JSON.stringify($scope.Authuser), {
                             path: '/'
                         });
                         $cookies.put('token', $scope.response.access_token, {
@@ -159,12 +174,28 @@ angular.module('getlancerApp')
                         $rootScope.$emit('updateParent', {
                             isAuth: true
                         });
-                        if ($cookies.get("redirect_url") !== null && $cookies.get("redirect_url") !== undefined) {
-                            $location.path($cookies.get("redirect_url"));
-                            $cookies.remove('redirect_url');
+                        if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
+                            if ($scope.response.role_id === ConstUserRole.Freelancer) {
+                                $window.location.href = 'my_works';
+                            } else if ($scope.response.role_id === ConstUserRole.Employer) {
+                                $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
+                            } else {
+                                $state.go('user_dashboard', {
+                                    'type': 'news_feed',
+                                    'status': 'news_feed',
+                                });
+                            }
+                        } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.response.user_login_count === '1') {
+                            $window.location.href = 'users/' + $scope.response.id + '/' + $scope.response.username;
                         } else {
-                            $location.path('/');
+                            $state.go('user_dashboard', {
+                                'type': 'news_feed',
+                                'status': 'news_feed',
+                            });
                         }
+                    } else if ($scope.response.error.code === 0 && $scope.response.thrid_party_profile) {
+                        $window.localStorage.setItem("twitter_auth", JSON.stringify($scope.response));
+                        $state.go('get_email');
                     }
                     $uibModalStack.dismissAll();
                 })

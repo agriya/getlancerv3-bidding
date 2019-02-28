@@ -453,7 +453,4 @@ angular.module('getlancerApp')
         $scope.ok = function() {
             $uibModalStack.dismissAll();
         };
-        $scope.$on('modal.closing', function() {
-          $location.path('/');
-        });
     });
