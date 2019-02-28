@@ -160,8 +160,7 @@ angular.module('getlancerApp')
                                 'status': 'news_feed',
                             });
                         }
-                    }
-                    if ($scope.response.error.code === 0 && $scope.response.thrid_party_profile && $scope.response.already_register !== '1') {
+                    } else if ($scope.response.error.code === 0 && $scope.response.thrid_party_profile && $scope.response.already_register !== '1') {
                         $window.localStorage.setItem("twitter_auth", JSON.stringify($scope.response));
                         $state.go('get_email');
                     } else if ($scope.response.access_token) {
