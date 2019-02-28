@@ -20274,7 +20274,7 @@ ALTER TABLE ONLY provider_users
 --
 
 ALTER TABLE ONLY provider_users
-    ADD CONSTRAINT provider_users_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL;
+    ADD CONSTRAINT provider_users_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 
 --
