@@ -7,7 +7,7 @@
  * Controller of the getlancerApp
  */
 angular.module('getlancerApp')
-    .controller('UsersLoginController', ['$rootScope', '$scope', 'usersLogin', 'providers', '$auth', 'flash', '$window', '$location', '$filter', '$cookies', '$state', '$uibModalStack', '$timeout', 'ConstUserRole', 'myUserFactory', 'ConstQuoteStatuses', function($rootScope, $scope, usersLogin, providers, $auth, flash, $window, $location, $filter, $cookies, $state, $uibModalStack, $timeout, ConstUserRole, myUserFactory, ConstQuoteStatuses) {
+    .controller('UsersLoginController', ['$rootScope', '$scope', 'usersLogin', 'providers', '$auth', 'flash', '$window', '$location', '$filter', '$cookies', '$state', '$uibModalStack', '$timeout', 'ConstUserRole', 'ConstQuoteStatuses', function($rootScope, $scope, usersLogin, providers, $auth, flash, $window, $location, $filter, $cookies, $state, $uibModalStack, $timeout, ConstUserRole, ConstQuoteStatuses) {
         $rootScope.header = $rootScope.settings.SITE_NAME + ' | ' + $filter("translate")("Login");
         $scope.ConstUserRole = ConstUserRole;
         $scope.ConstQuoteStatuses = ConstQuoteStatuses;
@@ -187,15 +187,11 @@ angular.module('getlancerApp')
 
   /*  twitter controller*/
 
-    .controller('TwitterLoginController', ['$rootScope', '$scope', 'twitterLogin', 'providers', '$auth', 'flash', '$window', '$location', '$state', '$cookies', '$filter', '$timeout', 'ConstUserRole', 'ConstQuoteStatuses', 'myUserFactory', function($rootScope, $scope, twitterLogin, providers, $auth, flash, $window, $location, $state, $cookies, $filter, $timeout, ConstUserRole, ConstQuoteStatuses, myUserFactory) {
+    .controller('TwitterLoginController', ['$rootScope', '$scope', 'twitterLogin', 'providers', '$auth', 'flash', '$window', '$location', '$state', '$cookies', '$filter', '$timeout', 'ConstUserRole', 'ConstQuoteStatuses', function($rootScope, $scope, twitterLogin, providers, $auth, flash, $window, $location, $state, $cookies, $filter, $timeout, ConstUserRole, ConstQuoteStatuses) {
         $scope.ConstUserRole = ConstUserRole;
         $scope.ConstQuoteStatuses = ConstQuoteStatuses;
         $scope.provider_login = $cookies.get('provider_name', $scope.social_login_provider);
-        $scope.save_btn = false;
-        myUserFactory.get(function(response) {
-            $rootScope.my_auth_user = response.data;
-        });
-        
+        $scope.save_btn = false;        
         $scope.loginNow = function(form) {
             if (form) {
                 $scope.user = {};
@@ -227,7 +223,6 @@ angular.module('getlancerApp')
                     $scope.response = response;
                     $scope.save_btn = false;
                     if ($scope.response.error.code === 0) {
-                        myUserFactory();
                         if ($scope.provider_login === 'facebook' || $scope.provider_login === 'google') {
                             $scope.Authuser = {
                                 id: $scope.response.id,
@@ -258,8 +253,8 @@ angular.module('getlancerApp')
                                 } else {
                                     $window.location.href = 'users/dashboard';
                                 }
-                            } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.my_auth_user.user_login_count === '1') {
-                                $window.location.href = 'users/' + $scope.my_auth_user.id + '/' + $scope.my_auth_user.username;
+                            } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.response.user_login_count === '1') {
+                                $window.location.href = 'users/' + $scope.response.id + '/' + $scope.response.username;
                             } else {
                                 $state.go('user_dashboard', {
                                     'type': 'news_feed',
@@ -297,8 +292,8 @@ angular.module('getlancerApp')
                                     } else {
                                         $window.location.href = 'users/dashboard';
                                     }
-                                } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.my_auth_user.user_login_count === '1')  {
-                                    $window.location.href = 'users/' + $scope.my_auth_user.id + '/' + $scope.my_auth_user.username;
+                                } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.response.user_login_count === '1')  {
+                                    $window.location.href = 'users/' + $scope.response.id + '/' + $scope.response.username;
                                 } else {
                                     $state.go('user_dashboard', {
                                         'type': 'news_feed',
@@ -344,8 +339,8 @@ angular.module('getlancerApp')
                                     } else {
                                         $window.location.href = 'users/dashboard';
                                     }
-                                } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.my_auth_user.user_login_count === '1') {
-                                    $window.location.href = 'users/' + $scope.my_auth_user.id + '/' + $scope.my_auth_user.username;
+                                } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.response.user_login_count === '1') {
+                                    $window.location.href = 'users/' + $scope.response.id + '/' + $scope.response.username;
                                 } else {
                                     $state.go('user_dashboard', {
                                         'type': 'news_feed',
