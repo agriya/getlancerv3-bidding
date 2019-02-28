@@ -62,6 +62,14 @@ angular.module('getlancerApp')
                             $rootScope.my_user = response;
                             $rootScope.my_user.available_wallet_amount = Number($rootScope.my_user.available_wallet_amount||0);
                             $scope.UserDetails  = $scope.my_user;
+                            if ($scope.response.role_id === $scope.ConstUserRole.Employer) {
+                                $rootScope.Employer = true;
+                                $rootScope.Freelancer = false;
+                            } else {
+                                $rootScope.Freelancer = true;
+                                $rootScope.Employer = false;
+                                $window.localStorage.setItem("portal", JSON.stringify('Freelancer'));
+                            }
                             $scope.Authuser = {
                                 id: $scope.response.id,
                                 username: $scope.response.username,
@@ -138,6 +146,17 @@ angular.module('getlancerApp')
                         $cookies.put('token', $scope.response.access_token, {
                             path: '/'
                         });
+                        $rootScope.my_user = $scope.response;
+                        $rootScope.my_user.available_wallet_amount = Number($rootScope.my_user.available_wallet_amount||0);
+                        $scope.UserDetails  = $scope.my_user;
+                        if ($scope.response.role_id === $scope.ConstUserRole.Employer) {
+                            $rootScope.Employer = true;
+                            $rootScope.Freelancer = false;
+                        } else {
+                            $rootScope.Freelancer = true;
+                            $rootScope.Employer = false;
+                            $window.localStorage.setItem("portal", JSON.stringify('Freelancer'));
+                        }
                         $rootScope.user = $scope.response;
                         $rootScope.$emit('updateParent', {
                             isAuth: true
@@ -178,9 +197,20 @@ angular.module('getlancerApp')
                             path: '/'
                         });
                         $rootScope.user = $scope.response;
+                        $rootScope.my_user = $scope.response;
+                        $rootScope.my_user.available_wallet_amount = Number($rootScope.my_user.available_wallet_amount||0);
+                        $scope.UserDetails  = $scope.my_user;
                         $rootScope.$emit('updateParent', {
                             isAuth: true
                         });
+                        if ($scope.response.role_id === $scope.ConstUserRole.Employer) {
+                            $rootScope.Employer = true;
+                            $rootScope.Freelancer = false;
+                        } else {
+                            $rootScope.Freelancer = true;
+                            $rootScope.Employer = false;
+                            $window.localStorage.setItem("portal", JSON.stringify('Freelancer'));
+                        }
                         if ($cookies.get("redirect_url") !== null && $cookies.get("redirect_url") !== undefined) {
                             $location.path($cookies.get("redirect_url"));
                             $cookies.remove('redirect_url');
@@ -255,9 +285,20 @@ angular.module('getlancerApp')
                                 path: '/'
                             });
                             $rootScope.user = $scope.response;
+                            $rootScope.my_user = $scope.response;
+                            $rootScope.my_user.available_wallet_amount = Number($rootScope.my_user.available_wallet_amount||0);
+                            $scope.UserDetails  = $scope.my_user;
                             $rootScope.$emit('updateParent', {
                                 isAuth: true
                             });
+                            if ($scope.response.role_id === $scope.ConstUserRole.Employer) {
+                                $rootScope.Employer = true;
+                                $rootScope.Freelancer = false;
+                            } else {
+                                $rootScope.Freelancer = true;
+                                $rootScope.Employer = false;
+                                $window.localStorage.setItem("portal", JSON.stringify('Freelancer'));
+                            }
                             flash.set($filter("translate")("You have successfully registered with our site."), 'success', false);
                             if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
                                 if ($scope.response.role_id === ConstUserRole.Freelancer) {
@@ -294,9 +335,20 @@ angular.module('getlancerApp')
                                     path: '/'
                                 });
                                 $rootScope.user = $scope.response;
+                                $rootScope.my_user = $scope.response;
+                                $rootScope.my_user.available_wallet_amount = Number($rootScope.my_user.available_wallet_amount||0);
+                                $scope.UserDetails  = $scope.my_user;
                                 $rootScope.$emit('updateParent', {
                                     isAuth: true
                                 });
+                                if ($scope.response.role_id === $scope.ConstUserRole.Employer) {
+                                    $rootScope.Employer = true;
+                                    $rootScope.Freelancer = false;
+                                } else {
+                                    $rootScope.Freelancer = true;
+                                    $rootScope.Employer = false;
+                                    $window.localStorage.setItem("portal", JSON.stringify('Freelancer'));
+                                }
                                 flash.set($filter("translate")("You have successfully registered with our site."), 'success', false);
                                 if ($cookies.get("redirect_url") !== null && $cookies.get("redirect_url") !== undefined) {
                                     $cookies.remove('redirect_url');
