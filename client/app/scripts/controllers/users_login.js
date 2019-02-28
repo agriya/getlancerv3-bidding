@@ -59,14 +59,8 @@ angular.module('getlancerApp')
                             $scope.response = response;
                             delete $scope.response.scope;
                             if ($scope.response.error.code === 0) {
-                              /* login user details get factory*/
-                                myUserFactory.get(function(response) {
-                                    $rootScope.my_user = response.data;
-                                    $rootScope.my_user.available_wallet_amount = Number($rootScope.my_user.available_wallet_amount||0);
-                                });
-                                $timeout(function() {
-                                    $scope.UserDetails  = $scope.my_user;
-                                }, 500);
+                                $rootScope.my_user = response.data;
+                                $scope.UserDetails  = $scope.my_user;
                                 $scope.Authuser = {
                                     id: $scope.response.id,
                                     username: $scope.response.username,
@@ -135,23 +129,24 @@ angular.module('getlancerApp')
                         if ($scope.response.already_register === '1') {
                              myUserFactory.get(function(response) {
                                 $rootScope.my_auth_user = response.data;
-                            });
-                            if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
-                                if ($scope.response.role_id === ConstUserRole.Freelancer) {
-                                    $window.location.href = 'my_works';
-                                } else if ($scope.response.role_id === ConstUserRole.Employer) {
-                                    $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
+                                if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
+                                    if ($scope.response.role_id === ConstUserRole.Freelancer) {
+                                        $window.location.href = 'my_works';
+                                    } else if ($scope.response.role_id === ConstUserRole.Employer) {
+                                        $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
+                                    } else {
+                                        $window.location.href = 'users/dashboard';
+                                    }
+                                } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.my_auth_user.user_login_count === '1') {
+                                    $window.location.href = 'users/' + $scope.my_auth_user.id + '/' + $scope.my_auth_user.username;
                                 } else {
-                                    $window.location.href = 'users/dashboard';
+                                    $state.go('user_dashboard', {
+                                        'type': 'news_feed',
+                                        'status': 'news_feed',
+                                    });
                                 }
-                            } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.my_auth_user.user_login_count === '1') {
-                                $window.location.href = 'users/' + $scope.my_auth_user.id + '/' + $scope.my_auth_user.username;
-                            } else {
-                                $state.go('user_dashboard', {
-                                    'type': 'news_feed',
-                                    'status': 'news_feed',
-                                });
-                            }
+                            });
+                            
                         }
                     if ($scope.response.error.code === 0 && $scope.response.thrid_party_profile && $scope.response.already_register !== '1') {
                         $window.localStorage.setItem("twitter_auth", JSON.stringify($scope.response));
@@ -297,10 +292,9 @@ angular.module('getlancerApp')
                                 });
                                 flash.set($filter("translate")("You have successfully registered with our site."), 'success', false);
                                 if ($cookies.get("redirect_url") !== null && $cookies.get("redirect_url") !== undefined) {
-                                    $location.path($cookies.get("redirect_url"));
                                     $cookies.remove('redirect_url');
-                                }
-                                if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
+                                    $location.path($cookies.get("redirect_url"));
+                                } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
                                     if ($scope.response.role_id === ConstUserRole.Freelancer) {
                                         $window.location.href = 'my_works';
                                     } else if ($scope.response.role_id === ConstUserRole.Employer) {
@@ -308,7 +302,7 @@ angular.module('getlancerApp')
                                     } else {
                                         $window.location.href = 'users/dashboard';
                                     }
-                                } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.my_auth_user.user_login_count === '1') {
+                                } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.my_auth_user.user_login_count === '1')  {
                                     $window.location.href = 'users/' + $scope.my_auth_user.id + '/' + $scope.my_auth_user.username;
                                 } else {
                                     $state.go('user_dashboard', {
