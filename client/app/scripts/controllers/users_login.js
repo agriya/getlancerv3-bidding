@@ -54,65 +54,65 @@ angular.module('getlancerApp')
                     }
                    /* user login post factory */
                     usersLogin.login($scope.user, function(response) {
-                            $scope.userLogin.$setPristine();
-                            $scope.userLogin.$setUntouched();
-                            $scope.response = response;
-                            delete $scope.response.scope;
-                            if ($scope.response.error.code === 0) {
-                                $rootScope.my_user = response.data;
-                                $scope.UserDetails  = $scope.my_user;
-                                $scope.Authuser = {
-                                    id: $scope.response.id,
-                                    username: $scope.response.username,
-                                    role_id: $scope.response.role_id,
-                                    refresh_token: $scope.response.refresh_token,
-                                    attachment: $scope.response.attachment,
-                                };
-                                $cookies.put('auth', JSON.stringify($scope.Authuser), {
-                                    path: '/'
+                        $scope.userLogin.$setPristine();
+                        $scope.userLogin.$setUntouched();
+                        $scope.response = response;
+                        delete $scope.response.scope;
+                        if ($scope.response.error.code === 0) {
+                            $rootScope.my_user = response.data;
+                            $scope.UserDetails  = $scope.my_user;
+                            $scope.Authuser = {
+                                id: $scope.response.id,
+                                username: $scope.response.username,
+                                role_id: $scope.response.role_id,
+                                refresh_token: $scope.response.refresh_token,
+                                attachment: $scope.response.attachment,
+                            };
+                            $cookies.put('auth', JSON.stringify($scope.Authuser), {
+                                path: '/'
+                            });
+                            $cookies.put('token', $scope.response.access_token, {
+                                path: '/'
+                            });
+                            $rootScope.$broadcast('updateParent', {
+                                isAuth: true,
+                                auth: $scope.response
+                            });
+                            if ($cookies.get("redirect_url") !== null && $cookies.get("redirect_url") !== undefined && $cookies.get("redirect_url") !== '/') {                 
+                                $uibModalStack.dismissAll();
+                                $cookies.remove("redirect_url", {
+                                    path: "/"
                                 });
-                                $cookies.put('token', $scope.response.access_token, {
-                                    path: '/'
-                                });
-                                $rootScope.$broadcast('updateParent', {
-                                    isAuth: true,
-                                    auth: $scope.response
-                                });
-                                if ($cookies.get("redirect_url") !== null && $cookies.get("redirect_url") !== undefined && $cookies.get("redirect_url") !== '/') {                 
-                                    $uibModalStack.dismissAll();
-                                    $cookies.remove("redirect_url", {
-                                        path: "/"
-                                    });
-                                    $location.path($cookies.get("redirect_url"));
-                                } else {
-                                    $uibModalStack.dismissAll();
-                                    if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
-                                        if ($scope.response.role_id === ConstUserRole.Freelancer) {
-                                            $window.location.href = 'my_works';
-                                        } else if ($scope.response.role_id === ConstUserRole.Employer) {
-                                            $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
-                                        } else {
-                                            $window.location.href = 'users/dashboard';
-                                        }
-                                    } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.response.user_login_count === '1') {
-                                        $window.location.href = 'users/' + $scope.response.id + '/' + $scope.response.username;
-                                    } else {
-                                        $state.go('user_dashboard', {
-                                            'type': 'news_feed',
-                                            'status': 'news_feed',
-                                        });
-                                    }
-                                }
+                                $location.path($cookies.get("redirect_url"));
                             } else {
-                                flash.set($filter("translate")("Sorry, login failed. Either your username or password are incorrect or admin deactivated your account."), 'error', false);
-                                $scope.save_btn = false;
-                                $scope.user = {};
+                                $uibModalStack.dismissAll();
+                                if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
+                                    if ($scope.response.role_id === ConstUserRole.Freelancer) {
+                                        $window.location.href = 'my_works';
+                                    } else if ($scope.response.role_id === ConstUserRole.Employer) {
+                                        $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
+                                    } else {
+                                        $window.location.href = 'users/dashboard';
+                                    }
+                                } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.response.user_login_count === '1') {
+                                    $window.location.href = 'users/' + $scope.response.id + '/' + $scope.response.username;
+                                } else {
+                                    $state.go('user_dashboard', {
+                                        'type': 'news_feed',
+                                        'status': 'news_feed',
+                                    });
+                                }
                             }
-                        }, //jshint unused:false 
-                        function(error) {
+                        } else {
                             flash.set($filter("translate")("Sorry, login failed. Either your username or password are incorrect or admin deactivated your account."), 'error', false);
                             $scope.save_btn = false;
-                        });
+                            $scope.user = {};
+                        }
+                    }, //jshint unused:false 
+                    function(error) {
+                        flash.set($filter("translate")("Sorry, login failed. Either your username or password are incorrect or admin deactivated your account."), 'error', false);
+                        $scope.save_btn = false;
+                    });
                 }
             }
         };
@@ -261,8 +261,7 @@ angular.module('getlancerApp')
                             if ($cookies.get("redirect_url") !== null && $cookies.get("redirect_url") !== undefined) {
                                 $location.path($cookies.get("redirect_url"));
                                 $cookies.remove('redirect_url');
-                            }
-                            if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
+                            } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
                                 if ($scope.response.role_id === ConstUserRole.Freelancer) {
                                     $window.location.href = 'my_works';
                                 } else if ($scope.response.role_id === ConstUserRole.Employer) {
@@ -348,10 +347,9 @@ angular.module('getlancerApp')
                                 });
                                 flash.set($filter("translate")("You have successfully registered with our site."), 'success', false);
                                 if ($cookies.get("redirect_url") !== null && $cookies.get("redirect_url") !== undefined) {
-                                    $location.path($cookies.get("redirect_url"));
                                     $cookies.remove('redirect_url');
-                                }
-                                if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
+                                    $location.path($cookies.get("redirect_url"));
+                                } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
                                     if ($scope.response.role_id === ConstUserRole.Freelancer) {
                                         $window.location.href = 'my_works';
                                     } else if ($scope.response.role_id === ConstUserRole.Employer) {
