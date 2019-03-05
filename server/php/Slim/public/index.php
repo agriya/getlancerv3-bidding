@@ -1868,41 +1868,46 @@ $app->GET('/api/v1/payment_gateways/{paymentGatewayId}', function ($request, $re
 $app->PUT('/api/v1/payment_gateway_settings/{paymentGatewayId}', function ($request, $response, $args) {
     $body = $request->getParsedBody();
     $result = array();
-    $value_to_zazpay = "";
-    $array_name = !empty($body['is_live_mode']) ? 'live_mode_value' : 'test_mode_value';
-    if (!empty($body[$array_name])) {
-        $value_to_zazpay = $body[$array_name];
-        foreach($body[$array_name] as $key => $value)
-        {
+    //Updating live_mode_value values
+    if (!empty($body['live_mode_value'])) {
+        foreach($body['live_mode_value'] as $key => $value) {
             $payment_gateway_setting = Models\PaymentGatewaySetting::where('payment_gateway_id',$request->getAttribute('paymentGatewayId'))->where('name', $key)->first();
-            if(!empty($payment_gateway_setting))
-            {
-                $payment_gateway_setting->$array_name = $value;
+            if(!empty($payment_gateway_setting)) {
+                $payment_gateway_setting->live_mode_value = $value;
                 $payment_gateway_setting->update();
             }
         }
     } 
+    //Updating test_mode_value values
+    if (!empty($body['test_mode_value'])) {
+        foreach($body['test_mode_value'] as $key => $value) {
+            $payment_gateway_setting = Models\PaymentGatewaySetting::where('payment_gateway_id',$request->getAttribute('paymentGatewayId'))->where('name', $key)->first();
+            if(!empty($payment_gateway_setting)) {
+                $payment_gateway_setting->test_mode_value = $value;
+                $payment_gateway_setting->update();
+            }
+        }
+    }
     if (isset($body['is_live_mode'])) {
         $is_test = empty($body['is_live_mode']) ? 1 : 0;
         Models\PaymentGateway::where('id', $request->getAttribute('paymentGatewayId'))->update(array(
             "is_test_mode" => $is_test
         ));
     }
-    if($request->getAttribute('paymentGatewayId') == \Constants\PaymentGateways::ZazPay)
-    {
+    if($request->getAttribute('paymentGatewayId') == \Constants\PaymentGateways::ZazPay) {
         Models\PaymentGatewaySetting::where('name', 'payment_gateway_all_credentials')->update(array(
             $array_name => serialize($value_to_zazpay) 
         )); 
     }
     $payment_gateway_settings = Models\PaymentGateway::with('payment_settings')->find($request->getAttribute('paymentGatewayId'));
-    if(!empty($payment_gateway_settings))
-    {
+    if(!empty($payment_gateway_settings)) {
         $result['data'] = $payment_gateway_settings->toArray();
         return renderWithJson($result);
-    }else{
+    } else {
         return renderWithJson($result, $message = 'No record found', $fields = '', $isError = 1, 404);
     }
 });
+
 /**
  * PUT paymentGatewayspaymentGatewayIdPut
  * Summary: Update Payment gateway by its id
