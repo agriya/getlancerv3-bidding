@@ -435,13 +435,12 @@ ngapp.directive('paymentGateways', function(paymentGateway, zazpaySynchronize, $
             $scope.liveMode = false;
             $scope.save = function() {
                 $scope.data = {};
-                if($scope.liveMode === true)
-                {
-                     $scope.data.live_mode_value = $scope.live_mode_value;
-                      $scope.data.is_live_mode = true;
-                }else{
-                     $scope.data.test_mode_value = $scope.test_mode_value;
-                     $scope.data.is_live_mode = false;
+                $scope.data.live_mode_value = $scope.live_mode_value;
+                $scope.data.test_mode_value = $scope.test_mode_value;
+                if($scope.liveMode === true) {
+                    $scope.data.is_live_mode = true;
+                } else {
+                    $scope.data.is_live_mode = false;
                 }
                 $scope.data.id = $scope.entry()
                     .values.id;
@@ -469,22 +468,29 @@ ngapp.directive('paymentGateways', function(paymentGateway, zazpaySynchronize, $
                         $scope.test_mode_value[value.name] = value.test_mode_value;
                         $scope.live_mode_value[value.name] = value.live_mode_value;
                     });
-                    if(parseInt($state.params.id) === PaymentGatewaySettings.PayPalREST)
-                    {
+                    if(parseInt($state.params.id) === PaymentGatewaySettings.PayPalREST) {
                         $scope.PayPalREST = true;
-                    }else{
+                    } else {
                         $scope.PayPalREST = false;
                     }
-                    if(parseInt($state.params.id) === PaymentGatewaySettings.Wallet)
-                    {
+                    if(parseInt($state.params.id) === PaymentGatewaySettings.Wallet) {
                         $scope.wallet = true;
-                    }else{
+                    } else {
                          $scope.wallet = false;
+                    }
+                    if(parseInt($state.params.id) === PaymentGatewaySettings.ZazPay) {
+                        $scope.ZazPay = true;
+                    } else {
+                        $scope.ZazPay = false;
+                    }
+                    $scope.liveMode = true;
+                    if($scope.entry().values.is_test_mode === true) {
+                        $scope.liveMode = false;
                     }
             };
             $scope.index();
         },
-        template: '<span ng-show="!wallet"><input type="checkbox" ng-model="liveMode"></span>&nbsp;<label ng-if="!wallet">Live Mode?</label><table ng-show="!PayPalREST &&!wallet"><tr><th></th><th>Live Mode Credential</th><th>&nbsp;</th><th>Test Mode Credential</th></tr><tr><td>Merchant ID &nbsp;&nbsp;</td><td><input type="text" ng-model="live_mode_value.zazpay_merchant_id" class="form-control"></td><td>&nbsp;</td><td><input type="text" class="form-control" ng-readonly="live_mode" ng-model="test_mode_value.zazpay_merchant_id"></td></tr><tr><td>Website ID</td><td><input type="text" class="form-control" ng-model="live_mode_value.zazpay_website_id"></td><td>&nbsp;</td><td><input type="text" class="form-control" ng-readonly="live_mode" ng-model="test_mode_value.zazpay_website_id"></td></tr><tr><td>Secret Key</td><td><input type="text" ng-model="live_mode_value.zazpay_secret_string" class="form-control"></td><td>&nbsp;</td><td><input type="text" ng-readonly="live_mode" ng-model="test_mode_value.zazpay_secret_string" class="form-control"></td></tr><tr><td>API Key</td><td><input type="text" ng-model="live_mode_value.zazpay_api_key" class="form-control"></td><td>&nbsp;</td><td><input type="text" ng-readonly="live_mode" ng-model="test_mode_value.zazpay_api_key" class="form-control"></td></tr><tr><td>&nbsp;</td><td><button type="button" ng-click="save()" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span>&nbsp;<span class="hidden-xs">Save changes</span></button></td><td>&nbsp;</td><td><button type="button" ng-click="zazpay_synchronize()" class="btn btn-primary"><span class="glyphicon glyphicon-refresh"></span>&nbsp;<span class="hidden-xs">Sync with ZazPay</span></button></td></tr></table><table ng-show="PayPalREST && !wallet"><tr><th></th><th>Live Mode Credential</th><th>&nbsp;</th><th>Test Mode Credential</th></tr><tr><td>Client Secret &nbsp;&nbsp;</td><td><input type="text" ng-model="live_mode_value.paypal_client_Secret" class="form-control"></td><td>&nbsp;</td><td><input type="text" class="form-control" ng-readonly="live_mode" ng-model="test_mode_value.paypal_client_Secret"></td></tr><tr><td>Client ID</td><td><input type="text" class="form-control" ng-model="live_mode_value.paypal_client_id"></td><td>&nbsp;</td><td><input type="text" class="form-control" ng-readonly="live_mode" ng-model="test_mode_value.paypal_client_id"></td></tr><tr><td>&nbsp;</td><td><button type="button" ng-click="save()" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span>&nbsp;<span class="hidden-xs">Save changes</span></button></td><td>&nbsp;</td><td><button type="button" ng-click="zazpay_synchronize()" class="btn btn-primary"><span class="glyphicon glyphicon-refresh"></span>&nbsp;<span class="hidden-xs">Sync with ZazPay</span></button></td></tr></table>',
+        template: '<span ng-show="!wallet"><input type="checkbox" ng-model="liveMode"></span>&nbsp;<label ng-if="!wallet">Live Mode?</label><table ng-show="ZazPay"><tr><th></th><th>Live Mode Credential</th><th>&nbsp;</th><th>Test Mode Credential</th></tr><tr><td>Merchant ID &nbsp;&nbsp;</td><td><input type="text" ng-model="live_mode_value.zazpay_merchant_id" class="form-control"></td><td>&nbsp;</td><td><input type="text" class="form-control" ng-readonly="live_mode" ng-model="test_mode_value.zazpay_merchant_id"></td></tr><tr><td>Website ID</td><td><input type="text" class="form-control" ng-model="live_mode_value.zazpay_website_id"></td><td>&nbsp;</td><td><input type="text" class="form-control" ng-readonly="live_mode" ng-model="test_mode_value.zazpay_website_id"></td></tr><tr><td>Secret Key</td><td><input type="text" ng-model="live_mode_value.zazpay_secret_string" class="form-control"></td><td>&nbsp;</td><td><input type="text" ng-readonly="live_mode" ng-model="test_mode_value.zazpay_secret_string" class="form-control"></td></tr><tr><td>API Key</td><td><input type="text" ng-model="live_mode_value.zazpay_api_key" class="form-control"></td><td>&nbsp;</td><td><input type="text" ng-readonly="live_mode" ng-model="test_mode_value.zazpay_api_key" class="form-control"></td></tr><tr><td>&nbsp;</td><td><button type="button" ng-click="save()" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span>&nbsp;<span class="hidden-xs">Save changes</span></button></td><td>&nbsp;</td><td><button type="button" ng-click="zazpay_synchronize()" class="btn btn-primary"><span class="glyphicon glyphicon-refresh"></span>&nbsp;<span class="hidden-xs">Sync with ZazPay</span></button></td></tr></table><table ng-show="PayPalREST"><tr><th></th><th>Live Mode Credential</th><th>&nbsp;</th><th>Test Mode Credential</th></tr><tr><td>Client Secret &nbsp;&nbsp;</td><td><input type="text" ng-model="live_mode_value.paypal_client_Secret" class="form-control"></td><td>&nbsp;</td><td><input type="text" class="form-control" ng-readonly="live_mode" ng-model="test_mode_value.paypal_client_Secret"></td></tr><tr><td>Client ID</td><td><input type="text" class="form-control" ng-model="live_mode_value.paypal_client_id"></td><td>&nbsp;</td><td><input type="text" class="form-control" ng-readonly="live_mode" ng-model="test_mode_value.paypal_client_id"></td></tr><tr><td>&nbsp;</td><td><button type="button" ng-click="save()" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span>&nbsp;<span class="hidden-xs">Save changes</span></button></td><td>&nbsp;</td><td>&nbsp;</td></tr></table>',
     };
 });
 ngapp.directive('googlePlaces', ['$location', function($location) {
