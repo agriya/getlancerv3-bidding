@@ -7,12 +7,13 @@
  * Controller of the getlancerApp
  */
 angular.module('getlancerApp')
-    .controller('UsersRegisterController', ['$rootScope', '$scope', 'usersRegister', 'flash', '$location', '$timeout', 'vcRecaptchaService', '$filter', '$cookies', '$uibModalStack', 'providers', '$auth', '$window', '$state', function($rootScope, $scope, usersRegister, flash, $location, $timeout, vcRecaptchaService, $filter, $cookies, $uibModalStack, providers, $auth, $window, $state) {
+    .controller('UsersRegisterController', ['$rootScope', '$scope', 'usersRegister', 'flash', '$location', '$timeout', 'vcRecaptchaService', '$filter', '$cookies', '$uibModalStack', 'providers', '$auth', '$window', '$state', 'ConstUserRole', function($rootScope, $scope, usersRegister, flash, $location, $timeout, vcRecaptchaService, $filter, $cookies, $uibModalStack, providers, $auth, $window, $state, ConstUserRole) {
         // $rootScope.header = $rootScope.settings.SITE_NAME + ' | ' + $filter("translate")("Register");
         var current_state = $state.current.name;
-                if (current_state === 'register') {
-                    $rootScope.header = $rootScope.settings.SITE_NAME + ' | ' + $filter("translate")("Register");
-                }
+        $scope.ConstUserRole = ConstUserRole;
+        if (current_state === 'register') {
+            $rootScope.header = $rootScope.settings.SITE_NAME + ' | ' + $filter("translate")("Register");
+        }
         /*jshint -W117 */
         // function validatePassword() {
         //     var pass2 = document.getElementById("password")
@@ -96,35 +97,39 @@ angular.module('getlancerApp')
                                     auth: $scope.response
                                 });
                                 flash.set($filter("translate")("You have successfully registered with our site."), 'success', false);
-                            } else if (parseInt($rootScope.settings.USER_IS_EMAIL_VERIFICATION_FOR_REGISTER) && parseInt($rootScope.settings.USER_IS_ADMIN_ACTIVATE_AFTER_REGISTER)) {
-                                flash.set($filter("translate")("You have successfully registered with our site you can login after email verification and administrator approval. Your activation mail has been sent to your mail inbox."), 'success', false);
-                            } else if (parseInt($rootScope.settings.USER_IS_ADMIN_ACTIVATE_AFTER_REGISTER)) {
-                                flash.set($filter("translate")("You have successfully registered with our site. After administrator approval you can login to site."), 'success', false);
-                            } else if (parseInt($rootScope.settings.USER_IS_EMAIL_VERIFICATION_FOR_REGISTER)) {
-                                flash.set($filter("translate")("You have successfully registered with our site and your activation mail has been sent to your mail inbox."), 'success', false);
-                            } else {
-                                flash.set($filter("translate")("You have successfully registered with our site."), 'success', false);
-                            }
-                            $uibModalStack.dismissAll();
-                            if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
-                                if ($scope.response.role_id === ConstUserRole.Freelancer) {
-                                    $window.location.href = 'my_works';
-                                } else if ($scope.response.role_id === ConstUserRole.Employer) {
-                                    $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
+                                if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
+                                    if ($scope.response.role_id === ConstUserRole.Freelancer) {
+                                        $window.location.href = 'my_works';
+                                    } else if ($scope.response.role_id === ConstUserRole.Employer) {
+                                        $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
+                                    } else {
+                                        $state.go('user_dashboard', {
+                                            'type': 'news_feed',
+                                            'status': 'news_feed',
+                                        });
+                                    }
+                                } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.response.user_login_count === '1') {
+                                    $window.location.href = 'users/' + $scope.response.id + '/' + $scope.response.username;
                                 } else {
                                     $state.go('user_dashboard', {
                                         'type': 'news_feed',
                                         'status': 'news_feed',
                                     });
                                 }
-                            } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.response.user_login_count === '1') {
-                                $window.location.href = 'users/' + $scope.response.id + '/' + $scope.response.username;
+                            } else if (parseInt($rootScope.settings.USER_IS_EMAIL_VERIFICATION_FOR_REGISTER) && parseInt($rootScope.settings.USER_IS_ADMIN_ACTIVATE_AFTER_REGISTER)) {
+                                flash.set($filter("translate")("You have successfully registered with our site you can login after email verification and administrator approval. Your activation mail has been sent to your mail inbox."), 'success', false);
+                                $location.path('/');
+                            } else if (parseInt($rootScope.settings.USER_IS_ADMIN_ACTIVATE_AFTER_REGISTER)) {
+                                flash.set($filter("translate")("You have successfully registered with our site. After administrator approval you can login to site."), 'success', false);
+                                $location.path('/');
+                            } else if (parseInt($rootScope.settings.USER_IS_EMAIL_VERIFICATION_FOR_REGISTER)) {
+                                flash.set($filter("translate")("You have successfully registered with our site and your activation mail has been sent to your mail inbox."), 'success', false);
+                                $location.path('/users/login');
                             } else {
-                                $state.go('user_dashboard', {
-                                    'type': 'news_feed',
-                                    'status': 'news_feed',
-                                });
+                                flash.set($filter("translate")("You have successfully registered with our site."), 'success', false);
+                                $location.path('/users/login');
                             }
+                            $uibModalStack.dismissAll();
                         } else {
                             if (angular.isDefined($scope.response.error.fields) && angular.isDefined($scope.response.error.fields.unique) && $scope.response.error.fields.unique.length !== 0) {
                                 flash.set($filter("translate")("Please choose different " + $scope.response.error.fields.unique.join()), 'error', false);

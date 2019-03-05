@@ -87,7 +87,8 @@ angular.module('getlancerApp')
                                 isAuth: true,
                                 auth: $scope.response
                             });
-                            if ($cookies.get("redirect_url") !== null && $cookies.get("redirect_url") !== undefined && $cookies.get("redirect_url") !== '/') {                 
+                            if ($cookies.get("redirect_url") !== null && $cookies.get("redirect_url") !== undefined && $cookies.get("redirect_url") !== '/') {
+                                $window.location.href = $cookies.get("redirect_url");      
                                 $uibModalStack.dismissAll();
                                 $cookies.remove("redirect_url", {
                                     path: "/"
@@ -98,8 +99,10 @@ angular.module('getlancerApp')
                                 if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
                                     if ($scope.response.role_id === ConstUserRole.Freelancer) {
                                         $window.location.href = 'my_works';
+                                        
                                     } else if ($scope.response.role_id === ConstUserRole.Employer) {
                                         $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
+                                        
                                     } else {
                                         $window.location.href = 'users/dashboard';
                                     }
@@ -110,7 +113,7 @@ angular.module('getlancerApp')
                                         'type': 'news_feed',
                                         'status': 'news_feed',
                                     });
-                                }
+                                } 
                             }
                         } else {
                             flash.set($filter("translate")("Sorry, login failed. Either your username or password are incorrect or admin deactivated your account."), 'error', false);
