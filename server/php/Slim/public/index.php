@@ -766,6 +766,7 @@ $app->PUT('/api/v1/users/{userId}', function ($request, $response, $args) {
     unset($user->state_name);
     unset($user->country);
     $validation = true;
+    $old_status = $user->is_active;
     //get country, state and city ids
     if (!empty($args['full_address'])) {
         if (!empty($args['country']['iso_alpha2'])) {
@@ -815,6 +816,17 @@ $app->PUT('/api/v1/users/{userId}', function ($request, $response, $args) {
             }
             try {
                 $user->save();
+                $new_status = $user->is_active;
+                if ($old_status != $new_status) {
+                    $emailFindReplace = array(
+                        '##USERNAME##' => $user->username,
+                    );
+                    if($new_status == false) {
+                        sendMail('Admin User Deactivate', $emailFindReplace, $user->email);
+                    } else if($new_status == true) {
+                        sendMail('Admin User Active', $emailFindReplace, $user->email);
+                    }
+                }
                 if (!empty($args['image'])) {
                     saveImage('UserAvatar', $args['image'], $user->id);
                 }
