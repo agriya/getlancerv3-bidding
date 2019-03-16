@@ -99,12 +99,13 @@ angular.module('getlancerApp')
                                 if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1) {
                                     if ($scope.response.role_id === ConstUserRole.Freelancer) {
                                         $window.location.href = 'my_works';
-                                        
                                     } else if ($scope.response.role_id === ConstUserRole.Employer) {
                                         $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
-                                        
                                     } else {
-                                        $window.location.href = 'users/dashboard';
+                                        $state.go('user_dashboard', {
+                                            'type': 'news_feed',
+                                            'status': 'news_feed',
+                                        });
                                     }
                                 } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.response.user_login_count === '1') {
                                     $window.location.href = 'users/' + $scope.response.id + '/' + $scope.response.username;
@@ -362,7 +363,10 @@ angular.module('getlancerApp')
                                     } else if ($scope.response.role_id === ConstUserRole.Employer) {
                                         $window.location.href = 'quote_bids/my_requests/all/' + $scope.ConstQuoteStatuses.UnderDiscussion + '/under_discussion';
                                     } else {
-                                        $window.location.href = 'users/dashboard';
+                                        $state.go('user_dashboard', {
+                                            'type': 'news_feed',
+                                            'status': 'news_feed',
+                                        });
                                     }
                                 } else if ($rootScope.settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/Bidding') > -1 &&  $scope.response.user_login_count === '1')  {
                                     $window.location.href = 'users/' + $scope.response.id + '/' + $scope.response.username;
