@@ -354,17 +354,11 @@ $tables = array(
                     'name' => 'first_name',
                     'label' => 'First Name',
                     'type' => 'string',
-                    'validation' => array(
-                        'required' => true,
-                    ) ,
                 ) ,
                 2 => array(
                     'name' => 'last_name',
                     'label' => 'Last Name',
                     'type' => 'string',
-                    'validation' => array(
-                        'required' => true,
-                    ) ,
                 ) ,
                 3 => array(
                     'name' => 'is_active',
