@@ -176,6 +176,17 @@ angular.module('getlancerApp')
                             path: '/'
                         });
                         $rootScope.user = $scope.response;
+                        $rootScope.my_user = $scope.response;
+                        $rootScope.my_user.available_wallet_amount = Number($rootScope.my_user.available_wallet_amount||0);
+                        $scope.UserDetails  = $scope.my_user;
+                        if ($scope.response.role_id === $scope.ConstUserRole.Employer) {
+                            $rootScope.Employer = true;
+                            $rootScope.Freelancer = false;
+                        } else {
+                            $rootScope.Freelancer = true;
+                            $rootScope.Employer = false;
+                            $window.localStorage.setItem("portal", JSON.stringify('Freelancer'));
+                        }
                         $rootScope.$emit('updateParent', {
                             isAuth: true
                         });
