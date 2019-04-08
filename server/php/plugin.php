@@ -31,6 +31,7 @@ if (!file_exists(SCRIPT_PATH . DS . $_GET['file'])) {
         $concat .= "angular.module('getlancerApp').requires.push('getlancerApp." . $pluginPath . "');";
     }
     file_put_contents(SCRIPT_PATH . DS . $_GET['file'], $concat);
+    chmod(SCRIPT_PATH . DS . $_GET['file'], 0777);
     header('Location:' . $_SERVER['REQUEST_URI'] . '?chrome-3xx-fix');
 } else {
     echo file_get_contents(SCRIPT_PATH . DS . $_GET['file']);
