@@ -334,21 +334,22 @@ angular.module('getlancerApp.Bidding')
                         if (parseInt(response.error.code) === 0) {
                             $scope.biddings = response.data; 
                             angular.forEach($scope.biddings, function (value) {
-                                if(value.exams_users !== undefined){
-                                if (value.exams_users.length != 0) {
-                                    $scope.exam_users = value.exams_users;
-                                    angular.forEach($scope.exam_users, function (exams) {
-                                        $scope.total_mark = Number(exams.total_mark || 0);
-                                        $scope.total_question_count = Number(exams.total_question_count || 0);
-                                        $scope.average = $scope.total_mark / $scope.total_question_count;
-                                        exams.exam_user_per = parseInt($scope.average * 100);
-                                        if (angular.isDefined(exams.exam.attachment) && exams.exam.attachment !== null) {
-                                            var hash = md5.createHash('Exam' + exams.exam.attachment.foreign_id + 'png' + 'small_thumb');
-                                            exams.exam_image = 'images/small_thumb/Exam/' + exams.exam.attachment.foreign_id + '.' + md5.createHash('Exam' + exams.exam.attachment.foreign_id + 'png' + 'small_thumb') + '.png';
-                                        } else {
-                                            exams.exam_image = 'images/no-image.png';
-                                        }
-                                    });
+                                if(value.exams_users !== undefined) {
+                                    if (value.exams_users.length != 0) {
+                                        $scope.exam_users = value.exams_users;
+                                        angular.forEach($scope.exam_users, function (exams) {
+                                            $scope.total_mark = Number(exams.total_mark || 0);
+                                            $scope.total_question_count = Number(exams.total_question_count || 0);
+                                            $scope.average = $scope.total_mark / $scope.total_question_count;
+                                            exams.exam_user_per = parseInt($scope.average * 100);
+                                            if (angular.isDefined(exams.exam.attachment) && exams.exam.attachment !== null) {
+                                                var hash = md5.createHash('Exam' + exams.exam.attachment.foreign_id + 'png' + 'small_thumb');
+                                                exams.exam_image = 'images/small_thumb/Exam/' + exams.exam.attachment.foreign_id + '.' + md5.createHash('Exam' + exams.exam.attachment.foreign_id + 'png' + 'small_thumb') + '.png';
+                                            } else {
+                                                exams.exam_image = 'images/no-image.png';
+                                            }
+                                        });
+                                    }
                                 }
                                 if (angular.isDefined(value.user.attachment) && value.user.attachment !== null) {
                                     value.user.user_avatar_url = 'images/big_thumb/UserAvatar/' + value.user.id + '.' + md5.createHash('UserAvatar' + value.user.id + 'png' + 'big_thumb') + '.png';
@@ -360,7 +361,6 @@ angular.module('getlancerApp.Bidding')
                                 $scope.total_count = $scope.project_failed_count + $scope.project_completed_count;
                                 $scope.mul = $scope.project_completed_count / $scope.total_count;
                                 value.completetion_rate = $scope.mul * 100;
-                                }
                             });
                             if ($rootScope.scrollBids === true) {
                                 $timeout(function () {
