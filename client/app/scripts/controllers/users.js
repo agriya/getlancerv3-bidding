@@ -178,27 +178,29 @@
                         }
                     };
                     $scope.submit = function() {
-                        $scope.tmp_skills = [];
-                        angular.forEach($scope.project_select, function(id) {
-                            $scope.tmp_skills.push({
-                                'project_id': id
+                        if ($scope.Hire.$valid) {
+                            $scope.tmp_skills = [];
+                            angular.forEach($scope.project_select, function(id) {
+                                $scope.tmp_skills.push({
+                                    'project_id': id
+                                });
                             });
-                        });
-                        var params = {};
-                        params.projects = $scope.tmp_skills;
-                        params.message = $scope.data.message;
-                        params.class = 'Project';
-                        params.user_id = $other_user_id;
-                        HireMe.create(params, function(response) {
-                            $scope.closemodel();
-                            if (response.error.code === 0) {
-                                flashMessage = $filter("translate")("Message sent successfully.");
-                                flash.set(flashMessage, 'success', false);
-                            } else {
-                                flashMessage = $filter("translate")(response.error.message);
-                                flash.set(flashMessage, 'error', false);
-                            }
-                        });
+                            var params = {};
+                            params.projects = $scope.tmp_skills;
+                            params.message = $scope.data.message;
+                            params.class = 'Project';
+                            params.user_id = $other_user_id;
+                            HireMe.create(params, function(response) {
+                                $scope.closemodel();
+                                if (response.error.code === 0) {
+                                    flashMessage = $filter("translate")("Message sent successfully.");
+                                    flash.set(flashMessage, 'success', false);
+                                } else {
+                                    flashMessage = $filter("translate")(response.error.message);
+                                    flash.set(flashMessage, 'error', false);
+                                }
+                            });
+                        }
                     };
                 },
                 size: 'lg'
